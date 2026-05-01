@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { register } from "@/utils/authApi";
+import { useRouter } from "next/navigation";
 
 const COUNTRIES = [
   "UAE", "USA", "Portugal", "Canada", "Australia",
@@ -46,6 +47,7 @@ const EyeIcon = ({ open }) => open ? (
 );
 
 export default function Register() {
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -86,8 +88,14 @@ export default function Register() {
         countryCode,
         role: form.role,
       });
-      setSuccess("Account created successfully! You can now sign in.");
-      setForm({ name: "", email: "", phone: "", country: "UAE", role: "buyer", password: "", confirmPassword: "" });
+      // Close modal
+      document.querySelector('[data-bs-dismiss="modal"]')?.click();
+      // Redirect based on role
+      if (form.role === "broker" || form.role === "seller") {
+        window.location.href = "/kyc-property-verification";
+      } else {
+        window.location.href = "/";
+      }
     } catch (err) {
       setError(err?.response?.data?.message || err.message || "Registration failed");
     } finally {
