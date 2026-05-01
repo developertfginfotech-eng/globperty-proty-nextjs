@@ -1,9 +1,21 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DashboardNav({ color = "" }) {
   const [isDDOpen, setIsDDOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("chatSessionId");
+    router.push("/");
+    router.refresh();
+  };
   return (
     <div
       className={`box-user tf-action-btns ${isDDOpen ? "active" : ""} `}
@@ -390,7 +402,7 @@ export default function DashboardNav({ color = "" }) {
             </a>
           </div>
         </div>
-        <Link className="dropdown-item" href={`/`}>
+        <a className="dropdown-item" href="#" onClick={handleLogout}>
           <svg
             width={20}
             height={20}
@@ -421,7 +433,7 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           Logout
-        </Link>
+        </a>
       </div>
     </div>
   );
