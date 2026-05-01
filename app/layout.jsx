@@ -10,6 +10,8 @@ import MobileMenu from "@/components/headers/MobileMenu";
 import SettingsHandler from "@/components/common/SettingsHandler";
 import Login from "@/components/modals/Login";
 import Register from "@/components/modals/Register";
+import ChatWidget from "@/components/chat/ChatWidget";
+import CopilotFab from "@/components/chat/CopilotFab";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -79,6 +81,8 @@ export default function RootLayout({ children }) {
         <SettingsHandler />
         <Login />
         <Register />
+        <ChatWidget />
+        <CopilotFab />
       </body>
     </html>
   );
