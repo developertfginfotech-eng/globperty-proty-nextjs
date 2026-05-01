@@ -4,20 +4,15 @@ import Image from "next/image";
 import { register } from "@/utils/authApi";
 
 const COUNTRIES = [
-  "Australia", "Austria", "Belgium", "Brazil", "Canada", "China", "Cyprus",
-  "Czech Republic", "Denmark", "Egypt", "Finland", "France", "Germany",
-  "Greece", "Hong Kong", "Hungary", "India", "Indonesia", "Ireland", "Israel",
-  "Italy", "Japan", "Jordan", "Latvia", "Luxembourg", "Malaysia", "Malta",
-  "Mexico", "Netherlands", "New Zealand", "Norway", "Philippines", "Poland",
-  "Portugal", "Qatar", "Romania", "Saudi Arabia", "Singapore", "South Africa",
-  "South Korea", "Spain", "Sweden", "Switzerland", "Thailand", "Turkey",
-  "UAE", "UK", "USA", "Vietnam",
+  "UAE", "USA", "Portugal", "Canada", "Australia",
+  "Turkey", "Cyprus", "Malta", "Hungary", "Latvia",
+  "Philippines", "Malaysia",
 ];
 
 const COUNTRY_CODES = {
-  Australia: "+61", Canada: "+1", USA: "+1", UK: "+44", India: "+91",
-  UAE: "+971", Germany: "+49", France: "+33", Singapore: "+65",
-  "Saudi Arabia": "+966", Qatar: "+974", China: "+86", Japan: "+81",
+  UAE: "+971", USA: "+1", Portugal: "+351", Canada: "+1", Australia: "+61",
+  Turkey: "+90", Cyprus: "+357", Malta: "+356", Hungary: "+36", Latvia: "+371",
+  Philippines: "+63", Malaysia: "+60",
 };
 
 const LockIcon = () => (
@@ -43,7 +38,7 @@ export default function Register() {
     name: "",
     email: "",
     phone: "",
-    country: "Australia",
+    country: "UAE",
     role: "buyer",
     password: "",
     confirmPassword: "",
@@ -78,7 +73,7 @@ export default function Register() {
         role: form.role,
       });
       setSuccess("Account created successfully! You can now sign in.");
-      setForm({ name: "", email: "", phone: "", country: "Australia", role: "buyer", password: "", confirmPassword: "" });
+      setForm({ name: "", email: "", phone: "", country: "UAE", role: "buyer", password: "", confirmPassword: "" });
     } catch (err) {
       setError(err?.response?.data?.message || err.message || "Registration failed");
     } finally {
