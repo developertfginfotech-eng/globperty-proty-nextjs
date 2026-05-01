@@ -33,6 +33,18 @@ const EmailIcon = () => (
   </svg>
 );
 
+const EyeIcon = ({ open }) => open ? (
+  <svg className="icon" width={18} height={18} viewBox="0 0 24 24" fill="none">
+    <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="#A3ABB0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="12" cy="12" r="3" stroke="#A3ABB0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+) : (
+  <svg className="icon" width={18} height={18} viewBox="0 0 24 24" fill="none">
+    <path d="M17.94 17.94A10.07 10.07 0 0112 20C5 20 1 12 1 12a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19M1 1l22 22" stroke="#A3ABB0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M10.73 10.73a3 3 0 004.54 4.54" stroke="#A3ABB0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
 export default function Register() {
   const [form, setForm] = useState({
     name: "",
@@ -46,6 +58,8 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const countryCode = COUNTRY_CODES[form.country] || "+1";
 
@@ -153,17 +167,23 @@ export default function Register() {
 
                 <fieldset className="box-fieldset">
                   <label htmlFor="reg-pass">Password</label>
-                  <div className="ip-field">
+                  <div className="ip-field" style={{ position: "relative" }}>
                     <LockIcon />
-                    <input type="password" className="form-control" id="reg-pass" name="password" placeholder="Your password" value={form.password} onChange={handleChange} required />
+                    <input type={showPassword ? "text" : "password"} className="form-control" id="reg-pass" name="password" placeholder="Your password" value={form.password} onChange={handleChange} required style={{ paddingRight: 36 }} />
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}>
+                      <EyeIcon open={showPassword} />
+                    </button>
                   </div>
                 </fieldset>
 
                 <fieldset className="box-fieldset">
                   <label htmlFor="reg-confirm">Confirm password</label>
-                  <div className="ip-field">
+                  <div className="ip-field" style={{ position: "relative" }}>
                     <LockIcon />
-                    <input type="password" className="form-control" id="reg-confirm" name="confirmPassword" placeholder="Confirm password" value={form.confirmPassword} onChange={handleChange} required />
+                    <input type={showConfirm ? "text" : "password"} className="form-control" id="reg-confirm" name="confirmPassword" placeholder="Confirm password" value={form.confirmPassword} onChange={handleChange} required style={{ paddingRight: 36 }} />
+                    <button type="button" onClick={() => setShowConfirm(!showConfirm)} style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}>
+                      <EyeIcon open={showConfirm} />
+                    </button>
                   </div>
                 </fieldset>
               </div>
