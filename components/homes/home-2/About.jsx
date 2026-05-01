@@ -1,6 +1,4 @@
 import React from "react";
-import Image from "next/image";
-import SplitTextAnimation from "@/components/common/SplitTextAnimation";
 export default function About() {
   return (
     <section className="section-trusted  tf-spacing-1">
@@ -333,24 +331,16 @@ export default function About() {
           className="person absolute wow animate__fadeInRight animate__animated"
           data-wow-duration="2s"
         >
-          <Image
-            alt=""
-            width={576}
-            height={766}
-            src="/images/items/section-trusted-1.png"
-          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img alt="" width={576} height={766} src="/images/items/section-trusted-1.png" />
         </div>
         <div
           className="item absolute wow animate__fadeInRight animate__animated"
           data-wow-duration="2s"
           data-wow-delay="0.3s"
         >
-          <Image
-            alt=""
-            width={379}
-            height={687}
-            src="/images/items/section-trusted-2.png"
-          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img alt="" width={379} height={687} src="/images/items/section-trusted-2.png" />
         </div>
       </div>
     </section>
