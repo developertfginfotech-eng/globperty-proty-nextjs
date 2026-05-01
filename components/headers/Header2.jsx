@@ -12,14 +12,10 @@ export default function Header2() {
             <div className="col-12">
               <div className="header-inner-wrap">
                 <div className="header-logo">
-                  <Link href={`/`} className="site-logo">
-                    <Image
-                      className="img-default"
-                      alt=""
-                      width={272}
-                      height={84}
-                      src="/images/logo/logo-3@2x.png"
-                    />
+                  <Link href={`/`} className="site-logo" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/images/logo/globperty-logo.svg" alt="Globperty" height={40} style={{ height: 40, width: "auto" }} />
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#06A788", fontFamily: "sans-serif" }}>Globperty</span>
                   </Link>
                 </div>
                 <nav className="main-menu">
