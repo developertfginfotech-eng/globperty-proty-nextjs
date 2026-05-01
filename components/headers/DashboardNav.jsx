@@ -1,20 +1,16 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function DashboardNav({ color = "" }) {
   const [isDDOpen, setIsDDOpen] = useState(false);
-  const router = useRouter();
-
   const handleLogout = (e) => {
     e.preventDefault();
     e.stopPropagation();
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     localStorage.removeItem("chatSessionId");
-    router.push("/");
-    router.refresh();
+    window.location.href = "/";
   };
   return (
     <div
