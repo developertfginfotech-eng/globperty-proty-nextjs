@@ -1,9 +1,17 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function DashboardNav({ color = "" }) {
   const [isDDOpen, setIsDDOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      if (user?.name) setUserName(user.name.split(" ")[0]);
+    } catch {}
+  }, []);
   const handleLogout = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -35,7 +43,7 @@ export default function DashboardNav({ color = "" }) {
         </svg>
       </div>
       <div className={`name ${color} `}>
-        Themesflat
+        {userName || "Account"}
         <i className="icon-CaretDown" />
       </div>
       <div className=" menu-user">
