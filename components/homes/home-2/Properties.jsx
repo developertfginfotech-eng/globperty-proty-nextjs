@@ -102,15 +102,16 @@ export default function Properties() {
                       {(filtered.length ? filtered : properties.slice(0, 8)).map((property) => (
                         <SwiperSlide className="swiper-slide" key={property.id}>
                           <div className="box-house hover-img">
-                            <div className="image-wrap">
-                              <Link href={`/property-detail-v1/${property.id}`}>
+                            <div className="image-wrap" style={{ height: 240, overflow: "hidden" }}>
+                              <Link href={`/property-detail-v1/${property.id}`} style={{ display: "block", height: "100%" }}>
                                 <Image
                                   className="lazyload"
                                   alt={property.title}
                                   width={600}
-                                  height={401}
+                                  height={240}
                                   src={property.imageSrc}
                                   unoptimized
+                                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                 />
                               </Link>
                               <ul className="box-tag flex gap-8">
