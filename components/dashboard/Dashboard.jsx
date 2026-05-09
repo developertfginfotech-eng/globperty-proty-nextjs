@@ -30,6 +30,25 @@ export default function Dashboard() {
   const [inquiries, setInquiries] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [kycStatus, setKycStatus] = useState(null); // null | 'unsubmitted' | 'pending' | 'verified' | 'rejected'
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    try {
+      const u = JSON.parse(localStorage.getItem("user") || "{}");
+      setRole(u.role || "");
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (!role || role === "buyer") return;
+    apiClient.get("/kyc/status")
+      .then(res => {
+        const s = res.data?.kyc?.status;
+        setKycStatus(s || "unsubmitted");
+      })
+      .catch(() => setKycStatus("unsubmitted"));
+  }, [role]);
 
   useEffect(() => {
     Promise.allSettled([
@@ -65,6 +84,45 @@ export default function Dashboard() {
         <div className="button-show-hide show-mb">
           <span className="body-1">Show Dashboard</span>
         </div>
+
+        {/* KYC status banner */}
+        {role && role !== "buyer" && kycStatus && kycStatus !== "verified" && (
+          <div style={{
+            marginBottom: 24,
+            padding: "14px 20px",
+            borderRadius: 10,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: 12,
+            background: kycStatus === "pending" ? "#eff6ff" : kycStatus === "rejected" ? "#fee2e2" : "#fef9c3",
+            border: `1.5px solid ${kycStatus === "pending" ? "#93c5fd" : kycStatus === "rejected" ? "#fca5a5" : "#fbbf24"}`,
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 22 }}>
+                {kycStatus === "pending" ? "⏳" : kycStatus === "rejected" ? "❌" : "⚠️"}
+              </span>
+              <div>
+                <strong style={{ fontSize: 15, color: "#1a1a1a" }}>
+                  {kycStatus === "pending" ? "KYC Under Review" : kycStatus === "rejected" ? "KYC Rejected" : "KYC Not Completed"}
+                </strong>
+                <p style={{ margin: 0, fontSize: 13, color: "#555" }}>
+                  {kycStatus === "pending"
+                    ? "Your documents are being reviewed. You'll be notified once approved."
+                    : kycStatus === "rejected"
+                    ? "Your KYC was rejected. Please resubmit your documents."
+                    : "Complete KYC verification to list properties on Globperty."}
+                </p>
+              </div>
+            </div>
+            {kycStatus !== "pending" && (
+              <Link href="/kyc-property-verification" style={{ background: "#eb6753", color: "#fff", padding: "8px 20px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>
+                {kycStatus === "rejected" ? "Resubmit KYC →" : "Complete KYC →"}
+              </Link>
+            )}
+          </div>
+        )}
 
         {/* Stats counters */}
         <div className="flat-counter-v2 tf-counter">

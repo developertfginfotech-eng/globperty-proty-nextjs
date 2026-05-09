@@ -461,7 +461,7 @@ export default function AddProperty() {
             </h4>
             <p style={{ color: "#555", marginBottom: 28, lineHeight: 1.6 }}>{kycGate.message}</p>
             {isUnsubmitted && (
-              <Link href="/kyc" className="tf-btn bg-color-primary" style={{ display: "inline-block", padding: "12px 32px", borderRadius: 8, textDecoration: "none", color: "#fff", fontWeight: 600 }}>
+              <Link href="/kyc-property-verification" className="tf-btn bg-color-primary" style={{ display: "inline-block", padding: "12px 32px", borderRadius: 8, textDecoration: "none", color: "#fff", fontWeight: 600 }}>
                 Complete KYC Verification →
               </Link>
             )}

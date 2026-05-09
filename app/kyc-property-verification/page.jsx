@@ -2095,7 +2095,20 @@ const PropertyKYCVerification = () => {
                   </div>
                 )}
 
-                <div className="d-flex justify-content-between align-items-center mt40">
+                <div className="text-center mt30">
+                  <button
+                    type="button"
+                    onClick={() => router.push('/dashboard-home')}
+                    style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 14, cursor: 'pointer', textDecoration: 'underline' }}
+                  >
+                    Skip for now — I'll complete KYC later
+                  </button>
+                  <p style={{ fontSize: 12, color: '#d1d5db', marginTop: 4 }}>
+                    You won't be able to list properties until KYC is verified.
+                  </p>
+                </div>
+
+                <div className="d-flex justify-content-between align-items-center mt20">
                   {step > 1 && <button type="button" className="btn btn-border-light-2 btn-lg" onClick={() => setStep(step - 1)}><i className="fas fa-arrow-left me-2"></i> Previous</button>}
                   {step < getTotalSteps() ? (
                     <button type="button" className="btn btn-danger btn-lg ms-auto" onClick={() => setStep(step + 1)} disabled={!canProceedToNextStep()} style={{ opacity: !canProceedToNextStep() ? 0.5 : 1 }}>Next <i className="fas fa-arrow-right ms-2"></i></button>
