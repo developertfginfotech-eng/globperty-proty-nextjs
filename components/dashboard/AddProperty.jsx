@@ -1,642 +1,771 @@
 "use client";
-import React from "react";
-import Image from "next/image";
-import DropdownSelect from "../common/DropdownSelect";
+import React, { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { addProperty } from "@/utils/propertyApi";
+import apiClient from "@/utils/apiClient";
+
+const COUNTRIES = ["UAE", "USA", "Portugal", "Canada", "Australia", "Turkey", "Cyprus", "Malta", "Hungary", "Latvia", "Philippines", "Malaysia"];
+
+const COUNTRY_REGION_LABEL = {
+  UAE: "Emirate", USA: "State", Portugal: "District", Canada: "Province",
+  Australia: "State/Territory", Turkey: "Province", Cyprus: "District",
+  Malta: "Region", Hungary: "County", Latvia: "Region",
+  Philippines: "Province", Malaysia: "State",
+};
+
+const COUNTRY_REGIONS = {
+  UAE: ["Abu Dhabi", "Dubai", "Sharjah", "Ajman", "Umm Al Quwain", "Ras Al Khaimah", "Fujairah"],
+  USA: ["California", "Texas", "New York", "Florida", "Illinois", "Washington", "Arizona"],
+  Portugal: ["Lisbon", "Porto", "Algarve", "Setúbal", "Braga", "Aveiro", "Coimbra"],
+  Canada: ["Ontario", "Quebec", "British Columbia", "Alberta", "Manitoba", "Saskatchewan", "Nova Scotia"],
+  Australia: ["New South Wales", "Victoria", "Queensland", "Western Australia", "South Australia", "Tasmania"],
+  Turkey: ["Istanbul", "Ankara", "Izmir", "Antalya", "Bursa", "Trabzon", "Mugla"],
+  Cyprus: ["Nicosia", "Limassol", "Larnaca", "Famagusta", "Paphos", "Kyrenia"],
+  Malta: ["Northern", "Southern", "Central", "Western", "Eastern", "Gozo"],
+  Hungary: ["Budapest", "Pest", "Győr-Moson-Sopron", "Fejér", "Hajdú-Bihar", "Bács-Kiskun"],
+  Latvia: ["Riga", "Vidzeme", "Kurzeme", "Zemgale", "Latgale"],
+  Philippines: ["Metro Manila", "Cebu", "Davao", "Laguna", "Cavite", "Batangas", "Pampanga"],
+  Malaysia: ["Kuala Lumpur", "Selangor", "Penang", "Johor", "Sabah", "Sarawak", "Perak"],
+};
+
+const REGION_CITIES = {
+  "Abu Dhabi": ["Abu Dhabi City", "Al Ain", "Al Reem Island", "Saadiyat Island", "Yas Island", "Khalifa City"],
+  "Dubai": ["Bur Dubai", "Deira", "Jumeirah", "Downtown Dubai", "Dubai Marina", "Business Bay", "JBR", "Palm Jumeirah", "JVC"],
+  "Sharjah": ["Sharjah City", "Al Qasimia", "Al Majaz", "Al Nahda", "Muwaileh"],
+  "Ajman": ["Ajman City", "Al Nuaimiya", "Al Rashidiya", "Al Jurf"],
+  "Ras Al Khaimah": ["RAK City", "Al Hamra Village", "Mina Al Arab", "Al Marjan Island"],
+  "Fujairah": ["Fujairah City", "Dibba", "Khor Fakkan"],
+  "Umm Al Quwain": ["Umm Al Quwain City", "Al Salamah", "Al Raas"],
+  "California": ["Los Angeles", "San Francisco", "San Diego", "San Jose", "Sacramento", "Oakland"],
+  "Texas": ["Houston", "Austin", "Dallas", "San Antonio", "Fort Worth", "El Paso"],
+  "New York": ["New York City", "Buffalo", "Albany", "Rochester", "Syracuse", "Yonkers"],
+  "Florida": ["Miami", "Orlando", "Tampa", "Jacksonville", "Fort Lauderdale", "Boca Raton"],
+  "Illinois": ["Chicago", "Springfield", "Naperville", "Rockford", "Peoria"],
+  "Washington": ["Seattle", "Spokane", "Tacoma", "Bellevue", "Olympia"],
+  "Arizona": ["Phoenix", "Tucson", "Scottsdale", "Mesa", "Chandler", "Tempe"],
+  "Lisbon": ["Lisbon City", "Cascais", "Sintra", "Almada", "Amadora", "Setúbal"],
+  "Porto": ["Porto City", "Gaia", "Matosinhos", "Braga", "Guimarães"],
+  "Algarve": ["Faro", "Albufeira", "Portimão", "Lagos", "Tavira", "Vilamoura"],
+  "Ontario": ["Toronto", "Ottawa", "Mississauga", "Brampton", "Hamilton", "London"],
+  "Quebec": ["Montreal", "Quebec City", "Laval", "Gatineau", "Longueuil"],
+  "British Columbia": ["Vancouver", "Surrey", "Burnaby", "Richmond", "Kelowna", "Victoria"],
+  "Alberta": ["Calgary", "Edmonton", "Red Deer", "Lethbridge", "Medicine Hat"],
+  "New South Wales": ["Sydney", "Newcastle", "Wollongong", "Central Coast", "Parramatta"],
+  "Victoria": ["Melbourne", "Geelong", "Ballarat", "Bendigo", "Shepparton"],
+  "Queensland": ["Brisbane", "Gold Coast", "Sunshine Coast", "Townsville", "Cairns"],
+  "Western Australia": ["Perth", "Fremantle", "Mandurah", "Bunbury", "Geraldton"],
+  "Istanbul": ["Beyoglu", "Kadıköy", "Beşiktaş", "Üsküdar", "Bakırköy", "Ataşehir", "Sarıyer"],
+  "Ankara": ["Çankaya", "Keçiören", "Yenimahalle", "Mamak", "Altındağ"],
+  "Izmir": ["Konak", "Karşıyaka", "Bornova", "Buca", "Çiğli", "Balçova"],
+  "Antalya": ["Antalya City", "Alanya", "Kemer", "Belek", "Side", "Manavgat"],
+  "Nicosia": ["Nicosia City", "Strovolos", "Aglandjia", "Latsia", "Lakatamia"],
+  "Limassol": ["Limassol City", "Germasogeia", "Agios Athanasios", "Mesa Geitonia"],
+  "Larnaca": ["Larnaca City", "Livadia", "Oroklini", "Pervolia"],
+  "Paphos": ["Paphos City", "Chlorakas", "Pegeia", "Peyia", "Emba"],
+  "Northern": ["Valletta", "Mellieħa", "Mosta", "Naxxar"],
+  "Southern": ["Marsaskala", "Żabbar", "Fgura", "Tarxien"],
+  "Central": ["Birkirkara", "Qormi", "Hamrun", "Marsa"],
+  "Gozo": ["Victoria", "Marsalforn", "Xlendi", "Nadur"],
+  "Budapest": ["District I", "District II", "District V", "District XIII", "District XIV"],
+  "Riga": ["Riga Centre", "Purvciems", "Imanta", "Ziepniekkalns", "Mežciems", "Jūrmala"],
+  "Metro Manila": ["Makati", "BGC", "Quezon City", "Pasig", "Mandaluyong", "Taguig"],
+  "Cebu": ["Cebu City", "Mandaue", "Lapu-Lapu", "Talisay", "Consolacion"],
+  "Davao": ["Davao City", "Tagum", "Digos", "Panabo"],
+  "Kuala Lumpur": ["KLCC", "Mont Kiara", "Bangsar", "Chow Kit", "Bukit Bintang", "Damansara"],
+  "Selangor": ["Petaling Jaya", "Shah Alam", "Subang Jaya", "Klang", "Ampang"],
+  "Penang": ["George Town", "Bayan Lepas", "Butterworth", "Bukit Mertajam"],
+  "Johor": ["Johor Bahru", "Iskandar Puteri", "Kluang", "Muar", "Batu Pahat"],
+};
+
+// All values match backend model enums exactly
+const PROPERTY_TYPES = [
+  { label: "Apartments", value: "apartments" },
+  { label: "House", value: "house" },
+  { label: "Villa", value: "villa" },
+  { label: "Office", value: "office" },
+  { label: "Shop", value: "shop" },
+  { label: "Warehouse", value: "warehouse" },
+  { label: "Industrial", value: "industrial" },
+  { label: "Residential Plot", value: "residential-plot" },
+  { label: "Commercial Plot", value: "commercial-plot" },
+  { label: "Agricultural Land", value: "agricultural-land" },
+  { label: "Industrial Plot", value: "industrial-plot" },
+];
+const PROPERTY_CATEGORIES = [
+  { label: "Residential", value: "residential" },
+  { label: "Commercial", value: "commercial" },
+  { label: "Land / Plot", value: "land" },
+];
+const AD_TYPES = [
+  { label: "For Rent", value: "rent" },
+  { label: "For Sale / Resale", value: "resale" },
+];
+const BUILDING_TYPES = [
+  { label: "Multi-Story", value: "multi-story" },
+  { label: "Low-Rise (1-4 floors)", value: "low-rise" },
+  { label: "High-Rise (5+ floors)", value: "high-rise" },
+];
+const FURNISHING_OPTIONS = [
+  { label: "Fully Furnished", value: "fully-furnished" },
+  { label: "Semi-Furnished", value: "semi-furnished" },
+  { label: "Unfurnished", value: "unfurnished" },
+];
+const PROPERTY_AGE_OPTIONS = [
+  { label: "0–1 Year", value: "0-1" },
+  { label: "1–3 Years", value: "1-3" },
+  { label: "3–5 Years", value: "3-5" },
+  { label: "5–10 Years", value: "5-10" },
+  { label: "10+ Years", value: "10+" },
+];
+const FLOOR_OPTIONS = ["Ground", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "15", "20", "25+"];
+const TOTAL_FLOORS_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20, 25, 30];
+const OWNERSHIP_OPTIONS = [
+  { label: "Freehold", value: "freehold" },
+  { label: "Leasehold", value: "leasehold" },
+  { label: "Co-operative", value: "co-operative" },
+  { label: "Power of Attorney", value: "power-of-attorney" },
+];
+const PARKING_OPTIONS = [
+  { label: "None", value: "none" },
+  { label: "Bike", value: "bike" },
+  { label: "Car (1)", value: "car" },
+  { label: "Car (2)", value: "car-2" },
+  { label: "Bike + Car", value: "both" },
+];
+
+// Boolean amenities — stored as separate fields in the backend
+const BOOLEAN_AMENITIES = [
+  { label: "Gym", field: "gym" },
+  { label: "Swimming Pool", field: "swimmingPool" },
+  { label: "Garden", field: "garden" },
+  { label: "Club House", field: "clubHouse" },
+  { label: "Internet / WiFi", field: "internetWifi" },
+  { label: "Lift / Elevator", field: "lift" },
+  { label: "Power Backup", field: "powerBackup" },
+  { label: "24/7 Security", field: "security" },
+  { label: "Water Storage", field: "waterStorage" },
+];
+
+// String amenities — stored in amenities[] array
+const AMENITIES_LIST = {
+  "Home Safety": ["Smoke alarm", "Carbon monoxide alarm", "Security cameras", "Self check-in with lockbox"],
+  "Kitchen": ["Refrigerator", "Dishwasher", "Microwave", "Coffee maker"],
+};
+
+const INITIAL_FORM = {
+  propertyName: "",
+  description: "",
+  address: "",
+  street: "",
+  locality: "",
+  landmark: "",
+  zipCode: "",
+  country: "UAE",
+  state: "Dubai",
+  city: "",
+  propertyType: "apartments",
+  propertyCategory: "residential",
+  propertyAdType: "rent",
+  buildingType: "multi-story",
+  propertyAge: "",
+  floor: "",
+  totalFloor: "",
+  price: "",
+  priceNegotiable: false,
+  superBuiltUpArea: "",
+  sizeInFt: "",
+  carpetArea: "",
+  rooms: "",
+  bedrooms: "",
+  bathrooms: "",
+  balconies: "",
+  furnishing: "",
+  parking: "none",
+  ownershipType: "",
+  availableFrom: "",
+  garages: "",
+  garageSize: "",
+  yearBuilt: "",
+  videoUrl: "",
+  latitude: "",
+  longitude: "",
+  amenities: [],
+  // Boolean amenity fields (stored separately in backend)
+  gym: false,
+  swimmingPool: false,
+  garden: false,
+  clubHouse: false,
+  internetWifi: false,
+  lift: false,
+  powerBackup: false,
+  security: false,
+  waterStorage: false,
+  // Additional info
+  previousOccupancy: "",
+  whoWillShow: "",
+  secondaryNumber: "",
+  availabilityDays: "everyday",
+  showingTime: "anytime",
+};
+
 export default function AddProperty() {
+  const router = useRouter();
+  const fileInputRef = useRef(null);
+  const [form, setForm] = useState(INITIAL_FORM);
+  const [images, setImages] = useState([]);
+  const [previews, setPreviews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [aiAnalyzing, setAiAnalyzing] = useState(false);
+  const [aiGenerating, setAiGenerating] = useState(false);
+  const [aiNote, setAiNote] = useState("");
+
+  const regionLabel = COUNTRY_REGION_LABEL[form.country] || "Province/State";
+  const regions = COUNTRY_REGIONS[form.country] || [];
+  const cities = REGION_CITIES[form.state] || [];
+
+  const set = (field) => (e) => {
+    const value = e.target ? e.target.value : e;
+    setForm((prev) => {
+      const next = { ...prev, [field]: value };
+      if (field === "country") {
+        const firstRegion = COUNTRY_REGIONS[value]?.[0] || "";
+        next.state = firstRegion;
+        next.city = "";
+      }
+      if (field === "state") next.city = "";
+      return next;
+    });
+  };
+
+  const toggleAmenity = (item) => {
+    setForm((prev) => ({
+      ...prev,
+      amenities: prev.amenities.includes(item)
+        ? prev.amenities.filter((a) => a !== item)
+        : [...prev.amenities, item],
+    }));
+  };
+
+  const handleImages = (e) => {
+    const files = Array.from(e.target.files || []).slice(0, 10);
+    setImages(files);
+    setPreviews(files.map((f) => URL.createObjectURL(f)));
+  };
+
+  const removeImage = (idx) => {
+    setImages((prev) => prev.filter((_, i) => i !== idx));
+    setPreviews((prev) => prev.filter((_, i) => i !== idx));
+  };
+
+  const handleAiAnalyzeImages = async () => {
+    if (images.length === 0) {
+      setAiNote("Upload at least one photo first.");
+      return;
+    }
+    setAiAnalyzing(true);
+    setAiNote("");
+    try {
+      const base64Images = await Promise.all(
+        images.slice(0, 4).map(
+          (file) =>
+            new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(file);
+            })
+        )
+      );
+      const { data } = await apiClient.post("/ai/analyze-images", { images: base64Images });
+      const ai = data.data;
+      setForm((prev) => ({
+        ...prev,
+        propertyName: ai.title || prev.propertyName,
+        description: ai.description || prev.description,
+        bedrooms: ai.bedrooms || prev.bedrooms,
+        bathrooms: ai.bathrooms || prev.bathrooms,
+        sizeInFt: ai.sizeInFt || prev.sizeInFt,
+        price: ai.priceEstimate?.replace(/[^0-9]/g, "") || prev.price,
+      }));
+      setAiNote("AI filled in details from your photos. Review and adjust as needed.");
+    } catch {
+      setAiNote("AI analysis failed. Please fill in manually.");
+    } finally {
+      setAiAnalyzing(false);
+    }
+  };
+
+  const [descNote, setDescNote] = useState("");
+
+  const handleAiGenerateDescription = async () => {
+    if (!form.propertyName) {
+      setDescNote("Fill in the Title first.");
+      return;
+    }
+    setAiGenerating(true);
+    setDescNote("");
+    try {
+      const { data } = await apiClient.post("/ai/generate-description", {
+        propertyName: form.propertyName,
+        bedrooms: form.bedrooms || "1",
+        bathrooms: form.bathrooms || "1",
+        city: form.city || form.state,
+        country: form.country,
+        propertyType: form.propertyType,
+        price: form.price,
+        sizeInFt: form.sizeInFt,
+      });
+      const desc = data.data?.description || data.data?.highlights?.join(" ") || "";
+      if (desc) {
+        setForm((prev) => ({ ...prev, description: desc }));
+        setDescNote("✓ Description generated. Edit if needed.");
+      } else {
+        setDescNote("AI returned empty response. Try again.");
+      }
+    } catch (err) {
+      setDescNote(err?.response?.data?.message || "AI generation failed. Try again.");
+    } finally {
+      setAiGenerating(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!form.propertyName || !form.country || !form.state || !form.city ||
+        !form.propertyCategory || !form.propertyAdType || !form.bedrooms || !form.bathrooms || !form.superBuiltUpArea) {
+      setError("Please fill in all required fields marked with *");
+      return;
+    }
+    if (images.length === 0) {
+      setError("Please upload at least one photo.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const fd = new FormData();
+      Object.entries(form).forEach(([k, v]) => {
+        if (k === "amenities") {
+          v.forEach((a) => fd.append("amenities", a));
+        } else if (typeof v === "boolean") {
+          fd.append(k, v);
+        } else if (v !== "") {
+          fd.append(k, v);
+        }
+      });
+      images.forEach((img) => fd.append("images", img));
+
+      await addProperty(fd);
+      setSuccess(true);
+      setTimeout(() => router.push("/my-property"), 2000);
+    } catch (err) {
+      setError(err?.response?.data?.message || "Failed to add property. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (success) {
+    return (
+      <div className="main-content w-100">
+        <div className="main-content-inner" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: 400 }}>
+          <div style={{ textAlign: "center", padding: 40 }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
+            <h3 style={{ color: "#2db224", marginBottom: 8 }}>Property Submitted!</h3>
+            <p>Your listing is pending admin approval. Redirecting to your properties…</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="main-content w-100">
       <div className="main-content-inner">
         <div className="button-show-hide show-mb">
           <span className="body-1">Show Dashboard</span>
         </div>
+
+        {/* Upload Media */}
         <div className="widget-box-2 mb-20">
           <h3 className="title">Upload Media</h3>
           <div className="box-uploadfile text-center">
             <div className="uploadfile">
-              <a
-                href="#"
-                className=" tf-btn bg-color-primary pd-10 btn-upload mx-auto"
-              >
-                <svg
-                  width={21}
-                  height={20}
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13.625 14.375V17.1875C13.625 17.705 13.205 18.125 12.6875 18.125H4.5625C4.31386 18.125 4.0754 18.0262 3.89959 17.8504C3.72377 17.6746 3.625 17.4361 3.625 17.1875V6.5625C3.625 6.045 4.045 5.625 4.5625 5.625H6.125C6.54381 5.62472 6.96192 5.65928 7.375 5.72834M13.625 14.375H16.4375C16.955 14.375 17.375 13.955 17.375 13.4375V9.375C17.375 5.65834 14.6725 2.57417 11.125 1.97834C10.7119 1.90928 10.2938 1.87472 9.875 1.875H8.3125C7.795 1.875 7.375 2.295 7.375 2.8125V5.72834M13.625 14.375H8.3125C8.06386 14.375 7.8254 14.2762 7.64959 14.1004C7.47377 13.9246 7.375 13.6861 7.375 13.4375V5.72834M17.375 11.25V9.6875C17.375 8.94158 17.0787 8.22621 16.5512 7.69876C16.0238 7.17132 15.3084 6.875 14.5625 6.875H13.3125C13.0639 6.875 12.8254 6.77623 12.6496 6.60041C12.4738 6.4246 12.375 6.18614 12.375 5.9375V4.6875C12.375 4.31816 12.3023 3.95243 12.1609 3.6112C12.0196 3.26998 11.8124 2.95993 11.5512 2.69876C11.2901 2.4376 10.98 2.23043 10.6388 2.08909C10.2976 1.94775 9.93184 1.875 9.5625 1.875H8.625"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+              <label className="tf-btn bg-color-primary pd-10 btn-upload mx-auto" style={{ cursor: "pointer" }}>
+                <svg width={21} height={20} viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13.625 14.375V17.1875C13.625 17.705 13.205 18.125 12.6875 18.125H4.5625C4.31386 18.125 4.0754 18.0262 3.89959 17.8504C3.72377 17.6746 3.625 17.4361 3.625 17.1875V6.5625C3.625 6.045 4.045 5.625 4.5625 5.625H6.125C6.54381 5.62472 6.96192 5.65928 7.375 5.72834M13.625 14.375H16.4375C16.955 14.375 17.375 13.955 17.375 13.4375V9.375C17.375 5.65834 14.6725 2.57417 11.125 1.97834C10.7119 1.90928 10.2938 1.87472 9.875 1.875H8.3125C7.795 1.875 7.375 2.295 7.375 2.8125V5.72834M13.625 14.375H8.3125C8.06386 14.375 7.8254 14.2762 7.64959 14.1004C7.47377 13.9246 7.375 13.6861 7.375 13.4375V5.72834M17.375 11.25V9.6875C17.375 8.94158 17.0787 8.22621 16.5512 7.69876C16.0238 7.17132 15.3084 6.875 14.5625 6.875H13.3125C13.0639 6.875 12.8254 6.77623 12.6496 6.60041C12.4738 6.4246 12.375 6.18614 12.375 5.9375V4.6875C12.375 4.31816 12.3023 3.95243 12.1609 3.6112C12.0196 3.26998 11.8124 2.95993 11.5512 2.69876C11.2901 2.4376 10.98 2.23043 10.6388 2.08909C10.2976 1.94775 9.93184 1.875 9.5625 1.875H8.625" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 Select photos
-                <input type="file" className="ip-file" />
-              </a>
-              <p className="file-name fw-5">
-                or drag photos here <br />
-                <span>(Up to 10 photos)</span>
-              </p>
-            </div>
-          </div>
-          <div className="box-img-upload">
-            <div className="item-upload file-delete">
-              <Image
-                alt="img"
-                width={615}
-                height={405}
-                src="/images/home/house-db-1.jpg"
-              />
-              <span className="icon icon-trashcan1 remove-file" />
-            </div>
-            <div className="item-upload file-delete">
-              <Image
-                alt="img"
-                width={615}
-                height={405}
-                src="/images/home/house-db-2.jpg"
-              />
-              <span className="icon icon-trashcan1" />
-            </div>
-            <div className="item-upload file-delete">
-              <Image
-                alt="img"
-                width={615}
-                height={405}
-                src="/images/home/house-db-3.jpg"
-              />
-              <span className="icon icon-trashcan1 remove-file" />
-            </div>
-            <div className="item-upload file-delete">
-              <Image
-                alt="img"
-                width={615}
-                height={405}
-                src="/images/home/house-db-4.jpg"
-              />
-              <span className="icon icon-trashcan1 remove-file" />
-            </div>
-            <div className="item-upload file-delete">
-              <Image
-                alt="img"
-                width={615}
-                height={405}
-                src="/images/home/house-db-5.jpg"
-              />
-              <span className="icon icon-trashcan1 remove-file" />
-            </div>
-          </div>
-        </div>
-        <div className="widget-box-2 mb-20">
-          <h5 className="title">Information</h5>
-          <form
-            className="box-info-property"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <fieldset className="box box-fieldset">
-              <label htmlFor="title">
-                Title:<span>*</span>
+                <input ref={fileInputRef} type="file" className="ip-file" accept="image/*" multiple onChange={handleImages} style={{ display: "none" }} />
               </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Choose"
-              />
-            </fieldset>
-            <fieldset className="box box-fieldset">
-              <label htmlFor="desc">Description:</label>
-              <textarea
-                className="textarea"
-                placeholder="Your Decscription"
-                defaultValue={""}
-              />
-            </fieldset>
+              <p className="file-name fw-5">or drag photos here <br /><span>(Up to 10 photos)</span></p>
+            </div>
+          </div>
+          {previews.length > 0 && (
+            <div className="box-img-upload">
+              {previews.map((src, i) => (
+                <div key={i} className="item-upload file-delete">
+                  <img alt="preview" src={src} style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 8 }} />
+                  <span className="icon icon-trashcan1 remove-file" onClick={() => removeImage(i)} style={{ cursor: "pointer" }} />
+                </div>
+              ))}
+            </div>
+          )}
+          {previews.length > 0 && (
+            <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+              <button type="button" className="tf-btn bg-color-primary pd-10" onClick={handleAiAnalyzeImages} disabled={aiAnalyzing} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span>🤖</span> {aiAnalyzing ? "Analyzing photos…" : "AI Auto-fill from Photos"}
+              </button>
+              {aiNote && <span style={{ fontSize: 13, color: "#2db224" }}>{aiNote}</span>}
+            </div>
+          )}
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          {/* Information */}
+          <div className="widget-box-2 mb-20">
+            <h5 className="title">Information</h5>
+            <div className="box-info-property">
+              <fieldset className="box box-fieldset">
+                <label>Title:<span>*</span></label>
+                <input type="text" className="form-control" placeholder="Property name" value={form.propertyName} onChange={set("propertyName")} required />
+              </fieldset>
+              <fieldset className="box box-fieldset">
+                <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>Description:</span>
+                  <button type="button" onClick={handleAiGenerateDescription} disabled={aiGenerating} style={{ background: "none", border: "1px solid #2db224", color: "#2db224", borderRadius: 6, padding: "2px 10px", fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>
+                    🤖 {aiGenerating ? "Generating…" : "AI Generate"}
+                  </button>
+                </label>
+                <textarea className="textarea" placeholder="Describe the property…" value={form.description} onChange={set("description")} />
+                {descNote && (
+                  <span style={{ fontSize: 12, color: descNote.startsWith("✓") ? "#2db224" : "#cc0000", marginTop: 4, display: "block" }}>
+                    {descNote}
+                  </span>
+                )}
+              </fieldset>
+              <div className="box grid-layout-3 gap-30">
+                <fieldset className="box-fieldset">
+                  <label>Full Address:<span>*</span></label>
+                  <input type="text" className="form-control" placeholder="Street, building, unit…" value={form.address} onChange={set("address")} />
+                </fieldset>
+                <fieldset className="box-fieldset">
+                  <label>Zip / Postal Code:</label>
+                  <input type="text" className="form-control" placeholder="e.g. 10001" value={form.zipCode} onChange={set("zipCode")} />
+                </fieldset>
+                <fieldset className="box-fieldset">
+                  <label>Country:<span>*</span></label>
+                  <select className="form-control nice-select" value={form.country} onChange={set("country")}>
+                    {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </fieldset>
+              </div>
+              <div className="box grid-layout-3 gap-30">
+                <fieldset className="box-fieldset">
+                  <label>{regionLabel}:<span>*</span></label>
+                  <select className="form-control nice-select" value={form.state} onChange={set("state")}>
+                    {regions.map((r) => <option key={r} value={r}>{r}</option>)}
+                  </select>
+                </fieldset>
+                <fieldset className="box-fieldset">
+                  <label>City:<span>*</span></label>
+                  <select className="form-control nice-select" value={form.city} onChange={set("city")}>
+                    <option value="">Select city…</option>
+                    {cities.map((c) => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </fieldset>
+                <fieldset className="box-fieldset">
+                  <label>Latitude:</label>
+                  <input type="text" className="form-control" placeholder="e.g. 25.2048" value={form.latitude} onChange={set("latitude")} />
+                </fieldset>
+              </div>
+              <div className="box grid-layout-3 gap-30">
+                <fieldset className="box-fieldset">
+                  <label>Longitude:</label>
+                  <input type="text" className="form-control" placeholder="e.g. 55.2708" value={form.longitude} onChange={set("longitude")} />
+                </fieldset>
+              </div>
+            </div>
+          </div>
+
+          {/* Price */}
+          <div className="widget-box-2 mb-20">
+            <h3 className="title">Price & Listing</h3>
             <div className="box grid-layout-3 gap-30">
               <fieldset className="box-fieldset">
-                <label htmlFor="address">
-                  Full Address:<span>*</span>
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter property full address"
-                />
+                <label>Price:<span>*</span></label>
+                <input type="number" className="form-control" placeholder="e.g. 450000" value={form.price} onChange={set("price")} min={0} />
               </fieldset>
               <fieldset className="box-fieldset">
-                <label htmlFor="zip">
-                  Zip Code:<span>*</span>
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter property zip code"
-                />
+                <label>Listing Type:<span>*</span></label>
+                <select className="form-control nice-select" value={form.propertyAdType} onChange={set("propertyAdType")}>
+                  {AD_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+                </select>
               </fieldset>
               <fieldset className="box-fieldset">
-                <label htmlFor="country">
-                  Country:<span>*</span>
-                </label>
-
-                <DropdownSelect
-                  options={["United States", "United Kingdom", "Russia"]}
-                  addtionalParentClass=""
-                />
+                <label>Category:<span>*</span></label>
+                <select className="form-control nice-select" value={form.propertyCategory} onChange={set("propertyCategory")}>
+                  {PROPERTY_CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                </select>
               </fieldset>
             </div>
+            <div className="box grid-layout-3 gap-30">
+              <fieldset className="box-fieldset">
+                <label>Ownership Type:</label>
+                <select className="form-control nice-select" value={form.ownershipType} onChange={set("ownershipType")}>
+                  <option value="">Select…</option>
+                  {OWNERSHIP_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                </select>
+              </fieldset>
+              <fieldset className="box-fieldset" style={{ display: "flex", alignItems: "center", gap: 10, paddingTop: 28 }}>
+                <label style={{ marginBottom: 0, display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+                  <input type="checkbox" checked={form.priceNegotiable} onChange={(e) => setForm((p) => ({ ...p, priceNegotiable: e.target.checked }))} />
+                  Price Negotiable
+                </label>
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Available From:</label>
+                <input type="date" className="form-control" value={form.availableFrom} onChange={set("availableFrom")} min={new Date().toISOString().split("T")[0]} />
+              </fieldset>
+            </div>
+          </div>
+
+          {/* Property Details */}
+          <div className="widget-box-2 mb-20">
+            <h3 className="title">Property Details</h3>
+            <div className="box grid-layout-3 gap-30">
+              <fieldset className="box-fieldset">
+                <label>Property Type:<span>*</span></label>
+                <select className="form-control nice-select" value={form.propertyType} onChange={set("propertyType")}>
+                  {PROPERTY_TYPES.map((t) => <option key={t.value} value={t.value}>{t.label}</option>)}
+                </select>
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Building Type:</label>
+                <select className="form-control nice-select" value={form.buildingType} onChange={set("buildingType")}>
+                  {BUILDING_TYPES.map((b) => <option key={b.value} value={b.value}>{b.label}</option>)}
+                </select>
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Property Age:</label>
+                <select className="form-control nice-select" value={form.propertyAge} onChange={set("propertyAge")}>
+                  <option value="">Select…</option>
+                  {PROPERTY_AGE_OPTIONS.map((a) => <option key={a.value} value={a.value}>{a.label}</option>)}
+                </select>
+              </fieldset>
+            </div>
+            <div className="box grid-layout-3 gap-30">
+              <fieldset className="box-fieldset">
+                <label>Floor:</label>
+                <select className="form-control nice-select" value={form.floor} onChange={set("floor")}>
+                  <option value="">Select…</option>
+                  {FLOOR_OPTIONS.map((f) => <option key={f} value={f}>{f}</option>)}
+                </select>
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Total Floors in Building:</label>
+                <select className="form-control nice-select" value={form.totalFloor} onChange={set("totalFloor")}>
+                  <option value="">Select…</option>
+                  {TOTAL_FLOORS_OPTIONS.map((f) => <option key={f} value={f}>{f}</option>)}
+                </select>
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Furnishing:</label>
+                <select className="form-control nice-select" value={form.furnishing} onChange={set("furnishing")}>
+                  <option value="">Select…</option>
+                  {FURNISHING_OPTIONS.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}
+                </select>
+              </fieldset>
+            </div>
+            <div className="box grid-layout-3 gap-30">
+              <fieldset className="box-fieldset">
+                <label>Built-Up Area (SqFt):<span>*</span></label>
+                <input type="number" className="form-control" placeholder="e.g. 1200" value={form.superBuiltUpArea}
+                  onChange={(e) => setForm((p) => ({ ...p, superBuiltUpArea: e.target.value, sizeInFt: e.target.value }))}
+                  min={0} />
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Carpet Area (SqFt):</label>
+                <input type="number" className="form-control" placeholder="e.g. 950" value={form.carpetArea} onChange={set("carpetArea")} min={0} />
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Bedrooms:<span>*</span></label>
+                <input type="number" className="form-control" placeholder="e.g. 3" value={form.bedrooms} onChange={set("bedrooms")} min={0} required />
+              </fieldset>
+            </div>
+            <div className="box grid-layout-3 gap-30">
+              <fieldset className="box-fieldset">
+                <label>Bathrooms:<span>*</span></label>
+                <input type="number" className="form-control" placeholder="e.g. 2" value={form.bathrooms} onChange={set("bathrooms")} min={0} required />
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Balconies:</label>
+                <input type="number" className="form-control" placeholder="e.g. 1" value={form.balconies} onChange={set("balconies")} min={0} />
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Parking:</label>
+                <select className="form-control nice-select" value={form.parking} onChange={set("parking")}>
+                  {PARKING_OPTIONS.map((p) => <option key={p.value} value={p.value}>{p.label}</option>)}
+                </select>
+              </fieldset>
+            </div>
+            <div className="box grid-layout-3 gap-30">
+              <fieldset className="box-fieldset">
+                <label>Rooms (Total):</label>
+                <input type="number" className="form-control" placeholder="e.g. 5" value={form.rooms} onChange={set("rooms")} min={0} />
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Year Built:</label>
+                <input type="number" className="form-control" placeholder="e.g. 2020" value={form.yearBuilt} onChange={set("yearBuilt")} min={1800} max={new Date().getFullYear()} />
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Locality / Area:</label>
+                <input type="text" className="form-control" placeholder="e.g. Near Metro, Downtown" value={form.locality} onChange={set("locality")} />
+              </fieldset>
+            </div>
+            <div className="box grid-layout-3 gap-30">
+              <fieldset className="box-fieldset">
+                <label>Street / Building:</label>
+                <input type="text" className="form-control" placeholder="e.g. Sheikh Zayed Rd" value={form.street} onChange={set("street")} />
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Landmark:</label>
+                <input type="text" className="form-control" placeholder="e.g. Near Dubai Mall" value={form.landmark} onChange={set("landmark")} />
+              </fieldset>
+            </div>
+          </div>
+
+          {/* Amenities */}
+          <div className="widget-box-2 mb-20">
+            <h5 className="title">Amenities</h5>
+            <div className="box-amenities-property">
+              {/* Boolean building facilities */}
+              <div className="box-amenities" style={{ width: "100%", marginBottom: 20 }}>
+                <div className="title-amenities fw-6 text-color-heading text-1" style={{ marginBottom: 10 }}>Building Facilities:</div>
+                <div className="list-amenities" style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {BOOLEAN_AMENITIES.map(({ label, field }) => (
+                    <fieldset className="checkbox-item style-1" key={field} style={{ minWidth: 180 }}>
+                      <label>
+                        <span className="text-4">{label}</span>
+                        <input type="checkbox" checked={!!form[field]} onChange={(e) => setForm((p) => ({ ...p, [field]: e.target.checked }))} />
+                        <span className="btn-checkbox" />
+                      </label>
+                    </fieldset>
+                  ))}
+                </div>
+              </div>
+              {/* String amenities */}
+              {Object.entries(AMENITIES_LIST).map(([category, items]) => (
+                <div className="box-amenities" key={category} style={{ width: "100%", marginBottom: 20 }}>
+                  <div className="title-amenities fw-6 text-color-heading text-1" style={{ marginBottom: 10 }}>{category}:</div>
+                  <div className="list-amenities" style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                    {items.map((item) => (
+                      <fieldset className="checkbox-item style-1" key={item} style={{ minWidth: 180 }}>
+                        <label>
+                          <span className="text-4">{item}</span>
+                          <input type="checkbox" checked={form.amenities.includes(item)} onChange={() => toggleAmenity(item)} />
+                          <span className="btn-checkbox" />
+                        </label>
+                      </fieldset>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Videos */}
+          <div className="widget-box-2 mb-20">
+            <h3 className="title">Video</h3>
+            <fieldset className="box-fieldset">
+              <label className="text-btn">YouTube / Vimeo URL:</label>
+              <input type="text" className="form-control" placeholder="e.g. https://youtube.com/watch?v=..." value={form.videoUrl} onChange={set("videoUrl")} />
+              <small style={{ color: "#888", fontSize: 12 }}>Paste a YouTube or Vimeo link. Direct video file upload is not supported.</small>
+            </fieldset>
+          </div>
+
+          {/* Additional Information */}
+          <div className="widget-box-2 mb-20">
+            <h3 className="title">Additional Information</h3>
+            <div className="box grid-layout-3 gap-30">
+              <fieldset className="box-fieldset">
+                <label>Previous Occupancy:</label>
+                <select className="form-control nice-select" value={form.previousOccupancy} onChange={set("previousOccupancy")}>
+                  <option value="">Select…</option>
+                  <option value="never-occupied">Never Occupied</option>
+                  <option value="family">Family</option>
+                  <option value="bachelor">Bachelor</option>
+                  <option value="company">Company</option>
+                </select>
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Who Will Show Property:</label>
+                <select className="form-control nice-select" value={form.whoWillShow} onChange={set("whoWillShow")}>
+                  <option value="">Select…</option>
+                  <option value="owner">Owner</option>
+                  <option value="agent">Agent</option>
+                  <option value="relative">Relative</option>
+                  <option value="neighbor">Neighbor</option>
+                </select>
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Secondary Contact:</label>
+                <input type="tel" className="form-control" placeholder="Alternate phone number" value={form.secondaryNumber} onChange={set("secondaryNumber")} />
+              </fieldset>
+            </div>
+          </div>
+
+          {/* Schedule */}
+          <div className="widget-box-2 mb-20">
+            <h3 className="title">Schedule / Availability</h3>
             <div className="box grid-layout-2 gap-30">
               <fieldset className="box-fieldset">
-                <label htmlFor="state">
-                  Province/State:<span>*</span>
-                </label>
+                <label>Availability Days:</label>
+                <select className="form-control nice-select" value={form.availabilityDays} onChange={set("availabilityDays")}>
+                  <option value="everyday">Everyday</option>
+                  <option value="weekday">Weekdays only</option>
+                  <option value="weekend">Weekends only</option>
+                </select>
+              </fieldset>
+              <fieldset className="box-fieldset">
+                <label>Preferred Showing Time:</label>
+                <select className="form-control nice-select" value={form.showingTime} onChange={set("showingTime")}>
+                  <option value="anytime">Any time</option>
+                  <option value="morning">Morning (8am–12pm)</option>
+                  <option value="afternoon">Afternoon (12pm–5pm)</option>
+                  <option value="evening">Evening (5pm–9pm)</option>
+                </select>
+              </fieldset>
+            </div>
+          </div>
 
-                <DropdownSelect
-                  options={["None", "Texas", "New York"]}
-                  addtionalParentClass=""
-                />
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="neighborhood">
-                  Neighborhood:<span>*</span>
-                </label>
+          {/* Error */}
+          {error && (
+            <div style={{ background: "#fff0f0", border: "1px solid #ffb3b3", borderRadius: 8, padding: "12px 16px", marginBottom: 16, color: "#cc0000" }}>
+              {error}
+            </div>
+          )}
 
-                <DropdownSelect
-                  options={["None", "Little Italy", "Bedford Park"]}
-                  addtionalParentClass=""
-                />
-              </fieldset>
-            </div>
-            <div className="box box-fieldset">
-              <label htmlFor="location">
-                Location:<span>*</span>
-              </label>
-              <div className="box-ip">
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue="None"
-                />
-                <a href="#" className="btn-location">
-                  <i className="icon icon-location" />
-                </a>
-              </div>
-              <iframe
-                className="map"
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d135905.11693909427!2d-73.95165795400088!3d41.17584829642291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1727094281524!5m2!1sen!2s"
-                width="100%"
-                height={456}
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </form>
-        </div>
-        <div className="widget-box-2 mb-20">
-          <h3 className="title">Price</h3>
-          <div className="box-price-property">
-            <form
-              className="box grid-2 gap-30"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <fieldset className="box-fieldset mb-30">
-                <label htmlFor="price">
-                  Price:<span>*</span>
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Example value: 12345.67"
-                />
-              </fieldset>
-              <fieldset className="box-fieldset mb-30">
-                <label htmlFor="neighborhood">
-                  Unit Price:<span>*</span>
-                </label>
+          {/* Submit */}
+          <div className="box-btn">
+            <button type="submit" className="tf-btn bg-color-primary pd-13" disabled={loading}>
+              {loading ? "Submitting…" : "Add Property"}
+            </button>
+          </div>
+        </form>
 
-                <DropdownSelect
-                  options={["None", "1000", "2000"]}
-                  addtionalParentClass=""
-                />
-              </fieldset>
-              <div className="grid-layout-2 gap-30">
-                <fieldset className="box-fieldset">
-                  <label htmlFor="price">
-                    Before Price Label:<span>*</span>
-                  </label>
-                  <input type="text" className="form-control" />
-                </fieldset>
-                <fieldset className="box-fieldset">
-                  <label htmlFor="price">
-                    After Price Label:<span>*</span>
-                  </label>
-                  <input type="text" className="form-control" />
-                </fieldset>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div className="widget-box-2 mb-20">
-          <h3 className="title">Addtional Infomation</h3>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <div className="box grid-layout-3 gap-30">
-              <fieldset className="box-fieldset">
-                <label htmlFor="type">
-                  Property Type:<span>*</span>
-                </label>
-
-                <DropdownSelect
-                  options={["Apartment", "Villa", "Studio", "Office"]}
-                  addtionalParentClass=""
-                />
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="status">
-                  Property Status:<span>*</span>
-                </label>
-
-                <DropdownSelect
-                  options={["Choose", "For Rent", "For Sale"]}
-                  addtionalParentClass=""
-                />
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="label">
-                  Property Label:<span>*</span>
-                </label>
-
-                <DropdownSelect
-                  options={["Choose", "New Listing", "Open House"]}
-                  addtionalParentClass=""
-                />
-              </fieldset>
-            </div>
-            <div className="box grid-layout-3 gap-30">
-              <fieldset className="box-fieldset">
-                <label htmlFor="size">
-                  Size (SqFt):<span>*</span>
-                </label>
-                <input type="text" className="form-control" />
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="land">
-                  Land Area (SqFt):<span>*</span>
-                </label>
-                <input type="text" className="form-control" />
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="id">
-                  Property ID:<span>*</span>
-                </label>
-                <input type="text" className="form-control" />
-              </fieldset>
-            </div>
-            <div className="box grid-layout-3 gap-30">
-              <fieldset className="box-fieldset">
-                <label htmlFor="rom">
-                  Rooms:<span>*</span>
-                </label>
-                <input type="text" className="form-control" />
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="bedrooms">
-                  Bedrooms:<span>*</span>
-                </label>
-                <input type="text" className="form-control" />
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="bathrooms">
-                  Bathrooms:<span>*</span>
-                </label>
-                <input type="text" className="form-control" />
-              </fieldset>
-            </div>
-            <div className="box grid-layout-3 gap-30">
-              <fieldset className="box-fieldset">
-                <label htmlFor="garages">
-                  Garages:<span>*</span>
-                </label>
-                <input type="text" className="form-control" />
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="garages-size">
-                  Garages Size (SqFt):<span>*</span>
-                </label>
-                <input type="text" className="form-control" />
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="year">
-                  Year Built:<span>*</span>
-                </label>
-                <input type="text" className="form-control" />
-              </fieldset>
-            </div>
-          </form>
-        </div>
-        <div className="widget-box-2 mb-20">
-          <h5 className="title">
-            Amenities<span>*</span>
-          </h5>
-          <div className="box-amenities-property">
-            <div className="box-amenities">
-              <div className="title-amenities fw-6 text-color-heading text-1">
-                Home safety:
-              </div>
-              <div className="list-amenities">
-                <fieldset className="checkbox-item  style-1  ">
-                  <label>
-                    <span className="text-4">Smoke alarm</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Self check-in with lockbox</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Carbon monoxide alarm</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Security cameras</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-              </div>
-            </div>
-            <div className="box-amenities">
-              <div className="title-amenities fw-6 text-color-heading text-1">
-                Bedroom
-              </div>
-              <div className="list-amenities">
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Hangers</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Extra pillows &amp; blankets</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Bed linens</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">TV with standard cable</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-              </div>
-            </div>
-            <div className="box-amenities">
-              <div className="title-amenities fw-6 text-color-heading text-1">
-                Kitchen:
-              </div>
-              <div className="list-amenities">
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Refrigerator</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Dishwasher</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Microwave</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-                <fieldset className="checkbox-item style-1  ">
-                  <label>
-                    <span className="text-4">Coffee maker</span>
-                    <input type="checkbox" />
-                    <span className="btn-checkbox" />
-                  </label>
-                </fieldset>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="widget-box-2 mb-20">
-          <h3 className="title">Virtual Tour 360</h3>
-          <div className="box-radio-check">
-            <div className="text-btn mb-16">Virtual Tour Type:</div>
-            <form onSubmit={(e) => e.preventDefault()}>
-              <fieldset className="radio-item   ">
-                <label>
-                  <span className="text-1">Embedded code</span>
-                  <input type="radio" name="radio" id="radio1" />
-                  <span className="btn-radio" />
-                </label>
-              </fieldset>
-              <fieldset className="radio-item  style-1  ">
-                <label>
-                  <span className="text-1">Upload image</span>
-                  <input type="radio" name="radio" id="radio2" />
-                  <span className="btn-radio" />
-                </label>
-              </fieldset>
-              <fieldset className="box-fieldset">
-                <label htmlFor="embedded">Embedded Code Virtual 360</label>
-                <textarea className="textarea" defaultValue={""} />
-              </fieldset>
-            </form>
-          </div>
-        </div>
-        <div className="widget-box-2 mb-20">
-          <h3 className="title">Videos</h3>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <fieldset className="box-fieldset">
-              <label htmlFor="video" className="text-btn">
-                Video URL:
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Youtube, vimeo url"
-              />
-            </fieldset>
-          </form>
-        </div>
-        <div className="widget-box-2 mb-20">
-          <h3 className="title">Floors</h3>
-          <div className="box-radio-check mb-16">
-            <div className="text-1 mb-12">Enable Floor Plan:</div>
-            <fieldset className="radio-item mb-8">
-              <label>
-                <span className="text-1">Enable</span>
-                <input type="radio" name="radio" id=" floor-plan-1" />
-                <span className="btn-radio" />
-              </label>
-            </fieldset>
-            <fieldset className="radio-item  style-1  ">
-              <label>
-                <span className="text-1">Disable</span>
-                <input type="radio" name="radio" id="  floor-plan-2 " />
-                <span className="btn-radio" />
-              </label>
-            </fieldset>
-          </div>
-          <div className="box-floor-property file-delete">
-            <div className="top d-flex justify-content-between align-items-center">
-              <h6>Floor 1:</h6>
-              <a href="#" className="remove-file">
-                <span className="icon icon-close" />
-              </a>
-            </div>
-            <form onSubmit={(e) => e.preventDefault()}>
-              <fieldset className="box box-fieldset">
-                <label htmlFor="name">Floor Name:</label>
-                <input type="text" className="form-control " />
-              </fieldset>
-              <div className="grid-layout-2 box gap-30">
-                <fieldset className="box-fieldset">
-                  <label htmlFor="floor-price">
-                    Floor Price (Only Digits):
-                  </label>
-                  <input type="text" className="form-control " />
-                </fieldset>
-                <fieldset className="box-fieldset">
-                  <label htmlFor="price-postfix">Price Postfix:</label>
-                  <input type="text" className="form-control " />
-                </fieldset>
-              </div>
-              <div className="grid-layout-2 box gap-30">
-                <fieldset className="box-fieldset">
-                  <label htmlFor="floor-size">Floor Size (Only Digits):</label>
-                  <input type="text" className="form-control " />
-                </fieldset>
-                <fieldset className="box-fieldset">
-                  <label htmlFor="size-postfix">Size Postfix:</label>
-                  <input type="text" className="form-control " />
-                </fieldset>
-              </div>
-              <div className="grid-layout-2 box gap-30">
-                <fieldset className="box-fieldset">
-                  <label htmlFor="bedrooms">Bedrooms:</label>
-                  <input type="text" className="form-control " />
-                </fieldset>
-                <fieldset className="box-fieldset">
-                  <label htmlFor="bathrooms">Bathrooms:</label>
-                  <input type="text" className="form-control " />
-                </fieldset>
-              </div>
-              <div className="grid-layout-2 box gap-30">
-                <fieldset className="box-fieldset">
-                  <label htmlFor="bedrooms">Floor Image:</label>
-                  <div className="box-floor-img uploadfile">
-                    <a
-                      href="#"
-                      className="btn-upload tf-btn bg-color-primary pd-10"
-                    >
-                      <svg
-                        width={21}
-                        height={20}
-                        viewBox="0 0 21 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M2.375 13.125L6.67417 8.82583C6.84828 8.65172 7.05498 8.51361 7.28246 8.41938C7.50995 8.32515 7.75377 8.27665 8 8.27665C8.24623 8.27665 8.49005 8.32515 8.71754 8.41938C8.94502 8.51361 9.15172 8.65172 9.32583 8.82583L13.625 13.125M12.375 11.875L13.5492 10.7008C13.7233 10.5267 13.93 10.3886 14.1575 10.2944C14.385 10.2001 14.6288 10.1516 14.875 10.1516C15.1212 10.1516 15.365 10.2001 15.5925 10.2944C15.82 10.3886 16.0267 10.5267 16.2008 10.7008L18.625 13.125M3.625 16.25H17.375C17.7065 16.25 18.0245 16.1183 18.2589 15.8839C18.4933 15.6495 18.625 15.3315 18.625 15V5C18.625 4.66848 18.4933 4.35054 18.2589 4.11612C18.0245 3.8817 17.7065 3.75 17.375 3.75H3.625C3.29348 3.75 2.97554 3.8817 2.74112 4.11612C2.5067 4.35054 2.375 4.66848 2.375 5V15C2.375 15.3315 2.5067 15.6495 2.74112 15.8839C2.97554 16.1183 3.29348 16.25 3.625 16.25ZM12.375 6.875H12.3817V6.88167H12.375V6.875ZM12.6875 6.875C12.6875 6.95788 12.6546 7.03737 12.596 7.09597C12.5374 7.15458 12.4579 7.1875 12.375 7.1875C12.2921 7.1875 12.2126 7.15458 12.154 7.09597C12.0954 7.03737 12.0625 6.95788 12.0625 6.875C12.0625 6.79212 12.0954 6.71263 12.154 6.65403C12.2126 6.59542 12.2921 6.5625 12.375 6.5625C12.4579 6.5625 12.5374 6.59542 12.596 6.65403C12.6546 6.71263 12.6875 6.79212 12.6875 6.875Z"
-                          stroke="white"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      Choose File
-                      <input type="file" className="ip-file" />
-                    </a>
-                    <p className="file-name">Or drop file here to upload</p>
-                  </div>
-                </fieldset>
-                <fieldset className="box-fieldset">
-                  <label htmlFor="bathrooms">Description:</label>
-                  <textarea className="textarea" defaultValue={""} />
-                </fieldset>
-              </div>
-            </form>
-          </div>
-          <div className="text-center">
-            <a href="#" className="btn-add-floor">
-              <span className="icon icon-plus" />
-            </a>
-          </div>
-        </div>
-        <div className="widget-box-2 mb-20">
-          <h3 className="title">Agent Infomation</h3>
-          <div className="box-radio-check">
-            <div className="text-1 mb-16">Choose type agent information?</div>
-            <fieldset className="radio-item mb-8">
-              <label>
-                <span className="text-1">Your current user information</span>
-                <input type="radio" name="radio" id=" floor-plan-1" />
-                <span className="btn-radio" />
-              </label>
-            </fieldset>
-            <fieldset className="radio-item  style-1  ">
-              <label>
-                <span className="text-1">Other contact</span>
-                <input type="radio" name="radio" id="  floor-plan-2 " />
-                <span className="btn-radio" />
-              </label>
-            </fieldset>
-          </div>
-        </div>
-        <div className="box-btn">
-          <a href="#" className="tf-btn bg-color-primary pd-13">
-            Add Property
-          </a>
-          <a href="#" className="tf-btn style-border pd-10">
-            Save &amp; Preview
-          </a>
-        </div>
-        {/* .footer-dashboard */}
         <div className="footer-dashboard">
-          <p>Copyright © {new Date().getFullYear()} Popty</p>
+          <p>Copyright © {new Date().getFullYear()} Globperty</p>
           <ul className="list">
-            <li>
-              <a href="#">Privacy</a>
-            </li>
-            <li>
-              <a href="#">Terms</a>
-            </li>
-            <li>
-              <a href="#">Support</a>
-            </li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Support</a></li>
           </ul>
         </div>
-        {/* /.footer-dashboard */}
       </div>
       <div className="overlay-dashboard" />
     </div>

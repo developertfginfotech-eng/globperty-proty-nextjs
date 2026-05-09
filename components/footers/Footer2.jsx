@@ -84,7 +84,7 @@ export default function Footer2({ parentClass = "" }) {
                     alt="logo-footer"
                     width={272}
                     height={85}
-                    src="/images/logo/logo-2@2x.png"
+                    src="/images/logo/globperty-logo.svg"
                   />
                 </Link>
               </div>
@@ -96,7 +96,7 @@ export default function Footer2({ parentClass = "" }) {
                   <div className="content">
                     <div className="title text-1">Address</div>
                     <h6>
-                      <a href="#">proty-support@gmail.com</a>
+                      <a href="#">globperty-support@gmail.com</a>
                     </h6>
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export default function Footer2({ parentClass = "" }) {
                   <div className="content">
                     <div className="title text-1">Nee live help</div>
                     <h6 className="fw-4">
-                      <a href="#"> proty-support@gmail.com </a>
+                      <a href="#"> globperty-support@gmail.com </a>
                     </h6>
                   </div>
                 </div>
@@ -294,7 +294,7 @@ export default function Footer2({ parentClass = "" }) {
           <div className="footer-bottom">
             <p>
               Copyright © {new Date().getFullYear()}{" "}
-              <span className="fw-7">PROTY - REAL ESTATE</span> . Designed &amp;
+              <span className="fw-7">Globperty</span> . Designed &amp;
               Developed by
               <a href="#">Themesflat</a>
             </p>

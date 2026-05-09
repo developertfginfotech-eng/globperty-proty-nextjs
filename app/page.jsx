@@ -39,7 +39,7 @@ export default function Home() {
             <Brands />
             <Blogs />
           </div>
-          <Footer1 logo="/images/logo/logo-3@2x.png" />
+          <Footer1 logo="/images/logo/globperty-logo.svg" />
         </div>
       </div>
     </>

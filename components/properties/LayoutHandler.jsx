@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 export default function LayoutHandler({ defaultGrid = true }) {
@@ -6,6 +7,8 @@ export default function LayoutHandler({ defaultGrid = true }) {
       <li className="nav-tab-item" role="presentation">
         <a
           href="#gridLayout"
+          role="tab"
+          aria-selected={defaultGrid}
           className={`btn-layout grid nav-link-item ${
             defaultGrid ? "active" : ""
           }`}
@@ -60,6 +63,8 @@ export default function LayoutHandler({ defaultGrid = true }) {
       <li className="nav-tab-item" role="presentation">
         <a
           href="#listLayout"
+          role="tab"
+          aria-selected={!defaultGrid}
           className={`nav-link-item btn-layout  ${
             !defaultGrid ? "active" : ""
           } list`}

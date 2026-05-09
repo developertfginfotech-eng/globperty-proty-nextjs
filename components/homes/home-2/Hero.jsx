@@ -1,14 +1,101 @@
 "use client";
-import DropdownSelect from "@/components/common/DropdownSelect";
 import SearchForm from "@/components/common/SearchForm";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+
+const COUNTRIES = [
+  "UAE", "USA", "Portugal", "Canada", "Australia",
+  "Turkey", "Cyprus", "Malta", "Hungary", "Latvia",
+  "Philippines", "Malaysia",
+];
+
+const PROPERTY_TYPES = [
+  "Property type", "Apartment", "House", "Villa",
+  "Bungalow", "Smart Home", "Penthouse", "Office",
+];
+
+// Map spoken words → dropdown values
+const TYPE_KEYWORDS = {
+  apartment: "Apartment", flat: "Apartment", house: "House", home: "House",
+  villa: "Villa", bungalow: "Bungalow", smart: "Smart Home",
+  penthouse: "Penthouse", office: "Office",
+};
+const LOCATION_KEYWORDS = {
+  uae: "UAE", dubai: "UAE", "abu dhabi": "UAE",
+  usa: "USA", america: "USA", "united states": "USA",
+  portugal: "Portugal", lisbon: "Portugal",
+  canada: "Canada", toronto: "Canada",
+  australia: "Australia", sydney: "Australia",
+  turkey: "Turkey", istanbul: "Turkey",
+  cyprus: "Cyprus", malta: "Malta",
+  hungary: "Hungary", budapest: "Hungary",
+  latvia: "Latvia", riga: "Latvia",
+  philippines: "Philippines", manila: "Philippines",
+  malaysia: "Malaysia", "kuala lumpur": "Malaysia",
+};
+
+function parseVoice(text) {
+  const lower = text.toLowerCase();
+  let type = null;
+  let loc = null;
+  for (const [kw, val] of Object.entries(TYPE_KEYWORDS)) {
+    if (lower.includes(kw)) { type = val; break; }
+  }
+  for (const [kw, val] of Object.entries(LOCATION_KEYWORDS)) {
+    if (lower.includes(kw)) { loc = val; break; }
+  }
+  return { type, loc };
+}
 
 export default function Hero() {
-  // State to track the active item
-  const [activeItem, setActiveItem] = useState("For sale");
+  const [activeTab, setActiveTab] = useState("Buy");
+  const [propertyType, setPropertyType] = useState("Property type");
+  const [location, setLocation] = useState("Location");
+  const [showTypeDD, setShowTypeDD] = useState(false);
+  const [showLocDD, setShowLocDD] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+  const recognitionRef = useRef(null);
 
-  // Array of items to render
-  const items = ["For sale", "For rent"];
+  const tabs = ["Buy", "Rent", "Sell"];
+
+  const handleMic = () => {
+    if (typeof window === "undefined") return;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) return;
+
+    if (isListening) {
+      recognitionRef.current?.stop();
+      return;
+    }
+
+    const recognition = new SR();
+    recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => setIsListening(true);
+    recognition.onend = () => setIsListening(false);
+    recognition.onerror = () => setIsListening(false);
+    recognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript;
+      const { type, loc } = parseVoice(transcript);
+      if (type) setPropertyType(type);
+      if (loc) setLocation(loc);
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (propertyType !== "Property type") params.set("type", propertyType);
+    if (location !== "Location") params.set("location", location);
+    params.set("status", activeTab.toLowerCase());
+    window.location.href = `/listings?${params.toString()}`;
+  };
+
   return (
     <div
       className="page-title home02"
@@ -27,142 +114,147 @@ export default function Hero() {
               <div className="heading-title">
                 <h1 className="title">Your Way Home Starts Here</h1>
                 <p className="h6 fw-4">
-                  Thousands of luxury home enthusiasts just like you visit our
-                  website.
+                  Thousands of luxury home enthusiasts just like you visit our website.
                 </p>
               </div>
-              <div className="widget-tabs style-1">
-                <ul className="widget-menu-tab">
-                  {items.map((item) => (
-                    <li
-                      key={item}
-                      className={`item-title ${
-                        activeItem === item ? "active" : ""
-                      }`}
-                      onClick={() => setActiveItem(item)} // Set the active item on click
+
+              <div className="hero-search-wrapper">
+                {/* Tabs */}
+                <div className="hero-search-tabs">
+                  {tabs.map((tab) => (
+                    <button
+                      key={tab}
+                      className={`hero-tab-btn${activeTab === tab ? " active" : ""}`}
+                      onClick={() => setActiveTab(tab)}
+                      type="button"
                     >
-                      {item}
-                    </li>
+                      {tab}
+                    </button>
                   ))}
-                </ul>
-                <div className="wg-filter">
-                  <div className="widget-content-inner active">
-                    <div className="form-title">
-                      <form className="w-full">
-                        <fieldset>
-                          <input
-                            type="text"
-                            placeholder="Address, City, ZIP..."
-                          />
-                        </fieldset>
-                      </form>
+                </div>
 
-                      <DropdownSelect
-                        options={[
-                          "Property type",
-                          "Bungalow",
-                          "Apartment",
-                          "House",
-                          "Smart Home",
-                        ]}
-                        addtionalParentClass=""
-                      />
-
-                      <DropdownSelect
-                        options={[
-                          "Location",
-                          "Texas",
-                          "Florida",
-                          "New York",
-                          "Illinois",
-                          "Washington",
-                          "Pennsylvania",
-                          "Ohio",
-                        ]}
-                        addtionalParentClass=""
-                      />
-                      <div className="wrap-btn">
-                        <div className="btn-filter show-form searchFormToggler">
-                          <div className="icons">
-                            <svg
-                              width={24}
-                              height={24}
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M21 4H14"
-                                stroke="#F1913D"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M10 4H3"
-                                stroke="#F1913D"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M21 12H12"
-                                stroke="#F1913D"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M8 12H3"
-                                stroke="#F1913D"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M21 20H16"
-                                stroke="#F1913D"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M12 20H3"
-                                stroke="#F1913D"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M14 2V6"
-                                stroke="#F1913D"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M8 10V14"
-                                stroke="#F1913D"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <path
-                                d="M16 18V22"
-                                stroke="#F1913D"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </div>
-                        </div>
-                        <a href="#" className="tf-btn bg-color-primary pd-3">
-                          Search <i className="icon-MagnifyingGlass fw-6" />
-                        </a>
-                      </div>
-                    </div>
+                {/* Search bar */}
+                <div className="hero-search-bar">
+                  {/* Property type dropdown */}
+                  <div
+                    className="hero-dd-wrap"
+                    style={{ flex: 1, position: "relative" }}
+                  >
+                    <button
+                      type="button"
+                      className="hero-dd-btn"
+                      onClick={() => { setShowTypeDD(!showTypeDD); setShowLocDD(false); }}
+                    >
+                      <span style={{ color: propertyType === "Property type" ? "#9ca3af" : "#1a1a1a" }}>
+                        {propertyType}
+                      </span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 9L12 15L18 9" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    {showTypeDD && (
+                      <ul className="hero-dd-list">
+                        {PROPERTY_TYPES.map((t) => (
+                          <li
+                            key={t}
+                            className={`hero-dd-item${propertyType === t ? " selected" : ""}`}
+                            onClick={() => { setPropertyType(t); setShowTypeDD(false); }}
+                          >
+                            {t}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
+
+                  {/* Divider */}
+                  <div style={{ width: 1, height: 32, background: "#e5e7eb", flexShrink: 0 }} />
+
+                  {/* Location dropdown */}
+                  <div
+                    className="hero-dd-wrap"
+                    style={{ flex: 1, position: "relative" }}
+                  >
+                    <button
+                      type="button"
+                      className="hero-dd-btn"
+                      onClick={() => { setShowLocDD(!showLocDD); setShowTypeDD(false); }}
+                    >
+                      <span style={{ color: location === "Location" ? "#9ca3af" : "#1a1a1a" }}>
+                        {location}
+                      </span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 9L12 15L18 9" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    {showLocDD && (
+                      <ul className="hero-dd-list">
+                        <li
+                          className={`hero-dd-item${location === "Location" ? " selected" : ""}`}
+                          onClick={() => { setLocation("Location"); setShowLocDD(false); }}
+                        >
+                          All Countries
+                        </li>
+                        {COUNTRIES.map((c) => (
+                          <li
+                            key={c}
+                            className={`hero-dd-item${location === c ? " selected" : ""}`}
+                            onClick={() => { setLocation(c); setShowLocDD(false); }}
+                          >
+                            {c}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  {/* Mic button */}
+                  <button
+                    className={`hero-mic-btn${isListening ? " listening" : ""}`}
+                    type="button"
+                    onClick={handleMic}
+                    title={isListening ? "Listening… click to stop" : "Search by voice"}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <rect x="9" y="2" width="6" height="11" rx="3"
+                        fill={isListening ? "#ef4444" : "#7C3AED"} />
+                      <path d="M5 11C5 14.866 8.134 18 12 18C15.866 18 19 14.866 19 11"
+                        stroke={isListening ? "#ef4444" : "#7C3AED"} strokeWidth="2" strokeLinecap="round"/>
+                      <line x1="12" y1="18" x2="12" y2="22"
+                        stroke={isListening ? "#ef4444" : "#7C3AED"} strokeWidth="2" strokeLinecap="round"/>
+                      <line x1="9" y1="22" x2="15" y2="22"
+                        stroke={isListening ? "#ef4444" : "#7C3AED"} strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </button>
+
+                  {/* Advanced filter */}
+                  <button
+                    className={`hero-filter-btn${showFilter ? " active" : ""}`}
+                    type="button"
+                    title="Advanced filters"
+                    onClick={() => setShowFilter(!showFilter)}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M21 4H14M10 4H3M21 12H12M8 12H3M21 20H16M12 20H3M14 2V6M8 10V14M16 18V22"
+                        stroke="var(--Primary, #16b286)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+
+                  {/* Search button */}
+                  <button
+                    className="hero-search-submit"
+                    type="button"
+                    onClick={handleSearch}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <circle cx="11" cy="11" r="8" stroke="white" strokeWidth="2.5"/>
+                      <path d="M21 21L16.65 16.65" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+                    </svg>
+                    Search
+                  </button>
+                </div>
+
+                <div style={{ display: showFilter ? "block" : "none" }}>
                   <SearchForm />
                 </div>
               </div>

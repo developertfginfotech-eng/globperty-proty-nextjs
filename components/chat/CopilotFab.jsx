@@ -21,7 +21,7 @@ export default function CopilotFab() {
       }}
     >
       <span style={{ fontSize: 16 }}>🤖</span>
-      Globperty AI Copilot
+      Globperty AI
     </Link>
   );
 }

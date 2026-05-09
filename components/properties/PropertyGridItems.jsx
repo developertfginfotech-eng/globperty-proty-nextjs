@@ -3,31 +3,30 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function PropertyGridItems({ showItems = properties11.length }) {
+export default function PropertyGridItems({ showItems, properties: propsProp }) {
+  const items = propsProp ?? properties11.slice(0, showItems ?? properties11.length);
   return (
     <>
-      {properties11.slice(0, showItems).map((property) => (
+      {items.map((property) => (
         <div className="box-house hover-img" key={property.id}>
           <div className="image-wrap">
             <Link href={`/property-detail-v1/${property.id}`}>
               <Image
                 className="lazyload"
-                data-src={property.imageSrc}
-                alt={property.title}
-                src={property.imageSrc}
-                width={property.imageWidth}
-                height={property.imageHeight}
+                alt={property.title || ""}
+                src={property.imageSrc || "/images/property/placeholder.jpg"}
+                width={property.imageWidth || 600}
+                height={property.imageHeight || 400}
+                unoptimized
               />
             </Link>
             <ul className="box-tag flex gap-8">
               {property.featured && (
-                <li className="flat-tag text-4 bg-main fw-6 text_white">
-                  Featured
-                </li>
+                <li className="flat-tag text-4 bg-main fw-6 text_white">Featured</li>
               )}
-              {property.forSale && (
+              {(property.forSale || property.adType) && (
                 <li className="flat-tag text-4 bg-3 fw-6 text_white">
-                  For Sale
+                  {property.adType || "For Sale"}
                 </li>
               )}
             </ul>

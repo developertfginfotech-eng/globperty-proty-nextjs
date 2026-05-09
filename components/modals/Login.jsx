@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import { login } from "@/utils/authApi";
 
 const UserIcon = () => (
@@ -50,9 +49,7 @@ export default function Login() {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="flat-account">
-            <div className="banner-account">
-              <Image alt="banner" width={380} height={659} src="/images/section/banner-login.jpg" />
-            </div>
+            <div className="banner-account" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80')", backgroundSize: "cover", backgroundPosition: "center", minHeight: 400 }} />
             <form className="form-account" onSubmit={handleSubmit}>
               <div className="title-box">
                 <h4>Login</h4>

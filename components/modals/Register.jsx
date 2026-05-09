@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import { register } from "@/utils/authApi";
 import { useRouter } from "next/navigation";
 
@@ -108,9 +107,7 @@ export default function Register() {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="flat-account">
-            <div className="banner-account">
-              <Image alt="banner" width={380} height={858} src="/images/section/banner-register.jpg" />
-            </div>
+            <div className="banner-account" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80')", backgroundSize: "cover", backgroundPosition: "center", minHeight: 400 }} />
             <form className="form-account" onSubmit={handleSubmit}>
               <div className="title-box">
                 <h4>Register</h4>
@@ -166,9 +163,8 @@ export default function Register() {
                   <label htmlFor="reg-role">I am a</label>
                   <div className="ip-field">
                     <select className="form-control" id="reg-role" name="role" value={form.role} onChange={handleChange} style={{ border: "none", outline: "none", background: "transparent", width: "100%" }}>
-                      <option value="buyer">Buyer / Tenant</option>
-                      <option value="seller">Property Owner</option>
-                      <option value="broker">Broker / Agent</option>
+                      <option value="buyer">Buyer</option>
+                      <option value="seller">Seller</option>
                     </select>
                   </div>
                 </fieldset>

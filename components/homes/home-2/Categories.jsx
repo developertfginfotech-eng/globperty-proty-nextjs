@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import React from "react";
+import Link from "next/link";
 import { getAllProperties } from "@/utils/propertyApi";
 
 const TYPES = [
@@ -20,14 +21,18 @@ export default function Categories() {
   useEffect(() => {
     getAllProperties()
       .then((props) => {
+        console.log("[Categories] getAllProperties returned:", props.length, "properties");
         const map = {};
         props.forEach((p) => {
           const t = (p.propertyType || "").toLowerCase();
-          map[t] = (map[t] || 0) + 1;
+          if (t) map[t] = (map[t] || 0) + 1;
         });
+        console.log("[Categories] type counts:", map);
         setCounts(map);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error("[Categories] getAllProperties failed:", err?.response?.status, err?.message);
+      });
   }, []);
 
   const getCount = (keys) =>
@@ -52,7 +57,7 @@ export default function Categories() {
                 const count = getCount(type.key);
                 return (
                   <div key={type.label} style={{ flex: "0 0 calc(25% - 12px)" }}>
-                    <a href="#" className="categories-item style-2">
+                    <Link href={`/property-gird-left-sidebar?type=${encodeURIComponent(type.label.toLowerCase())}`} className="categories-item style-2">
                       <div className="icon-box">
                         <i className={`icon ${type.icon}`} />
                       </div>
@@ -69,7 +74,7 @@ export default function Categories() {
                           {count > 0 ? `${count} listings for sale` : "0 listings"}
                         </p>
                       </div>
-                    </a>
+                    </Link>
                   </div>
                 );
               })}
@@ -80,7 +85,7 @@ export default function Categories() {
               {TYPES.map((type) => {
                 const count = getCount(type.key);
                 return (
-                  <a key={type.label} href="#" className="categories-item style-2 mb-15">
+                  <Link key={type.label} href={`/property-gird-left-sidebar?type=${encodeURIComponent(type.label.toLowerCase())}`} className="categories-item style-2 mb-15">
                     <div className="icon-box">
                       <i className={`icon ${type.icon}`} />
                     </div>
@@ -88,7 +93,7 @@ export default function Categories() {
                       <h5 className="mb-10">{type.label}</h5>
                       <p>{count > 0 ? `${count} listings` : "0 listings"}</p>
                     </div>
-                  </a>
+                  </Link>
                 );
               })}
             </div>

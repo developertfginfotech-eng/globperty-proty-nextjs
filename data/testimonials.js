@@ -1,34 +1,34 @@
 export const testimonials = [
   {
-    avatarSrc: "/images/avatar/testimonials-3.jpg",
+    avatarSrc: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop",
     description:
       "Phasellus efficitur dictum urna, non elementum mauris mollis a. Duis lacinia arcu ac lorem ultricies porta. Maecenas eleifend malesuada egestas. In eu eros hendrerit, pharetra justo id, blandit orci.",
     name: "Ronald Richards",
     role: "CEO Themesflat",
   },
   {
-    avatarSrc: "/images/avatar/testimonials-2.jpg",
+    avatarSrc: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop",
     description:
       "Proin auctor, mauris at tristique ullamcorper, nunc nisi sagittis velit, eget blandit dolor arcu sed ante. Fusce euismod varius massa, id viverra nisl semper ut. Aliquam felis eros, eleifend non faucibus at.",
     name: "Courtney Henry",
     role: "CEO Themesflat",
   },
   {
-    avatarSrc: "/images/avatar/testimonials-4.jpg",
+    avatarSrc: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop",
     description:
       "Phasellus efficitur dictum urna, non elementum mauris mollis a. Duis lacinia arcu ac lorem ultricies porta. Maecenas eleifend malesuada egestas. In eu eros hendrerit, pharetra justo id, blandit orci.",
     name: "Ronald Richards",
     role: "CEO Themesflat",
   },
   {
-    avatarSrc: "/images/avatar/testimonials-3.jpg",
+    avatarSrc: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop",
     description:
       "Sed eget nibh eros. Phasellus pharetra ac leo et auctor. Donec libero dui, blandit id nulla laoreet, pellentesque egestas ante. Etiam mollis tincidunt elit, sit amet sodales tellus finibus ut. Orci varius natoque.",
     name: "Annette Black",
     role: "CEO Themesflat",
   },
   {
-    avatarSrc: "/images/avatar/testimonials-3.jpg",
+    avatarSrc: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop",
     description:
       "Phasellus efficitur dictum urna, non elementum mauris mollis a. Duis lacinia arcu ac lorem ultricies porta. Maecenas eleifend malesuada egestas. In eu eros hendrerit, pharetra justo id, blandit orci.",
     name: "Ronald Richards",

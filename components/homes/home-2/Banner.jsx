@@ -38,7 +38,7 @@ export default function Banner() {
                     alt=""
                     width={346}
                     height={499}
-                    src="/images/section/person-2.png"
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=346&h=499&fit=crop"
                   />
                 </div>
               </div>

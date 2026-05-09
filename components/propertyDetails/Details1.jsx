@@ -53,7 +53,7 @@ export default function Details1({ property }) {
             </div>
           </div>
           <div className="col-xl-4 col-lg-5">
-            <Sidebar />
+            <Sidebar agent={property?.agent || property?.agentId} />
           </div>
         </div>
       </div>

@@ -30,12 +30,24 @@ export function mapProperty(p) {
     adType: p.propertyAdType === "rent" ? "For Rent" : "For Sale",
     status: p.approvalStatus,
     agentId: p.agentId,
+    agent: p.agentId ? {
+      name: p.agentId.name || "Agent",
+      email: p.agentId.email || "",
+      phone: p.agentId.phone || "",
+    } : null,
     description: p.description || "",
     country: p.country,
     city: p.city,
     propertyType: p.propertyType,
     propertyCategory: p.propertyCategory,
     propertyAdType: p.propertyAdType,
+    propertyAge: p.propertyAge || "",
+    furnishing: p.furnishing || "",
+    floor: p.floor ?? null,
+    totalFloor: p.totalFloor ?? null,
+    carpetArea: p.carpetArea ?? null,
+    parking: p.parking || "",
+    balconies: p.balconies ?? null,
   };
 }
 

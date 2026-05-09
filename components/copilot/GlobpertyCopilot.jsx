@@ -302,7 +302,7 @@ export default function GlobpertyCopilot() {
             fontSize: 26, marginBottom: 14,
             boxShadow: '0 6px 20px rgba(235,103,83,0.4)',
           }}>🤖</div>
-          <div style={{ color: 'white', fontWeight: 700, fontSize: 18 }}>Globperty AI Copilot</div>
+          <div style={{ color: 'white', fontWeight: 700, fontSize: 18 }}>Globperty AI</div>
           <div style={{ color: '#64748b', fontSize: 12, marginTop: 4 }}>
             <span style={{ color: '#4ade80', fontSize: 9 }}>●</span>
             {' '}Ask anything about real estate — globally
@@ -372,7 +372,7 @@ export default function GlobpertyCopilot() {
           flexShrink: 0,
         }}>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 16, color: '#111' }}>Globperty AI Copilot</div>
+            <div style={{ fontWeight: 700, fontSize: 16, color: '#111' }}>Globperty AI</div>
             <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 1 }}>
               Ask anything about real estate — globally
             </div>

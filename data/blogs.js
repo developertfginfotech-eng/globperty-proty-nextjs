@@ -25,7 +25,7 @@ export const blogPosts = [
 export const blogArticles = [
   {
     id: 4,
-    imageSrc: "/images/blog/blog-grid-1.jpg",
+    imageSrc: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=396&fit=crop",
     alt: "",
     tag: "Real estate",
     date: "26 August, 2024",
@@ -33,7 +33,7 @@ export const blogArticles = [
   },
   {
     id: 5,
-    imageSrc: "/images/blog/blog-grid-2.jpg",
+    imageSrc: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&h=396&fit=crop",
     alt: "",
     tag: "News",
     date: "26 August, 2024",
@@ -41,7 +41,7 @@ export const blogArticles = [
   },
   {
     id: 6,
-    imageSrc: "/images/blog/blog-grid-3.jpg",
+    imageSrc: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=396&fit=crop",
     alt: "",
     tag: "Real estate",
     date: "26 August, 2024",

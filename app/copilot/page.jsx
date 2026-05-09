@@ -1,7 +1,7 @@
 import GlobpertyCopilot from "@/components/copilot/GlobpertyCopilot";
 
 export const metadata = {
-  title: "Globperty AI Copilot",
+  title: "Globperty AI",
   description: "Ask anything about real estate — globally",
 };
 

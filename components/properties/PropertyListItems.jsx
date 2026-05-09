@@ -3,10 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function PropertyListItems({ showItems = properties11.length }) {
+export default function PropertyListItems({ showItems, properties: propsProp }) {
+  const items = propsProp ?? properties11.slice(0, showItems ?? properties11.length);
   return (
     <>
-      {properties11.slice(0, showItems).map((property, i) => (
+      {items.map((property, i) => (
         <div key={i} className="box-house style-list hover-img">
           <div className="image-wrap">
             <Link href={`/property-detail-v1/${property.id}`}>
