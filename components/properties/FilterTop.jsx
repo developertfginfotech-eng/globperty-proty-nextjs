@@ -6,7 +6,7 @@ import SearchForm from "../common/SearchForm";
 
 export default function FilterTop() {
   return (
-    <section className="flat-title style-2">
+    <section className="flat-title style-2" style={{ paddingTop: 90 }}>
       <div className="tf-container">
         <div className="row">
           <div className="col-lg-12">
