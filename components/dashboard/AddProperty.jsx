@@ -448,22 +448,28 @@ export default function AddProperty() {
     };
     const c = colors[kycGate.type] || colors.unsubmitted;
     return (
-      <div className="main-content w-100">
-        <div className="main-content-inner" style={{ padding: "60px 40px", display: "flex", justifyContent: "center" }}>
+      <div className="main-content w-100" style={{ overflowY: "auto" }}>
+        <div className="main-content-inner" style={{ minHeight: "calc(100vh - 80px)", padding: "60px 40px", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <div style={{
             maxWidth: 520, width: "100%",
             background: c.bg, border: `1.5px solid ${c.border}`,
-            borderRadius: 12, padding: "36px 32px", textAlign: "center",
+            borderRadius: 16, padding: "48px 40px", textAlign: "center",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
           }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>{c.icon}</div>
-            <h4 style={{ marginBottom: 12, fontWeight: 700, color: "#1a1a1a" }}>
+            <div style={{ fontSize: 56, marginBottom: 20 }}>{c.icon}</div>
+            <h4 style={{ marginBottom: 12, fontWeight: 700, fontSize: 24, color: "#1a1a1a" }}>
               {kycGate.type === "pending" ? "KYC Under Review" : kycGate.type === "buyer" ? "Not Permitted" : kycGate.type === "rejected" ? "KYC Rejected" : "KYC Required"}
             </h4>
-            <p style={{ color: "#555", marginBottom: 28, lineHeight: 1.6 }}>{kycGate.message}</p>
+            <p style={{ color: "#6b7280", marginBottom: 32, lineHeight: 1.7, fontSize: 15 }}>{kycGate.message}</p>
             {isUnsubmitted && (
-              <Link href="/kyc-property-verification" className="tf-btn bg-color-primary" style={{ display: "inline-block", padding: "12px 32px", borderRadius: 8, textDecoration: "none", color: "#fff", fontWeight: 600 }}>
+              <Link href="/kyc-property-verification" style={{ display: "inline-block", padding: "14px 36px", borderRadius: 10, textDecoration: "none", color: "#fff", fontWeight: 600, fontSize: 15, background: "#eb6753" }}>
                 Complete KYC Verification →
               </Link>
+            )}
+            {kycGate.type === "pending" && (
+              <p style={{ marginTop: 20, fontSize: 13, color: "#9ca3af" }}>
+                Our team typically reviews submissions within 1–2 business days.
+              </p>
             )}
           </div>
         </div>
