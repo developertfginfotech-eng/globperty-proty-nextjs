@@ -12,14 +12,9 @@ export default function Header1({ parentClass = "header" }) {
             <div className="col-12">
               <div className="header-inner-wrap">
                 <div className="header-logo">
-                  <Link href={`/`} className="site-logo">
-                    <img
-                      className="logo_header"
-                      alt=""
-                      data-light="/images/logo/logo@2x.png"
-                      data-dark="/images/logo/logo-2@2x.png"
-                      src="/images/logo/logo@2x.png"
-                    />
+                  <Link href={`/`} className="site-logo" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/images/logo/globperty-logo.svg" alt="Globperty" height={44} style={{ height: 44, width: "auto" }} />
                   </Link>
                 </div>
                 <nav className="main-menu">
