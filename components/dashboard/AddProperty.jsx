@@ -1,6 +1,7 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { addProperty } from "@/utils/propertyApi";
 import apiClient from "@/utils/apiClient";
 
@@ -220,6 +221,44 @@ export default function AddProperty() {
   const [aiAnalyzing, setAiAnalyzing] = useState(false);
   const [aiGenerating, setAiGenerating] = useState(false);
   const [aiNote, setAiNote] = useState("");
+  const [kycChecking, setKycChecking] = useState(true);
+  const [kycGate, setKycGate] = useState(null); // null = ok, else { type, message }
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const role = user.role || "";
+
+    if (role === "buyer") {
+      setKycGate({ type: "buyer", message: "Buyers cannot list properties. Switch to a Seller or Broker account to add listings." });
+      setKycChecking(false);
+      return;
+    }
+
+    if (role === "admin") {
+      setKycChecking(false);
+      return;
+    }
+
+    // seller or broker — must have verified KYC
+    apiClient.get("/kyc/status")
+      .then((res) => {
+        const status = res.data?.kyc?.status;
+        if (status === "verified") {
+          setKycGate(null);
+        } else if (status === "pending") {
+          setKycGate({ type: "pending", message: "Your KYC is under review. You can add properties once it is approved by our team." });
+        } else if (status === "rejected") {
+          setKycGate({ type: "rejected", message: "Your KYC was rejected. Please resubmit your documents to list properties." });
+        } else {
+          setKycGate({ type: "unsubmitted", message: "KYC verification is required before you can add a property." });
+        }
+      })
+      .catch(() => {
+        // No KYC record found (404) or network error
+        setKycGate({ type: "unsubmitted", message: "KYC verification is required before you can add a property." });
+      })
+      .finally(() => setKycChecking(false));
+  }, []);
 
   const regionLabel = COUNTRY_REGION_LABEL[form.country] || "Province/State";
   const regions = COUNTRY_REGIONS[form.country] || [];
@@ -363,7 +402,13 @@ export default function AddProperty() {
       setSuccess(true);
       setTimeout(() => router.push("/my-property"), 2000);
     } catch (err) {
-      setError(err?.response?.data?.message || "Failed to add property. Please try again.");
+      const status = err?.response?.status;
+      const msg = err?.response?.data?.message || "";
+      if (status === 403 && msg.toLowerCase().includes("kyc")) {
+        setKycGate({ type: "unsubmitted", message: msg });
+      } else {
+        setError(msg || "Failed to add property. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -377,6 +422,49 @@ export default function AddProperty() {
             <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
             <h3 style={{ color: "#2db224", marginBottom: 8 }}>Property Submitted!</h3>
             <p>Your listing is pending admin approval. Redirecting to your properties…</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (kycChecking) {
+    return (
+      <div className="main-content w-100">
+        <div className="main-content-inner" style={{ padding: 60, textAlign: "center", color: "#888" }}>
+          Checking verification status…
+        </div>
+      </div>
+    );
+  }
+
+  if (kycGate) {
+    const isUnsubmitted = kycGate.type === "unsubmitted" || kycGate.type === "rejected";
+    const colors = {
+      buyer:       { bg: "#fff7ed", border: "#fdba74", icon: "🚫" },
+      unsubmitted: { bg: "#fef9c3", border: "#fbbf24", icon: "⚠️" },
+      pending:     { bg: "#eff6ff", border: "#93c5fd", icon: "⏳" },
+      rejected:    { bg: "#fee2e2", border: "#fca5a5", icon: "❌" },
+    };
+    const c = colors[kycGate.type] || colors.unsubmitted;
+    return (
+      <div className="main-content w-100">
+        <div className="main-content-inner" style={{ padding: "60px 40px", display: "flex", justifyContent: "center" }}>
+          <div style={{
+            maxWidth: 520, width: "100%",
+            background: c.bg, border: `1.5px solid ${c.border}`,
+            borderRadius: 12, padding: "36px 32px", textAlign: "center",
+          }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>{c.icon}</div>
+            <h4 style={{ marginBottom: 12, fontWeight: 700, color: "#1a1a1a" }}>
+              {kycGate.type === "pending" ? "KYC Under Review" : kycGate.type === "buyer" ? "Not Permitted" : kycGate.type === "rejected" ? "KYC Rejected" : "KYC Required"}
+            </h4>
+            <p style={{ color: "#555", marginBottom: 28, lineHeight: 1.6 }}>{kycGate.message}</p>
+            {isUnsubmitted && (
+              <Link href="/kyc" className="tf-btn bg-color-primary" style={{ display: "inline-block", padding: "12px 32px", borderRadius: 8, textDecoration: "none", color: "#fff", fontWeight: 600 }}>
+                Complete KYC Verification →
+              </Link>
+            )}
           </div>
         </div>
       </div>
