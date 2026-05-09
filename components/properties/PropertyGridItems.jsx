@@ -9,15 +9,16 @@ export default function PropertyGridItems({ showItems, properties: propsProp }) 
     <>
       {items.map((property) => (
         <div className="box-house hover-img" key={property.id}>
-          <div className="image-wrap">
-            <Link href={`/property-detail-v1/${property.id}`}>
+          <div className="image-wrap" style={{ height: 240, overflow: "hidden" }}>
+            <Link href={`/property-detail-v1/${property.id}`} style={{ display: "block", height: "100%" }}>
               <Image
                 className="lazyload"
                 alt={property.title || ""}
                 src={property.imageSrc || "/images/property/placeholder.jpg"}
-                width={property.imageWidth || 600}
-                height={property.imageHeight || 400}
+                width={600}
+                height={240}
                 unoptimized
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             </Link>
             <ul className="box-tag flex gap-8">
