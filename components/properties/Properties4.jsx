@@ -19,26 +19,88 @@ const TYPE_KEYS = {
   "land / plot": ["land", "plot", "plots"],
 };
 
-function Properties4Inner({ defaultGrid }) {
-  const searchParams  = useSearchParams();
-  const typeParam     = (searchParams.get("type") || "").toLowerCase();
+function matchesType(property, typeParam) {
+  if (!typeParam) return true;
+  const keys = TYPE_KEYS[typeParam] || [typeParam];
+  return keys.includes((property.propertyType || "").toLowerCase());
+}
 
-  const [properties, setProperties] = useState([]);
-  const [loading, setLoading]       = useState(true);
+function applyFilters(all, params) {
+  const typeParam    = (params.get("type") || "").toLowerCase();
+  const keyword      = (params.get("keyword") || "").toLowerCase();
+  const location     = (params.get("location") || "").toLowerCase();
+  const minPrice     = Number(params.get("minPrice")) || 0;
+  const maxPrice     = Number(params.get("maxPrice")) || Infinity;
+  const minSize      = Number(params.get("minSize")) || 0;
+  const maxSize      = Number(params.get("maxSize")) || Infinity;
+  const house        = (params.get("house") || "").toLowerCase();
+  const beds         = params.get("beds") || "";
+  const baths        = params.get("baths") || "";
+  const sortBy       = params.get("sort") || "";
+
+  let result = all.filter((p) => {
+    if (!matchesType(p, typeParam)) return false;
+
+    if (keyword && ![p.title, p.description, p.location, p.city, p.country]
+      .filter(Boolean).some(f => f.toLowerCase().includes(keyword))) return false;
+
+    if (location && ![p.location, p.city, p.country, p.address]
+      .filter(Boolean).some(f => f.toLowerCase().includes(location))) return false;
+
+    const price = Number(p.price) || 0;
+    if (minPrice > 0 && price < minPrice) return false;
+    if (maxPrice < Infinity && price > maxPrice) return false;
+
+    const sqft = Number(p.sqft) || 0;
+    if (minSize > 0 && sqft < minSize) return false;
+    if (maxSize < Infinity && sqft > maxSize) return false;
+
+    if (house && house !== "any") {
+      const typeMatch = TYPE_KEYS[house] || [house];
+      if (!typeMatch.includes((p.propertyType || "").toLowerCase())) return false;
+    }
+
+    if (beds && beds !== "Any") {
+      const bedNum = parseInt(beds);
+      const pBeds = parseInt(p.beds) || 0;
+      if (beds.includes("+")) { if (pBeds < bedNum) return false; }
+      else if (pBeds !== bedNum) return false;
+    }
+
+    if (baths && baths !== "Any") {
+      const bathNum = parseInt(baths);
+      const pBaths = parseInt(p.baths) || 0;
+      if (baths.includes("+")) { if (pBaths < bathNum) return false; }
+      else if (pBaths !== bathNum) return false;
+    }
+
+    return true;
+  });
+
+  if (sortBy === "Newest") result = result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  if (sortBy === "Oldest") result = result.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+  return result;
+}
+
+function Properties4Inner({ defaultGrid }) {
+  const searchParams = useSearchParams();
+  const [allProperties, setAllProperties] = useState([]);
+  const [filtered, setFiltered]           = useState([]);
+  const [loading, setLoading]             = useState(true);
 
   useEffect(() => {
     getAllProperties()
-      .then((all) => {
-        if (!typeParam) { setProperties(all); return; }
-        const keys = TYPE_KEYS[typeParam] || [typeParam];
-        setProperties(
-          all.filter((p) => keys.includes((p.propertyType || "").toLowerCase()))
-        );
-      })
+      .then((all) => { setAllProperties(all); })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [typeParam]);
+  }, []);
 
+  useEffect(() => {
+    setFiltered(applyFilters(allProperties, searchParams));
+  }, [allProperties, searchParams]);
+
+  const typeParam = (searchParams.get("type") || "").toLowerCase();
   const heading = typeParam
     ? typeParam.charAt(0).toUpperCase() + typeParam.slice(1)
     : "Property listing";
@@ -67,34 +129,30 @@ function Properties4Inner({ defaultGrid }) {
           <div className="col-lg-8">
             {loading ? (
               <p className="text-center py-60">Loading properties…</p>
+            ) : filtered.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "60px 20px", color: "#9ca3af" }}>
+                <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
+                <h5 style={{ color: "#374151", marginBottom: 8 }}>No properties found</h5>
+                <p style={{ fontSize: 14 }}>Try adjusting your filters or reset to see all listings.</p>
+              </div>
             ) : (
               <>
                 <div className="flat-animate-tab">
                   <div className="tab-content" suppressHydrationWarning>
-                    <div
-                      className={`tab-pane ${defaultGrid ? " active show" : ""}`}
-                      id="gridLayout"
-                      role="tabpanel"
-                      suppressHydrationWarning
-                    >
+                    <div className={`tab-pane ${defaultGrid ? " active show" : ""}`} id="gridLayout" role="tabpanel" suppressHydrationWarning>
                       <div className="tf-grid-layout md-col-2">
-                        <PropertyGridItems properties={properties} />
+                        <PropertyGridItems properties={filtered} />
                       </div>
                     </div>
-                    <div
-                      className={`tab-pane ${!defaultGrid ? " active show" : ""}`}
-                      id="listLayout"
-                      role="tabpanel"
-                      suppressHydrationWarning
-                    >
+                    <div className={`tab-pane ${!defaultGrid ? " active show" : ""}`} id="listLayout" role="tabpanel" suppressHydrationWarning>
                       <div className="wrap-list">
-                        <PropertyListItems properties={properties} />
+                        <PropertyListItems properties={filtered} />
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="wrap-pagination">
-                  <p className="text-1">Showing {properties.length} result{properties.length !== 1 ? "s" : ""}.</p>
+                  <p className="text-1">Showing {filtered.length} result{filtered.length !== 1 ? "s" : ""}.</p>
                 </div>
               </>
             )}
