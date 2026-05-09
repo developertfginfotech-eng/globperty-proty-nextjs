@@ -20,22 +20,8 @@ export default function Nav() {
     );
   return (
     <>
-      <li
-        className={`has-child ${
-          homes.some((elm) => elm.href == pathname) ? "current-menu" : ""
-        }`}
-      >
-        <a href="#">Home</a>
-        <ul className="submenu">
-          {homes.map((item, index) => (
-            <li
-              key={index}
-              className={pathname == item.href ? "current-item" : ""}
-            >
-              <Link href={item.href}>{item.label}</Link>
-            </li>
-          ))}
-        </ul>
+      <li className={pathname === "/" ? "current-menu" : ""}>
+        <Link href="/">Home</Link>
       </li>
       <li
         className={`has-child style-2 ${
