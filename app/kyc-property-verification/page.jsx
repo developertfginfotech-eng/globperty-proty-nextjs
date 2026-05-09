@@ -340,6 +340,7 @@ const PropertyKYCVerification = () => {
   const [files, setFiles] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [validationErrors, setValidationErrors] = useState([]);
   const [success, setSuccess] = useState(false);
   const [checking, setChecking] = useState(true);
   const [showRejectionInfo, setShowRejectionInfo] = useState(null);
@@ -706,6 +707,7 @@ const PropertyKYCVerification = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setValidationErrors([]);
     try {
       const token = localStorage.getItem('authToken');
       if (!token) { setError('Not authenticated'); router.push('/auth/sign-in'); return; }
@@ -798,6 +800,7 @@ const PropertyKYCVerification = () => {
       setTimeout(() => { router.push('/dashboard-home'); }, 2000);
     } catch (err) {
       setError(err.message || 'Failed to submit KYC');
+      if (err.errors && err.errors.length > 0) setValidationErrors(err.errors);
     } finally {
       setLoading(false);
     }
@@ -856,7 +859,8 @@ const PropertyKYCVerification = () => {
           <div className="col-lg-10 mx-auto">
             <div className="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
               <div className="text-center mb40">
-                <Image width={138} height={44} src="/images/header-logo2.svg" alt="Header Logo" className="mx-auto" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/logo/globperty-logo.svg" alt="Globperty" height={44} style={{ height: 44, width: "auto" }} />
               </div>
 
               {error && (
@@ -890,7 +894,14 @@ const PropertyKYCVerification = () => {
                       </div>
                     </div>
                   ) : (
-                    <><i className="fas fa-exclamation-circle me-2"></i>{error}</>
+                    <div>
+                      <div><i className="fas fa-exclamation-circle me-2"></i>{error}</div>
+                      {validationErrors.length > 0 && (
+                        <ul style={{ marginTop: 8, marginBottom: 0, paddingLeft: 20 }}>
+                          {validationErrors.map((e, i) => <li key={i} style={{ fontSize: 14 }}>{e}</li>)}
+                        </ul>
+                      )}
+                    </div>
                   )}
                 </div>
               )}
@@ -1594,8 +1605,7 @@ const PropertyKYCVerification = () => {
                             )}
 
                             {/* Tax Residence Information */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Country of Tax Residence *</h6>
-                            <div className="row mb30">
+                            <div className="row mb30 mt40">
                               <div className="col-md-6 mb20">
                                 <label className="form-label fw600">Country of Tax Residence *</label>
                                 <input
@@ -1704,6 +1714,7 @@ const PropertyKYCVerification = () => {
                                   </label>
                                 </div>
                               </div>
+                              <div className="col-12" style={{ borderTop: '1px solid #e5e7eb', marginTop: 10, marginBottom: 20 }} />
                               <div className="col-md-6 mb20">
                                 <label className="form-label fw600">Electronic Signature (Full Name) *</label>
                                 <input
@@ -1928,12 +1939,12 @@ const PropertyKYCVerification = () => {
                         )}
                         <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Required Documents</h6>
                         <div className="row mb30">
-                          {requirements.documents?.map(doc => (
-                            <div key={doc.key} className="col-md-12 mb20">
-                              <label className="form-label fw600">{doc.label} {doc.required ? '*' : '(Optional)'}</label>
+                          {requirements.documents?.map((doc, idx) => (
+                            <div key={doc.key} className="col-md-12" style={{ paddingTop: idx > 0 ? 20 : 0, marginBottom: 20, borderTop: idx > 0 ? '1px solid #e5e7eb' : 'none' }}>
+                              <label className="form-label fw600" style={{ fontSize: "15px", marginBottom: 10 }}>{doc.label} {doc.required ? '*' : '(Optional)'}</label>
                               {doc.hasFrontBack ? (
-                                <>
-                                  <div className="mb-2">
+                                <div className="row">
+                                  <div className="col-md-6 mb-3">
                                     <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#555" }}>
                                       {doc.frontLabel || 'Front Side'} {doc.required ? '*' : ''}
                                     </label>
@@ -1945,7 +1956,7 @@ const PropertyKYCVerification = () => {
                                       accept={doc.fileTypes?.join(',')}
                                     />
                                   </div>
-                                  <div>
+                                  <div className="col-md-6 mb-3">
                                     <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#555" }}>
                                       {doc.backLabel || 'Back Side'} {doc.required ? '*' : ''}
                                     </label>
@@ -1957,7 +1968,7 @@ const PropertyKYCVerification = () => {
                                       accept={doc.fileTypes?.join(',')}
                                     />
                                   </div>
-                                </>
+                                </div>
                               ) : (
                                 <input
                                   type="file"
@@ -2053,12 +2064,19 @@ const PropertyKYCVerification = () => {
                       </div>
                     )}
 
-                    {/* Show uploaded documents count */}
+                    {/* Show uploaded documents */}
                     <div className="mb30">
                       <h6 className="mb20" style={{ fontSize: "16px", fontWeight: "700" }}>Documents</h6>
-                      <p className="text-muted">
-                        {Object.keys(files).length} document(s) uploaded
-                      </p>
+                      {requirements?.documents?.map(doc => {
+                        const f = files[doc.key];
+                        const uploaded = doc.hasFrontBack ? (f?.front || f?.back) : !!f;
+                        return (
+                          <div key={doc.key} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                            <span style={{ color: uploaded ? "#16a34a" : "#dc2626", fontWeight: 600 }}>{uploaded ? "✓" : "✗"}</span>
+                            <span style={{ fontSize: 14, color: uploaded ? "#374151" : "#dc2626" }}>{doc.label}{doc.required ? " *" : " (Optional)"}</span>
+                          </div>
+                        );
+                      })}
                     </div>
                     <div className="checkbox-style1 mb20">
                       <label className="custom_checkbox">

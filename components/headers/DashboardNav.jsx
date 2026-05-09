@@ -7,16 +7,20 @@ export default function DashboardNav({ color = "" }) {
   const [isDDOpen, setIsDDOpen] = useState(false);
   const [userName, setUserName] = useState("");
   const [favCount, setFavCount] = useState(0);
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     try {
       const user = JSON.parse(localStorage.getItem("user") || "{}");
       if (user?.name) setUserName(user.name.split(" ")[0]);
+      if (user?.role) setRole(user.role);
     } catch {}
     apiClient.get("/favorites")
       .then((res) => setFavCount((res.data.favorites || []).length))
       .catch(() => {});
   }, []);
+
+  const isBuyer = role === "buyer";
   const handleLogout = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -353,7 +357,7 @@ export default function DashboardNav({ color = "" }) {
           </svg>
           My properties
         </Link>
-        <Link className="dropdown-item " href={`/add-property`}>
+        {!isBuyer && <Link className="dropdown-item " href={`/add-property`}>
           <svg
             width={20}
             height={20}
@@ -384,7 +388,7 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           Add property
-        </Link>
+        </Link>}
         <div className="dropdown-item ">
           <svg
             width={20}

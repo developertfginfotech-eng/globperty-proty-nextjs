@@ -57,7 +57,9 @@ export const kycAPI = {
     });
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || 'KYC submission failed');
+      const err = new Error(errorData.message || 'KYC submission failed');
+      err.errors = errorData.errors || [];
+      throw err;
     }
     return response.json();
   },

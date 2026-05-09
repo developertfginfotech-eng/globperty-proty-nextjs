@@ -7,12 +7,19 @@ import apiClient from "@/utils/apiClient";
 export default function Sidebar() {
   const pathname = usePathname();
   const [favCount, setFavCount] = useState(0);
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     apiClient.get("/favorites")
       .then((res) => setFavCount((res.data.favorites || []).length))
       .catch(() => {});
+    try {
+      const u = JSON.parse(localStorage.getItem("user") || "{}");
+      setRole(u.role || "");
+    } catch {}
   }, []);
+
+  const isBuyer = role === "buyer";
   return (
     <div className="wrap-sidebar">
       <div className="sidebar-menu-dashboard">
@@ -361,7 +368,7 @@ export default function Sidebar() {
                 My properties
               </Link>
             </li>
-            <li
+            {!isBuyer && <li
               className={`nav-menu-item ${
                 pathname == "/add-property" ? "active" : ""
               } `}
@@ -398,7 +405,7 @@ export default function Sidebar() {
                 </svg>
                 Add property
               </Link>
-            </li>
+            </li>}
             <li className={`nav-menu-item `}>
               <Link className="nav-menu-link" href={`/`}>
                 <svg
