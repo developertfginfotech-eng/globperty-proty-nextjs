@@ -14,7 +14,7 @@ export default function HelpCenter() {
           <div className="col-12">
             <div className="heading-section mb-68 gap-32">
               <h2 className="title fw-5 split-text effect-right">
-                <SplitTextAnimation text="See how Proty can help" />
+                <SplitTextAnimation text="See how Globperty can help" />
               </h2>
               <p
                 className="text-1 text-color-default wow animate__fadeInUp animate__animated"

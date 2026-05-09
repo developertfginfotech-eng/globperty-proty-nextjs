@@ -8,8 +8,8 @@ import { agenciesData } from "@/data/agency";
 import React from "react";
 
 export const metadata = {
-  title: "Agency Details || Proty - Real Estate React Nextjs Template",
-  description: "Proty - Real Estate React Nextjs Template",
+  title: "Agency Details || Globperty - Real Estate React Nextjs Template",
+  description: "Globperty - Real Estate React Nextjs Template",
 };
 export default async function page({ params }) {
   const { id } = await params;

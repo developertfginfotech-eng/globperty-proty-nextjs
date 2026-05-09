@@ -7,8 +7,8 @@ import Header1 from "@/components/headers/Header1";
 import React from "react";
 
 export const metadata = {
-  title: "Agency List || Proty - Real Estate React Nextjs Template",
-  description: "Proty - Real Estate React Nextjs Template",
+  title: "Agency List || Globperty - Real Estate React Nextjs Template",
+  description: "Globperty - Real Estate React Nextjs Template",
 };
 export default function page() {
   return (

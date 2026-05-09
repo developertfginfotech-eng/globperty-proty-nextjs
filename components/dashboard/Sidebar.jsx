@@ -1,10 +1,18 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import apiClient from "@/utils/apiClient";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [favCount, setFavCount] = useState(0);
+
+  useEffect(() => {
+    apiClient.get("/favorites")
+      .then((res) => setFavCount((res.data.favorites || []).length))
+      .catch(() => {});
+  }, []);
   return (
     <div className="wrap-sidebar">
       <div className="sidebar-menu-dashboard">
@@ -180,7 +188,7 @@ export default function Sidebar() {
                     strokeLinejoin="round"
                   />
                 </svg>
-                My favorites (1)
+                My favorites {favCount > 0 ? `(${favCount})` : ""}
               </Link>
             </li>
             <li

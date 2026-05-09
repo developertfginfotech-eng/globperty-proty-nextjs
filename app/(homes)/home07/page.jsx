@@ -15,8 +15,8 @@ import Footer1 from "@/components/footers/Footer1";
 import Footer2 from "@/components/footers/Footer2";
 
 export const metadata = {
-  title: "Home 07 || Proty - Real Estate React Nextjs Template",
-  description: "Proty - Real Estate React Nextjs Template",
+  title: "Home 07 || Globperty - Real Estate React Nextjs Template",
+  description: "Globperty - Real Estate React Nextjs Template",
 };
 export default function page() {
   return (

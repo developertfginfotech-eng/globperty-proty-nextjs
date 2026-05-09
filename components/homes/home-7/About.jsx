@@ -17,7 +17,7 @@ export default function About() {
                   data-wow-duration="1.5s"
                   data-wow-delay="0s"
                 >
-                  At Proty, we're more than just a real estate company; we're
+                  At Globperty, we're more than just a real estate company; we're
                   architects of dreams, crafting spaces where life flourishes
                   and businesses thrive. With a rich history spanning 12 years,
                   we've established ourselves as a trusted leader in the real

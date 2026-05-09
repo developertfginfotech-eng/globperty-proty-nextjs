@@ -13,7 +13,7 @@ export default function Jobs() {
                 data-wow-duration="1s"
                 data-wow-delay="0s"
               >
-                Best Job For You At Proty
+                Best Job For You At Globperty
               </h2>
               <p
                 className="text-1 wow animate__fadeInUp animate__animated"

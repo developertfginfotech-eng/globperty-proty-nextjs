@@ -14,8 +14,8 @@ import WelcomeSection from "@/components/homes/home-8/WelcomeSection";
 import React from "react";
 
 export const metadata = {
-  title: "Home 08 || Proty - Real Estate React Nextjs Template",
-  description: "Proty - Real Estate React Nextjs Template",
+  title: "Home 08 || Globperty - Real Estate React Nextjs Template",
+  description: "Globperty - Real Estate React Nextjs Template",
 };
 export default function page() {
   return (

@@ -9,8 +9,8 @@ import React from "react";
 
 export const metadata = {
   title:
-    "Property List Top Search || Proty - Real Estate React Nextjs Template",
-  description: "Proty - Real Estate React Nextjs Template",
+    "Property List Top Search || Globperty - Real Estate React Nextjs Template",
+  description: "Globperty - Real Estate React Nextjs Template",
 };
 export default function page() {
   return (

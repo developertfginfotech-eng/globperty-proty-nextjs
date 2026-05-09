@@ -1,16 +1,21 @@
 "use client";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import apiClient from "@/utils/apiClient";
 
 export default function DashboardNav({ color = "" }) {
   const [isDDOpen, setIsDDOpen] = useState(false);
   const [userName, setUserName] = useState("");
+  const [favCount, setFavCount] = useState(0);
 
   useEffect(() => {
     try {
       const user = JSON.parse(localStorage.getItem("user") || "{}");
       if (user?.name) setUserName(user.name.split(" ")[0]);
     } catch {}
+    apiClient.get("/favorites")
+      .then((res) => setFavCount((res.data.favorites || []).length))
+      .catch(() => {});
   }, []);
   const handleLogout = (e) => {
     e.preventDefault();
@@ -236,7 +241,7 @@ export default function DashboardNav({ color = "" }) {
               strokeLinejoin="round"
             />
           </svg>
-          My favorites (1)
+          My favorites {favCount > 0 ? `(${favCount})` : ""}
         </Link>
         <Link className="dropdown-item" href={`/my-save-search`}>
           <svg

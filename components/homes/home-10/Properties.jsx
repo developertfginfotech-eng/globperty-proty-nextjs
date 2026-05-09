@@ -14,7 +14,7 @@ export default function Properties() {
           <div className="col-12">
             <div className="heading-section text-center gap-30 mb-56">
               <h2 className="title split-text effect-right">
-                <SplitTextAnimation text="Premium properties by Proty" />
+                <SplitTextAnimation text="Premium properties by Globperty" />
               </h2>
               <p className="text-1 split-text split-lines-transform">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce

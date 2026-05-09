@@ -45,7 +45,7 @@ export default function Benefits() {
                   data-wow-delay="0s"
                 >
                   Benefits when you work <br />
-                  at Proty
+                  at Globperty
                 </h2>
                 <div
                   className="description wow animate__fadeInUp animate__animated"

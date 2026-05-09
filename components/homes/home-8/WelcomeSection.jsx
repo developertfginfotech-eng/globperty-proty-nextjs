@@ -34,14 +34,14 @@ export default function WelcomeSection() {
             <div className="content">
               <div className="heading-section mb-32 gap-30">
                 <h2 className="title split-text effect-right fw-5">
-                  <SplitTextAnimation text="Welcome to Proty" />
+                  <SplitTextAnimation text="Welcome to Globperty" />
                 </h2>
                 <p
                   className="text-1 text-color-default wow animate__fadeInUp animate__animated"
                   data-wow-duration="1.5s"
                   data-wow-delay="0s"
                 >
-                  At Proty, we're more than just a real estate company; we're
+                  At Globperty, we're more than just a real estate company; we're
                   architects of dreams, crafting spaces where life flourishes
                   and businesses thrive. With a rich history spanning 12 years,
                   we've established ourselves as a trusted leader in the real

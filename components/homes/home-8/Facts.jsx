@@ -13,7 +13,7 @@ export default function Facts() {
                 <SplitTextAnimation text="Market leader in real estate" />
               </h2>
               <p className="text-1 text-color-default split-text split-lines-transform">
-                At Proty, we're more than just a real estate company; we're
+                At Globperty, we're more than just a real estate company; we're
                 architects of dreams, crafting spaces where life <br />
                 flourishes and businesses thrive.
               </p>

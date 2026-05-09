@@ -8,7 +8,7 @@ export default function Hero() {
           <div className="col-12">
             <div className="clip-color-text heading">
               <div className="clip-text-bg-Horizontal" id="scrollText">
-                PROTY
+                GLOBPERTY
               </div>
             </div>
             <div className="text-uppercase fw-3 text-13 text-color-heading text-center sub split-text split-lines-rotation-x">

@@ -17,7 +17,7 @@ export default function Banner() {
                     className="text-1 split-text split-lines-transform"
                     data-wow-duration="1s"
                   >
-                    Proty® agents have the experience to get the job done in
+                    Globperty® agents have the experience to get the job done in
                     today’s market, backed by a robust network of over 140,000
                     agents in more than 9,000 offices worldwide. With our
                     extensive global connections and deep local insights, you

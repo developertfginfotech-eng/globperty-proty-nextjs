@@ -14,7 +14,7 @@ export default function HelpSection() {
           <div className="col-12">
             <div className="heading-section text-center mb-68 gap-33">
               <h2 className="title fw-5 split-text effect-right">
-                <SplitTextAnimation text="See how Proty can help" />
+                <SplitTextAnimation text="See how Globperty can help" />
               </h2>
               <p className="text-1 text-color-default split-text split-lines-transform">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce

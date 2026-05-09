@@ -14,11 +14,11 @@ export default function About() {
                 <div className="box-contact style-1 pt-0 pb-0">
                   <div className="heading-section mb-56 gap-32">
                     <h2 className="title split-text split-lines-transform">
-                      Proty Comprehensive solution for your real estate buying
+                      Globperty Comprehensive solution for your real estate buying
                       and selling
                     </h2>
                     <p className="text-1 wow animate__fadeInUp animate__animated">
-                      At Proty, we're more than just a real estate company;
+                      At Globperty, we're more than just a real estate company;
                       we're architects of dreams, crafting spaces where life
                       flourishes and businesses thrive. With a rich history
                       spanning 12 years, we've established ourselves as a
@@ -78,7 +78,7 @@ export default function About() {
                       </div>
                       <div className="content">
                         <div className="sub">Nee live help</div>
-                        <p>proty-support@gmail.com</p>
+                        <p>support@globperty.com</p>
                       </div>
                     </li>
                   </ul>
@@ -108,7 +108,7 @@ export default function About() {
                           </defs>
                           <text>
                             <textPath xlinkHref="#textcircle" textLength={900}>
-                              find the dream home Proty real estate *
+                              find the dream home Globperty real estate *
                             </textPath>
                           </text>
                         </svg>

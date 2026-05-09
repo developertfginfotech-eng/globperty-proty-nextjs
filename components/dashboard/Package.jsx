@@ -39,7 +39,7 @@ export default function Package() {
         </div>
         {/* .footer-dashboard */}
         <div className="footer-dashboard style-2">
-          <p>Copyright © {new Date().getFullYear()} Popty</p>
+          <p>Copyright © {new Date().getFullYear()} Globperty</p>
           <ul className="list">
             <li>
               <a href="#">Privacy</a>

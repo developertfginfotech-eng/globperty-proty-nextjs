@@ -15,7 +15,7 @@ export default function About() {
                   className="text-1 text-color1 description wow animate__fadeInUp animate__animated"
                   data-wow-delay="0.3s"
                 >
-                  At Proty, we're more than just a real estate company; we're
+                  At Globperty, we're more than just a real estate company; we're
                   architects of dreams, crafting spaces where life flourishes
                   and businesses thrive. With a rich history spanning 12 years,
                   we've established ourselves as a trusted leader in the real
@@ -44,7 +44,7 @@ export default function About() {
                     <div className="content">
                       <div className="title text-1">Nee live help</div>
                       <h6 className="fw-4">
-                        <a href="#"> proty-support@gmail.com </a>
+                        <a href="#"> support@globperty.com </a>
                       </h6>
                     </div>
                   </div>

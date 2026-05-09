@@ -5,8 +5,8 @@ import Properties5 from "@/components/properties/Properties5";
 import React from "react";
 
 export const metadata = {
-  title: "Property Half Map Grid || Proty - Real Estate React Nextjs Template",
-  description: "Proty - Real Estate React Nextjs Template",
+  title: "Property Half Map Grid || Globperty - Real Estate React Nextjs Template",
+  description: "Globperty - Real Estate React Nextjs Template",
 };
 export default function page() {
   return (
