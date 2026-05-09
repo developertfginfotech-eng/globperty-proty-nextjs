@@ -2095,20 +2095,34 @@ const PropertyKYCVerification = () => {
                   </div>
                 )}
 
-                <div className="text-center mt30">
+                <div style={{ margin: '32px 0 0', borderTop: '1px solid #e5e7eb', paddingTop: 24, textAlign: 'center' }}>
+                  <p style={{ fontSize: 13, color: '#9ca3af', marginBottom: 10 }}>
+                    Not ready yet? You can complete this later from your dashboard.
+                  </p>
                   <button
                     type="button"
                     onClick={() => router.push('/dashboard-home')}
-                    style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: 14, cursor: 'pointer', textDecoration: 'underline' }}
+                    style={{
+                      background: '#f9fafb',
+                      border: '1px solid #e5e7eb',
+                      color: '#6b7280',
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      padding: '8px 22px',
+                      borderRadius: 8,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      transition: 'background 0.2s',
+                    }}
                   >
-                    Skip for now — I'll complete KYC later
+                    Skip for now
+                    <span style={{ fontSize: 16, lineHeight: 1 }}>→</span>
                   </button>
-                  <p style={{ fontSize: 12, color: '#d1d5db', marginTop: 4 }}>
-                    You won't be able to list properties until KYC is verified.
-                  </p>
                 </div>
 
-                <div className="d-flex justify-content-between align-items-center mt20">
+                <div className="d-flex justify-content-between align-items-center mt30">
                   {step > 1 && <button type="button" className="btn btn-border-light-2 btn-lg" onClick={() => setStep(step - 1)}><i className="fas fa-arrow-left me-2"></i> Previous</button>}
                   {step < getTotalSteps() ? (
                     <button type="button" className="btn btn-danger btn-lg ms-auto" onClick={() => setStep(step + 1)} disabled={!canProceedToNextStep()} style={{ opacity: !canProceedToNextStep() ? 0.5 : 1 }}>Next <i className="fas fa-arrow-right ms-2"></i></button>
