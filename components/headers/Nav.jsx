@@ -298,7 +298,7 @@ export default function Nav() {
   return (
     <>
       <li className={pathname === "/" ? "current-menu" : ""} style={{ whiteSpace: "nowrap" }}>
-        <Link href="/" style={{ fontSize: 13, padding: "0 10px", whiteSpace: "nowrap" }}>Home</Link>
+        <Link href="/" style={{ fontSize: 14, padding: "0 14px", whiteSpace: "nowrap", display: "block" }}>Home</Link>
       </li>
       {MENU.map((menu) => (
         <li
@@ -309,7 +309,7 @@ export default function Nav() {
         >
           <a
             href="#"
-            style={{ display: "flex", alignItems: "center", gap: 3, cursor: "pointer", fontSize: 13, padding: "0 10px", whiteSpace: "nowrap" }}
+            style={{ display: "flex", alignItems: "center", gap: 4, cursor: "pointer", fontSize: 14, padding: "0 14px", whiteSpace: "nowrap" }}
             onClick={e => e.preventDefault()}
           >
             {menu.label}
@@ -325,7 +325,7 @@ export default function Nav() {
         </li>
       ))}
       <li className={pathname === "/contact" ? "current-menu" : ""} style={{ whiteSpace: "nowrap" }}>
-        <Link href="/contact" style={{ fontSize: 13, padding: "0 10px", whiteSpace: "nowrap" }}>Contact</Link>
+        <Link href="/contact" style={{ fontSize: 14, padding: "0 14px", whiteSpace: "nowrap", display: "block" }}>Contact</Link>
       </li>
     </>
   );
