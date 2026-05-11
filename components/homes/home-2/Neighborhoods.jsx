@@ -80,13 +80,12 @@ export default function Neighborhoods() {
             ))}
           </div>
 
-          <div className="text-center" style={{ marginTop: "32px" }}>
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "32px" }}>
             <button
               onClick={() => setShowAll((v) => !v)}
               className="tf-btn style-border pd-23"
-              style={{ minWidth: "180px" }}
             >
-              {showAll ? "Load Less" : "Load More"} <i className={`icon-arrow-${showAll ? "up" : "right"}`} />
+              {showAll ? "Less" : "More"} <i className={`icon-arrow-${showAll ? "up" : "right"}`} />
             </button>
           </div>
         </div>
