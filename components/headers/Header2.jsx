@@ -8,27 +8,27 @@ export default function Header2() {
   return (
     <header id="header-main" className="header style-2">
       <div className="header-inner">
-        <div className="tf-container lg">
+        <div style={{ maxWidth: "100%", padding: "0 24px" }}>
           <div className="row">
             <div className="col-12">
-              <div className="header-inner-wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div className="header-inner-wrap" style={{ display: "flex", alignItems: "center", gap: 24 }}>
                 {/* Logo */}
-                <div className="header-logo" style={{ flex: "0 0 auto" }}>
+                <div className="header-logo" style={{ flexShrink: 0 }}>
                   <Link href={`/`} className="site-logo" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/images/logo/globperty-logo.svg" alt="Globperty" height={44} style={{ height: 44, width: "auto" }} />
+                    <img src="/images/logo/globperty-logo.svg" alt="Globperty" height={40} style={{ height: 40, width: "auto" }} />
                   </Link>
                 </div>
 
-                {/* Nav — centered */}
-                <nav className="main-menu" style={{ flex: "1 1 auto", display: "flex", justifyContent: "center" }}>
-                  <ul className="navigation">
+                {/* Nav */}
+                <nav className="main-menu" style={{ flex: "1 1 auto", overflow: "visible", minWidth: 0 }}>
+                  <ul className="navigation" style={{ display: "flex", alignItems: "center", gap: 0, flexWrap: "nowrap", margin: 0, padding: 0, listStyle: "none" }}>
                     <Nav />
                   </ul>
                 </nav>
 
                 {/* Right actions */}
-                <div className="header-right" style={{ flex: "0 0 auto", display: "flex", alignItems: "center", gap: 16 }}>
+                <div className="header-right" style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 12 }}>
                   <DashboardNav color="text_white" />
                   <div className="btn-add">
                     <AddPropertyBtn />

@@ -71,7 +71,7 @@ const MENU = [
     ],
   },
   {
-    label: "Knowledge Base",
+    label: "Guides",
     sections: [
       {
         title: "GUIDES & RESEARCH",
@@ -104,7 +104,7 @@ const MENU = [
     ],
   },
   {
-    label: "Golden Visa",
+    label: "Visas",
     sections: [
       {
         title: "BY COUNTRY PROGRAM",
@@ -205,7 +205,7 @@ const MENU = [
     ],
   },
   {
-    label: "For Agents",
+    label: "Agents",
     sections: [
       {
         title: "AGENTS & DEVELOPERS",
@@ -297,19 +297,19 @@ export default function Nav() {
 
   return (
     <>
-      <li className={pathname === "/" ? "current-menu" : ""}>
-        <Link href="/">Home</Link>
+      <li className={pathname === "/" ? "current-menu" : ""} style={{ whiteSpace: "nowrap" }}>
+        <Link href="/" style={{ fontSize: 13, padding: "0 10px", whiteSpace: "nowrap" }}>Home</Link>
       </li>
       {MENU.map((menu) => (
         <li
           key={menu.label}
-          style={{ position: "relative" }}
+          style={{ position: "relative", whiteSpace: "nowrap" }}
           onMouseEnter={() => show(menu.label)}
           onMouseLeave={hide}
         >
           <a
             href="#"
-            style={{ display: "flex", alignItems: "center", gap: 4, cursor: "pointer" }}
+            style={{ display: "flex", alignItems: "center", gap: 3, cursor: "pointer", fontSize: 13, padding: "0 10px", whiteSpace: "nowrap" }}
             onClick={e => e.preventDefault()}
           >
             {menu.label}
@@ -324,8 +324,8 @@ export default function Nav() {
           )}
         </li>
       ))}
-      <li className={pathname === "/contact" ? "current-menu" : ""}>
-        <Link href="/contact">Contact</Link>
+      <li className={pathname === "/contact" ? "current-menu" : ""} style={{ whiteSpace: "nowrap" }}>
+        <Link href="/contact" style={{ fontSize: 13, padding: "0 10px", whiteSpace: "nowrap" }}>Contact</Link>
       </li>
     </>
   );
