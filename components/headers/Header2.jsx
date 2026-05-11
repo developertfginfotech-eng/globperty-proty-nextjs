@@ -15,8 +15,8 @@ export default function Header2() {
                 {/* Logo */}
                 <div className="header-logo" style={{ flexShrink: 0, marginRight: 24 }}>
                   <Link href={`/`} className="site-logo" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/images/logo/globperty-logo.svg" alt="Globperty" height={40} style={{ height: 40, width: "auto" }} />
+                    <span style={{ fontSize: 24, fontWeight: 800, color: "#fff", letterSpacing: "-0.5px" }}>Glob</span>
+                    <span style={{ fontSize: 24, fontWeight: 800, color: "#f0822d", letterSpacing: "-0.5px" }}>perty</span>
                   </Link>
                 </div>
 

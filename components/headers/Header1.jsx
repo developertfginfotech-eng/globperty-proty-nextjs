@@ -14,8 +14,8 @@ export default function Header1({ parentClass = "header" }) {
               <div className="header-inner-wrap">
                 <div className="header-logo">
                   <Link href={`/`} className="site-logo" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/images/logo/globperty-logo.svg" alt="Globperty" height={44} style={{ height: 44, width: "auto" }} />
+                    <span style={{ fontSize: 24, fontWeight: 800, color: "#fff", letterSpacing: "-0.5px" }}>Glob</span>
+                    <span style={{ fontSize: 24, fontWeight: 800, color: "#f0822d", letterSpacing: "-0.5px" }}>perty</span>
                   </Link>
                 </div>
                 <nav className="main-menu">
