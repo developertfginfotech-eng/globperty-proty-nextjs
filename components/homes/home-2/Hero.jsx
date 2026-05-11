@@ -56,7 +56,7 @@ export default function Hero() {
   const [showFilter, setShowFilter] = useState(false);
   const recognitionRef = useRef(null);
 
-  const tabs = ["Buy", "Rent", "Sell"];
+  const tabs = ["Buy", "Sell", "Rent"];
 
   const handleMic = () => {
     if (typeof window === "undefined") return;
