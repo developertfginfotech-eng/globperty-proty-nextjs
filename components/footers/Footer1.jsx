@@ -1,319 +1,319 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import Link from "next/link";
-import axios from "axios";
-import { footerData } from "@/data/footerLinks";
-export default function Footer1({ logo = "/images/logo/globperty-logo.svg" }) {
-  useEffect(() => {
-    const headings = document.querySelectorAll(".title-mobile");
 
-    const toggleOpen = (event) => {
-      const parent = event.target.closest(".footer-col-block");
-      const content = parent.querySelector(".tf-collapse-content");
+const PROPERTIES = [
+  "Buy Property Abroad","Rent Property Abroad","Sell Your Property","Short Stay / Holiday Let",
+  "Student Housing","Shared / Roommate Housing","New Projects & Off-Plan","Luxury Properties",
+  "Commercial Property","Apartments & Flats","Villas & Houses","Townhouses","Penthouses",
+  "Land & Plots","Beachfront Properties","Investment Properties",
+];
 
-      if (parent.classList.contains("open")) {
-        parent.classList.remove("open");
-        content.style.height = "0px";
-      } else {
-        parent.classList.add("open");
-        content.style.height = content.scrollHeight + 10 + "px";
-      }
-    };
+const KNOWLEDGE_BASE = [
+  "Country Investment Guides","City & Area Guides","Property Market Reports","Golden Visa Guides",
+  "Legal & Ownership Rules","Tax Guides by Country","Expat Living Guides","Student Housing Guide",
+  "Airbnb Investment Guide","Off-Plan Buying Guide","Mortgage Guides","NRI Property Guide",
+  "Relocation Guide","Commercial Property Guide","News & Market Updates","Property Glossary",
+];
 
-    headings.forEach((heading) => {
-      heading.addEventListener("click", toggleOpen);
-    });
+const TOOLS_FINANCE = [
+  "Rental Yield Calculator","ROI & Growth Estimator","Mortgage Calculator","Currency Converter",
+  "Visa Eligibility Checker","Airbnb Income Estimator","Cost of Buying Calculator",
+  "Country Comparison Tool","Neighbourhood Explorer","AI Property Assistant",
+  "Mortgage Partners","Compare Mortgages","Property Insurance","Legal Services",
+  "Tax Advisory","Islamic Finance",
+];
 
-    // Clean up event listeners when the component unmounts
-    return () => {
-      headings.forEach((heading) => {
-        heading.removeEventListener("click", toggleOpen);
-      });
-    };
-  }, []); // Empty dependency array means this will run only once on mount
-  const [success, setSuccess] = useState(true);
-  const [showMessage, setShowMessage] = useState(false);
+const COMPANY = [
+  "About Globperty","Our Story","Our Team","Careers","Press & Media","Blog","Contact Us","FAQ",
+];
 
-  const handleShowMessage = () => {
-    setShowMessage(true);
-    setTimeout(() => {
-      setShowMessage(false);
-    }, 2000);
-  };
+const FOR_AGENTS = [
+  { label: "List Your Properties", badge: "FREE" },
+  { label: "Create Agent Profile" },
+  { label: "Agent Dashboard" },
+  { label: "Buy Leads" },
+  { label: "Developer Packages" },
+  { label: "Exhibit at Expo" },
+  { label: "Advertise" },
+  { label: "Partner With Us" },
+];
 
-  const sendEmail = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    const email = e.target.email.value;
+const COUNTRIES = [
+  {
+    flag: "🇦🇪", name: "UAE Properties",
+    links: ["Buy Property in Dubai","Rent Property in Dubai","Apartments in Dubai Marina","Villas in Palm Jumeirah","Property in Downtown Dubai","Buy Property in Abu Dhabi","Property in Sharjah","Dubai Off-Plan Projects","Dubai Golden Visa Property","Invest in UAE Real Estate"],
+  },
+  {
+    flag: "🇵🇹", name: "Portugal Properties",
+    links: ["Buy Property in Portugal","Property in Lisbon","Property in Porto","Algarve Property for Sale","Portugal Golden Visa Property","Madeira Property","Holiday Homes in Portugal","Apartments in Lisbon","Invest in Portugal Real Estate","Portugal Property for Indians"],
+  },
+  {
+    flag: "🇹🇷", name: "Turkey Properties",
+    links: ["Buy Property in Turkey","Property in Istanbul","Apartments in Antalya","Villas in Bodrum","Turkey Citizenship Property","Property in Izmir","Beachfront Property Turkey","Off-Plan in Istanbul","Invest in Turkey Real Estate","Turkey Property for Indians"],
+  },
+  {
+    flag: "🇦🇺", name: "Australia Properties",
+    links: ["Buy Property in Australia","Property in Sydney","Property in Melbourne","Apartments in Brisbane","Perth Property for Sale","Student Housing Sydney","Student Housing Melbourne","Investment Property Australia","Rent in Sydney","NRI Property in Australia"],
+  },
+  {
+    flag: "🇺🇸", name: "USA Properties",
+    links: ["Buy Property in USA","Property in Miami","Property in New York","Property in Los Angeles","Texas Real Estate","Student Housing in USA","Condos in Miami Beach","Invest in US Real Estate","Florida Property for Sale","NRI Property in USA"],
+  },
+  {
+    flag: "🇨🇦", name: "Canada Properties",
+    links: ["Buy Property in Canada","Property in Toronto","Property in Vancouver","Calgary Real Estate","Montreal Property","Student Housing Toronto","Student Housing Vancouver","Invest in Canada Real Estate","NRI Property in Canada","Condos in Toronto"],
+  },
+  {
+    flag: "🇨🇾", name: "Cyprus Properties",
+    links: ["Buy Property in Cyprus","Property in Limassol","Property in Paphos","Nicosia Real Estate","Cyprus Residency Property","Larnaca Property","Beachfront Cyprus Property","Villas in Cyprus","Invest in Cyprus","Cyprus Property for Indians"],
+  },
+  {
+    flag: "🇲🇹", name: "Malta Properties",
+    links: ["Buy Property in Malta","Property in Sliema","Property in St Julian's","Valletta Real Estate","Malta Residency Property","Gozo Property for Sale","Apartments in Malta","Invest in Malta","Malta Property for Indians","Holiday Homes Malta"],
+  },
+  {
+    flag: "🇲🇾", name: "Malaysia Properties",
+    links: ["Buy Property in Malaysia","Property in Kuala Lumpur","Property in Penang","Johor Bahru Real Estate","Malaysia MM2H Property","Langkawi Property","Student Housing Malaysia","Condos in KL","Invest in Malaysia","Malaysia Property for Indians"],
+  },
+  {
+    flag: "🇵🇭", name: "Philippines Properties",
+    links: ["Buy Property in Philippines","Property in Manila","Property in Cebu","Davao Real Estate","Condos in BGC Manila","Boracay Property","Makati Property","Invest in Philippines","Holiday Homes Philippines","Rental Property Manila"],
+  },
+  {
+    flag: "🇭🇺", name: "Hungary Properties",
+    links: ["Buy Property in Hungary","Property in Budapest","Hungary Guest Investor Visa","Apartments in Budapest","Invest in Hungary","Budapest Investment Property","Hungary Property for Indians","Student Housing Budapest","Commercial Property Hungary","Holiday Homes Hungary"],
+  },
+  {
+    flag: "🇱🇻", name: "Latvia Properties",
+    links: ["Buy Property in Latvia","Property in Riga","Jurmala Property for Sale","Latvia Residency Property","Apartments in Riga","Invest in Latvia","Latvia Property for Indians","Beach Property Latvia","Commercial Property Riga","EU Residency via Latvia"],
+  },
+];
 
-    try {
-      const response = await axios.post(
-        "https://express-brevomail.vercel.app/api/contacts",
-        {
-          email,
-        }
-      );
+const POPULAR_SEARCHES = [
+  "Apartments Abroad","Villas for Sale","Golden Visa Properties","Beachfront Homes",
+  "Student Accommodation","Holiday Lets","Off-Plan Properties","Luxury Penthouses",
+  "NRI Investment","Commercial Property","Airbnb Properties","Residency by Investment",
+  "Land & Plots","Townhouses","New Launches 2025",
+];
 
-      if ([200, 201].includes(response.status)) {
-        e.target.reset(); // Reset the form
-        setSuccess(true); // Set success state
-        handleShowMessage();
-      } else {
-        setSuccess(false); // Handle unexpected responses
-        handleShowMessage();
-      }
-    } catch (error) {
-      console.error("Error:", error.response?.data || "An error occurred");
-      setSuccess(false); // Set error state
-      handleShowMessage();
-      e.target.reset(); // Reset the form
-    }
-  };
+const POPULAR_GUIDES = [
+  "How to Buy Property in Dubai as Indian","Portugal Golden Visa Guide 2025","Turkey Citizenship by Investment",
+  "Can Foreigners Buy in Malaysia","Best Areas to Invest in Dubai","Rental Yield Dubai Marina",
+  "Cyprus Permanent Residency Guide","Student Housing in Sydney","Malta Residency Programme 2025",
+  "Philippines Property Foreign Buyers","Hungary Guest Investor Visa","NRI Buying Property Abroad Guide",
+  "Latvia EU Residency via Property","Airbnb Investment Dubai 2025","Off-Plan Property Dubai Guide",
+  "Property Tax in Portugal Explained","Best Cities to Invest in Turkey","Student Accommodation Melbourne",
+  "Buy Property in Lisbon as Foreigner","ROI Buying Property in Cyprus","Cost of Living in Dubai for Indians",
+  "Toronto Condo Investment Guide","Malaysia MM2H Visa 2025","How to Get UAE Golden Visa",
+];
+
+const TRUST_BADGES = [
+  { icon: "✅", text: "Verified Agents & Developers" },
+  { icon: "🌍", text: "12 Countries · 40+ Cities" },
+  { icon: "🔍", text: "AI-Powered Search" },
+  { icon: "🪪", text: "Golden Visa Experts" },
+  { icon: "🎓", text: "Student Housing Specialists" },
+  { icon: "🔒", text: "Secure & GDPR Compliant" },
+  { icon: "💬", text: "24/7 AI Support" },
+  { icon: "🏛", text: "Globperty LLC · USA" },
+];
+
+const LEGAL_LINKS = ["Privacy Policy","Terms of Use","Cookie Policy","Disclaimer","GDPR Compliance","Sitemap","Accessibility"];
+
+export default function Footer1() {
+  const [email, setEmail] = useState("");
 
   return (
-    <footer id="footer">
-      <div className="tf-container">
-        <div className="row">
-          <div className="col-12">
-            <div className="footer-top">
-              <div className="footer-logo">
-                <Link href={`/`}>
-                  <Image
-                    id="logo_footer"
-                    alt="logo-footer"
-                    src={logo}
-                    width={272}
-                    height={85}
-                  />
-                </Link>
-              </div>
-              <div className="wrap-contact-item">
-                <div className="contact-item">
-                  <div className="icons">
-                    <i className="icon-phone-2" />
-                  </div>
-                  <div className="content">
-                    <div className="title text-1">Call us</div>
-                    <h6>
-                      <a href="#"> (603) 555-0123</a>
-                    </h6>
-                  </div>
-                </div>
-                <div className="contact-item">
-                  <div className="icons">
-                    <i className="icon-letter-2" />
-                  </div>
-                  <div className="content">
-                    <div className="title text-1">Nee live help</div>
-                    <h6 className="fw-4">
-                      <a href="#">globperty-support@gmail.com</a>
-                    </h6>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <footer style={{ background: "#0d1b2a", color: "#c9d1d9", fontFamily: "inherit" }}>
+
+      {/* Newsletter Banner */}
+      <div style={{ background: "#112240", borderBottom: "1px solid #1a3050", padding: "20px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+            <span style={{ fontSize: 20 }}>🌍</span>
+            <strong style={{ color: "#fff", fontSize: 16 }}>Stay ahead of global property markets</strong>
           </div>
-          <div className="footer-main">
-            <div className="row">
-              {footerData.map((column, index) => (
-                <div className="col-lg-3 col-md-6" key={index}>
-                  <div
-                    className={`footer-menu-list footer-col-block ${
-                      column.className || ""
-                    }`}
-                  >
-                    <h5 className="title lh-30 title-desktop">
-                      {column.title}
-                    </h5>
-                    <h5 className="title lh-30 title-mobile">{column.title}</h5>
-                    <ul className="tf-collapse-content">
-                      {column.links.map((link, linkIndex) => (
-                        <li key={linkIndex}>
-                          {link.href.startsWith("/") ? (
-                            <Link href={link.href}>{link.text}</Link>
-                          ) : (
-                            <a href={link.href}>{link.text}</a>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-              <div className="col-lg-3 col-md-6">
-                <div className="footer-menu-list newsletter ">
-                  <h5 className="title lh-30 mb-19">Newsletter</h5>
-                  <div className="sib-form">
-                    <div id="sib-form-container" className="sib-form-container">
-                      <div
-                        id="error-message"
-                        className="sib-form-message-panel"
-                      >
-                        <div className="sib-form-message-panel__text sib-form-message-panel__text--center">
-                          <svg
-                            viewBox="0 0 512 512"
-                            className="sib-icon sib-notification__icon"
-                          >
-                            <path d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z" />
-                          </svg>
-                          <span className="sib-form-message-panel__inner-text">
-                            Your subscription could not be saved. Please try
-                            again.
-                          </span>
-                        </div>
-                      </div>
-                      <div
-                        id="success-message"
-                        className="sib-form-message-panel"
-                      >
-                        <div className="sib-form-message-panel__text sib-form-message-panel__text--center">
-                          <svg
-                            viewBox="0 0 512 512"
-                            className="sib-icon sib-notification__icon"
-                          >
-                            <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z" />
-                          </svg>
-                          <span className="sib-form-message-panel__inner-text">
-                            Your subscription has been successful.
-                          </span>
-                        </div>
-                      </div>
-                      <div
-                        id="sib-container"
-                        className="sib-container--large sib-container--vertical"
-                      >
-                        <div
-                          className={`tfSubscribeMsg  footer-sub-element ${
-                            showMessage ? "active" : ""
-                          }`}
-                        >
-                          {success ? (
-                            <p style={{ color: "rgb(52, 168, 83)" }}>
-                              You have successfully subscribed.
-                            </p>
-                          ) : (
-                            <p style={{ color: "red" }}>Something went wrong</p>
-                          )}
-                        </div>
-                        <form onSubmit={sendEmail} id="sib-form">
-                          <div className="sib-form-block ">
-                            <div className="sib-text-form-block">
-                              <p className="text-1">
-                                Sign up to receive the latest articles
-                              </p>
-                            </div>
-                          </div>
-                          <div className="sib-input sib-form-block mb-11">
-                            <div className="form__entry entry_block">
-                              <div className="form__label-row mb-10">
-                                <fieldset className="entry__field">
-                                  <input
-                                    className="input input-nl "
-                                    type="text"
-                                    id="EMAIL"
-                                    name="email"
-                                    autoComplete="off"
-                                    placeholder="Your email address"
-                                    data-required="true"
-                                    required
-                                  />
-                                </fieldset>
-                              </div>
-                              <label className="  entry__error entry__error--primary"></label>
-                            </div>
-                          </div>
-                          <div className="sib-form-block">
-                            <button
-                              className="sib-form-block__button sib-form-block__button-with-loader tf-btn bg-color-primary  w-full"
-                              form="sib-form"
-                              type="submit"
-                            >
-                              <svg
-                                className="icon clickable__icon progress-indicator__icon sib-hide-loader-icon"
-                                viewBox="0 0 512 512"
-                              >
-                                <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
-                              </svg>
-                              Subscribe
-                            </button>
-                          </div>
-                          <div className="sib-optin sib-form-block">
-                            <div className="form__entry entry_mcq">
-                              <div className="form__label-row ">
-                                <div className="checkbox-item ">
-                                  <label className="mb-0">
-                                    <span className="text-2 text-color-default">
-                                      I have read and agree to the terms &amp;
-                                      conditions
-                                    </span>
-                                    <input
-                                      type="checkbox"
-                                      className="input_replaced"
-                                      defaultValue={1}
-                                      id="OPT_IN"
-                                      name="OPT_IN"
-                                    />
-                                    <span className="btn-checkbox" />
-                                  </label>
-                                </div>
-                              </div>
-                              <label className="entry__error entry__error--primary"></label>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                    <form onSubmit={(e) => e.preventDefault()}>
-                      <input
-                        type="text"
-                        name="email_address_check"
-                        defaultValue=""
-                        className="input--hidden"
-                      />
-                      <input type="hidden" name="locale" defaultValue="en" />
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p style={{ margin: 0, fontSize: 13, color: "#8b949e" }}>Get weekly investment insights, Golden Visa updates &amp; exclusive property deals — free</p>
         </div>
-        <div className="col-12">
-          <div className="footer-bottom">
-            <p>
-              Copyright © {new Date().getFullYear()}{" "}
-              <span className="fw-7">Globperty</span> . Designed &amp;
-              Developed by
-              <a href="#">Themesflat</a>
-            </p>
-            <div className="wrap-social">
-              <div className="text-3  fw-6 text_white">Follow us</div>
-              <ul className="tf-social ">
-                <li>
-                  <a href="#">
-                    <i className="icon-fb" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="icon-X" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="icon-linked" />
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="icon-ins" />
-                  </a>
-                </li>
-              </ul>
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          <input
+            type="email"
+            placeholder="Enter your email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ padding: "10px 16px", borderRadius: 8, border: "1px solid #1a3050", background: "#0d1b2a", color: "#c9d1d9", fontSize: 14, width: 260, outline: "none" }}
+          />
+          <button
+            onClick={() => setEmail("")}
+            style={{ padding: "10px 20px", borderRadius: 8, background: "#f0822d", color: "#fff", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", whiteSpace: "nowrap" }}
+          >
+            Subscribe Free
+          </button>
+        </div>
+      </div>
+
+      {/* Main Footer Columns */}
+      <div style={{ padding: "48px 40px 32px", maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "260px 1fr 1fr 1fr 1fr", gap: 40 }}>
+
+          {/* Brand column */}
+          <div>
+            <div style={{ marginBottom: 16 }}>
+              <span style={{ fontSize: 26, fontWeight: 800, color: "#fff" }}>Glob</span><span style={{ fontSize: 26, fontWeight: 800, color: "#f0822d" }}>perty</span>
             </div>
+            <p style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.7, marginBottom: 20 }}>
+              Your global real estate intelligence platform. Buy, sell, rent and invest in properties across 12 countries — powered by AI and deep market knowledge.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+              {[{icon:"💼",label:"LinkedIn"},{icon:"📘",label:"Facebook"},{icon:"📸",label:"Instagram"},{icon:"▶️",label:"YouTube"},{icon:"💬",label:"WhatsApp"},{icon:"✖",label:"Twitter/X"}].map(s => (
+                <a key={s.label} href="#" style={{ display: "flex", alignItems: "center", gap: 5, background: "#1a3050", border: "1px solid #1a3050", borderRadius: 6, padding: "5px 10px", fontSize: 12, color: "#c9d1d9", textDecoration: "none" }}>
+                  <span>{s.icon}</span>{s.label}
+                </a>
+              ))}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <a href="#" style={{ display: "flex", alignItems: "center", gap: 8, background: "#1a3050", border: "1px solid #1a3050", borderRadius: 8, padding: "8px 14px", fontSize: 12, color: "#8b949e", textDecoration: "none" }}>
+                <span>📱</span> App Store — Coming Soon
+              </a>
+              <a href="#" style={{ display: "flex", alignItems: "center", gap: 8, background: "#1a3050", border: "1px solid #1a3050", borderRadius: 8, padding: "8px 14px", fontSize: 12, color: "#8b949e", textDecoration: "none" }}>
+                <span>🤖</span> Google Play — Coming Soon
+              </a>
+            </div>
+          </div>
+
+          {/* Properties */}
+          <div>
+            <h6 style={{ color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>Properties</h6>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {PROPERTIES.map(item => (
+                <li key={item} style={{ marginBottom: 8 }}>
+                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Knowledge Base */}
+          <div>
+            <h6 style={{ color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>Knowledge Base</h6>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {KNOWLEDGE_BASE.map(item => (
+                <li key={item} style={{ marginBottom: 8 }}>
+                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Tools & Finance */}
+          <div>
+            <h6 style={{ color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>Tools &amp; Finance</h6>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {TOOLS_FINANCE.map(item => (
+                <li key={item} style={{ marginBottom: 8 }}>
+                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company + For Agents */}
+          <div>
+            <h6 style={{ color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>Company</h6>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, marginBottom: 28 }}>
+              {COMPANY.map(item => (
+                <li key={item} style={{ marginBottom: 8 }}>
+                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item}</a>
+                </li>
+              ))}
+            </ul>
+            <h6 style={{ color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>For Agents</h6>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {FOR_AGENTS.map(item => (
+                <li key={item.label} style={{ marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
+                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item.label}</a>
+                  {item.badge && (
+                    <span style={{ fontSize: 10, background: "#f0822d", color: "#fff", fontWeight: 700, padding: "2px 6px", borderRadius: 4 }}>{item.badge}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
+
+      {/* Country Grid */}
+      <div style={{ borderTop: "1px solid #1a3050", padding: "40px 40px", maxWidth: 1400, margin: "0 auto" }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 32 }}>
+          Browse Properties by Country &amp; City — All Destinations
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "32px 24px" }}>
+          {COUNTRIES.map(c => (
+            <div key={c.name}>
+              <h6 style={{ color: "#fff", fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
+                {c.flag} {c.name}
+              </h6>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {c.links.map(l => (
+                  <li key={l} style={{ marginBottom: 5 }}>
+                    <a href="#" style={{ fontSize: 12, color: "#6e7681", textDecoration: "none" }}>{l}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Popular Searches */}
+      <div style={{ borderTop: "1px solid #1a3050", padding: "28px 40px", maxWidth: 1400, margin: "0 auto" }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: "#6e7681", textTransform: "uppercase", marginBottom: 14 }}>Popular Searches:</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {POPULAR_SEARCHES.map(s => (
+            <a key={s} href="#" style={{ fontSize: 12, color: "#8b949e", border: "1px solid #1a3050", borderRadius: 20, padding: "5px 14px", textDecoration: "none", whiteSpace: "nowrap" }}>{s}</a>
+          ))}
+        </div>
+      </div>
+
+      {/* Popular Guides */}
+      <div style={{ borderTop: "1px solid #1a3050", padding: "24px 40px", maxWidth: 1400, margin: "0 auto" }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: "#6e7681", textTransform: "uppercase", marginBottom: 12 }}>Popular Guides &amp; Resources</p>
+        <p style={{ fontSize: 12, color: "#6e7681", lineHeight: 2 }}>
+          {POPULAR_GUIDES.map((g, i) => (
+            <span key={g}>
+              <a href="#" style={{ color: "#6e7681", textDecoration: "none" }}>{g}</a>
+              {i < POPULAR_GUIDES.length - 1 && <span style={{ margin: "0 8px" }}>·</span>}
+            </span>
+          ))}
+        </p>
+      </div>
+
+      {/* Trust Badges */}
+      <div style={{ borderTop: "1px solid #1a3050", padding: "20px 40px", maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 32px" }}>
+          {TRUST_BADGES.map(b => (
+            <div key={b.text} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#8b949e" }}>
+              <span>{b.icon}</span><span>{b.text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Legal / Bottom bar */}
+      <div style={{ borderTop: "1px solid #1a3050", padding: "20px 40px", maxWidth: 1400, margin: "0 auto" }}>
+        <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 4 }}>© 2025 Globperty LLC. All rights reserved. Registered in the United States of America.</p>
+        <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 16 }}>Globperty is an independent property portal. All listings are provided by verified third-party agents and developers. Globperty does not provide legal, financial or immigration advice.</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 0", alignItems: "center" }}>
+          {LEGAL_LINKS.map((l, i) => (
+            <span key={l} style={{ display: "flex", alignItems: "center" }}>
+              <a href="#" style={{ fontSize: 12, color: "#6e7681", textDecoration: "none" }}>{l}</a>
+              {i < LEGAL_LINKS.length - 1 && <span style={{ margin: "0 10px", color: "#1a3050" }}>·</span>}
+            </span>
+          ))}
+        </div>
+      </div>
+
     </footer>
   );
 }

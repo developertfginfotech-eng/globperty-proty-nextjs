@@ -3,9 +3,18 @@ import SearchForm from "@/components/common/SearchForm";
 import React, { useState, useRef } from "react";
 
 const COUNTRIES = [
-  "UAE", "USA", "Portugal", "Canada", "Australia",
-  "Turkey", "Cyprus", "Malta", "Hungary", "Latvia",
-  "Philippines", "Malaysia",
+  { name: "UAE",         flag: "🇦🇪" },
+  { name: "USA",         flag: "🇺🇸" },
+  { name: "Portugal",    flag: "🇵🇹" },
+  { name: "Canada",      flag: "🇨🇦" },
+  { name: "Australia",   flag: "🇦🇺" },
+  { name: "Turkey",      flag: "🇹🇷" },
+  { name: "Cyprus",      flag: "🇨🇾" },
+  { name: "Malta",       flag: "🇲🇹" },
+  { name: "Hungary",     flag: "🇭🇺" },
+  { name: "Latvia",      flag: "🇱🇻" },
+  { name: "Philippines", flag: "🇵🇭" },
+  { name: "Malaysia",    flag: "🇲🇾" },
 ];
 
 const PROPERTY_TYPES = [
@@ -180,7 +189,12 @@ export default function Hero() {
                       className="hero-dd-btn"
                       onClick={() => { setShowLocDD(!showLocDD); setShowTypeDD(false); }}
                     >
-                      <span style={{ color: location === "Location" ? "#9ca3af" : "#1a1a1a" }}>
+                      <span style={{ color: location === "Location" ? "#9ca3af" : "#1a1a1a", display: "flex", alignItems: "center", gap: 6 }}>
+                        {location !== "Location" && (
+                          <span style={{ fontSize: 18, lineHeight: 1 }}>
+                            {COUNTRIES.find(c => c.name === location)?.flag}
+                          </span>
+                        )}
                         {location}
                       </span>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -197,11 +211,13 @@ export default function Hero() {
                         </li>
                         {COUNTRIES.map((c) => (
                           <li
-                            key={c}
-                            className={`hero-dd-item${location === c ? " selected" : ""}`}
-                            onClick={() => { setLocation(c); setShowLocDD(false); }}
+                            key={c.name}
+                            className={`hero-dd-item${location === c.name ? " selected" : ""}`}
+                            onClick={() => { setLocation(c.name); setShowLocDD(false); }}
+                            style={{ display: "flex", alignItems: "center", gap: 8 }}
                           >
-                            {c}
+                            <span style={{ fontSize: 18, lineHeight: 1 }}>{c.flag}</span>
+                            <span>{c.name}</span>
                           </li>
                         ))}
                       </ul>
