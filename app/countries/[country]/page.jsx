@@ -50,7 +50,7 @@ export default function CountryPage() {
     <>
       <Header2 />
       <div id="wrapper">
-        <HeroSection country={country} />
+        <HeroSection country={country} onSelectTab={setActiveTab} />
         <TabBar tabs={TABS} active={activeTab} onSelect={setActiveTab} tabRef={tabRef} />
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "40px 24px", display: "flex", gap: 28, alignItems: "flex-start" }}>
           <main style={{ flex: 1, minWidth: 0 }}>
@@ -111,7 +111,7 @@ export default function CountryPage() {
   );
 }
 
-function HeroSection({ country }) {
+function HeroSection({ country, onSelectTab }) {
   return (
     <section style={{
       position: "relative", minHeight: "75vh", display: "flex", alignItems: "center",
@@ -165,9 +165,12 @@ function HeroSection({ country }) {
               🤖 Ask AI Assistant
             </Link>
             {country.visaCard && (
-              <Link href={country.visaCard.ctaLink || "/contact"} style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", padding: "14px 24px", borderRadius: 8, fontWeight: 600, fontSize: 15, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <button
+                onClick={() => { onSelectTab("Golden Visa"); setTimeout(() => window.scrollTo({ top: 400, behavior: "smooth" }), 50); }}
+                style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", padding: "14px 24px", borderRadius: 8, fontWeight: 600, fontSize: 15, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8 }}
+              >
                 🎫 {country.visaCard.title || "Visa Guide"}
-              </Link>
+              </button>
             )}
           </div>
         </div>
