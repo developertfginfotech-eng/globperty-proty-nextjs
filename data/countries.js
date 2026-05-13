@@ -3831,7 +3831,7 @@ export const COUNTRIES_DATA = {
     ],
     cityImages: [
       { name: "Kuala Lumpur", url: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80" },
-      { name: "Petronas Towers", url: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&q=80" },
+      { name: "Petronas Towers", url: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=600&q=80" },
       { name: "Penang Heritage", url: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80" },
       { name: "Johor Bahru", url: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80" },
     ],
