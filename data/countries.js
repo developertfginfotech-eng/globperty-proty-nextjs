@@ -2,6 +2,7 @@ export const COUNTRIES_DATA = {
   uae: {
     slug: "uae",
     name: "United Arab Emirates",
+    shortName: "UAE",
     highlight: "Emirates",
     flag: "🇦🇪",
     badge: "#1 Investment Destination — Asia & Middle East 2025",
@@ -66,10 +67,10 @@ export const COUNTRIES_DATA = {
       { name: "Sharjah & Ajman", emoji: "🌿", image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "AED 400–900", bestFor: "Budget + High Yield", tags: ["High Yield", "Affordable"] },
     ],
     cityImages: [
-      { name: "Dubai Skyline", url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80" },
-      { name: "Palm Jumeirah", url: "https://images.unsplash.com/photo-1583936167014-e3fb443d5c15?w=600&q=80" },
-      { name: "Abu Dhabi", url: "https://images.unsplash.com/photo-1545128485-c400ce7b23d5?w=600&q=80" },
-      { name: "Burj Khalifa", url: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=600&q=80" },
+      { name: "Dubai Skyline", url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80" },
+      { name: "Palm Jumeirah", url: "https://images.unsplash.com/photo-1526400473556-aac12354f3db?w=600&q=80" },
+      { name: "Abu Dhabi", url: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&q=80" },
+      { name: "Burj Khalifa", url: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80" },
     ],
     overview: [
       { title: "Zero Tax Environment", body: "The UAE has no personal income tax, no capital gains tax, and no property tax. Investors keep 100% of their rental income and sale profits." },
@@ -96,6 +97,7 @@ export const COUNTRIES_DATA = {
   usa: {
     slug: "usa",
     name: "United States",
+    shortName: "USA",
     highlight: "America",
     flag: "🇺🇸",
     badge: "#1 Global Real Estate Market 2025",

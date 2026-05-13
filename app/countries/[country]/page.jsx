@@ -116,7 +116,7 @@ function HeroSection({ country }) {
           {/* CTAs */}
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link href={`/listings?location=${country.locationParam}`} style={{ background: "#f0822d", color: "#fff", padding: "14px 28px", borderRadius: 8, fontWeight: 700, fontSize: 15, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
-              🏠 Browse {country.name.split(" ")[0]} Properties
+              🏠 Browse {country.shortName || country.name} Properties
             </Link>
             <Link href="/copilot" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", padding: "14px 24px", borderRadius: 8, fontWeight: 600, fontSize: 15, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 8 }}>
               🤖 Ask AI Assistant
@@ -172,27 +172,29 @@ function TabBar({ tabs, active, onSelect, tabRef }) {
 }
 
 function OverviewSection({ country }) {
+  const imgs = country.cityImages || [];
   return (
     <div>
-      {/* Photo grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 32, borderRadius: 12, overflow: "hidden", height: 280 }}>
-        {(country.cityImages || []).slice(0, 4).map((img, i) => (
-          <div key={i} style={{
-            position: "relative",
-            gridColumn: i === 0 ? "1 / 2" : undefined,
-            gridRow: i === 0 ? "1 / 2" : undefined,
-          }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={img.url} alt={img.name} style={{ width: "100%", height: i === 0 ? 280 : 135, objectFit: "cover", display: "block" }} />
-            {i === 0 && <div style={{ position: "absolute", bottom: 8, left: 8, background: "rgba(0,0,0,0.6)", color: "#fff", fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 6 }}>{img.name}</div>}
-          </div>
-        ))}
+      {/* Photo mosaic grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "160px 160px", gap: 8, marginBottom: 32, borderRadius: 12, overflow: "hidden" }}>
+        {/* Large left image spanning both rows */}
+        <div style={{ gridRow: "1 / 3", position: "relative" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={imgs[0]?.url} alt={imgs[0]?.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          {imgs[0] && <div style={{ position: "absolute", bottom: 8, left: 8, background: "rgba(0,0,0,0.65)", color: "#fff", fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 6 }}>{imgs[0].name}</div>}
+        </div>
+        {/* Top right */}
         <div style={{ position: "relative" }}>
-          {country.cityImages?.[3] && (
-            <img src={country.cityImages[3].url} alt={country.cityImages[3].name} style={{ width: "100%", height: 135, objectFit: "cover", display: "block" }} />
-          )}
-          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ color: "#fff", fontWeight: 700, fontSize: 14 }}>+28 photos</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={imgs[1]?.url} alt={imgs[1]?.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          {imgs[1] && <div style={{ position: "absolute", bottom: 6, left: 8, background: "rgba(0,0,0,0.55)", color: "#fff", fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 4 }}>{imgs[1].name}</div>}
+        </div>
+        {/* Bottom right with +photos overlay */}
+        <div style={{ position: "relative" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={imgs[2]?.url} alt={imgs[2]?.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>+{imgs.length > 3 ? imgs.length - 2 : 8} photos</span>
           </div>
         </div>
       </div>
@@ -333,6 +335,7 @@ function ComingSoonSection({ tab, country }) {
 
 function Sidebar({ country, cityListings, totalListings }) {
   const [aiQuery, setAiQuery] = useState("");
+  const sN = country.shortName || country.name.split(" ")[0];
 
   return (
     <div style={{ width: 300, flexShrink: 0, display: "flex", flexDirection: "column", gap: 20, position: "sticky", top: 60, maxHeight: "calc(100vh - 80px)", overflowY: "auto" }}>
@@ -340,7 +343,7 @@ function Sidebar({ country, cityListings, totalListings }) {
       {/* At a Glance */}
       <div style={{ background: "#0f1423", borderRadius: 14, padding: 20, color: "#fff" }}>
         <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}>
-          📊 {country.name.split(" ")[0]} At a Glance
+          📊 {sN} At a Glance
         </div>
         {Object.entries(country.atAGlance || {}).map(([key, val]) => {
           const isObj = typeof val === "object";
@@ -354,7 +357,7 @@ function Sidebar({ country, cityListings, totalListings }) {
           );
         })}
         <Link href={`/listings?location=${country.locationParam}`} style={{ display: "block", width: "100%", background: "#1d4ed8", color: "#fff", textAlign: "center", padding: "12px", borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: "none", marginTop: 6 }}>
-          Browse {country.name.split(" ")[0]} Properties
+          Browse {sN} Properties
         </Link>
       </div>
 
@@ -362,7 +365,7 @@ function Sidebar({ country, cityListings, totalListings }) {
       <div style={{ background: "#1e1b4b", borderRadius: 14, padding: 20 }}>
         <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 8 }}>🤖 Ask Globperty AI</div>
         <p style={{ fontSize: 12, color: "rgba(255,255,255,0.65)", marginBottom: 14, lineHeight: 1.6 }}>
-          Ask anything about {country.name.split(" ")[0]} property — yields, visa, legal, mortgage, best areas for your budget...
+          Ask anything about {sN} property — yields, visa, legal, mortgage, best areas for your budget...
         </p>
         <div style={{ display: "flex", gap: 8 }}>
           <input
@@ -380,7 +383,7 @@ function Sidebar({ country, cityListings, totalListings }) {
       {/* Browse by City */}
       <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 20 }}>
         <div style={{ background: "#1d4ed8", margin: "-20px -20px 16px", padding: "14px 20px", borderRadius: "14px 14px 0 0", color: "#fff", fontSize: 14, fontWeight: 700 }}>
-          🏙️ Browse by {country.name.split(" ")[0]} City
+          🏙️ Browse by {sN} City
         </div>
         {(country.cities || []).slice(0, 6).map((city) => {
           const count = cityListings[city] || cityListings[city.split(" ")[0]] || 0;
@@ -421,7 +424,7 @@ function Sidebar({ country, cityListings, totalListings }) {
           🏦 Get Mortgage Help
         </div>
         <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.6, marginBottom: 14 }}>
-          Compare {country.name.split(" ")[0]} mortgage rates from 12+ lenders. Pre-approved in 48 hours. Free service.
+          Compare {sN} mortgage rates from 12+ lenders. Pre-approved in 48 hours. Free service.
         </p>
         <Link href="/home-loan-process" style={{ display: "block", width: "100%", background: "#1d4ed8", color: "#fff", textAlign: "center", padding: "12px", borderRadius: 8, fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
           Compare Mortgages
