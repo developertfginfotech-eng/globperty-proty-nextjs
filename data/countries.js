@@ -1452,12 +1452,12 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "Small island, big opportunity — each coastal city offers a distinct investment profile",
     cityData: [
       { name: "Limassol", emoji: "🏙️", image: "/images/cyprus/limassol.jpg", yield: "5–7%", yieldColor: "#16b286", priceRange: "€3,000–€8,000/sqm", bestFor: "Business & Luxury", tags: ["International Hub", "Luxury", "High Demand"] },
-      { name: "Paphos", emoji: "🏛️", image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,800–€4,500/sqm", bestFor: "Residency & Retirement", tags: ["Residency Program", "Tourist Area", "Golf"] },
+      { name: "Paphos", emoji: "🏛️", image: "/images/cyprus/paphos.jpg", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,800–€4,500/sqm", bestFor: "Residency & Retirement", tags: ["Residency Program", "Tourist Area", "Golf"] },
       { name: "Larnaca", emoji: "✈️", image: "/images/cyprus/larnaca.jpg", yield: "5–8%", yieldColor: "#16b286", priceRange: "€1,500–€3,500/sqm", bestFor: "High Yield & Value", tags: ["Affordable", "Airport City", "Growing"] },
     ],
     cityImages: [
       { name: "Limassol", url: "/images/cyprus/limassol.jpg" },
-      { name: "Paphos", url: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80" },
+      { name: "Paphos", url: "/images/cyprus/paphos.jpg" },
       { name: "Nicosia", url: "/images/cyprus/nicosia.jpg" },
       { name: "Ayia Napa", url: "/images/cyprus/larnaca.jpg" },
     ],
