@@ -63,13 +63,13 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "7 Emirates, each with its own character — find where to invest and where to live",
     cityData: [
       { name: "Dubai", emoji: "🏙️", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "AED 1,200–3,500", bestFor: "Investment & Lifestyle", tags: ["Freehold", "Golden Visa", "Airbnb"] },
-      { name: "Abu Dhabi", emoji: "🏛️", image: "https://images.unsplash.com/photo-1512632578888-169b2028ab63?w=600&q=80", yield: "5–7%", yieldColor: "#3b82f6", priceRange: "AED 900–2,200", bestFor: "Families & Stability", tags: ["Capital City", "Lower Cost"] },
+      { name: "Abu Dhabi", emoji: "🏛️", image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80", yield: "5–7%", yieldColor: "#3b82f6", priceRange: "AED 900–2,200", bestFor: "Families & Stability", tags: ["Capital City", "Lower Cost"] },
       { name: "Sharjah & Ajman", emoji: "🌿", image: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "AED 400–900", bestFor: "Budget + High Yield", tags: ["High Yield", "Affordable"] },
     ],
     cityImages: [
       { name: "Dubai Skyline", url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80" },
       { name: "Palm Jumeirah", url: "https://images.unsplash.com/photo-1526400473556-aac12354f3db?w=600&q=80" },
-      { name: "Abu Dhabi", url: "https://images.unsplash.com/photo-1512632578888-169b2028ab63?w=600&q=80" },
+      { name: "Abu Dhabi", url: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80" },
       { name: "Burj Khalifa", url: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80" },
     ],
     overview: [
