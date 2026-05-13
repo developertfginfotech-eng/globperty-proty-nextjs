@@ -64,7 +64,7 @@ export const COUNTRIES_DATA = {
     cityData: [
       { name: "Dubai", emoji: "🏙️", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "AED 1,200–3,500", bestFor: "Investment & Lifestyle", tags: ["Freehold", "Golden Visa", "Airbnb"] },
       { name: "Abu Dhabi", emoji: "🏛️", image: "https://images.unsplash.com/photo-1512632578888-169b2028ab63?w=600&q=80", yield: "5–7%", yieldColor: "#3b82f6", priceRange: "AED 900–2,200", bestFor: "Families & Stability", tags: ["Capital City", "Lower Cost"] },
-      { name: "Sharjah & Ajman", emoji: "🌿", image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "AED 400–900", bestFor: "Budget + High Yield", tags: ["High Yield", "Affordable"] },
+      { name: "Sharjah & Ajman", emoji: "🌿", image: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "AED 400–900", bestFor: "Budget + High Yield", tags: ["High Yield", "Affordable"] },
     ],
     cityImages: [
       { name: "Dubai Skyline", url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80" },
@@ -1106,13 +1106,13 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "From cosmopolitan Istanbul to turquoise coastlines — Turkey's regions each attract different investor profiles",
     cityData: [
       { name: "Istanbul", emoji: "🏙️", image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80", yield: "5–8%", yieldColor: "#16b286", priceRange: "$1,500–$5,000/sqm", bestFor: "Long-term Capital Growth", tags: ["Citizenship", "Largest City", "Business"] },
-      { name: "Antalya", emoji: "🌊", image: "https://images.unsplash.com/photo-1499678329028-101435f6ef88?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "$800–$2,500/sqm", bestFor: "Holiday Rental", tags: ["Beach", "Tourism", "Affordable"] },
-      { name: "Bodrum", emoji: "⛵", image: "https://images.unsplash.com/photo-1533050487297-09b450131914?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "$1,200–$4,000/sqm", bestFor: "Luxury Villas", tags: ["Upscale", "Marina", "Yachting"] },
+      { name: "Antalya", emoji: "🌊", image: "https://images.unsplash.com/photo-1504214208698-ea1916a55c8d?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "$800–$2,500/sqm", bestFor: "Holiday Rental", tags: ["Beach", "Tourism", "Affordable"] },
+      { name: "Bodrum", emoji: "⛵", image: "https://images.unsplash.com/photo-1566566259553-03a0edd3f2cc?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "$1,200–$4,000/sqm", bestFor: "Luxury Villas", tags: ["Upscale", "Marina", "Yachting"] },
     ],
     cityImages: [
       { name: "Istanbul", url: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80" },
-      { name: "Antalya", url: "https://images.unsplash.com/photo-1499678329028-101435f6ef88?w=600&q=80" },
-      { name: "Bodrum", url: "https://images.unsplash.com/photo-1533050487297-09b450131914?w=600&q=80" },
+      { name: "Antalya", url: "https://images.unsplash.com/photo-1504214208698-ea1916a55c8d?w=600&q=80" },
+      { name: "Bodrum", url: "https://images.unsplash.com/photo-1566566259553-03a0edd3f2cc?w=600&q=80" },
       { name: "Cappadocia", url: "https://images.unsplash.com/photo-1579606032821-4d5d496e0c96?w=600&q=80" },
     ],
     overview: [
@@ -1431,7 +1431,7 @@ export const COUNTRIES_DATA = {
       "Market Trend": { value: "📈 Rising", color: "#16b286" },
       "Active Listings": "1,200+",
     },
-    heroImage: "https://images.unsplash.com/photo-1559682468-a6a29e7d9517?w=1400&q=80",
+    heroImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400&q=80",
     overviewTitle: "Why Cyprus is the Smart Gateway to EU Residency",
     overviewSubtitle: "Mediterranean living, EU access, and low taxes — the full package from €300K",
     overviewText: [
@@ -1451,14 +1451,14 @@ export const COUNTRIES_DATA = {
     cities: ["Limassol", "Nicosia", "Paphos", "Larnaca", "Ayia Napa", "Famagusta"],
     geographySubtitle: "Small island, big opportunity — each coastal city offers a distinct investment profile",
     cityData: [
-      { name: "Limassol", emoji: "🏙️", image: "https://images.unsplash.com/photo-1559682468-a6a29e7d9517?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€3,000–€8,000/sqm", bestFor: "Business & Luxury", tags: ["International Hub", "Luxury", "High Demand"] },
-      { name: "Paphos", emoji: "🏛️", image: "https://images.unsplash.com/photo-1522083165195-3424ed129620?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,800–€4,500/sqm", bestFor: "Residency & Retirement", tags: ["Residency Program", "Tourist Area", "Golf"] },
+      { name: "Limassol", emoji: "🏙️", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€3,000–€8,000/sqm", bestFor: "Business & Luxury", tags: ["International Hub", "Luxury", "High Demand"] },
+      { name: "Paphos", emoji: "🏛️", image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,800–€4,500/sqm", bestFor: "Residency & Retirement", tags: ["Residency Program", "Tourist Area", "Golf"] },
       { name: "Larnaca", emoji: "✈️", image: "https://images.unsplash.com/photo-1530973428-5bf2db2e4d71?w=600&q=80", yield: "5–8%", yieldColor: "#16b286", priceRange: "€1,500–€3,500/sqm", bestFor: "High Yield & Value", tags: ["Affordable", "Airport City", "Growing"] },
     ],
     cityImages: [
-      { name: "Limassol", url: "https://images.unsplash.com/photo-1559682468-a6a29e7d9517?w=600&q=80" },
-      { name: "Paphos", url: "https://images.unsplash.com/photo-1522083165195-3424ed129620?w=600&q=80" },
-      { name: "Nicosia", url: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=600&q=80" },
+      { name: "Limassol", url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" },
+      { name: "Paphos", url: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&q=80" },
+      { name: "Nicosia", url: "https://images.unsplash.com/photo-1519985591540-dde4f1ecd8e4?w=600&q=80" },
       { name: "Ayia Napa", url: "https://images.unsplash.com/photo-1530973428-5bf2db2e4d71?w=600&q=80" },
     ],
     overview: [
@@ -1793,12 +1793,12 @@ export const COUNTRIES_DATA = {
     cityData: [
       { name: "Sliema & St Julian's", emoji: "🌊", image: "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=600&q=80", yield: "4–6%", yieldColor: "#16b286", priceRange: "€4,000–€8,000/sqm", bestFor: "Short-term Rental & Business", tags: ["Tourist Hub", "Expat Area", "Nightlife"] },
       { name: "Valletta", emoji: "🏛️", image: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=600&q=80", yield: "4–5%", yieldColor: "#3b82f6", priceRange: "€3,500–€6,000/sqm", bestFor: "Heritage & Culture", tags: ["UNESCO", "Capital", "Historic"] },
-      { name: "Gozo", emoji: "🌿", image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€2,000–€5,000/sqm", bestFor: "Tranquil Living & Villas", tags: ["Island Life", "Farmhouses", "Peaceful"] },
+      { name: "Gozo", emoji: "🌿", image: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€2,000–€5,000/sqm", bestFor: "Tranquil Living & Villas", tags: ["Island Life", "Farmhouses", "Peaceful"] },
     ],
     cityImages: [
       { name: "Valletta", url: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=600&q=80" },
       { name: "Sliema", url: "https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=600&q=80" },
-      { name: "Gozo", url: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80" },
+      { name: "Gozo", url: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80" },
       { name: "St Julian's", url: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=600&q=80" },
     ],
     overview: [
@@ -2810,13 +2810,13 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "Budapest dominates — but secondary cities offer high yields and even lower entry prices",
     cityData: [
       { name: "Budapest", emoji: "🏛️", image: "https://images.unsplash.com/photo-1565426873118-a17ed65d74b9?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€1,500–€4,000/sqm", bestFor: "Short-term Rental & Growth", tags: ["Airbnb", "Tourist City", "Undervalued"] },
-      { name: "Budapest District VII", emoji: "🎭", image: "https://images.unsplash.com/photo-1551007153-8eed436b1b25?w=600&q=80", yield: "6–8%", yieldColor: "#16b286", priceRange: "€1,800–€3,500/sqm", bestFor: "Highest Rental Demand", tags: ["Ruin Bars", "Nightlife District", "Top Yield"] },
-      { name: "Lake Balaton Region", emoji: "🌊", image: "https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€800–€2,500/sqm", bestFor: "Holiday Home & Retreat", tags: ["Lakeside", "Summer Tourism", "Affordable"] },
+      { name: "Budapest District VII", emoji: "🎭", image: "https://images.unsplash.com/photo-1520950335664-407c7d52e0ea?w=600&q=80", yield: "6–8%", yieldColor: "#16b286", priceRange: "€1,800–€3,500/sqm", bestFor: "Highest Rental Demand", tags: ["Ruin Bars", "Nightlife District", "Top Yield"] },
+      { name: "Lake Balaton Region", emoji: "🌊", image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€800–€2,500/sqm", bestFor: "Holiday Home & Retreat", tags: ["Lakeside", "Summer Tourism", "Affordable"] },
     ],
     cityImages: [
       { name: "Budapest Parliament", url: "https://images.unsplash.com/photo-1565426873118-a17ed65d74b9?w=600&q=80" },
-      { name: "Budapest Chain Bridge", url: "https://images.unsplash.com/photo-1551007153-8eed436b1b25?w=600&q=80" },
-      { name: "Budapest Danube", url: "https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=600&q=80" },
+      { name: "Budapest Chain Bridge", url: "https://images.unsplash.com/photo-1520950335664-407c7d52e0ea?w=600&q=80" },
+      { name: "Budapest Danube", url: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" },
       { name: "Lake Balaton", url: "https://images.unsplash.com/photo-1465256410760-10640339c72a?w=600&q=80" },
     ],
     overview: [
@@ -3128,7 +3128,7 @@ export const COUNTRIES_DATA = {
       "Market Trend": { value: "📈 Rising", color: "#16b286" },
       "Active Listings": "800+",
     },
-    heroImage: "https://images.unsplash.com/photo-1565702564867-ebe7e16e7d94?w=1400&q=80",
+    heroImage: "https://images.unsplash.com/photo-1548391726-cba1c8218f45?w=1400&q=80",
     overviewTitle: "Why Latvia Offers Europe's Most Affordable EU Residency",
     overviewSubtitle: "Baltic gem with EU access, affordable property, and Riga's growing economy",
     overviewText: [
@@ -3148,13 +3148,13 @@ export const COUNTRIES_DATA = {
     cities: ["Riga", "Jürmala", "Jēkabpils", "Daugavpils", "Liepāja"],
     geographySubtitle: "Riga leads, but Latvia's coastal and regional towns offer lifestyle at exceptional value",
     cityData: [
-      { name: "Riga Old Town", emoji: "🏛️", image: "https://images.unsplash.com/photo-1565702564867-ebe7e16e7d94?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€1,500–€3,500/sqm", bestFor: "Tourism Rental & Culture", tags: ["UNESCO", "Airbnb", "Historic"] },
-      { name: "Riga City Center", emoji: "🏙️", image: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,200–€2,800/sqm", bestFor: "Business & Long-term Rental", tags: ["Business District", "Stable Demand", "Growing"] },
+      { name: "Riga Old Town", emoji: "🏛️", image: "https://images.unsplash.com/photo-1548391726-cba1c8218f45?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€1,500–€3,500/sqm", bestFor: "Tourism Rental & Culture", tags: ["UNESCO", "Airbnb", "Historic"] },
+      { name: "Riga City Center", emoji: "🏙️", image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,200–€2,800/sqm", bestFor: "Business & Long-term Rental", tags: ["Business District", "Stable Demand", "Growing"] },
       { name: "Jürmala", emoji: "🌊", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80", yield: "4–6%", yieldColor: "#3b82f6", priceRange: "€800–€2,000/sqm", bestFor: "Holiday Home & Beach", tags: ["Baltic Riviera", "Summer Season", "Peaceful"] },
     ],
     cityImages: [
-      { name: "Riga", url: "https://images.unsplash.com/photo-1565702564867-ebe7e16e7d94?w=600&q=80" },
-      { name: "Riga Art Nouveau", url: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=600&q=80" },
+      { name: "Riga", url: "https://images.unsplash.com/photo-1548391726-cba1c8218f45?w=600&q=80" },
+      { name: "Riga Art Nouveau", url: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=600&q=80" },
       { name: "Jürmala Beach", url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" },
       { name: "Riga Evening", url: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&q=80" },
     ],
@@ -3487,13 +3487,13 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "Metro Manila leads, but Cebu, Davao, and island resorts are fast-growing alternatives",
     cityData: [
       { name: "Bonifacio Global City", emoji: "🏙️", image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "$200–$400/sqft", bestFor: "Highest Rental Yield", tags: ["BGC", "Business District", "Expats"] },
-      { name: "Cebu City", emoji: "🏖️", image: "https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "$100–$250/sqft", bestFor: "Tourism & Business", tags: ["IT Park", "Tourism Hub", "Growing"] },
-      { name: "Boracay Island", emoji: "🌴", image: "https://images.unsplash.com/photo-1573843981267-be1e1d2268e7?w=600&q=80", yield: "8–12%", yieldColor: "#16b286", priceRange: "$150–$350/sqft", bestFor: "Beach Holiday Rental", tags: ["World's Best Beach", "Tourism", "Airbnb"] },
+      { name: "Cebu City", emoji: "🏖️", image: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "$100–$250/sqft", bestFor: "Tourism & Business", tags: ["IT Park", "Tourism Hub", "Growing"] },
+      { name: "Boracay Island", emoji: "🌴", image: "https://images.unsplash.com/photo-1501179691627-eeaa65ea017c?w=600&q=80", yield: "8–12%", yieldColor: "#16b286", priceRange: "$150–$350/sqft", bestFor: "Beach Holiday Rental", tags: ["World's Best Beach", "Tourism", "Airbnb"] },
     ],
     cityImages: [
       { name: "Manila BGC", url: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&q=80" },
-      { name: "Cebu", url: "https://images.unsplash.com/photo-1544550581-5f7ceaf7f992?w=600&q=80" },
-      { name: "Boracay", url: "https://images.unsplash.com/photo-1573843981267-be1e1d2268e7?w=600&q=80" },
+      { name: "Cebu", url: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=600&q=80" },
+      { name: "Boracay", url: "https://images.unsplash.com/photo-1501179691627-eeaa65ea017c?w=600&q=80" },
       { name: "Palawan", url: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80" },
     ],
     overview: [
@@ -3827,12 +3827,12 @@ export const COUNTRIES_DATA = {
     cityData: [
       { name: "Kuala Lumpur", emoji: "🏙️", image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80", yield: "4–6%", yieldColor: "#3b82f6", priceRange: "RM 600–1,500/sqft", bestFor: "Capital & Business Hub", tags: ["KLCC", "MM2H", "Expat Favorite"] },
       { name: "Johor Bahru", emoji: "🤝", image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80", yield: "5–8%", yieldColor: "#16b286", priceRange: "RM 400–1,000/sqft", bestFor: "Singapore Proximity Play", tags: ["SEZ Zone", "Singapore Border", "Growing Fast"] },
-      { name: "Penang", emoji: "🏛️", image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "RM 500–1,200/sqft", bestFor: "Heritage, Tourism & Tech", tags: ["UNESCO Heritage", "Tech Hub", "Tourism"] },
+      { name: "Penang", emoji: "🏛️", image: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "RM 500–1,200/sqft", bestFor: "Heritage, Tourism & Tech", tags: ["UNESCO Heritage", "Tech Hub", "Tourism"] },
     ],
     cityImages: [
       { name: "Kuala Lumpur", url: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80" },
       { name: "Petronas Towers", url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80" },
-      { name: "Penang Heritage", url: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80" },
+      { name: "Penang Heritage", url: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80" },
       { name: "Johor Bahru", url: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80" },
     ],
     overview: [
