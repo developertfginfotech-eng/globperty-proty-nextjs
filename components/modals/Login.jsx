@@ -85,7 +85,7 @@ export default function Login() {
                 </fieldset>
                 <fieldset className="box-fieldset">
                   <label htmlFor="login-pass">Password</label>
-                  <div className="ip-field" style={{ position: "relative" }}>
+                  <div className="ip-field" style={{ display: "flex", alignItems: "center", overflow: "visible" }}>
                     <LockIcon />
                     <input
                       type={showPassword ? "text" : "password"}
@@ -96,12 +96,12 @@ export default function Login() {
                       value={form.password}
                       onChange={handleChange}
                       required
-                      style={{ paddingRight: 40 }}
+                      style={{ flex: 1, border: "none", outline: "none", background: "transparent" }}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword((v) => !v)}
-                      style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}
+                      style={{ background: "none", border: "none", cursor: "pointer", padding: "0 4px", display: "flex", alignItems: "center", flexShrink: 0 }}
                       tabIndex={-1}
                     >
                       <EyeIcon show={showPassword} />
