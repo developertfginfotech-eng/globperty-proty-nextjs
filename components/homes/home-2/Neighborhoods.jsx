@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getAllProperties } from "@/utils/propertyApi";
 
 const COUNTRY_ORDER = [
@@ -23,10 +24,17 @@ const COUNTRY_IMAGES = {
   Malaysia:    "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80",
 };
 
+const SLUG_MAP = {
+  UAE: "uae", USA: "usa", Portugal: "portugal", Canada: "canada",
+  Australia: "australia", Turkey: "turkey", Cyprus: "cyprus", Malta: "malta",
+  Hungary: "hungary", Latvia: "latvia", Philippines: "philippines", Malaysia: "malaysia",
+};
+
 const GRID_7  = `"aa bb cc dd" "ee ff ff gg"`;
 const GRID_12 = `"aa bb cc dd" "ee ff ff gg" "hh ii ii jj" ". kk ll ."`;
 
 export default function Neighborhoods() {
+  const router = useRouter();
   const [counts, setCounts]     = useState({});
   const [showAll, setShowAll]   = useState(false);
 
@@ -58,26 +66,30 @@ export default function Neighborhoods() {
             className="wrap-neighborhoods"
             style={{ gridTemplateAreas: showAll ? GRID_12 : GRID_7 }}
           >
-            {visible.map((country, idx) => (
-              <div key={country} className={`box-location hover-img item-${idx + 1}`}>
-                <div className="image-wrap">
-                  <a href="#" style={{ position: "relative", display: "block" }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={COUNTRY_IMAGES[country]}
-                      alt={country}
-                      style={{ width: "100%", height: "245px", objectFit: "cover", display: "block" }}
-                    />
-                  </a>
+            {visible.map((country, idx) => {
+              const slug = SLUG_MAP[country];
+              const href = slug ? `/countries/${slug}` : `/listings?location=${encodeURIComponent(country)}`;
+              return (
+                <div key={country} className={`box-location hover-img item-${idx + 1}`} style={{ cursor: "pointer" }} onClick={() => router.push(href)}>
+                  <div className="image-wrap">
+                    <div style={{ position: "relative", display: "block" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={COUNTRY_IMAGES[country]}
+                        alt={country}
+                        style={{ width: "100%", height: "245px", objectFit: "cover", display: "block" }}
+                      />
+                    </div>
+                  </div>
+                  <div className="content">
+                    <h6 className="text_white">{country}</h6>
+                    <div className="text-1 tf-btn style-border pd-23 text_white" style={{ cursor: "pointer" }}>
+                      {counts[country] ?? 0} Properties <i className="icon-arrow-right" />
+                    </div>
+                  </div>
                 </div>
-                <div className="content">
-                  <h6 className="text_white">{country}</h6>
-                  <a href="#" className="text-1 tf-btn style-border pd-23 text_white">
-                    {counts[country] ?? 0} Properties <i className="icon-arrow-right" />
-                  </a>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div style={{ display: "flex", justifyContent: "center", marginTop: "32px" }}>
