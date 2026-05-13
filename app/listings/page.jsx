@@ -19,8 +19,10 @@ const TYPE_KEYS = {
 };
 
 function ListingsContent() {
-  const searchParams  = useSearchParams();
-  const typeParam     = (searchParams.get("type") || "").toLowerCase();
+  const searchParams   = useSearchParams();
+  const typeParam      = (searchParams.get("type") || "").toLowerCase();
+  const locationParam  = (searchParams.get("location") || "").toLowerCase();
+  const cityParam      = (searchParams.get("city") || "").toLowerCase();
 
   const [properties, setProperties] = useState([]);
   const [loading, setLoading]       = useState(true);
@@ -28,17 +30,40 @@ function ListingsContent() {
   useEffect(() => {
     getAllProperties()
       .then((all) => {
-        if (!typeParam) { setProperties(all); return; }
-        const keys = TYPE_KEYS[typeParam] || [typeParam];
-        setProperties(
-          all.filter((p) => keys.includes((p.propertyType || "").toLowerCase()))
-        );
+        let filtered = all;
+
+        // Filter by location (country)
+        if (locationParam) {
+          filtered = filtered.filter((p) =>
+            (p.country || "").toLowerCase() === locationParam ||
+            (p.location || "").toLowerCase().includes(locationParam)
+          );
+        }
+
+        // Filter by city
+        if (cityParam) {
+          filtered = filtered.filter((p) =>
+            (p.city || "").toLowerCase().includes(cityParam)
+          );
+        }
+
+        // Filter by property type
+        if (typeParam) {
+          const keys = TYPE_KEYS[typeParam] || [typeParam];
+          filtered = filtered.filter((p) =>
+            keys.includes((p.propertyType || "").toLowerCase())
+          );
+        }
+
+        setProperties(filtered);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [typeParam]);
+  }, [typeParam, locationParam, cityParam]);
 
-  const heading = typeParam
+  const heading = locationParam
+    ? `${locationParam.toUpperCase()} Properties${typeParam ? ` — ${typeParam.charAt(0).toUpperCase() + typeParam.slice(1)}` : ""}`
+    : typeParam
     ? typeParam.charAt(0).toUpperCase() + typeParam.slice(1)
     : "All Properties";
 
@@ -57,7 +82,7 @@ function ListingsContent() {
             {loading ? (
               <p className="text-center py-60">Loading properties…</p>
             ) : properties.length === 0 ? (
-              <p className="text-center py-60">No properties found for this type.</p>
+              <p className="text-center py-60">No properties found{locationParam ? ` in ${locationParam.toUpperCase()}` : ""}.</p>
             ) : (
               <div
                 className="tf-layout-mobile-sm sm-col-2 xl-col-4 lg-col-3 d-flex flex-wrap"
