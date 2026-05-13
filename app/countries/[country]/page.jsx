@@ -76,7 +76,30 @@ export default function CountryPage() {
                 ? <GoldenVisaSection data={country.goldenVisa} country={country} />
                 : <ComingSoonSection tab={activeTab} country={country} />
             )}
-            {!["Overview", "Geography", "Real Estate Market", "Buying Guide", "Investment", "Golden Visa"].includes(activeTab) && (
+            {activeTab === "Taxes & Legal" && (
+              country.taxesLegal
+                ? <TaxesLegalSection data={country.taxesLegal} country={country} />
+                : <ComingSoonSection tab={activeTab} country={country} />
+            )}
+            {activeTab === "Finance" && (
+              country.finance
+                ? <FinanceSection data={country.finance} country={country} />
+                : <ComingSoonSection tab={activeTab} country={country} />
+            )}
+            {activeTab === "Business" && (
+              country.business
+                ? <BusinessSection data={country.business} country={country} />
+                : <ComingSoonSection tab={activeTab} country={country} />
+            )}
+            {activeTab === "Expat Guide" && (
+              country.expatGuide
+                ? <ExpatGuideSection data={country.expatGuide} country={country} />
+                : <ComingSoonSection tab={activeTab} country={country} />
+            )}
+            {activeTab === "Listings" && (
+              <ListingsSection country={country} />
+            )}
+            {!["Overview", "Geography", "Real Estate Market", "Buying Guide", "Investment", "Golden Visa", "Taxes & Legal", "Finance", "Business", "Expat Guide", "Listings"].includes(activeTab) && (
               <ComingSoonSection tab={activeTab} country={country} />
             )}
           </main>
@@ -244,7 +267,7 @@ function OverviewSection({ country }) {
 
       {/* Feature cards */}
       {country.features && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginTop: 36 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginTop: 36, marginBottom: 48 }}>
           {country.features.map((f) => (
             <div key={f.title} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 12, padding: "20px 16px", textAlign: "center", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
               <div style={{ fontSize: 28, marginBottom: 10 }}>{f.icon}</div>
@@ -254,6 +277,78 @@ function OverviewSection({ country }) {
           ))}
         </div>
       )}
+
+      {/* Country Comparison */}
+      {country.countryComparison && <CountryComparisonBlock data={country.countryComparison} country={country} />}
+
+      {/* FAQ */}
+      {country.faq && <FAQBlock data={country.faq} country={country} />}
+    </div>
+  );
+}
+
+function CountryComparisonBlock({ data, country }) {
+  const cols = data.compareWith || [];
+  return (
+    <div style={{ marginBottom: 48 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>COUNTRY COMPARISON</div>
+      <h2 style={{ fontSize: 26, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+      <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 20 }}>{data.subtitle}</p>
+      <div style={{ background: "#0f172a", borderRadius: 14, padding: 24 }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.7)", marginBottom: 20 }}>📊 Investment Metrics Comparison</div>
+        <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols.length}, 1fr)`, gap: 0 }}>
+          {cols.map((col, ci) => (
+            <div key={ci} style={{ borderRight: ci < cols.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none", paddingRight: ci < cols.length - 1 ? 20 : 0, paddingLeft: ci > 0 ? 20 : 0 }}>
+              <div style={{ textAlign: "center", marginBottom: 16 }}>
+                <div style={{ fontSize: 28, marginBottom: 4 }}>{col.flag}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>{col.name}</div>
+              </div>
+              {(col.metrics || []).map((m, mi) => (
+                <div key={mi} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                  <span style={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }}>{m.label}</span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: m.valueColor || "#fff" }}>{m.value}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 20, marginTop: 16 }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", marginBottom: 14 }}>🌐 Explore More Countries on Globperty</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+          {[{flag:"🇦🇪",name:"UAE",slug:"uae"},{flag:"🇵🇹",name:"Portugal",slug:"portugal"},{flag:"🇹🇷",name:"Turkey",slug:"turkey"},{flag:"🇨🇾",name:"Cyprus",slug:"cyprus"},{flag:"🇲🇹",name:"Malta",slug:"malta"},{flag:"🇦🇺",name:"Australia",slug:"australia"},{flag:"🇺🇸",name:"USA",slug:"usa"},{flag:"🇨🇦",name:"Canada",slug:"canada"},{flag:"🇲🇾",name:"Malaysia",slug:"malaysia"},{flag:"🇵🇭",name:"Philippines",slug:"philippines"},{flag:"🇭🇺",name:"Hungary",slug:"hungary"},{flag:"🇱🇻",name:"Latvia",slug:"latvia"}].filter(c => c.slug !== country.slug).map(c => (
+            <Link key={c.slug} href={`/countries/${c.slug}`} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", borderRadius: 8, border: "1px solid #e5e7eb", fontSize: 13, fontWeight: 600, color: "#374151", textDecoration: "none", background: "#fafafa" }}>
+              {c.flag} {c.name}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FAQBlock({ data }) {
+  const [open, setOpen] = useState(null);
+  return (
+    <div style={{ marginBottom: 48 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>FREQUENTLY ASKED QUESTIONS</div>
+      <h2 style={{ fontSize: 26, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+      <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 20 }}>{data.subtitle}</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {(data.questions || []).map((item, i) => (
+          <div key={i} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 12, overflow: "hidden" }}>
+            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: "#111827", paddingRight: 16 }}>{item.q}</span>
+              <span style={{ color: open === i ? "#f0822d" : "#9ca3af", fontSize: 18, flexShrink: 0 }}>{open === i ? "▲" : "▼"}</span>
+            </button>
+            {open === i && (
+              <div style={{ padding: "0 20px 16px", fontSize: 13, color: "#374151", lineHeight: 1.7, borderTop: "1px solid #f3f4f6" }}>
+                <div style={{ paddingTop: 12 }}>{item.a}</div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -701,6 +796,377 @@ function BuyingGuideSection({ data, country }) {
           🤖 Ask Globperty AI
         </Link>
       </div>
+    </div>
+  );
+}
+
+function TaxesLegalSection({ data, country }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>TAXES & LEGAL</div>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+        <p style={{ fontSize: 14, color: "#6b7280" }}>{data.subtitle}</p>
+      </div>
+      <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 12, padding: "14px 18px", fontSize: 13, color: "#166534", lineHeight: 1.7 }}>
+        <strong>{data.alert?.split(":")[0]}:</strong>{data.alert?.split(":").slice(1).join(":")}
+      </div>
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ background: "#111827" }}>
+              {["TAX TYPE", "RATE", "DETAILS"].map(h => (
+                <th key={h} style={{ padding: "12px 16px", fontSize: 11, fontWeight: 700, color: "#9ca3af", textAlign: "left", letterSpacing: 0.8 }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {(data.taxes || []).map((row, i) => (
+              <tr key={i} style={{ borderBottom: "1px solid #f3f4f6", background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 600, color: "#111827" }}>{row.type}</td>
+                <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 800, color: row.rateColor || "#111827" }}>{row.rate}</td>
+                <td style={{ padding: "12px 16px", fontSize: 13, color: "#6b7280", lineHeight: 1.5 }}>{row.details}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {data.investorNote && (
+        <div style={{ background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 12, padding: "14px 18px", fontSize: 13, color: "#92400e", lineHeight: 1.7 }}>
+          {data.investorNote}
+        </div>
+      )}
+      <div style={{ background: "linear-gradient(135deg, #1d4ed8, #3b82f6)", borderRadius: 14, padding: 24, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 14 }}>
+        <div>
+          <div style={{ fontSize: 16, fontWeight: 800, color: "#fff", marginBottom: 4 }}>Need personalised tax advice for {country.name}?</div>
+          <div style={{ fontSize: 13, color: "rgba(255,255,255,0.8)" }}>Ask Globperty AI any tax, legal, or DTAA question instantly.</div>
+        </div>
+        <Link href="/copilot" style={{ background: "#f0822d", color: "#fff", padding: "12px 22px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 14 }}>🤖 Ask AI</Link>
+      </div>
+    </div>
+  );
+}
+
+function FinanceSection({ data }) {
+  const [price, setPrice] = useState(data.calculator?.defaultPrice || 1000000);
+  const [downPct, setDownPct] = useState(data.calculator?.defaultDown || 20);
+  const [rate, setRate] = useState(data.calculator?.defaultRate || 5.5);
+  const [term, setTerm] = useState(data.calculator?.defaultTerm || 25);
+  const currency = data.calculator?.currency || "$";
+
+  const loanAmt = price * (1 - downPct / 100);
+  const monthlyRate = rate / 100 / 12;
+  const n = term * 12;
+  const monthly = monthlyRate > 0 ? loanAmt * (monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1) : loanAmt / n;
+  const totalInterest = monthly * n - loanAmt;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>FINANCE & MORTGAGES</div>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+        <p style={{ fontSize: 14, color: "#6b7280" }}>{data.subtitle}</p>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+        {/* Mortgage rules */}
+        <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>🏦 Mortgage Rules for Foreigners</div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+            {(data.mortgageRules || []).map((r, i) => (
+              <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, lineHeight: 1.5 }}>
+                <span style={{ color: r.color || "#6b7280", width: 8, height: 8, borderRadius: "50%", background: r.color || "#6b7280", flexShrink: 0, marginTop: 5 }} />
+                <span><strong style={{ color: "#374151" }}>{r.label}</strong> <span style={{ color: "#6b7280" }}>{r.value}</span></span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Mortgage calculator */}
+        <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>💰 Mortgage Calculator</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+            {[
+              { label: `PROPERTY PRICE (${currency})`, value: price, setter: setPrice, step: 50000 },
+              { label: "DOWN PAYMENT", value: `${downPct}%`, isSelect: true, opts: ["10%","15%","20%","25%","30%","35%","40%"], setter: v => setDownPct(parseInt(v)) },
+              { label: "INTEREST RATE (%)", value: rate, setter: setRate, step: 0.1 },
+              { label: "LOAN TERM", isSelect: true, value: `${term} years`, opts: ["10 years","15 years","20 years","25 years","30 years"], setter: v => setTerm(parseInt(v)) },
+            ].map((f, fi) => (
+              <div key={fi}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: "#9ca3af", letterSpacing: 0.8, marginBottom: 4 }}>{f.label}</div>
+                {f.isSelect ? (
+                  <select value={f.value} onChange={e => f.setter(e.target.value)} style={{ width: "100%", padding: "8px 10px", borderRadius: 6, border: "1px solid #e5e7eb", fontSize: 13, background: "#fff" }}>
+                    {f.opts.map(o => <option key={o}>{o}</option>)}
+                  </select>
+                ) : (
+                  <input type="number" value={f.value} onChange={e => f.setter(Number(e.target.value))} step={f.step} style={{ width: "100%", padding: "8px 10px", borderRadius: 6, border: "1px solid #e5e7eb", fontSize: 13, boxSizing: "border-box" }} />
+                )}
+              </div>
+            ))}
+          </div>
+          <div style={{ background: "#1d4ed8", borderRadius: 10, padding: "16px", textAlign: "center" }}>
+            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", marginBottom: 4 }}>Estimated Monthly Payment</div>
+            <div style={{ fontSize: 26, fontWeight: 800, color: "#fff" }}>{currency} {Math.round(monthly).toLocaleString()} / month</div>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10, fontSize: 12, color: "#6b7280" }}>
+            <span>Loan amount: <strong>{currency} {Math.round(loanAmt).toLocaleString()}</strong></span>
+            <span>Total interest: <strong>{currency} {Math.round(totalInterest).toLocaleString()}</strong></span>
+          </div>
+        </div>
+      </div>
+
+      {/* Banks table */}
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden" }}>
+        <div style={{ padding: "14px 20px", background: "#111827", fontSize: 14, fontWeight: 700, color: "#fff" }}>
+          🏛️ Top {data.banks?.[0]?.name?.includes("Maybank") ? "Malaysian" : ""} Banks Offering Foreign Buyer Mortgages
+        </div>
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr style={{ background: "#1f2937" }}>
+                {["BANK", "RATE FROM", "MAX LTV", "NON-RESIDENT?", "ISLAMIC?"].map(h => (
+                  <th key={h} style={{ padding: "10px 16px", fontSize: 11, fontWeight: 700, color: "#9ca3af", textAlign: "left", letterSpacing: 0.8 }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {(data.banks || []).map((b, i) => (
+                <tr key={i} style={{ borderBottom: "1px solid #f3f4f6", background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                  <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 700, color: "#111827" }}>{b.name}</td>
+                  <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 700, color: "#16a34a" }}>{b.rateFrom}</td>
+                  <td style={{ padding: "12px 16px", fontSize: 13, color: "#374151" }}>{b.maxLtv}</td>
+                  <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 600, color: b.nonResidentColor || "#6b7280" }}>{b.nonResident}</td>
+                  <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 600, color: b.islamicColor || "#6b7280" }}>{b.islamic}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BusinessSection({ data, country }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>BUSINESS & ECONOMY</div>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+        <p style={{ fontSize: 14, color: "#6b7280" }}>{data.subtitle}</p>
+      </div>
+
+      {/* Stats */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+        {(data.stats || []).map((s, i) => (
+          <div key={i} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 20, textAlign: "center" }}>
+            <div style={{ fontSize: 28, marginBottom: 8 }}>{s.icon}</div>
+            <div style={{ fontSize: 22, fontWeight: 800, color: s.valueColor || "#1d4ed8" }}>{s.value}</div>
+            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+        {/* Setup options */}
+        <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>🏭 Ways to Set Up a Business</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {(data.setupOptions || []).map((opt, i) => (
+              <div key={i} style={{ background: opt.color + "10", border: `1px solid ${opt.color}30`, borderRadius: 10, padding: "12px 16px" }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: opt.color, marginBottom: 4 }}>{opt.name}</div>
+                <div style={{ fontSize: 12, color: "#374151", lineHeight: 1.5 }}>{opt.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Economic stats */}
+        <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>💰 Key Economic Stats</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {(data.economicStats || []).map((s, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: "1px solid #f3f4f6" }}>
+                <span style={{ fontSize: 13, color: "#6b7280" }}>{s.label}</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#111827", textAlign: "right", maxWidth: "55%" }}>{s.value}</span>
+              </div>
+            ))}
+          </div>
+          <Link href="/copilot" style={{ display: "block", marginTop: 16, textAlign: "center", background: "#f0822d", color: "#fff", padding: "10px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 13 }}>
+            Ask AI About Business in {country.name}
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ExpatGuideSection({ data, country }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>EXPAT GUIDE</div>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+        <p style={{ fontSize: 14, color: "#6b7280" }}>{data.subtitle}</p>
+      </div>
+
+      {/* Living costs table */}
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden" }}>
+        <div style={{ background: "#111827", padding: "14px 20px", fontSize: 14, fontWeight: 700, color: "#fff" }}>
+          💰 Monthly Cost of Living in {country.name} (2025 Estimate)
+        </div>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ background: "#1f2937" }}>
+              {["CATEGORY", "MONTHLY COST", "NOTES"].map(h => (
+                <th key={h} style={{ padding: "10px 16px", fontSize: 11, fontWeight: 700, color: "#9ca3af", textAlign: "left", letterSpacing: 0.8 }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {(data.livingCosts || []).map((row, i) => (
+              <tr key={i} style={{ borderBottom: "1px solid #f3f4f6", background: row.category.includes("Total") ? "#fffbeb" : i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: row.category.includes("Total") ? 700 : 600, color: "#111827" }}>{row.category}</td>
+                <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 700, color: row.category.includes("Total") ? "#f0822d" : "#1d4ed8" }}>{row.monthly}</td>
+                <td style={{ padding: "12px 16px", fontSize: 12, color: "#6b7280", fontStyle: "italic" }}>{row.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Neighborhoods */}
+      <div>
+        <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>🏙️ Best Neighborhoods for Expats</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+          {(data.neighborhoods || []).map((n, i) => (
+            <div key={i} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 20 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: i === 0 ? "#f0822d" : i === 1 ? "#16a34a" : "#1d4ed8", marginBottom: 6 }}>{n.type?.toUpperCase()}</div>
+              <div style={{ fontSize: 16, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{n.name}</div>
+              <div style={{ fontSize: 12, color: "#6b7280", lineHeight: 1.6, marginBottom: 12 }}>{n.desc}</div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
+                <span style={{ color: "#9ca3af" }}>Avg Rent/yr</span>
+                <span style={{ fontWeight: 700, color: "#111827" }}>{n.avgRent}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginTop: 4 }}>
+                <span style={{ color: "#9ca3af" }}>Best for</span>
+                <span style={{ fontWeight: 600, color: "#374151" }}>{n.bestFor}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Lifestyle */}
+      {data.lifestyle && (
+        <div style={{ background: "linear-gradient(135deg, #1e1b4b, #1d4ed8)", borderRadius: 14, padding: 24, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.7 }}>{data.lifestyle}</div>
+          </div>
+          <Link href="/copilot" style={{ background: "#f0822d", color: "#fff", padding: "12px 22px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 14, whiteSpace: "nowrap" }}>
+            🤖 Ask About Living in {country.name}
+          </Link>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ListingsSection({ country }) {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("All");
+
+  useEffect(() => {
+    getAllProperties()
+      .then(all => {
+        const loc = country.locationParam || country.name;
+        const filtered = (all || []).filter(p =>
+          p.country?.toLowerCase().includes(loc.toLowerCase()) ||
+          p.location?.toLowerCase().includes(loc.toLowerCase()) ||
+          p.city?.toLowerCase().includes(loc.toLowerCase())
+        );
+        setProperties(filtered.length > 0 ? filtered : (all || []).slice(0, 6));
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [country]);
+
+  const filters = ["All", "Buy", "Rent", "Off-Plan", "Golden Visa Eligible"];
+  const visible = filter === "All" ? properties :
+    filter === "Buy" ? properties.filter(p => p.adType?.toLowerCase().includes("sale") || p.adType?.toLowerCase().includes("buy")) :
+    filter === "Rent" ? properties.filter(p => p.adType?.toLowerCase().includes("rent")) :
+    filter === "Off-Plan" ? properties.filter(p => p.adType?.toLowerCase().includes("off") || p.propertyAge?.toLowerCase().includes("new")) :
+    properties;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>PROPERTIES IN {country.name.toUpperCase()}</div>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 4 }}>Featured {country.name} Properties on Globperty</h2>
+        <p style={{ fontSize: 14, color: "#6b7280" }}>Verified listings from registered agents — updated daily</p>
+      </div>
+
+      {/* Filters */}
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        {filters.map(f => (
+          <button key={f} onClick={() => setFilter(f)} style={{
+            padding: "8px 18px", borderRadius: 30, fontSize: 13, fontWeight: 600, cursor: "pointer",
+            background: filter === f ? "#1d4ed8" : "#fff",
+            border: `1.5px solid ${filter === f ? "#1d4ed8" : "#e5e7eb"}`,
+            color: filter === f ? "#fff" : "#374151",
+          }}>{f} {filter === f && properties.length > 0 ? `(${visible.length})` : ""}</button>
+        ))}
+      </div>
+
+      {loading ? (
+        <div style={{ textAlign: "center", padding: "40px 0", color: "#9ca3af" }}>Loading {country.name} properties…</div>
+      ) : visible.length === 0 ? (
+        <div style={{ textAlign: "center", padding: "40px 0", color: "#9ca3af", fontSize: 14 }}>
+          No {country.name} listings currently. <Link href="/listings" style={{ color: "#f0822d" }}>Browse all listings →</Link>
+        </div>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+          {visible.slice(0, 6).map(p => (
+            <Link key={p.id || p._id} href={`/property-detail-v1/${p.id || p._id}`} style={{ textDecoration: "none" }}>
+              <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.06)", transition: "box-shadow 0.2s" }}>
+                <div style={{ position: "relative", height: 180, background: "#f3f4f6", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  {p.imageSrc ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={p.imageSrc} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  ) : (
+                    <span style={{ fontSize: 40 }}>🏠</span>
+                  )}
+                  <div style={{ position: "absolute", top: 10, left: 10, display: "flex", gap: 6 }}>
+                    {p.featured && <span style={{ background: "#1d4ed8", color: "#fff", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4 }}>Featured</span>}
+                    <span style={{ background: "#f0822d", color: "#fff", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 4 }}>{p.adType || "For Sale"}</span>
+                  </div>
+                </div>
+                <div style={{ padding: 16 }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 4, lineHeight: 1.3 }}>{p.title || "Property Listing"}</div>
+                  <div style={{ fontSize: 12, color: "#9ca3af", marginBottom: 10, display: "flex", alignItems: "center", gap: 4 }}>
+                    <i className="icon-location" style={{ fontSize: 10 }} />{p.location || p.city}
+                  </div>
+                  <div style={{ display: "flex", gap: 12, fontSize: 12, color: "#6b7280", marginBottom: 12 }}>
+                    {p.beds && <span>🛏 {p.beds}</span>}
+                    {p.baths && <span>🚿 {p.baths}</span>}
+                    {p.sqft && <span>📐 {p.sqft} sqft</span>}
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: 16, fontWeight: 800, color: "#f0822d" }}>
+                      {p.price ? `$${Number(p.price).toLocaleString()}` : "Price on request"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      <Link href={`/listings?location=${country.locationParam || country.name}`} style={{ display: "block", textAlign: "center", background: "#1d4ed8", color: "#fff", padding: "14px", borderRadius: 10, fontWeight: 700, textDecoration: "none", fontSize: 15 }}>
+        View All {country.name} Properties →
+      </Link>
     </div>
   );
 }
