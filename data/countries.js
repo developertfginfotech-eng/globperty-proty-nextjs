@@ -2472,12 +2472,12 @@ export const COUNTRIES_DATA = {
     cityData: [
       { name: "Sydney", emoji: "🌉", image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&q=80", yield: "3–5%", yieldColor: "#3b82f6", priceRange: "AUD 1,200–$5,000/sqm", bestFor: "Capital Growth & Prestige", tags: ["Top Market", "Luxury", "Harbour City"] },
       { name: "Melbourne", emoji: "☕", image: "https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80", yield: "3–5%", yieldColor: "#3b82f6", priceRange: "AUD 800–$3,500/sqm", bestFor: "Liveable City & Culture", tags: ["World's Most Liveable", "Students", "Arts"] },
-      { name: "Brisbane", emoji: "🏅", image: "https://images.unsplash.com/photo-1524293568345-75d62c3664f7?w=600&q=80", yield: "4–6%", yieldColor: "#16b286", priceRange: "AUD 600–$2,000/sqm", bestFor: "Growth Market & Value", tags: ["2032 Olympics", "Affordable", "Fast Growing"] },
+      { name: "Brisbane", emoji: "🏅", image: "https://images.unsplash.com/photo-1543872084-c7bd3822856f?w=600&q=80", yield: "4–6%", yieldColor: "#16b286", priceRange: "AUD 600–$2,000/sqm", bestFor: "Growth Market & Value", tags: ["2032 Olympics", "Affordable", "Fast Growing"] },
     ],
     cityImages: [
       { name: "Sydney", url: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&q=80" },
       { name: "Melbourne", url: "https://images.unsplash.com/photo-1514395462725-fb4566210144?w=600&q=80" },
-      { name: "Brisbane", url: "https://images.unsplash.com/photo-1524293568345-75d62c3664f7?w=600&q=80" },
+      { name: "Brisbane", url: "https://images.unsplash.com/photo-1543872084-c7bd3822856f?w=600&q=80" },
       { name: "Gold Coast", url: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&q=80" },
     ],
     overview: [
