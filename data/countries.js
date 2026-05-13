@@ -1106,13 +1106,13 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "From cosmopolitan Istanbul to turquoise coastlines — Turkey's regions each attract different investor profiles",
     cityData: [
       { name: "Istanbul", emoji: "🏙️", image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80", yield: "5–8%", yieldColor: "#16b286", priceRange: "$1,500–$5,000/sqm", bestFor: "Long-term Capital Growth", tags: ["Citizenship", "Largest City", "Business"] },
-      { name: "Antalya", emoji: "🌊", image: "https://images.unsplash.com/photo-1571721795195-a2ca2d3370e9?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "$800–$2,500/sqm", bestFor: "Holiday Rental", tags: ["Beach", "Tourism", "Affordable"] },
-      { name: "Bodrum", emoji: "⛵", image: "https://images.unsplash.com/photo-1568376780-f8a9e1c34bd1?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "$1,200–$4,000/sqm", bestFor: "Luxury Villas", tags: ["Upscale", "Marina", "Yachting"] },
+      { name: "Antalya", emoji: "🌊", image: "/images/turkey/antalya.jpg", yield: "7–10%", yieldColor: "#16b286", priceRange: "$800–$2,500/sqm", bestFor: "Holiday Rental", tags: ["Beach", "Tourism", "Affordable"] },
+      { name: "Bodrum", emoji: "⛵", image: "/images/turkey/bodrum.jpg", yield: "6–9%", yieldColor: "#16b286", priceRange: "$1,200–$4,000/sqm", bestFor: "Luxury Villas", tags: ["Upscale", "Marina", "Yachting"] },
     ],
     cityImages: [
       { name: "Istanbul", url: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80" },
-      { name: "Antalya", url: "https://images.unsplash.com/photo-1571721795195-a2ca2d3370e9?w=600&q=80" },
-      { name: "Bodrum", url: "https://images.unsplash.com/photo-1568376780-f8a9e1c34bd1?w=600&q=80" },
+      { name: "Antalya", url: "/images/turkey/antalya.jpg" },
+      { name: "Bodrum", url: "/images/turkey/bodrum.jpg" },
       { name: "Cappadocia", url: "https://images.unsplash.com/photo-1579606032821-4d5d496e0c96?w=600&q=80" },
     ],
     overview: [
@@ -2810,13 +2810,13 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "Budapest dominates — but secondary cities offer high yields and even lower entry prices",
     cityData: [
       { name: "Budapest", emoji: "🏛️", image: "https://images.unsplash.com/photo-1565426873118-a17ed65d74b9?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€1,500–€4,000/sqm", bestFor: "Short-term Rental & Growth", tags: ["Airbnb", "Tourist City", "Undervalued"] },
-      { name: "Budapest District VII", emoji: "🎭", image: "https://images.unsplash.com/photo-1535966161992-4b2e01e3ae41?w=600&q=80", yield: "6–8%", yieldColor: "#16b286", priceRange: "€1,800–€3,500/sqm", bestFor: "Highest Rental Demand", tags: ["Ruin Bars", "Nightlife District", "Top Yield"] },
-      { name: "Lake Balaton Region", emoji: "🌊", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€800–€2,500/sqm", bestFor: "Holiday Home & Retreat", tags: ["Lakeside", "Summer Tourism", "Affordable"] },
+      { name: "Budapest District VII", emoji: "🎭", image: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=600&q=80", yield: "6–8%", yieldColor: "#16b286", priceRange: "€1,800–€3,500/sqm", bestFor: "Highest Rental Demand", tags: ["Ruin Bars", "Nightlife District", "Top Yield"] },
+      { name: "Lake Balaton Region", emoji: "🌊", image: "/images/hungary/lake-balaton.jpg", yield: "4–7%", yieldColor: "#16b286", priceRange: "€800–€2,500/sqm", bestFor: "Holiday Home & Retreat", tags: ["Lakeside", "Summer Tourism", "Affordable"] },
     ],
     cityImages: [
       { name: "Budapest Parliament", url: "https://images.unsplash.com/photo-1565426873118-a17ed65d74b9?w=600&q=80" },
-      { name: "Budapest Chain Bridge", url: "https://images.unsplash.com/photo-1535966161992-4b2e01e3ae41?w=600&q=80" },
-      { name: "Budapest Danube", url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80" },
+      { name: "Budapest Chain Bridge", url: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=600&q=80" },
+      { name: "Budapest Danube", url: "/images/hungary/lake-balaton.jpg" },
       { name: "Lake Balaton", url: "https://images.unsplash.com/photo-1465256410760-10640339c72a?w=600&q=80" },
     ],
     overview: [
