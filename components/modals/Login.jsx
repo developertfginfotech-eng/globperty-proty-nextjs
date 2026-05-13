@@ -14,10 +14,24 @@ const LockIcon = () => (
   </svg>
 );
 
+const EyeIcon = ({ show }) =>
+  show ? (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#A3ABB0" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  ) : (
+    <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#A3ABB0" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+      <line x1="1" y1="1" x2="23" y2="23" />
+    </svg>
+  );
+
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,7 +44,6 @@ export default function Login() {
     setError("");
     try {
       await login(form.email, form.password);
-      // Close modal on success
       const modal = document.getElementById("modalLogin");
       if (modal) {
         const bsModal = window.bootstrap?.Modal?.getInstance(modal);
@@ -72,9 +85,27 @@ export default function Login() {
                 </fieldset>
                 <fieldset className="box-fieldset">
                   <label htmlFor="login-pass">Password</label>
-                  <div className="ip-field">
+                  <div className="ip-field" style={{ position: "relative" }}>
                     <LockIcon />
-                    <input type="password" className="form-control" id="login-pass" name="password" placeholder="Your password" value={form.password} onChange={handleChange} required />
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control"
+                      id="login-pass"
+                      name="password"
+                      placeholder="Your password"
+                      value={form.password}
+                      onChange={handleChange}
+                      required
+                      style={{ paddingRight: 40 }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((v) => !v)}
+                      style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}
+                      tabIndex={-1}
+                    >
+                      <EyeIcon show={showPassword} />
+                    </button>
                   </div>
                   <div className="text-forgot text-end">
                     <a href="#">Forgot password</a>
