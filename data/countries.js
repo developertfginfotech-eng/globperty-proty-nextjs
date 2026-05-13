@@ -2810,12 +2810,12 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "Budapest dominates — but secondary cities offer high yields and even lower entry prices",
     cityData: [
       { name: "Budapest", emoji: "🏛️", image: "https://images.unsplash.com/photo-1565426873118-a17ed65d74b9?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€1,500–€4,000/sqm", bestFor: "Short-term Rental & Growth", tags: ["Airbnb", "Tourist City", "Undervalued"] },
-      { name: "Budapest District VII", emoji: "🎭", image: "https://images.unsplash.com/photo-1520950335664-407c7d52e0ea?w=600&q=80", yield: "6–8%", yieldColor: "#16b286", priceRange: "€1,800–€3,500/sqm", bestFor: "Highest Rental Demand", tags: ["Ruin Bars", "Nightlife District", "Top Yield"] },
+      { name: "Budapest District VII", emoji: "🎭", image: "https://images.unsplash.com/photo-1526786220381-1d21eeafd9f7?w=600&q=80", yield: "6–8%", yieldColor: "#16b286", priceRange: "€1,800–€3,500/sqm", bestFor: "Highest Rental Demand", tags: ["Ruin Bars", "Nightlife District", "Top Yield"] },
       { name: "Lake Balaton Region", emoji: "🌊", image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€800–€2,500/sqm", bestFor: "Holiday Home & Retreat", tags: ["Lakeside", "Summer Tourism", "Affordable"] },
     ],
     cityImages: [
       { name: "Budapest Parliament", url: "https://images.unsplash.com/photo-1565426873118-a17ed65d74b9?w=600&q=80" },
-      { name: "Budapest Chain Bridge", url: "https://images.unsplash.com/photo-1520950335664-407c7d52e0ea?w=600&q=80" },
+      { name: "Budapest Chain Bridge", url: "https://images.unsplash.com/photo-1526786220381-1d21eeafd9f7?w=600&q=80" },
       { name: "Budapest Danube", url: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" },
       { name: "Lake Balaton", url: "https://images.unsplash.com/photo-1465256410760-10640339c72a?w=600&q=80" },
     ],
