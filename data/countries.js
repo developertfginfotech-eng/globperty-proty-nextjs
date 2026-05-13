@@ -1106,13 +1106,13 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "From cosmopolitan Istanbul to turquoise coastlines — Turkey's regions each attract different investor profiles",
     cityData: [
       { name: "Istanbul", emoji: "🏙️", image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80", yield: "5–8%", yieldColor: "#16b286", priceRange: "$1,500–$5,000/sqm", bestFor: "Long-term Capital Growth", tags: ["Citizenship", "Largest City", "Business"] },
-      { name: "Antalya", emoji: "🌊", image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "$800–$2,500/sqm", bestFor: "Holiday Rental", tags: ["Beach", "Tourism", "Affordable"] },
-      { name: "Bodrum", emoji: "⛵", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "$1,200–$4,000/sqm", bestFor: "Luxury Villas", tags: ["Upscale", "Marina", "Yachting"] },
+      { name: "Antalya", emoji: "🌊", image: "https://images.unsplash.com/photo-1499678329028-101435f6ef88?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "$800–$2,500/sqm", bestFor: "Holiday Rental", tags: ["Beach", "Tourism", "Affordable"] },
+      { name: "Bodrum", emoji: "⛵", image: "https://images.unsplash.com/photo-1533050487297-09b450131914?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "$1,200–$4,000/sqm", bestFor: "Luxury Villas", tags: ["Upscale", "Marina", "Yachting"] },
     ],
     cityImages: [
       { name: "Istanbul", url: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80" },
-      { name: "Antalya", url: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80" },
-      { name: "Bodrum", url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" },
+      { name: "Antalya", url: "https://images.unsplash.com/photo-1499678329028-101435f6ef88?w=600&q=80" },
+      { name: "Bodrum", url: "https://images.unsplash.com/photo-1533050487297-09b450131914?w=600&q=80" },
       { name: "Cappadocia", url: "https://images.unsplash.com/photo-1579606032821-4d5d496e0c96?w=600&q=80" },
     ],
     overview: [
