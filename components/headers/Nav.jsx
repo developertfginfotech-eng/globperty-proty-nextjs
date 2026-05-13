@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const MENU = [
   {
@@ -234,19 +234,43 @@ const MENU = [
 ];
 
 const panelStyle = {
-  position: "absolute",
-  top: "100%",
-  left: "50%",
-  transform: "translateX(-50%)",
   background: "#fff",
   borderRadius: 12,
   boxShadow: "0 8px 40px rgba(0,0,0,0.14)",
-  padding: "24px 28px",
   minWidth: 680,
   maxWidth: 860,
-  zIndex: 9999,
   border: "1px solid #f0f0f0",
 };
+
+function SmartPanel({ children, onEnter, onLeave }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const MARGIN = 12;
+    const rect = el.getBoundingClientRect();
+    const vw = window.innerWidth;
+    if (rect.left < MARGIN) {
+      const shift = MARGIN - rect.left;
+      el.style.transform = `translateX(calc(-50% + ${shift}px))`;
+    } else if (rect.right > vw - MARGIN) {
+      const shift = rect.right - (vw - MARGIN);
+      el.style.transform = `translateX(calc(-50% - ${shift}px))`;
+    }
+  });
+
+  return (
+    <div
+      ref={ref}
+      style={{ position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)", zIndex: 9999 }}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+    >
+      {children}
+    </div>
+  );
+}
 
 function MegaItem({ item }) {
   return (
@@ -428,9 +452,9 @@ export default function Nav() {
             </svg>
           </a>
           {open === menu.label && (
-            <div onMouseEnter={() => show(menu.label)} onMouseLeave={hide}>
+            <SmartPanel onEnter={() => show(menu.label)} onLeave={hide}>
               {menu.label === "Countries" ? <CountriesPanel /> : <MegaPanel menu={menu} />}
-            </div>
+            </SmartPanel>
           )}
         </li>
       ))}
