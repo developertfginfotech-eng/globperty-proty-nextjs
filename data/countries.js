@@ -63,13 +63,13 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "7 Emirates, each with its own character — find where to invest and where to live",
     cityData: [
       { name: "Dubai", emoji: "🏙️", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "AED 1,200–3,500", bestFor: "Investment & Lifestyle", tags: ["Freehold", "Golden Visa", "Airbnb"] },
-      { name: "Abu Dhabi", emoji: "🏛️", image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&q=80", yield: "5–7%", yieldColor: "#3b82f6", priceRange: "AED 900–2,200", bestFor: "Families & Stability", tags: ["Capital City", "Lower Cost"] },
+      { name: "Abu Dhabi", emoji: "🏛️", image: "https://images.unsplash.com/photo-1512632578888-169b2028ab63?w=600&q=80", yield: "5–7%", yieldColor: "#3b82f6", priceRange: "AED 900–2,200", bestFor: "Families & Stability", tags: ["Capital City", "Lower Cost"] },
       { name: "Sharjah & Ajman", emoji: "🌿", image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "AED 400–900", bestFor: "Budget + High Yield", tags: ["High Yield", "Affordable"] },
     ],
     cityImages: [
       { name: "Dubai Skyline", url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80" },
       { name: "Palm Jumeirah", url: "https://images.unsplash.com/photo-1526400473556-aac12354f3db?w=600&q=80" },
-      { name: "Abu Dhabi", url: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&q=80" },
+      { name: "Abu Dhabi", url: "https://images.unsplash.com/photo-1512632578888-169b2028ab63?w=600&q=80" },
       { name: "Burj Khalifa", url: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600&q=80" },
     ],
     overview: [
@@ -1709,12 +1709,12 @@ export const COUNTRIES_DATA = {
     cityData: [
       { name: "Kuala Lumpur", emoji: "🏙️", image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80", yield: "4–6%", yieldColor: "#3b82f6", priceRange: "RM 600–1,500/sqft", bestFor: "Capital & Business Hub", tags: ["KLCC", "MM2H", "Expat Favorite"] },
       { name: "Johor Bahru", emoji: "🤝", image: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80", yield: "5–8%", yieldColor: "#16b286", priceRange: "RM 400–1,000/sqft", bestFor: "Singapore Proximity Play", tags: ["SEZ Zone", "Singapore Border", "Growing Fast"] },
-      { name: "Penang", emoji: "🏛️", image: "https://images.unsplash.com/photo-1567416647424-e3bd86c7b8dc?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "RM 500–1,200/sqft", bestFor: "Heritage, Tourism & Tech", tags: ["UNESCO Heritage", "Tech Hub", "Tourism"] },
+      { name: "Penang", emoji: "🏛️", image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "RM 500–1,200/sqft", bestFor: "Heritage, Tourism & Tech", tags: ["UNESCO Heritage", "Tech Hub", "Tourism"] },
     ],
     cityImages: [
       { name: "Kuala Lumpur", url: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80" },
-      { name: "Petronas Towers", url: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&q=80" },
-      { name: "Penang Heritage", url: "https://images.unsplash.com/photo-1567416647424-e3bd86c7b8dc?w=600&q=80" },
+      { name: "Petronas Towers", url: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=600&q=80" },
+      { name: "Penang Heritage", url: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80" },
       { name: "Johor Bahru", url: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600&q=80" },
     ],
     overview: [
