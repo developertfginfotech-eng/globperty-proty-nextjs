@@ -63,7 +63,7 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "7 Emirates, each with its own character — find where to invest and where to live",
     cityData: [
       { name: "Dubai", emoji: "🏙️", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "AED 1,200–3,500", bestFor: "Investment & Lifestyle", tags: ["Freehold", "Golden Visa", "Airbnb"] },
-      { name: "Abu Dhabi", emoji: "🏛️", image: "https://images.unsplash.com/photo-1545128485-c400ce7b23d5?w=600&q=80", yield: "5–7%", yieldColor: "#3b82f6", priceRange: "AED 900–2,200", bestFor: "Families & Stability", tags: ["Capital City", "Lower Cost"] },
+      { name: "Abu Dhabi", emoji: "🏛️", image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&q=80", yield: "5–7%", yieldColor: "#3b82f6", priceRange: "AED 900–2,200", bestFor: "Families & Stability", tags: ["Capital City", "Lower Cost"] },
       { name: "Sharjah & Ajman", emoji: "🌿", image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "AED 400–900", bestFor: "Budget + High Yield", tags: ["High Yield", "Affordable"] },
     ],
     cityImages: [
