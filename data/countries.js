@@ -1431,7 +1431,7 @@ export const COUNTRIES_DATA = {
       "Market Trend": { value: "📈 Rising", color: "#16b286" },
       "Active Listings": "1,200+",
     },
-    heroImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400&q=80",
+    heroImage: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=1400&q=80",
     overviewTitle: "Why Cyprus is the Smart Gateway to EU Residency",
     overviewSubtitle: "Mediterranean living, EU access, and low taxes — the full package from €300K",
     overviewText: [
@@ -1451,15 +1451,15 @@ export const COUNTRIES_DATA = {
     cities: ["Limassol", "Nicosia", "Paphos", "Larnaca", "Ayia Napa", "Famagusta"],
     geographySubtitle: "Small island, big opportunity — each coastal city offers a distinct investment profile",
     cityData: [
-      { name: "Limassol", emoji: "🏙️", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€3,000–€8,000/sqm", bestFor: "Business & Luxury", tags: ["International Hub", "Luxury", "High Demand"] },
-      { name: "Paphos", emoji: "🏛️", image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,800–€4,500/sqm", bestFor: "Residency & Retirement", tags: ["Residency Program", "Tourist Area", "Golf"] },
-      { name: "Larnaca", emoji: "✈️", image: "https://images.unsplash.com/photo-1530973428-5bf2db2e4d71?w=600&q=80", yield: "5–8%", yieldColor: "#16b286", priceRange: "€1,500–€3,500/sqm", bestFor: "High Yield & Value", tags: ["Affordable", "Airport City", "Growing"] },
+      { name: "Limassol", emoji: "🏙️", image: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€3,000–€8,000/sqm", bestFor: "Business & Luxury", tags: ["International Hub", "Luxury", "High Demand"] },
+      { name: "Paphos", emoji: "🏛️", image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,800–€4,500/sqm", bestFor: "Residency & Retirement", tags: ["Residency Program", "Tourist Area", "Golf"] },
+      { name: "Larnaca", emoji: "✈️", image: "https://images.unsplash.com/photo-1555664628-9afb91e9082a?w=600&q=80", yield: "5–8%", yieldColor: "#16b286", priceRange: "€1,500–€3,500/sqm", bestFor: "High Yield & Value", tags: ["Affordable", "Airport City", "Growing"] },
     ],
     cityImages: [
-      { name: "Limassol", url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" },
-      { name: "Paphos", url: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=600&q=80" },
+      { name: "Limassol", url: "https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&q=80" },
+      { name: "Paphos", url: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80" },
       { name: "Nicosia", url: "https://images.unsplash.com/photo-1519985591540-dde4f1ecd8e4?w=600&q=80" },
-      { name: "Ayia Napa", url: "https://images.unsplash.com/photo-1530973428-5bf2db2e4d71?w=600&q=80" },
+      { name: "Ayia Napa", url: "https://images.unsplash.com/photo-1555664628-9afb91e9082a?w=600&q=80" },
     ],
     overview: [
       { title: "EU Permanent Residency", body: "Cyprus grants permanent residency to non-EU investors purchasing property worth €300K+. No minimum stay required to maintain status." },
