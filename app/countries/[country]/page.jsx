@@ -56,7 +56,17 @@ export default function CountryPage() {
           <main style={{ flex: 1, minWidth: 0 }}>
             {activeTab === "Overview" && <OverviewSection country={country} />}
             {activeTab === "Geography" && <GeographySection country={country} cityListings={cityListings} />}
-            {!["Overview", "Geography"].includes(activeTab) && (
+            {activeTab === "Real Estate Market" && (
+              country.realEstateMarket
+                ? <RealEstateMarketSection data={country.realEstateMarket} country={country} />
+                : <ComingSoonSection tab={activeTab} country={country} />
+            )}
+            {activeTab === "Buying Guide" && (
+              country.buyingGuide
+                ? <BuyingGuideSection data={country.buyingGuide} country={country} />
+                : <ComingSoonSection tab={activeTab} country={country} />
+            )}
+            {!["Overview", "Geography", "Real Estate Market", "Buying Guide"].includes(activeTab) && (
               <ComingSoonSection tab={activeTab} country={country} />
             )}
           </main>
@@ -313,6 +323,197 @@ function GeographySection({ country, cityListings }) {
           <span style={{ fontSize: 12, color: "#6b7280" }}>⬜ Min Temp (°C)</span>
           <span style={{ fontSize: 12, color: "#6b7280" }}>⬜ Sunshine Hours</span>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function RealEstateMarketSection({ data, country }) {
+  const maxYield = Math.max(...data.globalComparison.items.map(i => i.yield));
+  const maxPrice = Math.max(...data.priceChart.map(p => p.value));
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      {/* Header */}
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>REAL ESTATE MARKET</div>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+        <p style={{ fontSize: 14, color: "#6b7280" }}>{data.subtitle}</p>
+      </div>
+
+      {/* Alert box */}
+      <div style={{ background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 12, padding: "14px 18px", fontSize: 13, color: "#1d4ed8", lineHeight: 1.7 }}>
+        <strong>{data.alert.split(":")[0]}:</strong>{data.alert.split(":").slice(1).join(":")}
+      </div>
+
+      {/* Price chart - CSS bars */}
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+        <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 20 }}>📈 {data.chartTitle}</div>
+        <div style={{ display: "flex", alignItems: "flex-end", gap: 12, height: 160 }}>
+          {data.priceChart.map((point, i) => (
+            <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 6, height: "100%", justifyContent: "flex-end" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#111827" }}>{point.value.toLocaleString()}</div>
+              <div style={{
+                width: "100%", borderRadius: "6px 6px 0 0",
+                height: `${(point.value / maxPrice) * 130}px`,
+                background: i === data.priceChart.length - 1
+                  ? "linear-gradient(to top, #f0822d, #fbbf24)"
+                  : "linear-gradient(to top, #3b82f6, #93c5fd)",
+                transition: "height 0.3s",
+              }} />
+              <div style={{ fontSize: 11, color: "#9ca3af", fontWeight: 600 }}>{point.year}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Yield table */}
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden" }}>
+        <div style={{ background: "#111827", padding: "14px 20px", fontSize: 14, fontWeight: 700, color: "#fff" }}>
+          {data.yieldTable.title}
+        </div>
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr style={{ background: "#1f2937" }}>
+                {["AREA", "AVG PRICE (1BR)", "ANNUAL RENT", "GROSS YIELD", "TREND", "BEST FOR"].map(h => (
+                  <th key={h} style={{ padding: "10px 14px", fontSize: 11, fontWeight: 700, color: "#9ca3af", textAlign: "left", letterSpacing: 0.8, whiteSpace: "nowrap" }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {data.yieldTable.rows.map((row, i) => (
+                <tr key={i} style={{ borderBottom: "1px solid #f3f4f6", background: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                  <td style={{ padding: "13px 14px", fontSize: 13, fontWeight: 700, color: "#111827", whiteSpace: "nowrap" }}>{row.area}</td>
+                  <td style={{ padding: "13px 14px", fontSize: 13, color: "#374151" }}>{row.price}</td>
+                  <td style={{ padding: "13px 14px", fontSize: 13, color: "#374151" }}>{row.rent}</td>
+                  <td style={{ padding: "13px 14px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: row.yieldColor, minWidth: 36 }}>{row.yield}%</span>
+                      <div style={{ flex: 1, height: 6, background: "#f3f4f6", borderRadius: 4, minWidth: 60 }}>
+                        <div style={{ height: "100%", width: `${(row.yield / 10) * 100}%`, background: row.yieldColor, borderRadius: 4 }} />
+                      </div>
+                    </div>
+                  </td>
+                  <td style={{ padding: "13px 14px", fontSize: 12, color: "#374151", whiteSpace: "nowrap" }}>{row.trend}</td>
+                  <td style={{ padding: "13px 14px" }}>
+                    <span style={{ fontSize: 12, fontWeight: 600, color: row.bestColor }}>{row.bestFor}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Global comparison - CSS horizontal bars */}
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+        <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 20 }}>{data.globalComparison.title}</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {data.globalComparison.items.map((item, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 120, fontSize: 12, fontWeight: 600, color: "#374151", flexShrink: 0 }}>
+                {item.city}
+                <div style={{ fontSize: 10, color: "#9ca3af", fontWeight: 400 }}>{item.country}</div>
+              </div>
+              <div style={{ flex: 1, height: 10, background: "#f3f4f6", borderRadius: 6 }}>
+                <div style={{ height: "100%", width: `${(item.yield / maxYield) * 100}%`, background: item.color, borderRadius: 6, transition: "width 0.4s" }} />
+              </div>
+              <div style={{ width: 42, fontSize: 13, fontWeight: 700, color: item.color, textAlign: "right", flexShrink: 0 }}>{item.yield}%</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BuyingGuideSection({ data, country }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      {/* Header */}
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>BUYING GUIDE</div>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+        <p style={{ fontSize: 14, color: "#6b7280" }}>{data.subtitle}</p>
+      </div>
+
+      {/* Alert box */}
+      <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: 12, padding: "14px 18px", fontSize: 13, color: "#92400e", lineHeight: 1.7 }}>
+        {data.alert}
+      </div>
+
+      {/* Steps */}
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+        <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 20 }}>📋 Step-by-Step Purchase Process</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+          {data.steps.map((step, i) => (
+            <div key={i} style={{ display: "flex", gap: 16, paddingBottom: i < data.steps.length - 1 ? 24 : 0, position: "relative" }}>
+              {/* Line connector */}
+              {i < data.steps.length - 1 && (
+                <div style={{ position: "absolute", left: 16, top: 32, bottom: 0, width: 2, background: "#e5e7eb" }} />
+              )}
+              {/* Step number */}
+              <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#1d4ed8", color: "#fff", fontSize: 13, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, zIndex: 1 }}>
+                {i + 1}
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6, flexWrap: "wrap" }}>
+                  <span style={{ fontSize: 15, fontWeight: 700, color: "#111827" }}>{step.title}</span>
+                  <span style={{ fontSize: 11, fontWeight: 600, background: "#f0fdf4", color: "#16a34a", padding: "2px 10px", borderRadius: 20, border: "1px solid #bbf7d0", whiteSpace: "nowrap" }}>
+                    ⏱ {step.time}
+                  </span>
+                </div>
+                <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.7, margin: 0 }}>{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Cost table */}
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden" }}>
+        <div style={{ background: "#111827", padding: "14px 20px", fontSize: 14, fontWeight: 700, color: "#fff" }}>
+          💰 Full Cost Breakdown — {country.name} Property Purchase
+        </div>
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr style={{ background: "#1f2937" }}>
+                {["FEE / TAX", "AMOUNT", "PAID TO", "TIMING"].map(h => (
+                  <th key={h} style={{ padding: "10px 14px", fontSize: 11, fontWeight: 700, color: "#9ca3af", textAlign: "left", letterSpacing: 0.8, whiteSpace: "nowrap" }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {data.costs.map((row, i) => (
+                <tr key={i} style={{ borderBottom: "1px solid #f3f4f6", background: row.highlight ? "#fff8f4" : i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                  <td style={{ padding: "13px 14px", fontSize: 13, fontWeight: row.highlight ? 700 : 600, color: row.highlight ? "#f0822d" : "#111827", whiteSpace: "nowrap" }}>
+                    {row.highlight && <span style={{ marginRight: 6 }}>★</span>}
+                    {row.fee}
+                  </td>
+                  <td style={{ padding: "13px 14px", fontSize: 13, fontWeight: 700, color: "#374151" }}>{row.amount}</td>
+                  <td style={{ padding: "13px 14px", fontSize: 13, color: "#6b7280" }}>{row.paidTo}</td>
+                  <td style={{ padding: "13px 14px", fontSize: 12, color: "#374151", whiteSpace: "nowrap" }}>{row.timing}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div style={{ padding: "12px 20px", background: "#fafafa", fontSize: 12, color: "#9ca3af", borderTop: "1px solid #f0f0f0" }}>
+          ★ Highlighted rows are costs buyers most commonly underestimate. Figures are approximate — consult a licensed local lawyer before proceeding.
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div style={{ background: "linear-gradient(135deg, #1d4ed8, #3b82f6)", borderRadius: 14, padding: 28, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+        <div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 4 }}>Ready to buy in {country.name}?</div>
+          <div style={{ fontSize: 13, color: "rgba(255,255,255,0.8)" }}>Our Globperty AI can answer any legal, tax, or process question instantly.</div>
+        </div>
+        <Link href="/copilot" style={{ background: "#f0822d", color: "#fff", padding: "12px 24px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 14, whiteSpace: "nowrap" }}>
+          🤖 Ask Globperty AI
+        </Link>
       </div>
     </div>
   );
