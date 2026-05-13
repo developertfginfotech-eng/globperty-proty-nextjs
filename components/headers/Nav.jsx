@@ -252,28 +252,138 @@ function MegaItem({ item }) {
   return (
     <Link
       href={item.href}
-      style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "7px 10px", borderRadius: 8, textDecoration: "none", transition: "background 0.15s" }}
-      onMouseEnter={e => e.currentTarget.style.background = "#f9f9f9"}
-      onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+      style={{
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 10,
+        padding: "7px 10px 7px 8px",
+        borderRadius: 8,
+        textDecoration: "none",
+        transition: "all 0.15s",
+        borderLeft: "2px solid transparent",
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.background = "#fff8f4";
+        e.currentTarget.style.borderLeftColor = "#f0822d";
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.background = "transparent";
+        e.currentTarget.style.borderLeftColor = "transparent";
+      }}
     >
-      <span style={{ fontSize: 18, lineHeight: 1, marginTop: 2, flexShrink: 0 }}>{item.icon}</span>
-      <div>
-        <div style={{ fontSize: 13, fontWeight: 600, color: "#1a1a1a", lineHeight: 1.3 }}>{item.label}</div>
-        {item.sub && <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 2, lineHeight: 1.3 }}>{item.sub}</div>}
+      <span style={{
+        fontSize: 15,
+        lineHeight: 1,
+        flexShrink: 0,
+        width: 32,
+        height: 32,
+        background: "#fff4ec",
+        borderRadius: 8,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
+        {item.icon}
+      </span>
+      <div style={{ paddingTop: 1 }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{item.label}</div>
+        {item.sub && <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 2, lineHeight: 1.35 }}>{item.sub}</div>}
       </div>
     </Link>
   );
 }
 
+const ALL_COUNTRIES = [
+  { icon: "🇦🇪", label: "UAE",         sub: "Dubai · Abu Dhabi · Sharjah",        href: "/countries/uae" },
+  { icon: "🇺🇸", label: "USA",         sub: "New York · Miami · Los Angeles",      href: "/countries/usa" },
+  { icon: "🇵🇹", label: "Portugal",    sub: "Lisbon · Porto · Algarve",            href: "/countries/portugal" },
+  { icon: "🇦🇺", label: "Australia",   sub: "Sydney · Melbourne · Brisbane",       href: "/countries/australia" },
+  { icon: "🇹🇷", label: "Turkey",      sub: "Istanbul · Antalya · Bodrum",         href: "/countries/turkey" },
+  { icon: "🇨🇾", label: "Cyprus",      sub: "Limassol · Nicosia · Paphos",         href: "/countries/cyprus" },
+  { icon: "🇲🇹", label: "Malta",       sub: "Valletta · Sliema · St Julian's",     href: "/countries/malta" },
+  { icon: "🇨🇦", label: "Canada",      sub: "Toronto · Vancouver · Calgary",       href: "/countries/canada" },
+  { icon: "🇭🇺", label: "Hungary",     sub: "Budapest · Debrecen · Pécs",          href: "/countries/hungary" },
+  { icon: "🇱🇻", label: "Latvia",      sub: "Riga · Jürmala · Daugavpils",         href: "/countries/latvia" },
+  { icon: "🇵🇭", label: "Philippines", sub: "Manila · Cebu · Davao",              href: "/countries/philippines" },
+  { icon: "🇲🇾", label: "Malaysia",    sub: "Kuala Lumpur · Penang · Langkawi",    href: "/countries/malaysia" },
+];
+
+function CountriesPanel() {
+  return (
+    <div style={{ ...panelStyle, minWidth: 760, maxWidth: 920, padding: "20px 22px", borderTop: "3px solid #f0822d" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+        <span style={{ fontSize: 11, fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 1.2 }}>
+          Invest in 12 Countries
+        </span>
+        <Link href="/listings" style={{ fontSize: 12, color: "#f0822d", textDecoration: "none", fontWeight: 600 }}>
+          View all properties →
+        </Link>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+        {ALL_COUNTRIES.map((country, ci) => (
+          <Link
+            key={ci}
+            href={country.href}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 5,
+              padding: "11px 12px",
+              borderRadius: 10,
+              textDecoration: "none",
+              border: "1.5px solid #eeeeee",
+              background: "#fafafa",
+              transition: "all 0.15s",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = "#fff";
+              e.currentTarget.style.borderColor = "#f0822d";
+              e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.09)";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = "#fafafa";
+              e.currentTarget.style.borderColor = "#eeeeee";
+              e.currentTarget.style.boxShadow = "none";
+              e.currentTarget.style.transform = "none";
+            }}
+          >
+            <span style={{ fontSize: 24, lineHeight: 1 }}>{country.icon}</span>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", lineHeight: 1.2 }}>{country.label}</div>
+            <div style={{ fontSize: 10, color: "#9ca3af", lineHeight: 1.5 }}>{country.sub}</div>
+          </Link>
+        ))}
+      </div>
+
+      <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid #f3f4f6", display: "flex", alignItems: "center", gap: 8 }}>
+        <Link href="/compare" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "#6b7280", textDecoration: "none", padding: "6px 12px", borderRadius: 7, background: "#f5f5f5", fontWeight: 500 }}>
+          🔍 Compare Countries
+        </Link>
+        <Link href="/copilot" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "#6b7280", textDecoration: "none", padding: "6px 12px", borderRadius: 7, background: "#f5f5f5", fontWeight: 500 }}>
+          🤖 AI Advisor
+        </Link>
+        <Link href="/listings" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "#fff", textDecoration: "none", padding: "6px 16px", borderRadius: 7, background: "#f0822d", fontWeight: 600, marginLeft: "auto" }}>
+          Browse All Properties →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 function MegaPanel({ menu }) {
   return (
-    <div style={panelStyle}>
+    <div style={{ ...panelStyle, borderTop: "3px solid #f0822d", padding: "20px 22px" }}>
       {menu.sections.map((section, si) => (
         <div key={si} style={{ marginBottom: si < menu.sections.length - 1 ? 20 : 0 }}>
-          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.2, color: "#9ca3af", textTransform: "uppercase", marginBottom: 10, paddingLeft: 10 }}>
-            {section.title}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#f0822d", flexShrink: 0 }} />
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1 }}>
+              {section.title}
+            </span>
+            <div style={{ flex: 1, height: 1, background: "#f0f0f0" }} />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.cols}, 1fr)`, gap: "2px 8px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.cols}, 1fr)`, gap: "2px 6px" }}>
             {section.items.map((item, ii) => <MegaItem key={ii} item={item} />)}
           </div>
         </div>
@@ -319,7 +429,7 @@ export default function Nav() {
           </a>
           {open === menu.label && (
             <div onMouseEnter={() => show(menu.label)} onMouseLeave={hide}>
-              <MegaPanel menu={menu} />
+              {menu.label === "Countries" ? <CountriesPanel /> : <MegaPanel menu={menu} />}
             </div>
           )}
         </li>
