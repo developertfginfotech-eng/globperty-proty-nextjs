@@ -66,7 +66,17 @@ export default function CountryPage() {
                 ? <BuyingGuideSection data={country.buyingGuide} country={country} />
                 : <ComingSoonSection tab={activeTab} country={country} />
             )}
-            {!["Overview", "Geography", "Real Estate Market", "Buying Guide"].includes(activeTab) && (
+            {activeTab === "Investment" && (
+              country.investment
+                ? <InvestmentSection data={country.investment} goldenVisa={country.goldenVisa} country={country} />
+                : <ComingSoonSection tab={activeTab} country={country} />
+            )}
+            {activeTab === "Golden Visa" && (
+              country.goldenVisa
+                ? <GoldenVisaSection data={country.goldenVisa} country={country} />
+                : <ComingSoonSection tab={activeTab} country={country} />
+            )}
+            {!["Overview", "Geography", "Real Estate Market", "Buying Guide", "Investment", "Golden Visa"].includes(activeTab) && (
               <ComingSoonSection tab={activeTab} country={country} />
             )}
           </main>
@@ -422,6 +432,182 @@ function RealEstateMarketSection({ data, country }) {
               <div style={{ width: 42, fontSize: 13, fontWeight: 700, color: item.color, textAlign: "right", flexShrink: 0 }}>{item.yield}%</div>
             </div>
           ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InvestmentSection({ data, goldenVisa, country }) {
+  const [activeBudget, setActiveBudget] = useState("All Budgets");
+  const budgetFilters = ["All Budgets", "Entry Level", "Sweet Spot", "Premium", "Golden Visa"];
+  const tierColorMap = { "#16a34a": "green", "#3b82f6": "blue", "#f0822d": "orange" };
+
+  const visibleTiers = activeBudget === "All Budgets"
+    ? data.tiers
+    : activeBudget === "Entry Level" ? [data.tiers[0]]
+    : activeBudget === "Sweet Spot" ? [data.tiers[1]]
+    : activeBudget === "Premium" || activeBudget === "Golden Visa" ? [data.tiers[2]]
+    : data.tiers;
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+      {/* Header */}
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>INVESTMENT OPPORTUNITIES</div>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+        <p style={{ fontSize: 14, color: "#6b7280" }}>{data.subtitle}</p>
+      </div>
+
+      {/* Budget filter pills */}
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        {budgetFilters.map(f => (
+          <button
+            key={f}
+            onClick={() => setActiveBudget(f)}
+            style={{
+              padding: "8px 18px", borderRadius: 30, fontSize: 13, fontWeight: 600, cursor: "pointer", border: "1.5px solid",
+              background: activeBudget === f ? "#f0822d" : "#fff",
+              borderColor: activeBudget === f ? "#f0822d" : "#e5e7eb",
+              color: activeBudget === f ? "#fff" : "#374151",
+              transition: "all 0.15s",
+            }}
+          >{f}</button>
+        ))}
+      </div>
+
+      {/* Property tier cards */}
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${visibleTiers.length}, 1fr)`, gap: 20 }}>
+        {visibleTiers.map((tier, i) => (
+          <div key={i} style={{ background: "#fff", border: "1.5px solid #e5e7eb", borderRadius: 14, padding: 24, display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: tier.labelColor, textTransform: "uppercase", letterSpacing: 0.8 }}>{tier.label}</div>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: "#111827", margin: 0, lineHeight: 1.3 }}>{tier.title}</h3>
+            <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.6, margin: 0 }}>{tier.desc}</p>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 6 }}>
+              {tier.bullets.map((b, bi) => (
+                <li key={bi} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "#374151" }}>
+                  <span style={{ width: 7, height: 7, borderRadius: "50%", background: tier.labelColor, marginTop: 5, flexShrink: 0 }} />
+                  {b}
+                </li>
+              ))}
+            </ul>
+            <div style={{ marginTop: "auto", paddingTop: 12, borderTop: "1px solid #f3f4f6", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 16, fontWeight: 800, color: tier.labelColor }}>{tier.priceRange}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: tier.yieldBadgeColor, background: tier.yieldBadgeColor + "18", padding: "3px 12px", borderRadius: 20 }}>{tier.yieldBadge}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* ROI projection */}
+      <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+        <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>📈 10-Year ROI Projection — {country.name}</div>
+        <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+          {[
+            { label: "Rental Yield", val: data.tiers[1]?.yieldBadge || "~7%" },
+            { label: "Capital Growth (est.)", val: "~5–8% p.a." },
+            { label: "Total 10-Year Return", val: "120–180%" },
+          ].map((item, i) => (
+            <div key={i} style={{ flex: 1, minWidth: 120, background: "#fafafa", borderRadius: 10, padding: "14px 16px", textAlign: "center" }}>
+              <div style={{ fontSize: 20, fontWeight: 800, color: "#f0822d" }}>{item.val}</div>
+              <div style={{ fontSize: 11, color: "#9ca3af", fontWeight: 600, marginTop: 4 }}>{item.label}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 16, background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 10, padding: "12px 16px", fontSize: 13, color: "#1d4ed8", lineHeight: 1.7 }}>
+          💡 {data.roiNote}
+        </div>
+      </div>
+
+      {/* Golden visa teaser */}
+      {goldenVisa && (
+        <div style={{ background: "linear-gradient(135deg, #1e1b4b, #1d4ed8)", borderRadius: 14, padding: 28, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.6)", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 6 }}>VISA & RESIDENCY</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 4 }}>{goldenVisa.headline}</div>
+            <div style={{ fontSize: 13, color: "rgba(255,255,255,0.7)" }}>{goldenVisa.subtitle}</div>
+          </div>
+          <button
+            onClick={() => {}}
+            style={{ background: "#f0822d", color: "#fff", padding: "12px 24px", borderRadius: 8, fontWeight: 700, border: "none", cursor: "pointer", fontSize: 14, whiteSpace: "nowrap" }}
+          >
+            View Full Visa Guide →
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function GoldenVisaSection({ data, country }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+      {/* Header */}
+      <div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 8 }}>VISA & RESIDENCY</div>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 6 }}>{data.headline}</h2>
+        <p style={{ fontSize: 14, color: "#6b7280" }}>{data.subtitle}</p>
+      </div>
+
+      {/* Main dark card */}
+      <div style={{ background: "linear-gradient(135deg, #0f172a, #1e3a5f)", borderRadius: 16, padding: 32, color: "#fff" }}>
+        <div style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginBottom: 10 }}>🛂 {data.card.title}</div>
+        <p style={{ fontSize: 14, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 24, maxWidth: 700 }}>{data.card.body}</p>
+
+        {/* Stats grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 28 }}>
+          {data.card.stats.map((stat, i) => (
+            <div key={i} style={{ background: "rgba(255,255,255,0.08)", borderRadius: 10, padding: "14px 16px" }}>
+              <div style={{ fontSize: 20, fontWeight: 800, color: "#f0822d" }}>{stat.value}</div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.55)", marginTop: 3 }}>{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Steps */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
+          {data.card.steps.map((step, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+              <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#f0822d", color: "#fff", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{i + 1}</div>
+              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.85)", lineHeight: 1.5, paddingTop: 3 }}>{step}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* CTAs */}
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <Link href={data.card.ctaLink || `/listings?location=${country.locationParam}`} style={{ background: "#f0822d", color: "#fff", padding: "12px 22px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 14 }}>Browse Properties</Link>
+          <Link href="/copilot" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", padding: "12px 22px", borderRadius: 8, fontWeight: 700, textDecoration: "none", fontSize: 14 }}>Ask Globperty AI</Link>
+        </div>
+      </div>
+
+      {/* Benefits + Rules */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+        <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>✅ What This Gives You</div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+            {data.benefits.map((b, i) => (
+              <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "#374151", lineHeight: 1.5 }}>
+                <span style={{ color: "#16a34a", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>●</span>
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 24 }}>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>⚠️ Important Rules to Know</div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+            {data.rules.map((r, i) => (
+              <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "#374151", lineHeight: 1.5 }}>
+                <span style={{ color: "#f0822d", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>●</span>
+                {r}
+              </li>
+            ))}
+          </ul>
+          {/* Warning box */}
+          <div style={{ marginTop: 16, background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 8, padding: "10px 14px", fontSize: 12, color: "#92400e", lineHeight: 1.6 }}>
+            📞 {data.warning}
+          </div>
         </div>
       </div>
     </div>
