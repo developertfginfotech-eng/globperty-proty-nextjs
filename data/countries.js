@@ -64,7 +64,7 @@ export const COUNTRIES_DATA = {
     cityData: [
       { name: "Dubai", emoji: "🏙️", image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "AED 1,200–3,500", bestFor: "Investment & Lifestyle", tags: ["Freehold", "Golden Visa", "Airbnb"] },
       { name: "Abu Dhabi", emoji: "🏛️", image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=600&q=80", yield: "5–7%", yieldColor: "#3b82f6", priceRange: "AED 900–2,200", bestFor: "Families & Stability", tags: ["Capital City", "Lower Cost"] },
-      { name: "Sharjah & Ajman", emoji: "🌿", image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "AED 400–900", bestFor: "Budget + High Yield", tags: ["High Yield", "Affordable"] },
+      { name: "Sharjah & Ajman", emoji: "🌿", image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "AED 400–900", bestFor: "Budget + High Yield", tags: ["High Yield", "Affordable"] },
     ],
     cityImages: [
       { name: "Dubai Skyline", url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80" },
@@ -346,12 +346,12 @@ export const COUNTRIES_DATA = {
     geographySubtitle: "From cosmopolitan Istanbul to turquoise coastlines — Turkey's regions each attract different investor profiles",
     cityData: [
       { name: "Istanbul", emoji: "🏙️", image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80", yield: "5–8%", yieldColor: "#16b286", priceRange: "$1,500–$5,000/sqm", bestFor: "Long-term Capital Growth", tags: ["Citizenship", "Largest City", "Business"] },
-      { name: "Antalya", emoji: "🌊", image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "$800–$2,500/sqm", bestFor: "Holiday Rental", tags: ["Beach", "Tourism", "Affordable"] },
+      { name: "Antalya", emoji: "🌊", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80", yield: "7–10%", yieldColor: "#16b286", priceRange: "$800–$2,500/sqm", bestFor: "Holiday Rental", tags: ["Beach", "Tourism", "Affordable"] },
       { name: "Bodrum", emoji: "⛵", image: "https://images.unsplash.com/photo-1599940778173-e276d4acb2bb?w=600&q=80", yield: "6–9%", yieldColor: "#16b286", priceRange: "$1,200–$4,000/sqm", bestFor: "Luxury Villas", tags: ["Upscale", "Marina", "Yachting"] },
     ],
     cityImages: [
       { name: "Istanbul", url: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&q=80" },
-      { name: "Antalya", url: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&q=80" },
+      { name: "Antalya", url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" },
       { name: "Bodrum", url: "https://images.unsplash.com/photo-1599940778173-e276d4acb2bb?w=600&q=80" },
       { name: "Cappadocia", url: "https://images.unsplash.com/photo-1579606032821-4d5d496e0c96?w=600&q=80" },
     ],
