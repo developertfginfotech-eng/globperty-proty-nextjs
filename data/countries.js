@@ -3128,7 +3128,7 @@ export const COUNTRIES_DATA = {
       "Market Trend": { value: "📈 Rising", color: "#16b286" },
       "Active Listings": "800+",
     },
-    heroImage: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?w=1400&q=80",
+    heroImage: "https://images.unsplash.com/photo-1467804792486-edb079d25a73?w=1400&q=80",
     overviewTitle: "Why Latvia Offers Europe's Most Affordable EU Residency",
     overviewSubtitle: "Baltic gem with EU access, affordable property, and Riga's growing economy",
     overviewText: [
@@ -3148,13 +3148,13 @@ export const COUNTRIES_DATA = {
     cities: ["Riga", "Jürmala", "Jēkabpils", "Daugavpils", "Liepāja"],
     geographySubtitle: "Riga leads, but Latvia's coastal and regional towns offer lifestyle at exceptional value",
     cityData: [
-      { name: "Riga Old Town", emoji: "🏛️", image: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€1,500–€3,500/sqm", bestFor: "Tourism Rental & Culture", tags: ["UNESCO", "Airbnb", "Historic"] },
-      { name: "Riga City Center", emoji: "🏙️", image: "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,200–€2,800/sqm", bestFor: "Business & Long-term Rental", tags: ["Business District", "Stable Demand", "Growing"] },
+      { name: "Riga Old Town", emoji: "🏛️", image: "https://images.unsplash.com/photo-1467804792486-edb079d25a73?w=600&q=80", yield: "5–7%", yieldColor: "#16b286", priceRange: "€1,500–€3,500/sqm", bestFor: "Tourism Rental & Culture", tags: ["UNESCO", "Airbnb", "Historic"] },
+      { name: "Riga City Center", emoji: "🏙️", image: "https://images.unsplash.com/photo-1560448204-61dc36dc98c8?w=600&q=80", yield: "4–7%", yieldColor: "#16b286", priceRange: "€1,200–€2,800/sqm", bestFor: "Business & Long-term Rental", tags: ["Business District", "Stable Demand", "Growing"] },
       { name: "Jürmala", emoji: "🌊", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80", yield: "4–6%", yieldColor: "#3b82f6", priceRange: "€800–€2,000/sqm", bestFor: "Holiday Home & Beach", tags: ["Baltic Riviera", "Summer Season", "Peaceful"] },
     ],
     cityImages: [
-      { name: "Riga", url: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?w=600&q=80" },
-      { name: "Riga Art Nouveau", url: "https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=600&q=80" },
+      { name: "Riga", url: "https://images.unsplash.com/photo-1467804792486-edb079d25a73?w=600&q=80" },
+      { name: "Riga Art Nouveau", url: "https://images.unsplash.com/photo-1560448204-61dc36dc98c8?w=600&q=80" },
       { name: "Jürmala Beach", url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" },
       { name: "Riga Evening", url: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&q=80" },
     ],
