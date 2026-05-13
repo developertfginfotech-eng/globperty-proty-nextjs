@@ -410,7 +410,7 @@ const PropertyKYCVerification = () => {
           const data = await response.json();
           if (data.kyc) {
             if (data.kyc.status === 'verified') {
-              router.push('/dashboard-home');
+              router.push('/dashboard');
             } else if (data.kyc.status === 'rejected') {
               // Store rejection info to display
               setError(`Your KYC was rejected. Reason: ${data.kyc.rejectionReason || 'Not provided'}. Please resubmit with correct information.`);
@@ -797,7 +797,7 @@ const PropertyKYCVerification = () => {
 
       await kycAPI.submitKYC(kycData, files);
       setSuccess(true);
-      setTimeout(() => { router.push('/dashboard-home'); }, 2000);
+      setTimeout(() => { router.push('/dashboard'); }, 2000);
     } catch (err) {
       setError(err.message || 'Failed to submit KYC');
       if (err.errors && err.errors.length > 0) setValidationErrors(err.errors);
@@ -2101,7 +2101,7 @@ const PropertyKYCVerification = () => {
                   </p>
                   <button
                     type="button"
-                    onClick={() => router.push('/dashboard-home')}
+                    onClick={() => router.push('/dashboard')}
                     style={{
                       background: '#f9fafb',
                       border: '1px solid #e5e7eb',
