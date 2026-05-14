@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <div id="wrapper">
       <Header1 />
-      <div className="page-title" style={{ backgroundImage: "url('/images/section/page-title-2.jpg')", backgroundSize: "cover", backgroundPosition: "center", padding: "132px 0 232px" }}>
+      <div className="page-title" style={{ backgroundImage: "url('/images/section/page-title-2.jpg')", backgroundSize: "cover", backgroundPosition: "center", padding: "120px 0 180px" }}>
         <div className="tf-container">
           <div className="row justify-center">
             <div className="col-lg-8">

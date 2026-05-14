@@ -47,7 +47,7 @@ export default function RoiCalculator() {
   return (
     <section className="section-calculate flat-spacing-1">
       <div className="tf-container">
-        <div className="box-calculate">
+        <div className="box-calculate" style={{ background: "#fff", boxShadow: "0 8px 60px rgba(0,0,0,0.15)" }}>
 
           <div style={{ background: "linear-gradient(90deg, #f0822d, #e56c1a)", padding: "20px 32px", display: "flex", alignItems: "center", gap: 12 }}>
             <span style={{ fontSize: 24 }}>📈</span>
