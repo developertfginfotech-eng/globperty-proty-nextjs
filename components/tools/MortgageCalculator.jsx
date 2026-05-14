@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 const COUNTRIES = ["UAE","USA","Portugal","Australia","Turkey","Cyprus","Malta","Canada","Hungary","Latvia","Philippines","Malaysia"];
 
@@ -41,15 +42,21 @@ export default function MortgageCalculator() {
       <div className="tf-container">
         <div className="box-calculate" style={{ background: "#fff", boxShadow: "0 8px 60px rgba(0,0,0,0.15)" }}>
 
-          <div style={{ background: "linear-gradient(90deg, #f0822d, #e56c1a)", padding: "20px 32px", display: "flex", alignItems: "center", gap: 12 }}>
-            <span style={{ fontSize: 24 }}>🏦</span>
-            <div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: "#fff" }}>Mortgage Calculator</div>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.8)", marginTop: 2 }}>Estimate your monthly repayments and total cost of borrowing</div>
-            </div>
+          <div style={{ position: "relative", overflow: "hidden", maxHeight: 320 }}>
+            <Image
+              src="/images/section/section-calculate.jpg"
+              alt="Calculate mortgage payments"
+              width={1200}
+              height={320}
+              style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }}
+            />
           </div>
 
           <form className="form-pre-approved" onSubmit={e => { e.preventDefault(); calculate(); }}>
+            <div style={{ marginBottom: 24 }}>
+              <h3 style={{ fontSize: 24, fontWeight: 800, color: "#111827", marginBottom: 6 }}>Calculate Mortgage Payments</h3>
+              <p className="text-1" style={{ color: "#6b7280" }}>Estimate your monthly repayment with our easy-to-use loan calculator.</p>
+            </div>
             <div className="row g-3" style={{ marginBottom: 24 }}>
               <div className="col-md-6">
                 <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Property Price ($)</label>
