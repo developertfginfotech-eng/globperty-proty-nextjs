@@ -44,7 +44,7 @@ export default function MortgageCalculator() {
 
           <div style={{ position: "relative", overflow: "hidden", maxHeight: 320 }}>
             <Image
-              src="/images/section/section-calculate.jpg"
+              src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=320&fit=crop"
               alt="Calculate mortgage payments"
               width={1200}
               height={320}
