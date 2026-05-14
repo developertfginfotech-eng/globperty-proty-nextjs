@@ -8,7 +8,7 @@ export default function Header2() {
   return (
     <header id="header-main" className="header style-2">
       <div className="header-inner">
-        <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 32px", width: "100%" }}>
+        <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 32px 0 56px", width: "100%" }}>
           <div className="row">
             <div className="col-12">
               <div className="header-inner-wrap" style={{ display: "flex", alignItems: "center", gap: 0 }}>

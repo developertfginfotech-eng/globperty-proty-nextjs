@@ -300,6 +300,28 @@ export default function Footer1() {
         </div>
       </div>
 
+      {/* Quick Nav Bar */}
+      <div style={{ borderTop: "1px solid #1a3050", padding: "16px 40px", maxWidth: 1400, margin: "0 auto" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 0", alignItems: "center" }}>
+          {[
+            { label: "Properties", href: "/listings" },
+            { label: "Countries", href: "/countries/uae" },
+            { label: "Guides", href: "/blog-grid" },
+            { label: "Visas", href: "/contact" },
+            { label: "Tools", href: "/compare" },
+            { label: "Finance", href: "/home-loan-process" },
+            { label: "Events", href: "/contact" },
+            { label: "Agents", href: "/agency-grid" },
+            { label: "Contact", href: "/contact" },
+          ].map((item, i, arr) => (
+            <span key={item.label} style={{ display: "flex", alignItems: "center" }}>
+              <a href={item.href} style={{ fontSize: 12, color: "#8b949e", textDecoration: "none", fontWeight: 500 }}>{item.label}</a>
+              {i < arr.length - 1 && <span style={{ margin: "0 10px", color: "#1a3050" }}>·</span>}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Legal / Bottom bar */}
       <div style={{ borderTop: "1px solid #1a3050", padding: "20px 40px", maxWidth: 1400, margin: "0 auto" }}>
         <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 4 }}>© 2025 Globperty LLC. All rights reserved. Registered in the United States of America.</p>

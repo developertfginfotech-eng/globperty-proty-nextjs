@@ -291,6 +291,27 @@ export default function Footer2({ parentClass = "" }) {
           </div>
         </div>
         <div className="col-12">
+          {/* Quick Nav Bar */}
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", padding: "16px 0", margin: "0 0 8px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 0", alignItems: "center" }}>
+              {[
+                { label: "Properties", href: "/listings" },
+                { label: "Countries", href: "/countries/uae" },
+                { label: "Guides", href: "/blog-grid" },
+                { label: "Visas", href: "/contact" },
+                { label: "Tools", href: "/compare" },
+                { label: "Finance", href: "/home-loan-process" },
+                { label: "Events", href: "/contact" },
+                { label: "Agents", href: "/agency-grid" },
+                { label: "Contact", href: "/contact" },
+              ].map((item, i, arr) => (
+                <span key={item.label} style={{ display: "flex", alignItems: "center" }}>
+                  <a href={item.href} style={{ fontSize: 12, color: "#8b949e", textDecoration: "none", fontWeight: 500 }}>{item.label}</a>
+                  {i < arr.length - 1 && <span style={{ margin: "0 10px", color: "rgba(255,255,255,0.1)" }}>·</span>}
+                </span>
+              ))}
+            </div>
+          </div>
           <div className="footer-bottom">
             <p>
               Copyright © {new Date().getFullYear()}{" "}

@@ -203,7 +203,7 @@ function TabBar({ tabs, active, onSelect, tabRef }) {
       <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px", display: "flex", gap: 0 }}>
         {tabs.map((tab) => (
           <button key={tab} onClick={() => onSelect(tab)} style={{
-            padding: "14px 16px", fontSize: 13, fontWeight: active === tab ? 700 : 500,
+            padding: "16px 18px", fontSize: 14, fontWeight: active === tab ? 700 : 500,
             color: active === tab ? "#f0822d" : "#6b7280", background: "none", border: "none",
             borderBottom: active === tab ? "3px solid #f0822d" : "3px solid transparent",
             cursor: "pointer", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 5,
