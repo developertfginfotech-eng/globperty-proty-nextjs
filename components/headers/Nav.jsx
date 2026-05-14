@@ -431,9 +431,6 @@ export default function Nav() {
 
   return (
     <>
-      <li className={pathname === "/" ? "current-menu" : ""} style={{ whiteSpace: "nowrap" }}>
-        <Link href="/" style={{ fontSize: 14, padding: "0 14px", whiteSpace: "nowrap", display: "block" }}>Home</Link>
-      </li>
       {MENU.map((menu) => (
         <li
           key={menu.label}
