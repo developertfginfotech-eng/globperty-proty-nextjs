@@ -71,39 +71,6 @@ const MENU = [
     ],
   },
   {
-    label: "Guides",
-    sections: [
-      {
-        title: "GUIDES & RESEARCH",
-        cols: 3,
-        items: [
-          { icon: "📖", label: "Country Investment Guides", sub: "Deep guides for all 12 countries",      href: "/blog-grid" },
-          { icon: "📊", label: "City Guides",               sub: "Area-by-area breakdown per city",       href: "/blog-grid" },
-          { icon: "📈", label: "Property Market Reports",   sub: "Prices, trends & forecasts 2025",       href: "/blog-list" },
-          { icon: "💰", label: "Investment Opportunities",  sub: "Hotspots, yields & ROI data",           href: "/listings?status=buy" },
-          { icon: "🌐", label: "Visa & Residency Guides",   sub: "Golden Visa, PR & citizenship paths",   href: "/blog-grid" },
-          { icon: "⚖️", label: "Legal & Ownership Rules",   sub: "Can foreigners buy? Step-by-step",     href: "/blog-list" },
-          { icon: "🧾", label: "Tax Guides",                sub: "Purchase tax, rental tax, CGT",         href: "/blog-list" },
-          { icon: "✈️", label: "Expat Living Guides",       sub: "Cost of living, culture, healthcare",  href: "/blog-grid" },
-        ],
-      },
-      {
-        title: "SPECIFIC BUYER GUIDES",
-        cols: 3,
-        items: [
-          { icon: "🇮🇳", label: "Guide for Indian Buyers",   sub: "NRI property investment abroad",       href: "/blog-grid" },
-          { icon: "🎓", label: "Student Housing Guide",      sub: "Renting near universities abroad",     href: "/listings?type=student" },
-          { icon: "📰", label: "News & Market Updates",      sub: "Global real estate news",              href: "/blog-list" },
-          { icon: "🏗", label: "Off-Plan Buying Guide",      sub: "Risks, rewards & what to check",       href: "/project-list" },
-          { icon: "🏨", label: "Airbnb Investment Guide",    sub: "Short-stay rental returns by city",    href: "/listings?type=short-stay" },
-          { icon: "🏦", label: "Mortgage Guides",            sub: "Foreign buyer mortgage by country",    href: "/home-loan-process" },
-          { icon: "🏬", label: "Commercial Property Guide",  sub: "Offices, retail, industrial abroad",   href: "/listings?type=Office" },
-          { icon: "📦", label: "Relocation Guide",           sub: "Moving abroad checklist & tips",       href: "/blog-list" },
-        ],
-      },
-    ],
-  },
-  {
     label: "Visas",
     sections: [
       {
@@ -149,57 +116,6 @@ const MENU = [
           { icon: "🌍", label: "Country Comparison Tool",        sub: "Compare 2 countries side by side",         href: "/compare" },
           { icon: "🗺", label: "Neighbourhood Explorer",         sub: "Find best areas by budget & lifestyle",    href: "/listings" },
           { icon: "🤖", label: "AI Property Assistant",          sub: "Chat & find your perfect property",        href: "/copilot" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Finance",
-    sections: [
-      {
-        title: "MORTGAGES & LOANS",
-        cols: 3,
-        items: [
-          { icon: "🏦", label: "Mortgage Partners",      sub: "Verified banks & lenders by country",     href: "/home-loan-process" },
-          { icon: "🔍", label: "Compare Mortgages",      sub: "Rates, LTV & eligibility comparison",     href: "/home-loan-process" },
-          { icon: "✅", label: "Get Pre-Approved",        sub: "Fast eligibility check online",           href: "/contact" },
-          { icon: "🕌", label: "Islamic Finance Options", sub: "Sharia-compliant mortgages",              href: "/contact" },
-        ],
-      },
-      {
-        title: "PROTECTION & LEGAL",
-        cols: 3,
-        items: [
-          { icon: "🛡", label: "Property Insurance",        sub: "Compare insurance partners",            href: "/contact" },
-          { icon: "⚖️", label: "Legal Services",            sub: "Verified property lawyers by country",  href: "/contact" },
-          { icon: "📋", label: "Title Deed & Due Diligence",sub: "Property verification services",        href: "/contact" },
-          { icon: "🧾", label: "Tax Advisory",              sub: "International tax consultants",         href: "/contact" },
-        ],
-      },
-      {
-        title: "OTHER SERVICES",
-        cols: 3,
-        items: [
-          { icon: "🚚", label: "Relocation Services", sub: "Movers, setup & settling-in help",           href: "/contact" },
-          { icon: "🏠", label: "Property Management", sub: "Manage your rental remotely",                href: "/dashboard" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Events",
-    sections: [
-      {
-        title: "EVENTS",
-        cols: 3,
-        items: [
-          { icon: "🌐", label: "Virtual Property Expos",  sub: "Live country-wise property showcases",   href: "/contact" },
-          { icon: "📅", label: "Upcoming Events",          sub: "Register free as a buyer",              href: "/contact" },
-          { icon: "🎬", label: "Past Event Replays",       sub: "Watch recorded presentations",          href: "/blog-list" },
-          { icon: "🏢", label: "Exhibit Your Property",    sub: "For agents & developers — paid booth",  href: "/contact" },
-          { icon: "🎙", label: "Investment Webinars",      sub: "Expert talks on property markets",      href: "/blog-list" },
-          { icon: "🌐", label: "Golden Visa Webinars",     sub: "Country-specific visa Q&A sessions",    href: "/blog-list" },
-          { icon: "🏅", label: "Sponsor an Event",         sub: "Brand exposure to global buyers",       href: "/contact" },
         ],
       },
     ],
