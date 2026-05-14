@@ -35,98 +35,93 @@ export default function RentalYieldCalculator() {
   };
 
   return (
-    <section style={{ background: "linear-gradient(135deg, #f8fafc 0%, #fff7ed 100%)", padding: "60px 0 80px" }}>
+    <section className="section-calculate flat-spacing-1">
       <div className="tf-container">
-        <div className="row justify-center">
-          <div className="col-lg-9">
+        <div className="box-calculate">
 
-            <div className="heading-section text-center mb-48">
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(240,130,45,0.1)", border: "1px solid rgba(240,130,45,0.3)", borderRadius: 20, padding: "5px 16px", marginBottom: 16 }}>
-                <span style={{ fontSize: 12, color: "#f0822d", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase" }}>📊 Investment Tool</span>
+          <div style={{ background: "linear-gradient(90deg, #f0822d, #e56c1a)", padding: "20px 32px", display: "flex", alignItems: "center", gap: 12 }}>
+            <span style={{ fontSize: 24 }}>📊</span>
+            <div>
+              <div style={{ fontSize: 17, fontWeight: 700, color: "#fff" }}>Rental Yield Calculator</div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.8)", marginTop: 2 }}>Calculate your gross and net annual return across 12 global markets</div>
+            </div>
+          </div>
+
+          <form className="form-pre-approved" onSubmit={e => { e.preventDefault(); calculate(); }}>
+            <div className="row g-3" style={{ marginBottom: 24 }}>
+              <div className="col-md-6">
+                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Property Value ($)</label>
+                <fieldset>
+                  <input type="number" className="form-control" placeholder="e.g. 500000" value={form.propertyValue} onChange={e => set("propertyValue", e.target.value)} style={{ height: 48 }} />
+                </fieldset>
               </div>
-              <h2 className="title">Rental Yield Calculator</h2>
-              <p className="text-1">Calculate your gross and net annual return across 12 global markets.</p>
+              <div className="col-md-6">
+                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Monthly Rent ($)</label>
+                <fieldset>
+                  <input type="number" className="form-control" placeholder="e.g. 2500" value={form.monthlyRent} onChange={e => set("monthlyRent", e.target.value)} style={{ height: 48 }} />
+                </fieldset>
+              </div>
+              <div className="col-md-6">
+                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Country (optional)</label>
+                <fieldset>
+                  <select className="form-control" value={form.country} onChange={e => set("country", e.target.value)} style={{ height: 48, background: "#fff" }}>
+                    <option value="">Select country</option>
+                    {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </fieldset>
+              </div>
+              <div className="col-md-6">
+                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Property Type</label>
+                <fieldset>
+                  <select className="form-control" value={form.type} onChange={e => set("type", e.target.value)} style={{ height: 48, background: "#fff" }}>
+                    {TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </fieldset>
+              </div>
             </div>
 
-            <div style={{ background: "#fff", borderRadius: 20, boxShadow: "0 8px 40px rgba(0,0,0,0.08)", border: "1px solid rgba(240,130,45,0.15)", overflow: "hidden" }}>
-              <div style={{ background: "linear-gradient(90deg, #f0822d, #e56c1a)", padding: "18px 32px", display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 20 }}>📊</span>
-                <span style={{ fontSize: 16, fontWeight: 700, color: "#fff" }}>Enter Property Details</span>
-              </div>
+            {error && <p style={{ color: "#ef4444", fontSize: 13, marginBottom: 16 }}>{error}</p>}
 
-              <div style={{ padding: "32px" }}>
+            <button type="submit" disabled={loading} className="tf-btn bg-color-primary w-full" style={{ height: 54, fontSize: 16, fontWeight: 700, borderRadius: 10, opacity: loading ? 0.7 : 1 }}>
+              {loading ? "Calculating…" : "Calculate Yield"} <i className="icon-arrow-right2" />
+            </button>
+
+            {result && (
+              <div style={{ marginTop: 32 }}>
                 <div className="row g-3 mb-20">
-                  <div className="col-md-6">
-                    <label className="text-1 fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Property Value ($)</label>
-                    <fieldset>
-                      <input type="number" className="form-control" placeholder="e.g. 500000" value={form.propertyValue} onChange={e => set("propertyValue", e.target.value)} style={{ height: 48 }} />
-                    </fieldset>
-                  </div>
-                  <div className="col-md-6">
-                    <label className="text-1 fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Monthly Rent ($)</label>
-                    <fieldset>
-                      <input type="number" className="form-control" placeholder="e.g. 2500" value={form.monthlyRent} onChange={e => set("monthlyRent", e.target.value)} style={{ height: 48 }} />
-                    </fieldset>
-                  </div>
-                  <div className="col-md-6">
-                    <label className="text-1 fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Country (optional)</label>
-                    <fieldset>
-                      <select className="form-control" value={form.country} onChange={e => set("country", e.target.value)} style={{ height: 48, background: "#fff" }}>
-                        <option value="">Select country</option>
-                        {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
-                      </select>
-                    </fieldset>
-                  </div>
-                  <div className="col-md-6">
-                    <label className="text-1 fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Property Type</label>
-                    <fieldset>
-                      <select className="form-control" value={form.type} onChange={e => set("type", e.target.value)} style={{ height: 48, background: "#fff" }}>
-                        {TYPES.map(t => <option key={t} value={t}>{t}</option>)}
-                      </select>
-                    </fieldset>
-                  </div>
+                  {[
+                    { label: "Gross Yield",          value: `${result.grossYield}%`,    icon: "📈", color: "#16b286", bg: "#f0fdf4" },
+                    { label: "Net Yield (est.)",     value: `${result.netYield}%`,      icon: "💰", color: "#f0822d", bg: "#fff7ed" },
+                    { label: "Annual Rental Income", value: `$${result.annualRent}`,    icon: "🏠", color: "#3b82f6", bg: "#eff6ff" },
+                    { label: "Break-even (months)",  value: result.monthsToBreakEven,   icon: "⏱", color: "#8b5cf6", bg: "#f5f3ff" },
+                  ].map(card => (
+                    <div key={card.label} className="col-6">
+                      <div style={{ background: card.bg, borderRadius: 12, padding: "18px 20px", border: `1.5px solid ${card.color}22` }}>
+                        <div style={{ fontSize: 20, marginBottom: 6 }}>{card.icon}</div>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: card.color, marginBottom: 3 }}>{card.value}</div>
+                        <div style={{ fontSize: 11, color: "#6b7280", fontWeight: 500 }}>{card.label}</div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
-                {error && <p style={{ color: "#ef4444", fontSize: 13, marginBottom: 16 }}>{error}</p>}
-
-                <button onClick={calculate} disabled={loading} className="tf-btn bg-color-primary w-full" style={{ height: 54, fontSize: 16, fontWeight: 700, borderRadius: 10, opacity: loading ? 0.7 : 1 }}>
-                  {loading ? "Calculating…" : "Calculate Yield"} <i className="icon-arrow-right2" />
-                </button>
-
-                {result && (
-                  <div style={{ marginTop: 32 }}>
-                    <div className="row g-3 mb-20">
-                      {[
-                        { label: "Gross Yield",          value: `${result.grossYield}%`,    icon: "📈", color: "#16b286", bg: "#f0fdf4" },
-                        { label: "Net Yield (est.)",     value: `${result.netYield}%`,      icon: "💰", color: "#f0822d", bg: "#fff7ed" },
-                        { label: "Annual Rental Income", value: `$${result.annualRent}`,    icon: "🏠", color: "#3b82f6", bg: "#eff6ff" },
-                        { label: "Break-even (months)",  value: result.monthsToBreakEven,   icon: "⏱", color: "#8b5cf6", bg: "#f5f3ff" },
-                      ].map(card => (
-                        <div key={card.label} className="col-6">
-                          <div style={{ background: card.bg, borderRadius: 12, padding: "18px 20px", border: `1.5px solid ${card.color}22` }}>
-                            <div style={{ fontSize: 20, marginBottom: 6 }}>{card.icon}</div>
-                            <div style={{ fontSize: 22, fontWeight: 800, color: card.color, marginBottom: 3 }}>{card.value}</div>
-                            <div style={{ fontSize: 11, color: "#6b7280", fontWeight: 500 }}>{card.label}</div>
-                          </div>
-                        </div>
-                      ))}
+                {result.marketYield && (
+                  <div style={{ background: "#f0fdf4", borderRadius: 12, padding: "16px 20px", border: "1.5px solid #16b28622", display: "flex", alignItems: "center", gap: 12 }}>
+                    <span style={{ fontSize: 24 }}>📍</span>
+                    <div>
+                      <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 2 }}>Market Average Yield — {form.country}</div>
+                      <div style={{ fontSize: 20, fontWeight: 800, color: "#16b286" }}>{result.marketYield}%</div>
                     </div>
-
-                    {result.marketYield && (
-                      <div style={{ background: "#f0fdf4", borderRadius: 12, padding: "16px 20px", border: "1.5px solid #16b28622", display: "flex", alignItems: "center", gap: 12 }}>
-                        <span style={{ fontSize: 24 }}>📍</span>
-                        <div>
-                          <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 2 }}>Market Average Yield — {form.country}</div>
-                          <div style={{ fontSize: 20, fontWeight: 800, color: "#16b286" }}>{result.marketYield}%</div>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 )}
-              </div>
-            </div>
 
-          </div>
+                <p style={{ fontSize: 11, color: "#9ca3af", marginTop: 20, textAlign: "center" }}>
+                  Net yield estimated at 85% of gross (accounting for management fees, maintenance and vacancy). Actual returns may vary.
+                </p>
+              </div>
+            )}
+          </form>
+
         </div>
       </div>
     </section>
