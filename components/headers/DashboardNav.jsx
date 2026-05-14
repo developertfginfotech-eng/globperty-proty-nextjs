@@ -406,13 +406,9 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           <div className="d-flex wrap-login">
-            <a href="#modalLogin" data-bs-toggle="modal">
-              login
-            </a>
+            <Link href="/login">login</Link>
             <span>/</span>
-            <a href="#modalRegister" data-bs-toggle="modal">
-              register{" "}
-            </a>
+            <Link href="/register">register</Link>
           </div>
         </div>
         <a className="dropdown-item" href="#" onClick={handleLogout}>
