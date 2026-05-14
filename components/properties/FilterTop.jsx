@@ -1,10 +1,49 @@
 "use client";
-import React from "react";
-import DropdownSelect from "../common/DropdownSelect";
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
-import SearchForm from "../common/SearchForm";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function FilterTop() {
+const STATUS_OPTIONS  = ["Any Status", "buy", "rent", "sell"];
+const TYPE_OPTIONS    = ["Any Type", "Apartment", "Villa", "Studio", "Townhouse", "Commercial", "Penthouse", "Land / Plot"];
+const BATH_OPTIONS    = ["Any Baths", "1", "2", "3", "4+"];
+const BED_OPTIONS     = ["Any Beds", "1", "2", "3", "4", "5+"];
+
+function FilterTopInner() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [keyword, setKeyword] = useState(searchParams.get("keyword") || "");
+  const [status,  setStatus]  = useState(searchParams.get("status")  || "");
+  const [type,    setType]    = useState(searchParams.get("type")    || "");
+  const [baths,   setBaths]   = useState(searchParams.get("baths")   || "");
+  const [beds,    setBeds]    = useState(searchParams.get("beds")    || "");
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (keyword.trim()) params.set("keyword", keyword.trim());
+    if (status && status !== "Any Status")  params.set("status",  status);
+    if (type   && type   !== "Any Type")    params.set("type",    type.toLowerCase());
+    if (baths  && baths  !== "Any Baths")   params.set("baths",   baths);
+    if (beds   && beds   !== "Any Beds")    params.set("beds",    beds);
+    // keep existing location param if present
+    const loc = searchParams.get("location");
+    if (loc) params.set("location", loc);
+    router.push(`/listings?${params.toString()}`);
+  };
+
+  const selectStyle = {
+    height: 46,
+    border: "1.5px solid #e5e7eb",
+    borderRadius: 8,
+    padding: "0 12px",
+    fontSize: 14,
+    background: "#fff",
+    color: "#374151",
+    cursor: "pointer",
+    outline: "none",
+  };
+
   return (
     <section className="flat-title style-2" style={{ paddingTop: 90 }}>
       <div className="tf-container">
@@ -12,148 +51,74 @@ export default function FilterTop() {
           <div className="col-lg-12">
             <div className="title-inner">
               <ul className="breadcrumb">
-                <li>
-                  <Link className="home fw-6 text-color-3" href={`/`}>
-                    Home
-                  </Link>
-                </li>
+                <li><Link className="home fw-6 text-color-3" href="/">Home</Link></li>
                 <li>Property Listing</li>
               </ul>
             </div>
-            <div className="wg-filter style-2 relative">
-              <div className="form-title style-2">
-                <form>
-                  <fieldset>
-                    <input type="text" placeholder="Address, City, ZIP..." />
-                  </fieldset>
-                </form>
 
-                <DropdownSelect
-                  options={[
-                    "Status",
-                    "Bungalow",
-                    "Apartment",
-                    "House",
-                    "Smart Home",
-                    "Office",
-                  ]}
-                />
-                <DropdownSelect
-                  options={[
-                    "Type",
-                    "Bungalow",
-                    "Apartment",
-                    "House",
-                    "Smart Home",
-                    "Office",
-                  ]}
-                />
+            <form className="wg-filter style-2 relative" onSubmit={handleSearch}>
+              <div className="form-title style-2" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
 
-                <DropdownSelect
-                  options={[
-                    "Baths",
-                    "Floating baths",
-                    "Massage baths",
-                    "Floor-standing bath",
-                    "Built-in baths",
-                  ]}
-                />
+                {/* Keyword */}
+                <fieldset style={{ flex: "1 1 220px", minWidth: 180 }}>
+                  <input
+                    type="text"
+                    placeholder="Address, City, country..."
+                    value={keyword}
+                    onChange={e => setKeyword(e.target.value)}
+                    style={{ height: 46, fontSize: 14 }}
+                  />
+                </fieldset>
 
-                <DropdownSelect
-                  options={[
-                    "Beds",
-                    "Twin beds",
-                    "Bunk beds",
-                    "Kids beds",
-                    "Single bed",
-                  ]}
-                />
-                <div className="wrap-btn searchFormToggler">
-                  <div className="btn-filter show-form">
-                    <div className="icons">
-                      <svg
-                        width={24}
-                        height={24}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M21 4H14"
-                          stroke="#F1913D"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M10 4H3"
-                          stroke="#F1913D"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M21 12H12"
-                          stroke="#F1913D"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M8 12H3"
-                          stroke="#F1913D"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M21 20H16"
-                          stroke="#F1913D"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M12 20H3"
-                          stroke="#F1913D"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M14 2V6"
-                          stroke="#F1913D"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M8 10V14"
-                          stroke="#F1913D"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M16 18V22"
-                          stroke="#F1913D"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <a href="#" className="tf-btn bg-color-primary pd-3 fw-6">
+                {/* Status */}
+                <select value={status} onChange={e => setStatus(e.target.value)} style={selectStyle}>
+                  {STATUS_OPTIONS.map(o => (
+                    <option key={o} value={o === "Any Status" ? "" : o}>
+                      {o === "buy" ? "For Sale" : o === "rent" ? "For Rent" : o === "sell" ? "Sell" : o}
+                    </option>
+                  ))}
+                </select>
+
+                {/* Type */}
+                <select value={type} onChange={e => setType(e.target.value)} style={selectStyle}>
+                  {TYPE_OPTIONS.map(o => (
+                    <option key={o} value={o === "Any Type" ? "" : o.toLowerCase()}>{o}</option>
+                  ))}
+                </select>
+
+                {/* Baths */}
+                <select value={baths} onChange={e => setBaths(e.target.value)} style={selectStyle}>
+                  {BATH_OPTIONS.map(o => (
+                    <option key={o} value={o === "Any Baths" ? "" : o}>{o === "Any Baths" ? "Baths" : `${o} Bath${o === "1" ? "" : "s"}`}</option>
+                  ))}
+                </select>
+
+                {/* Beds */}
+                <select value={beds} onChange={e => setBeds(e.target.value)} style={selectStyle}>
+                  {BED_OPTIONS.map(o => (
+                    <option key={o} value={o === "Any Beds" ? "" : o}>{o === "Any Beds" ? "Beds" : `${o} Bed${o === "1" ? "" : "s"}`}</option>
+                  ))}
+                </select>
+
+                <div className="wrap-btn" style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                  <button type="submit" className="tf-btn bg-color-primary pd-3 fw-6" style={{ height: 46, padding: "0 28px", whiteSpace: "nowrap", borderRadius: 8 }}>
                     Search <i className="icon-MagnifyingGlass fw-6" />
-                  </a>
+                  </button>
                 </div>
               </div>
-              <SearchForm />
-            </div>
+            </form>
+
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+export default function FilterTop() {
+  return (
+    <Suspense fallback={null}>
+      <FilterTopInner />
+    </Suspense>
   );
 }

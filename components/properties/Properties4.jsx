@@ -25,8 +25,18 @@ function matchesType(property, typeParam) {
   return keys.includes((property.propertyType || "").toLowerCase());
 }
 
+function matchesStatus(property, status) {
+  if (!status) return true;
+  const adType = (property.adType || "").toLowerCase();
+  if (status === "rent") return adType.includes("rent") || adType.includes("lease");
+  if (status === "buy")  return adType.includes("sale") || adType.includes("buy");
+  if (status === "sell") return adType.includes("sale") || adType.includes("buy");
+  return true;
+}
+
 function applyFilters(all, params) {
   const typeParam    = (params.get("type") || "").toLowerCase();
+  const statusParam  = (params.get("status") || "").toLowerCase();
   const keyword      = (params.get("keyword") || "").toLowerCase();
   const location     = (params.get("location") || "").toLowerCase();
   const minPrice     = Number(params.get("minPrice")) || 0;
@@ -40,6 +50,7 @@ function applyFilters(all, params) {
 
   let result = all.filter((p) => {
     if (!matchesType(p, typeParam)) return false;
+    if (!matchesStatus(p, statusParam)) return false;
 
     if (keyword && ![p.title, p.description, p.location, p.city, p.country]
       .filter(Boolean).some(f => f.toLowerCase().includes(keyword))) return false;
@@ -100,10 +111,18 @@ function Properties4Inner({ defaultGrid }) {
     setFiltered(applyFilters(allProperties, searchParams));
   }, [allProperties, searchParams]);
 
-  const typeParam = (searchParams.get("type") || "").toLowerCase();
-  const heading = typeParam
-    ? typeParam.charAt(0).toUpperCase() + typeParam.slice(1)
-    : "Property listing";
+  const typeParam   = (searchParams.get("type") || "").toLowerCase();
+  const statusParam = (searchParams.get("status") || "").toLowerCase();
+  const locationParam = (searchParams.get("location") || "").toLowerCase();
+
+  const headingParts = [];
+  if (statusParam === "rent") headingParts.push("Properties for Rent");
+  else if (statusParam === "buy") headingParts.push("Properties for Sale");
+  else if (statusParam === "sell") headingParts.push("List for Sale");
+  else headingParts.push("Property listing");
+  if (typeParam) headingParts[0] = `${typeParam.charAt(0).toUpperCase() + typeParam.slice(1)} — ${headingParts[0]}`;
+  if (locationParam) headingParts[0] += ` in ${locationParam.toUpperCase()}`;
+  const heading = headingParts[0];
 
   return (
     <section className="section-property-layout">

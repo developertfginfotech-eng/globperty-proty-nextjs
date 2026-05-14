@@ -24,6 +24,9 @@ function SidebarInner() {
   const [propertyType, setPropertyType] = useState(searchParams.get("house") || "Any");
   const [beds, setBeds] = useState(searchParams.get("beds") || "Any");
   const [baths, setBaths] = useState(searchParams.get("baths") || "Any");
+  const [status, setStatus] = useState(searchParams.get("status") || "Any");
+
+  const STATUS_OPTIONS = ["Any", "buy", "rent", "sell"];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,13 +41,14 @@ function SidebarInner() {
     if (propertyType && propertyType !== "Any") params.set("house", propertyType);
     if (beds && beds !== "Any") params.set("beds", beds);
     if (baths && baths !== "Any") params.set("baths", baths);
+    if (status && status !== "Any") params.set("status", status);
     router.push(`?${params.toString()}`);
   };
 
   const handleReset = () => {
     setKeyword(""); setLocation("");
     setPriceRange([0, 10000000]); setSizeRange([0, 50000]);
-    setPropertyType("Any"); setBeds("Any"); setBaths("Any");
+    setPropertyType("Any"); setBeds("Any"); setBaths("Any"); setStatus("Any");
     const params = new URLSearchParams();
     if (searchParams.get("type")) params.set("type", searchParams.get("type"));
     router.push(`?${params.toString()}`);
@@ -89,6 +93,11 @@ function SidebarInner() {
         </div>
 
         <div className="group-select mb-30">
+          <div className="box-select mb-12">
+            <select className="form-control" value={status} onChange={(e) => setStatus(e.target.value)} style={{ height: 44, borderRadius: 6, border: "1px solid #e5e7eb", padding: "0 12px" }}>
+              {STATUS_OPTIONS.map(o => <option key={o} value={o}>{o === "Any" ? "Status: Any" : o === "buy" ? "For Sale" : o === "rent" ? "For Rent" : "Sell / List"}</option>)}
+            </select>
+          </div>
           <div className="box-select mb-12">
             <select className="form-control" value={propertyType} onChange={(e) => setPropertyType(e.target.value)} style={{ height: 44, borderRadius: 6, border: "1px solid #e5e7eb", padding: "0 12px" }}>
               {PROPERTY_TYPES.map(t => <option key={t} value={t}>{t === "Any" ? "Property Type" : t}</option>)}

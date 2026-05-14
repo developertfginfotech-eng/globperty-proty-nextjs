@@ -77,22 +77,22 @@ const MENU = [
         title: "BY COUNTRY PROGRAM",
         cols: 3,
         items: [
-          { icon: "🇦🇪", label: "UAE Golden Visa",               sub: "From AED 2M property investment",  href: "/listings?location=UAE" },
-          { icon: "🇵🇹", label: "Portugal Golden Visa",          sub: "From €500K investment",            href: "/listings?location=Portugal" },
-          { icon: "🇹🇷", label: "Turkey Citizenship by Investment", sub: "From $400K property",           href: "/listings?location=Turkey" },
-          { icon: "🇨🇾", label: "Cyprus Permanent Residency",    sub: "From €300K property",              href: "/listings?location=Cyprus" },
-          { icon: "🇲🇹", label: "Malta Residency Programme",     sub: "From €375K property",              href: "/listings?location=Malta" },
-          { icon: "🇭🇺", label: "Hungary Guest Investor Visa",   sub: "From €500K property — new 2024",   href: "/listings?location=Hungary" },
-          { icon: "🇱🇻", label: "Latvia Residency by Investment",sub: "From €250K property",              href: "/listings?location=Latvia" },
-          { icon: "🇲🇾", label: "Malaysia MM2H Visa",            sub: "Long-stay visa for property owners",href: "/listings?location=Malaysia" },
+          { icon: "🇦🇪", label: "UAE Golden Visa",               sub: "From AED 2M property investment",  href: "/countries/uae" },
+          { icon: "🇵🇹", label: "Portugal Golden Visa",          sub: "From €500K investment",            href: "/countries/portugal" },
+          { icon: "🇹🇷", label: "Turkey Citizenship by Investment", sub: "From $400K property",           href: "/countries/turkey" },
+          { icon: "🇨🇾", label: "Cyprus Permanent Residency",    sub: "From €300K property",              href: "/countries/cyprus" },
+          { icon: "🇲🇹", label: "Malta Residency Programme",     sub: "From €375K property",              href: "/countries/malta" },
+          { icon: "🇭🇺", label: "Hungary Guest Investor Visa",   sub: "From €500K property — new 2024",   href: "/countries/hungary" },
+          { icon: "🇱🇻", label: "Latvia Residency by Investment",sub: "From €250K property",              href: "/countries/latvia" },
+          { icon: "🇲🇾", label: "Malaysia MM2H Visa",            sub: "Long-stay visa for property owners",href: "/countries/malaysia" },
         ],
       },
       {
         title: "TOOLS & COMPARISONS",
         cols: 3,
         items: [
-          { icon: "🔍", label: "Visa Eligibility Checker",    sub: "Which country suits your budget?",    href: "/copilot" },
-          { icon: "📊", label: "Compare All Visa Programs",   sub: "Side-by-side table of all programs",  href: "/compare" },
+          { icon: "🔍", label: "Visa Eligibility Checker",    sub: "Which country suits your budget?",    href: "/visa-checker" },
+          { icon: "📊", label: "Compare All Visa Programs",   sub: "Side-by-side table of all programs",  href: "/visa-comparison" },
           { icon: "🌐", label: "AI Visa Advisor",             sub: "Chat to find your best visa path",    href: "/copilot" },
           { icon: "📞", label: "Speak to a Visa Consultant",  sub: "Connect with verified visa experts",  href: "/contact" },
         ],
@@ -106,13 +106,12 @@ const MENU = [
         title: "CALCULATORS & TOOLS",
         cols: 3,
         items: [
-          { icon: "📊", label: "Rental Yield Calculator",        sub: "Annual return % by country & area",       href: "/copilot" },
-          { icon: "📈", label: "ROI & Capital Growth Estimator", sub: "5 & 10 year investment projections",       href: "/copilot" },
+          { icon: "📊", label: "Rental Yield Calculator",        sub: "Annual return % by country & area",       href: "/rental-yield" },
+          { icon: "📈", label: "ROI & Capital Growth Estimator", sub: "5 & 10 year investment projections",       href: "/roi-calculator" },
           { icon: "🏦", label: "Mortgage Calculator",            sub: "Monthly repayments & eligibility",         href: "/home-loan-process" },
-          { icon: "💱", label: "Currency Converter",             sub: "Live exchange rates — 30+ currencies",     href: "/copilot" },
+          { icon: "💱", label: "Currency Converter",             sub: "Live exchange rates — 17 currencies",      href: "/currency-converter" },
           { icon: "🌐", label: "Visa Eligibility Checker",       sub: "Find your Golden Visa match",              href: "/copilot" },
-          { icon: "💰", label: "Cost of Buying Calculator",      sub: "All purchase fees & taxes per country",    href: "/copilot" },
-          { icon: "🏨", label: "Airbnb Income Estimator",        sub: "Short-stay income potential",              href: "/copilot" },
+          { icon: "💰", label: "Cost of Buying Calculator",      sub: "All purchase fees & taxes per country",    href: "/cost-of-buying" },
           { icon: "🌍", label: "Country Comparison Tool",        sub: "Compare 2 countries side by side",         href: "/compare" },
           { icon: "🗺", label: "Neighbourhood Explorer",         sub: "Find best areas by budget & lifestyle",    href: "/listings" },
           { icon: "🤖", label: "AI Property Assistant",          sub: "Chat & find your perfect property",        href: "/copilot" },
@@ -149,37 +148,23 @@ const MENU = [
   },
 ];
 
-const panelStyle = {
-  background: "#fff",
-  borderRadius: 12,
-  boxShadow: "0 8px 40px rgba(0,0,0,0.14)",
-  minWidth: 680,
-  maxWidth: 860,
-  border: "1px solid #f0f0f0",
-};
-
 function SmartPanel({ children, onEnter, onLeave }) {
   const ref = useRef(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const MARGIN = 12;
     const rect = el.getBoundingClientRect();
     const vw = window.innerWidth;
-    if (rect.left < MARGIN) {
-      const shift = MARGIN - rect.left;
-      el.style.transform = `translateX(calc(-50% + ${shift}px))`;
-    } else if (rect.right > vw - MARGIN) {
-      const shift = rect.right - (vw - MARGIN);
-      el.style.transform = `translateX(calc(-50% - ${shift}px))`;
+    if (rect.right > vw - 12) {
+      el.style.left = `${-(rect.right - vw + 12)}px`;
     }
   });
 
   return (
     <div
       ref={ref}
-      style={{ position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)", zIndex: 9999 }}
+      style={{ position: "absolute", top: "100%", left: 0, zIndex: 9999, paddingTop: 10 }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
@@ -194,13 +179,15 @@ function MegaItem({ item }) {
       href={item.href}
       style={{
         display: "flex",
-        alignItems: "flex-start",
-        gap: 10,
-        padding: "7px 10px 7px 8px",
-        borderRadius: 8,
+        alignItems: "center",
+        gap: 7,
+        padding: "4px 8px 4px 6px",
+        borderRadius: 6,
         textDecoration: "none",
         transition: "all 0.15s",
         borderLeft: "2px solid transparent",
+        cursor: "pointer",
+        pointerEvents: "auto",
       }}
       onMouseEnter={e => {
         e.currentTarget.style.background = "#fff8f4";
@@ -212,22 +199,22 @@ function MegaItem({ item }) {
       }}
     >
       <span style={{
-        fontSize: 15,
+        fontSize: 13,
         lineHeight: 1,
         flexShrink: 0,
-        width: 32,
-        height: 32,
+        width: 24,
+        height: 24,
         background: "#fff4ec",
-        borderRadius: 8,
+        borderRadius: 6,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}>
         {item.icon}
       </span>
-      <div style={{ paddingTop: 1 }}>
-        <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{item.label}</div>
-        {item.sub && <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 2, lineHeight: 1.35 }}>{item.sub}</div>}
+      <div>
+        <div style={{ fontSize: 12.5, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{item.label}</div>
+        {item.sub && <div style={{ fontSize: 10.5, color: "#9ca3af", lineHeight: 1.3 }}>{item.sub}</div>}
       </div>
     </Link>
   );
@@ -250,7 +237,15 @@ const ALL_COUNTRIES = [
 
 function CountriesPanel() {
   return (
-    <div style={{ ...panelStyle, minWidth: 760, maxWidth: 920, padding: "20px 22px", borderTop: "3px solid #f0822d" }}>
+    <div style={{
+      background: "#fff",
+      borderTop: "3px solid #f0822d",
+      boxShadow: "0 6px 24px rgba(0,0,0,0.13)",
+      border: "1px solid #efefef",
+      borderTopColor: "#f0822d",
+      minWidth: 760,
+      padding: "14px 20px 16px",
+    }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
         <span style={{ fontSize: 11, fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 1.2 }}>
           Invest in 12 Countries
@@ -313,17 +308,25 @@ function CountriesPanel() {
 
 function MegaPanel({ menu }) {
   return (
-    <div style={{ ...panelStyle, borderTop: "3px solid #f0822d", padding: "20px 22px" }}>
+    <div style={{
+      background: "#fff",
+      borderTop: "3px solid #f0822d",
+      boxShadow: "0 6px 24px rgba(0,0,0,0.13)",
+      border: "1px solid #efefef",
+      borderTopColor: "#f0822d",
+      minWidth: 700,
+      padding: "14px 20px 16px",
+    }}>
       {menu.sections.map((section, si) => (
-        <div key={si} style={{ marginBottom: si < menu.sections.length - 1 ? 20 : 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#f0822d", flexShrink: 0 }} />
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1 }}>
+        <div key={si} style={{ marginBottom: si < menu.sections.length - 1 ? 12 : 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#f0822d", flexShrink: 0 }} />
+            <span style={{ fontSize: 9.5, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1 }}>
               {section.title}
             </span>
             <div style={{ flex: 1, height: 1, background: "#f0f0f0" }} />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.cols}, 1fr)`, gap: "2px 6px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.cols}, 1fr)`, gap: "1px 4px" }}>
             {section.items.map((item, ii) => <MegaItem key={ii} item={item} />)}
           </div>
         </div>
@@ -342,7 +345,7 @@ export default function Nav() {
     setOpen(label);
   };
   const hide = () => {
-    timerRef.current = setTimeout(() => setOpen(null), 120);
+    timerRef.current = setTimeout(() => setOpen(null), 250);
   };
 
   return (
@@ -356,7 +359,7 @@ export default function Nav() {
         >
           <a
             href="#"
-            style={{ display: "flex", alignItems: "center", gap: 4, cursor: "pointer", fontSize: 15, padding: "0 18px", whiteSpace: "nowrap" }}
+            style={{ display: "flex", alignItems: "center", gap: 4, cursor: "pointer", fontSize: 15.5, padding: "0 22px", whiteSpace: "nowrap", fontWeight: 500, letterSpacing: "0.01em" }}
             onClick={e => e.preventDefault()}
           >
             {menu.label}
@@ -372,7 +375,7 @@ export default function Nav() {
         </li>
       ))}
       <li className={pathname === "/contact" ? "current-menu" : ""} style={{ whiteSpace: "nowrap" }}>
-        <Link href="/contact" style={{ fontSize: 15, padding: "0 18px", whiteSpace: "nowrap", display: "block" }}>Contact</Link>
+        <Link href="/contact" style={{ fontSize: 15.5, padding: "0 22px", whiteSpace: "nowrap", display: "block", fontWeight: 500, letterSpacing: "0.01em" }}>Contact</Link>
       </li>
     </>
   );

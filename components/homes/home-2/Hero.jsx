@@ -114,9 +114,18 @@ export default function Hero() {
         backgroundPosition: "center",
         backgroundAttachment: "scroll",
         backgroundRepeat: "no-repeat",
+        position: "relative",
       }}
     >
-      <div className="tf-container">
+      {/* Dark overlay */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        background: "rgba(0,0,0,0.55)",
+        zIndex: 1,
+        pointerEvents: "none",
+      }} />
+      <div className="tf-container" style={{ position: "relative", zIndex: 2 }}>
         <div className="row">
           <div className="col-12">
             <div className="content-inner">
