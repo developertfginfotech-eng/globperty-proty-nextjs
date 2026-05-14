@@ -1,3 +1,21 @@
+.globperty-header-grid {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+  min-height: 72px !important;
+  padding: 0 40px !important;
+  max-width: 1440px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+.globperty-logo-text {
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.5px !important;
+}
+
 .swiper.wrap-partners .swiper-wrapper {
   animation-timing-function: linear !important;
   transition-timing-function: linear !important;
