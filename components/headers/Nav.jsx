@@ -147,17 +147,21 @@ const MENU = [
   },
 ];
 
-function SmartPanel({ children, onEnter, onLeave }) {
+function SmartPanel({ children, onEnter, onLeave, navItemWidth = 80 }) {
   const ref = useRef(null);
 
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Reset to natural left-aligned position first
     el.style.left = "0";
+    el.style.right = "auto";
     const rect = el.getBoundingClientRect();
     const vw = window.innerWidth;
     if (rect.right > vw - 12) {
-      el.style.left = `${vw - 12 - rect.right}px`;
+      // Flip: align panel's right edge to the nav item's right edge
+      el.style.left = "auto";
+      el.style.right = "0";
     }
   });
 
