@@ -9,7 +9,7 @@ export default function Cta() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 alt=""
-                src="/images/section/cta.png"
+                src="/images/items/section-trusted-1.png"
               />
               <div className="content">
                 <h4 className="text_white mb-8">
