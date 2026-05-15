@@ -3,40 +3,81 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 const PROPERTIES = [
-  "Buy Property Abroad","Rent Property Abroad","Sell Your Property","Short Stay / Holiday Let",
-  "Student Housing","Shared / Roommate Housing","New Projects & Off-Plan","Luxury Properties",
-  "Commercial Property","Apartments & Flats","Villas & Houses","Townhouses","Penthouses",
-  "Land & Plots","Beachfront Properties","Investment Properties",
+  { label: "Buy Property Abroad",        href: "/listings?status=buy" },
+  { label: "Rent Property Abroad",       href: "/listings?status=rent" },
+  { label: "Sell Your Property",         href: "/add-property" },
+  { label: "Short Stay / Holiday Let",   href: "/listings?type=short-stay" },
+  { label: "Student Housing",            href: "/listings?type=student" },
+  { label: "Shared / Roommate Housing",  href: "/listings?type=shared" },
+  { label: "New Projects & Off-Plan",    href: "/project-list" },
+  { label: "Luxury Properties",          href: "/listings?type=luxury" },
+  { label: "Commercial Property",        href: "/listings?type=Office" },
+  { label: "Apartments & Flats",         href: "/listings?type=Apartment" },
+  { label: "Villas & Houses",            href: "/listings?type=Villa" },
+  { label: "Townhouses",                 href: "/listings?type=townhouse" },
+  { label: "Penthouses",                 href: "/listings?type=Penthouse" },
+  { label: "Land & Plots",               href: "/listings?type=land" },
+  { label: "Beachfront Properties",      href: "/listings?type=beachfront" },
+  { label: "Investment Properties",      href: "/listings?purpose=invest" },
 ];
 
 const KNOWLEDGE_BASE = [
-  "Country Investment Guides","City & Area Guides","Property Market Reports","Golden Visa Guides",
-  "Legal & Ownership Rules","Tax Guides by Country","Expat Living Guides","Student Housing Guide",
-  "Airbnb Investment Guide","Off-Plan Buying Guide","Mortgage Guides","NRI Property Guide",
-  "Relocation Guide","Commercial Property Guide","News & Market Updates","Property Glossary",
+  { label: "Country Investment Guides",  href: "/blog-grid" },
+  { label: "City & Area Guides",         href: "/blog-grid" },
+  { label: "Property Market Reports",    href: "/blog-grid" },
+  { label: "Golden Visa Guides",         href: "/blog-grid" },
+  { label: "Legal & Ownership Rules",    href: "/blog-grid" },
+  { label: "Tax Guides by Country",      href: "/blog-grid" },
+  { label: "Expat Living Guides",        href: "/blog-grid" },
+  { label: "Student Housing Guide",      href: "/blog-grid" },
+  { label: "Airbnb Investment Guide",    href: "/blog-grid" },
+  { label: "Off-Plan Buying Guide",      href: "/blog-grid" },
+  { label: "Mortgage Guides",            href: "/home-loan-process" },
+  { label: "NRI Property Guide",         href: "/blog-grid" },
+  { label: "Relocation Guide",           href: "/blog-grid" },
+  { label: "Commercial Property Guide",  href: "/blog-grid" },
+  { label: "News & Market Updates",      href: "/blog-grid" },
+  { label: "Property Glossary",          href: "/blog-grid" },
 ];
 
 const TOOLS_FINANCE = [
-  "Rental Yield Calculator","ROI & Growth Estimator","Mortgage Calculator","Currency Converter",
-  "Visa Eligibility Checker","Airbnb Income Estimator","Cost of Buying Calculator",
-  "Country Comparison Tool","Neighbourhood Explorer","AI Property Assistant",
-  "Mortgage Partners","Compare Mortgages","Property Insurance","Legal Services",
-  "Tax Advisory","Islamic Finance",
+  { label: "Rental Yield Calculator",    href: "/rental-yield" },
+  { label: "ROI & Growth Estimator",     href: "/roi-calculator" },
+  { label: "Mortgage Calculator",        href: "/home-loan-process" },
+  { label: "Currency Converter",         href: "/currency-converter" },
+  { label: "Visa Eligibility Checker",   href: "/contact" },
+  { label: "Airbnb Income Estimator",    href: "/rental-yield" },
+  { label: "Cost of Buying Calculator",  href: "/cost-of-buying" },
+  { label: "Country Comparison Tool",    href: "/compare" },
+  { label: "Neighbourhood Explorer",     href: "/listings" },
+  { label: "AI Property Assistant",      href: "/copilot" },
+  { label: "Mortgage Partners",          href: "/finance-partner" },
+  { label: "Compare Mortgages",          href: "/home-loan-process" },
+  { label: "Property Insurance",         href: "/contact" },
+  { label: "Legal Services",             href: "/legal-partner" },
+  { label: "Tax Advisory",               href: "/contact" },
+  { label: "Islamic Finance",            href: "/contact" },
 ];
 
 const COMPANY = [
-  "About Globperty","Our Story","Careers","Press & Media","Blog","Contact Us","FAQ",
+  { label: "About Globperty",  href: "/about" },
+  { label: "Our Story",        href: "/about" },
+  { label: "Careers",          href: "/contact" },
+  { label: "Press & Media",    href: "/contact" },
+  { label: "Blog",             href: "/blog-grid" },
+  { label: "Contact Us",       href: "/contact" },
+  { label: "FAQ",              href: "/faq" },
 ];
 
 const FOR_AGENTS = [
-  { label: "List Your Properties", badge: "FREE" },
-  { label: "Create Agent Profile" },
-  { label: "Agent Dashboard" },
-  { label: "Buy Leads" },
-  { label: "Developer Packages" },
-  { label: "Exhibit at Expo" },
-  { label: "Advertise" },
-  { label: "Partner With Us" },
+  { label: "List Your Properties", badge: "FREE", href: "/add-property" },
+  { label: "Create Agent Profile",              href: "/my-profile" },
+  { label: "Agent Dashboard",                   href: "/dashboard" },
+  { label: "Buy Leads",                         href: "/buy-leads" },
+  { label: "Developer Packages",                href: "/developer-packages" },
+  { label: "Exhibit at Expo",                   href: "/virtual-expo" },
+  { label: "Advertise",                         href: "/advertise" },
+  { label: "Partner With Us",                   href: "/partner" },
 ];
 
 const COUNTRIES = [
@@ -187,8 +228,8 @@ export default function Footer1() {
             <h6 style={{ color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>Properties</h6>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {PROPERTIES.map(item => (
-                <li key={item} style={{ marginBottom: 8 }}>
-                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item}</a>
+                <li key={item.label} style={{ marginBottom: 8 }}>
+                  <Link href={item.href} style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -199,8 +240,8 @@ export default function Footer1() {
             <h6 style={{ color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>Knowledge Base</h6>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {KNOWLEDGE_BASE.map(item => (
-                <li key={item} style={{ marginBottom: 8 }}>
-                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item}</a>
+                <li key={item.label} style={{ marginBottom: 8 }}>
+                  <Link href={item.href} style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -211,8 +252,8 @@ export default function Footer1() {
             <h6 style={{ color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>Tools &amp; Finance</h6>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {TOOLS_FINANCE.map(item => (
-                <li key={item} style={{ marginBottom: 8 }}>
-                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item}</a>
+                <li key={item.label} style={{ marginBottom: 8 }}>
+                  <Link href={item.href} style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -223,8 +264,8 @@ export default function Footer1() {
             <h6 style={{ color: "#fff", fontWeight: 700, fontSize: 11, letterSpacing: 1.2, marginBottom: 16, textTransform: "uppercase" }}>Company</h6>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, marginBottom: 28 }}>
               {COMPANY.map(item => (
-                <li key={item} style={{ marginBottom: 8 }}>
-                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item}</a>
+                <li key={item.label} style={{ marginBottom: 8 }}>
+                  <Link href={item.href} style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item.label}</Link>
                 </li>
               ))}
             </ul>
@@ -232,7 +273,7 @@ export default function Footer1() {
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {FOR_AGENTS.map(item => (
                 <li key={item.label} style={{ marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
-                  <a href="#" style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item.label}</a>
+                  <Link href={item.href} style={{ fontSize: 13, color: "#8b949e", textDecoration: "none" }}>{item.label}</Link>
                   {item.badge && (
                     <span style={{ fontSize: 10, background: "#f0822d", color: "#fff", fontWeight: 700, padding: "2px 6px", borderRadius: 4 }}>{item.badge}</span>
                   )}
