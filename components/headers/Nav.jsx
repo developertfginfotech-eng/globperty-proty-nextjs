@@ -164,28 +164,10 @@ function SmartPanel({ children, onEnter, onLeave, navItemWidth = 80 }) {
   return (
     <div
       ref={ref}
-      style={{ position: "absolute", top: "100%", left: 0, zIndex: 9999, paddingTop: 18 }}
+      style={{ position: "absolute", top: "100%", left: 0, zIndex: 9999, paddingTop: 8 }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      {/* Triangle pointer — orange outer + white inner */}
-      <div style={{ position: "absolute", top: 9, left: 32, zIndex: 10000 }}>
-        <div style={{
-          width: 0, height: 0,
-          borderLeft: "11px solid transparent",
-          borderRight: "11px solid transparent",
-          borderBottom: "11px solid #f0822d",
-        }} />
-        <div style={{
-          width: 0, height: 0,
-          borderLeft: "9px solid transparent",
-          borderRight: "9px solid transparent",
-          borderBottom: "9px solid #fff",
-          position: "absolute",
-          top: 3,
-          left: -9,
-        }} />
-      </div>
       {children}
     </div>
   );

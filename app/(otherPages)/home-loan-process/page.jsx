@@ -3,7 +3,6 @@ import Footer1 from "@/components/footers/Footer1";
 import MortgageCalculator from "@/components/tools/MortgageCalculator";
 import ToolPageHero from "@/components/tools/ToolPageHero";
 import Link from "next/link";
-import Image from "next/image";
 
 export const metadata = {
   title: "Mortgage Calculator — Global Property Finance | Globperty",
@@ -52,11 +51,14 @@ export default function Page() {
 
       <div className="main-content">
 
-        {/* Facts / Help section */}
-        <section className="section-box-team" style={{ padding: "32px 0 60px" }}>
+        {/* Calculator first */}
+        <MortgageCalculator />
+
+        {/* Facts section below */}
+        <section className="section-box-team" style={{ padding: "60px 0" }}>
           <div className="tf-container">
-            <div className="row align-items-center">
-              <div className="col-lg-6">
+            <div className="row justify-center">
+              <div className="col-lg-8">
                 <div className="content-inner">
                   <div className="heading-section mb-32">
                     <h2 className="title">We Help You Finance <span className="text-color-primary">Globally</span></h2>
@@ -72,7 +74,7 @@ export default function Page() {
                       Talk to AI Advisor
                     </Link>
                   </div>
-                  <div className="wrap-counter" style={{ display: "flex", gap: 32, flexWrap: "wrap", marginTop: 8 }}>
+                  <div className="wrap-counter" style={{ display: "flex", gap: 40, flexWrap: "wrap", marginTop: 8 }}>
                     {STATS.map((s, i) => (
                       <div key={i} className="counter-item style-2">
                         <div className="count">
@@ -84,24 +86,10 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-6">
-                <div className="wrap-image" style={{ position: "relative", height: 420, marginTop: 20, overflow: "hidden" }}>
-                  <div style={{ position: "absolute", left: 0, top: 0, width: "72%", height: 260, borderRadius: 16, overflow: "hidden", boxShadow: "0 30px 60px rgba(0,0,0,0.18)", zIndex: 2 }}>
-                    <Image src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=520&fit=crop" alt="Global property investment" width={400} height={260} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                  </div>
-                  <div style={{ position: "absolute", right: 0, bottom: 0, width: "55%", height: 200, borderRadius: 16, overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.15)", zIndex: 1 }}>
-                    <Image src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop" alt="Luxury interior" width={300} height={200} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
 
-        {/* Calculator */}
-        <div style={{ paddingTop: 320 }}>
-          <MortgageCalculator />
-        </div>
       </div>
 
       <Footer1 logo="/images/logo/globperty-logo.svg" />
