@@ -110,7 +110,6 @@ const MENU = [
           { icon: "🏦", label: "Mortgage Calculator",            sub: "Monthly repayments & eligibility",         href: "/home-loan-process" },
           { icon: "💱", label: "Currency Converter",             sub: "Live exchange rates — 17 currencies",      href: "/currency-converter" },
           { icon: "💰", label: "Cost of Buying Calculator",      sub: "All purchase fees & taxes per country",    href: "/cost-of-buying" },
-          { icon: "🌍", label: "Country Comparison Tool",        sub: "Compare 2 countries side by side",         href: "/compare" },
           { icon: "🗺", label: "Neighbourhood Explorer",         sub: "Find best areas by budget & lifestyle",    href: "/listings" },
           { icon: "🤖", label: "AI Property Assistant",          sub: "Chat & find your perfect property",        href: "/copilot" },
         ],
