@@ -25,7 +25,7 @@ const TOOLS_FINANCE = [
 ];
 
 const COMPANY = [
-  "About Globperty","Our Story","Our Team","Careers","Press & Media","Blog","Contact Us","FAQ",
+  "About Globperty","Our Story","Careers","Press & Media","Blog","Contact Us","FAQ",
 ];
 
 const FOR_AGENTS = [
