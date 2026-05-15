@@ -4,15 +4,55 @@ import { register } from "@/utils/authApi";
 import { useRouter } from "next/navigation";
 
 const COUNTRIES = [
-  "UAE", "USA", "Portugal", "Canada", "Australia",
-  "Turkey", "Cyprus", "Malta", "Hungary", "Latvia",
-  "Philippines", "Malaysia",
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia",
+  "Austria", "Azerbaijan", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Bolivia", "Bosnia",
+  "Brazil", "Bulgaria", "Cambodia", "Cameroon", "Canada", "Chile", "China", "Colombia",
+  "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark",
+  "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Estonia", "Ethiopia",
+  "Finland", "France", "Georgia", "Germany", "Ghana", "Greece", "Guatemala",
+  "Honduras", "Hong Kong", "Hungary", "India", "Indonesia", "Iran", "Iraq",
+  "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan",
+  "Kenya", "Kuwait", "Kyrgyzstan", "Latvia", "Lebanon", "Libya", "Lithuania",
+  "Luxembourg", "Macau", "Malaysia", "Maldives", "Malta", "Mauritius", "Mexico",
+  "Moldova", "Mongolia", "Morocco", "Mozambique", "Myanmar", "Nepal", "Netherlands",
+  "New Zealand", "Nicaragua", "Nigeria", "North Korea", "Norway", "Oman",
+  "Pakistan", "Palestine", "Panama", "Paraguay", "Peru", "Philippines", "Poland",
+  "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Senegal", "Serbia",
+  "Singapore", "Slovakia", "Slovenia", "Somalia", "South Africa", "South Korea",
+  "Spain", "Sri Lanka", "Sudan", "Sweden", "Switzerland", "Syria", "Taiwan",
+  "Tajikistan", "Tanzania", "Thailand", "Tunisia", "Turkey", "Turkmenistan",
+  "UAE", "Uganda", "UK", "Ukraine", "Uruguay", "USA", "Uzbekistan",
+  "Venezuela", "Vietnam", "Yemen", "Zimbabwe",
 ];
 
 const COUNTRY_CODES = {
-  UAE: "+971", USA: "+1", Portugal: "+351", Canada: "+1", Australia: "+61",
-  Turkey: "+90", Cyprus: "+357", Malta: "+356", Hungary: "+36", Latvia: "+371",
-  Philippines: "+63", Malaysia: "+60",
+  Afghanistan: "+93", Albania: "+355", Algeria: "+213", Andorra: "+376", Angola: "+244",
+  Argentina: "+54", Armenia: "+374", Australia: "+61", Austria: "+43", Azerbaijan: "+994",
+  Bahrain: "+973", Bangladesh: "+880", Belarus: "+375", Belgium: "+32", Bolivia: "+591",
+  Bosnia: "+387", Brazil: "+55", Bulgaria: "+359", Cambodia: "+855", Cameroon: "+237",
+  Canada: "+1", Chile: "+56", China: "+86", Colombia: "+57", Congo: "+243",
+  "Costa Rica": "+506", Croatia: "+385", Cuba: "+53", Cyprus: "+357",
+  "Czech Republic": "+420", Denmark: "+45", "Dominican Republic": "+1-809",
+  Ecuador: "+593", Egypt: "+20", "El Salvador": "+503", Estonia: "+372", Ethiopia: "+251",
+  Finland: "+358", France: "+33", Georgia: "+995", Germany: "+49", Ghana: "+233",
+  Greece: "+30", Guatemala: "+502", Honduras: "+504", "Hong Kong": "+852", Hungary: "+36",
+  India: "+91", Indonesia: "+62", Iran: "+98", Iraq: "+964", Ireland: "+353",
+  Israel: "+972", Italy: "+39", Jamaica: "+1-876", Japan: "+81", Jordan: "+962",
+  Kazakhstan: "+7", Kenya: "+254", Kuwait: "+965", Kyrgyzstan: "+996", Latvia: "+371",
+  Lebanon: "+961", Libya: "+218", Lithuania: "+370", Luxembourg: "+352", Macau: "+853",
+  Malaysia: "+60", Maldives: "+960", Malta: "+356", Mauritius: "+230", Mexico: "+52",
+  Moldova: "+373", Mongolia: "+976", Morocco: "+212", Mozambique: "+258", Myanmar: "+95",
+  Nepal: "+977", Netherlands: "+31", "New Zealand": "+64", Nicaragua: "+505", Nigeria: "+234",
+  "North Korea": "+850", Norway: "+47", Oman: "+968", Pakistan: "+92", Palestine: "+970",
+  Panama: "+507", Paraguay: "+595", Peru: "+51", Philippines: "+63", Poland: "+48",
+  Portugal: "+351", Qatar: "+974", Romania: "+40", Russia: "+7", "Saudi Arabia": "+966",
+  Senegal: "+221", Serbia: "+381", Singapore: "+65", Slovakia: "+421", Slovenia: "+386",
+  Somalia: "+252", "South Africa": "+27", "South Korea": "+82", Spain: "+34",
+  "Sri Lanka": "+94", Sudan: "+249", Sweden: "+46", Switzerland: "+41", Syria: "+963",
+  Taiwan: "+886", Tajikistan: "+992", Tanzania: "+255", Thailand: "+66", Tunisia: "+216",
+  Turkey: "+90", Turkmenistan: "+993", UAE: "+971", Uganda: "+256", UK: "+44",
+  Ukraine: "+380", Uruguay: "+598", USA: "+1", Uzbekistan: "+998", Venezuela: "+58",
+  Vietnam: "+84", Yemen: "+967", Zimbabwe: "+263",
 };
 
 const LockIcon = () => (
@@ -153,7 +193,7 @@ export default function Register() {
                 <fieldset className="box-fieldset">
                   <label htmlFor="reg-country">Country</label>
                   <div className="ip-field">
-                    <select className="form-control" id="reg-country" name="country" value={form.country} onChange={handleChange} style={{ border: "none", outline: "none", background: "transparent", width: "100%" }}>
+                    <select className="form-control" id="reg-country" name="country" value={form.country} onChange={handleChange} style={{ border: "none", outline: "none", background: "transparent", width: "100%", fontFamily: "inherit" }}>
                       {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
@@ -162,7 +202,7 @@ export default function Register() {
                 <fieldset className="box-fieldset">
                   <label htmlFor="reg-role">I am a</label>
                   <div className="ip-field">
-                    <select className="form-control" id="reg-role" name="role" value={form.role} onChange={handleChange} style={{ border: "none", outline: "none", background: "transparent", width: "100%" }}>
+                    <select className="form-control" id="reg-role" name="role" value={form.role} onChange={handleChange} style={{ border: "none", outline: "none", background: "transparent", width: "100%", fontFamily: "inherit" }}>
                       <option value="buyer">Buyer</option>
                       <option value="seller">Seller</option>
                     </select>

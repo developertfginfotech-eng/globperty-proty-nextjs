@@ -3,104 +3,91 @@ import Footer1 from "@/components/footers/Footer1";
 import ToolPageHero from "@/components/tools/ToolPageHero";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Partner With Us — Relocation, Visa & Concierge Firms | Globperty",
+  description: "Partner with Globperty as a relocation, visa or concierge service provider. Reach international property buyers who need end-to-end support.",
+};
+
 const HERO = {
-  badge: "🤝 Partnerships",
-  titleWhite: "Grow Together ",
-  titleOrange: "With Globperty",
-  tagline: "We partner with relocation agencies, visa consultants, concierge services and more to deliver a complete end-to-end experience for global property buyers.",
-  tags: ["Relocation agencies", "Visa consultants", "Concierge services", "Education consultants", "Property management"],
+  bgImage: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1400&q=80",
+  badge: "🤝 Partner With Us — Relocation & Concierge Firms",
+  titleWhite: "Partner ",
+  titleOrange: "With Us",
+  tagline: "Join the Globperty partner network as a relocation, visa, concierge or property management firm. Get referrals from international buyers who need end-to-end support.",
+  tags: ["Relocation Firms", "Visa Consultants", "Concierge Services", "Property Management", "Global Buyers"],
   stats: [
+    { value: "50K+", label: "Active Buyers" },
     { value: "12", label: "Countries" },
-    { value: "50K+", label: "Monthly buyers" },
-    { value: "6+", label: "Partner types" },
-    { value: "Free", label: "Onboarding" },
+    { value: "End-to-End", label: "Buyer Support" },
+    { value: "Referrals", label: "Direct to You" },
   ],
-  bgImage: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1400&q=80",
-  primaryCta: { href: "/contact", label: "🤝 Apply to Partner" },
-  secondaryCta: { href: "/contact", label: "📞 Talk to Our Team" },
-  snapshotTitle: "🤝 What You Get",
+  primaryCta: { href: "/contact", label: "🤝 Become a Partner" },
+  secondaryCta: { href: "/register", label: "📋 Register Your Business" },
+  snapshotTitle: "🤝 Partner Types",
   snapshot: [
-    { key: "Co-branded page", value: "On Globperty", color: "#f0822d" },
-    { key: "Lead referrals", value: "From buyer network", color: "#16b286" },
-    { key: "AI integration", value: "Copilot recommendations" },
-    { key: "Marketing", value: "Joint campaigns" },
-    { key: "Reports", value: "Monthly performance" },
-    { key: "Cost", value: "Revenue share" },
+    { key: "Relocation Firms",     value: "Welcome",               color: "#f0822d" },
+    { key: "Visa Consultants",     value: "Welcome",               color: "#16b286" },
+    { key: "Concierge Services",   value: "Welcome",               color: "#f0822d" },
+    { key: "Property Management",  value: "Welcome",               color: "#16b286" },
+    { key: "Directory Listing",    value: "Yes — Free",            color: "#fff" },
+    { key: "Referral Method",      value: "Direct + Dashboard",    color: "#fff" },
   ],
 };
 
 const PARTNER_TYPES = [
-  { icon: "✈️", title: "Relocation Agencies", desc: "Help expats and international buyers settle in their new country with end-to-end relocation support." },
-  { icon: "🛂", title: "Visa & Immigration Consultants", desc: "Guide buyers through Golden Visa, residency and citizenship by investment applications." },
-  { icon: "🎁", title: "Concierge Services", desc: "Offer premium lifestyle, property management and after-sale services to global buyers." },
-  { icon: "🏫", title: "Education Consultants", desc: "Help families choosing where to buy based on school access and university proximity." },
-  { icon: "🚚", title: "International Removals", desc: "Connect buyers with trusted international moving and storage companies." },
-  { icon: "🏨", title: "Property Management", desc: "Manage rental properties on behalf of overseas owners — collections, maintenance, reporting." },
+  { icon: "🚚", title: "Relocation Firms", desc: "Help international buyers settle in their new country. School search, home setup, local registration and cultural orientation." },
+  { icon: "🇺🇳", title: "Visa Consultants", desc: "Support buyers applying for golden visas, residency programmes and investor visas tied to their property purchases." },
+  { icon: "🛎", title: "Concierge Services", desc: "Premium lifestyle management for high-net-worth buyers. Airport transfers, property management, personal assistance." },
+  { icon: "🔑", title: "Property Management", desc: "Manage rental properties for overseas investors who purchase through Globperty and need day-to-day management." },
+  { icon: "🏫", title: "Education Consultants", desc: "Connect relocating families with international schools. One of the top concerns for families moving abroad." },
+  { icon: "🏥", title: "Healthcare Partners", desc: "Private health insurance providers and healthcare concierges for international residents and property investors." },
 ];
 
-const BENEFITS = [
-  "Co-branded listing page on Globperty",
-  "Referral leads from our buyer network",
-  "Featured placement in relevant country pages",
-  "Access to our Copilot AI recommendation engine",
-  "Joint marketing campaigns and email promotions",
-  "Monthly performance reports",
-];
-
-export default function PartnerPage() {
+export default function Page() {
   return (
     <div id="wrapper">
       <Header1 />
       <ToolPageHero config={HERO} />
 
-      <section style={{ background: "#fff", padding: "60px 0 80px" }}>
-        <div className="tf-container">
+      <div className="main-content">
 
-          <div className="heading-section text-center mb-48">
-            <h2 className="title">Who We Partner With</h2>
-            <p className="text-1">From relocation agencies to visa consultants — if you serve global property buyers, we want to work with you.</p>
-          </div>
-
-          <div className="row g-4 mb-60">
-            {PARTNER_TYPES.map(p => (
-              <div key={p.title} className="col-md-4">
-                <div style={{ background: "#f9fafb", borderRadius: 14, padding: "24px", border: "1px solid #e5e7eb", height: "100%" }}>
-                  <div style={{ fontSize: 32, marginBottom: 12 }}>{p.icon}</div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "#111827", marginBottom: 6 }}>{p.title}</div>
-                  <div style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.6 }}>{p.desc}</div>
+        <section style={{ padding: "64px 0 48px", background: "#fff" }}>
+          <div className="tf-container">
+            <div style={{ textAlign: "center", marginBottom: 48 }}>
+              <h2 style={{ fontSize: 32, fontWeight: 800, color: "#111827", marginBottom: 12 }}>
+                Who Can <span style={{ color: "#f0822d" }}>Partner With Us?</span>
+              </h2>
+              <p style={{ fontSize: 16, color: "#6b7280", maxWidth: 560, margin: "0 auto" }}>
+                If your business serves international property buyers, we want to connect you with them.
+              </p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
+              {PARTNER_TYPES.map((p, i) => (
+                <div key={i} style={{ background: "#f9fafb", borderRadius: 14, padding: "28px 24px", border: "1px solid #f3f4f6" }}>
+                  <div style={{ fontSize: 32, marginBottom: 14 }}>{p.icon}</div>
+                  <h4 style={{ fontSize: 16, fontWeight: 700, color: "#111827", marginBottom: 8 }}>{p.title}</h4>
+                  <p style={{ fontSize: 13.5, color: "#6b7280", lineHeight: 1.7, margin: 0 }}>{p.desc}</p>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ background: "linear-gradient(135deg,#f8fafc 0%,#fff7ed 100%)", borderRadius: 20, padding: "40px 48px", border: "1px solid rgba(240,130,45,0.2)" }}>
-            <div className="row" style={{ alignItems: "center" }}>
-              <div className="col-md-7">
-                <h3 style={{ fontSize: 22, fontWeight: 800, color: "#111827", marginBottom: 16 }}>What You Get as a Partner</h3>
-                <div className="row g-2">
-                  {BENEFITS.map((b, i) => (
-                    <div key={i} className="col-12">
-                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <span style={{ width: 20, height: 20, borderRadius: "50%", background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                          <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                        </span>
-                        <span style={{ fontSize: 13, color: "#374151" }}>{b}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="col-md-5" style={{ textAlign: "center", paddingTop: 20 }}>
-                <Link href="/contact" className="tf-btn bg-color-primary" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 36px", borderRadius: 10, fontSize: 16, fontWeight: 700 }}>
-                  Apply to Partner →
-                </Link>
-              </div>
+              ))}
             </div>
           </div>
+        </section>
 
-        </div>
-      </section>
+        <section style={{ padding: "56px 0", background: "linear-gradient(135deg, #f0822d 0%, #e06820 100%)" }}>
+          <div className="tf-container" style={{ textAlign: "center" }}>
+            <h2 style={{ fontSize: 30, fontWeight: 800, color: "#fff", marginBottom: 12 }}>Ready to Partner With Globperty?</h2>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.85)", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>
+              Contact our partnerships team to discuss how we can connect your services with our international buyer network.
+            </p>
+            <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href="/contact" style={{ padding: "14px 32px", background: "#fff", color: "#f0822d", fontWeight: 700, fontSize: 15, borderRadius: 10, textDecoration: "none" }}>
+                Get in Touch →
+              </Link>
+            </div>
+          </div>
+        </section>
 
+      </div>
       <Footer1 logo="/images/logo/globperty-logo.svg" />
     </div>
   );
