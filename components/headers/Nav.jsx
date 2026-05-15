@@ -178,9 +178,9 @@ function MegaItem({ item }) {
       href={item.href}
       style={{
         display: "flex",
-        alignItems: "center",
-        gap: 7,
-        padding: "4px 8px 4px 6px",
+        alignItems: "flex-start",
+        gap: 9,
+        padding: "6px 8px 6px 6px",
         borderRadius: 6,
         textDecoration: "none",
         transition: "all 0.15s",
@@ -198,22 +198,23 @@ function MegaItem({ item }) {
       }}
     >
       <span style={{
-        fontSize: 13,
+        fontSize: 16,
         lineHeight: 1,
         flexShrink: 0,
-        width: 24,
-        height: 24,
+        width: 32,
+        height: 32,
         background: "#fff4ec",
-        borderRadius: 6,
+        borderRadius: 7,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        marginTop: 1,
       }}>
         {item.icon}
       </span>
-      <div>
-        <div style={{ fontSize: 12.5, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{item.label}</div>
-        {item.sub && <div style={{ fontSize: 10.5, color: "#9ca3af", lineHeight: 1.3 }}>{item.sub}</div>}
+      <div style={{ paddingTop: 2 }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{item.label}</div>
+        {item.sub && <div style={{ fontSize: 11, color: "#9ca3af", lineHeight: 1.3, marginTop: 1 }}>{item.sub}</div>}
       </div>
     </Link>
   );
