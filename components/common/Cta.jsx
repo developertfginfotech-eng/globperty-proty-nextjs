@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 export default function Cta() {
   return (
     <section className="section-CTA">
@@ -7,11 +6,10 @@ export default function Cta() {
         <div className="row">
           <div className="col-12">
             <div className="content-inner">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 alt=""
                 src="/images/section/cta.png"
-                width={216}
-                height={312}
               />
               <div className="content">
                 <h4 className="text_white mb-8">
