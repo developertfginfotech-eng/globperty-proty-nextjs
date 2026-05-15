@@ -199,15 +199,26 @@ function HeroSection({ country, onSelectTab }) {
 
 function TabBar({ tabs, active, onSelect, tabRef }) {
   return (
-    <div ref={tabRef} style={{ background: "#fff", borderBottom: "2px solid #e5e7eb", position: "sticky", top: 0, zIndex: 100, overflowX: "auto" }}>
-      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px", display: "flex", gap: 0 }}>
+    <div ref={tabRef} style={{ background: "#fff", borderBottom: "1px solid #f3f4f6", position: "sticky", top: 0, zIndex: 100, overflowX: "auto", boxShadow: "0 2px 10px rgba(0,0,0,0.08)" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px", display: "flex", gap: 4 }}>
         {tabs.map((tab) => (
           <button key={tab} onClick={() => onSelect(tab)} style={{
-            padding: "16px 18px", fontSize: 14, fontWeight: active === tab ? 700 : 500,
-            color: active === tab ? "#f0822d" : "#6b7280", background: "none", border: "none",
-            borderBottom: active === tab ? "3px solid #f0822d" : "3px solid transparent",
-            cursor: "pointer", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 5,
-            transition: "all 0.15s",
+            padding: active === tab ? "12px 22px" : "12px 16px",
+            margin: "10px 2px",
+            fontSize: active === tab ? 15 : 14,
+            fontWeight: active === tab ? 800 : 500,
+            color: active === tab ? "#fff" : "#6b7280",
+            background: active === tab ? "linear-gradient(135deg, #f0822d, #e56c1a)" : "none",
+            border: "none",
+            borderRadius: active === tab ? 24 : 8,
+            boxShadow: active === tab ? "0 4px 16px rgba(240,130,45,0.45)" : "none",
+            cursor: "pointer",
+            whiteSpace: "nowrap",
+            display: "flex",
+            alignItems: "center",
+            gap: 7,
+            transition: "all 0.2s",
+            letterSpacing: active === tab ? 0.2 : 0,
           }}>
             {TAB_ICONS[tab]} {tab}
           </button>

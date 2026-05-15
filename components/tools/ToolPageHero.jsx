@@ -7,13 +7,12 @@ export default function ToolPageHero({ config }) {
   return (
     <section style={{
       position: "relative",
-      minHeight: "60vh",
       display: "flex",
       alignItems: "center",
       background: `linear-gradient(to bottom, rgba(10,16,30,0.78) 0%, rgba(10,16,30,0.88) 60%, rgba(10,16,30,0.97) 100%), url('${bgImage}') center/cover no-repeat`,
       paddingTop: 80,
     }}>
-      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "60px 24px 48px", width: "100%", display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "48px 24px 48px", width: "100%", display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap" }}>
 
         {/* Left content */}
         <div style={{ flex: 1, minWidth: 300 }}>

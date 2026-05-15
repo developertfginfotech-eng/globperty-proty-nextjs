@@ -3,6 +3,7 @@ import Footer1 from "@/components/footers/Footer1";
 import RentalYieldCalculator from "@/components/tools/RentalYieldCalculator";
 import ToolPageHero from "@/components/tools/ToolPageHero";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = {
   title: "Rental Yield Calculator — Global Property Income | Globperty",
@@ -57,8 +58,8 @@ export default function Page() {
         {/* Facts section below */}
         <section className="section-box-team" style={{ padding: "60px 0" }}>
           <div className="tf-container">
-            <div className="row justify-center">
-              <div className="col-lg-8">
+            <div className="row align-items-center">
+              <div className="col-lg-6">
                 <div className="content-inner">
                   <div className="heading-section mb-32">
                     <h2 className="title">Maximize Your <span className="text-color-primary">Global Rental Returns</span></h2>
@@ -83,6 +84,16 @@ export default function Page() {
                         </div>
                       </div>
                     ))}
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div style={{ position: "relative", height: 420, marginTop: 40 }}>
+                  <div style={{ position: "absolute", left: 0, top: 0, width: "72%", height: 260, borderRadius: 16, overflow: "hidden", boxShadow: "0 30px 60px rgba(0,0,0,0.18)", zIndex: 2 }}>
+                    <Image src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=800&h=520&fit=crop" alt="Rental property" width={400} height={260} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
+                  <div style={{ position: "absolute", right: 0, bottom: 0, width: "55%", height: 200, borderRadius: 16, overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.15)", zIndex: 1 }}>
+                    <Image src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop" alt="Apartment" width={300} height={200} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   </div>
                 </div>
               </div>

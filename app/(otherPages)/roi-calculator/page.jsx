@@ -3,6 +3,7 @@ import Footer1 from "@/components/footers/Footer1";
 import RoiCalculator from "@/components/tools/RoiCalculator";
 import ToolPageHero from "@/components/tools/ToolPageHero";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata = {
   title: "ROI & Capital Growth Estimator — Global Property Investment | Globperty",
@@ -57,8 +58,8 @@ export default function Page() {
         {/* Facts section below */}
         <section className="section-box-team" style={{ padding: "60px 0" }}>
           <div className="tf-container">
-            <div className="row justify-center">
-              <div className="col-lg-8">
+            <div className="row align-items-center">
+              <div className="col-lg-6">
                 <div className="content-inner">
                   <div className="heading-section mb-32">
                     <h2 className="title">Plan Your <span className="text-color-primary">Long-Term Investment Returns</span></h2>
@@ -83,6 +84,28 @@ export default function Page() {
                         </div>
                       </div>
                     ))}
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div style={{ position: "relative", height: 420, marginTop: 40 }}>
+                  <div style={{ position: "absolute", left: 0, top: 0, width: "72%", height: 260, borderRadius: 16, overflow: "hidden", boxShadow: "0 30px 60px rgba(0,0,0,0.18)", zIndex: 2 }}>
+                    <Image
+                      src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&h=520&fit=crop"
+                      alt="Investment property"
+                      fill
+                      style={{ objectFit: "cover" }}
+                      unoptimized
+                    />
+                  </div>
+                  <div style={{ position: "absolute", right: 0, bottom: 0, width: "55%", height: 200, borderRadius: 16, overflow: "hidden", boxShadow: "0 20px 50px rgba(0,0,0,0.15)", zIndex: 1 }}>
+                    <Image
+                      src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop"
+                      alt="Global property investment"
+                      fill
+                      style={{ objectFit: "cover" }}
+                      unoptimized
+                    />
                   </div>
                 </div>
               </div>
