@@ -163,14 +163,14 @@ function SmartPanel({ children, onEnter, onLeave }) {
   return (
     <div
       ref={ref}
-      style={{ position: "absolute", top: "100%", left: 0, zIndex: 9999, paddingTop: 10 }}
+      style={{ position: "absolute", top: "100%", left: 0, zIndex: 9999, paddingTop: 18 }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
       {/* Triangle pointer */}
       <div style={{
         position: "absolute",
-        top: 2,
+        top: 8,
         left: 28,
         width: 0,
         height: 0,
