@@ -167,6 +167,18 @@ function SmartPanel({ children, onEnter, onLeave }) {
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
+      {/* Triangle pointer */}
+      <div style={{
+        position: "absolute",
+        top: 2,
+        left: 28,
+        width: 0,
+        height: 0,
+        borderLeft: "9px solid transparent",
+        borderRight: "9px solid transparent",
+        borderBottom: "9px solid #f0822d",
+        zIndex: 10000,
+      }} />
       {children}
     </div>
   );
