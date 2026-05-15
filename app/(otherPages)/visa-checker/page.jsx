@@ -1,8 +1,35 @@
 "use client";
 import Header1 from "@/components/headers/Header1";
 import Footer1 from "@/components/footers/Footer1";
+import ToolPageHero from "@/components/tools/ToolPageHero";
 import Link from "next/link";
 import { useState } from "react";
+
+const HERO = {
+  bgImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&q=80",
+  badge: "🎫 Visa Tool — Eligibility Checker",
+  titleWhite: "Find Your Best ",
+  titleOrange: "Visa Program",
+  tagline: "Answer 2 quick questions to see which Golden Visa or residency programme matches your investment budget and lifestyle goals.",
+  tags: ["UAE Golden Visa", "Portugal", "Turkey Citizenship", "Cyprus", "Malta", "8 Programmes"],
+  stats: [
+    { value: "8", label: "Visa Programmes" },
+    { value: "Free", label: "Eligibility Check" },
+    { value: "2 min", label: "To Complete" },
+    { value: "AI", label: "Matched Results" },
+  ],
+  primaryCta: { href: "#visa-checker-tool", label: "🎫 Check My Eligibility" },
+  secondaryCta: { href: "/contact", label: "💬 Speak to a Visa Expert" },
+  snapshotTitle: "🌍 Programmes Available",
+  snapshot: [
+    { key: "UAE Golden Visa",     value: "From AED 2M",    color: "#f0822d" },
+    { key: "Portugal",            value: "From €500K",     color: "#16b286" },
+    { key: "Turkey Citizenship",  value: "From $400K",     color: "#f0822d" },
+    { key: "Cyprus Residency",    value: "From €300K",     color: "#16b286" },
+    { key: "Latvia / Malta",      value: "From €250K",     color: "#fff" },
+    { key: "Malaysia MM2H",       value: "Long-Stay Visa", color: "#fff" },
+  ],
+};
 
 const VISA_PROGRAMS = [
   {
@@ -10,56 +37,56 @@ const VISA_PROGRAMS = [
     minBudget: 545000, currency: "AED 2M", duration: "10 years", path: "Residency",
     benefits: ["0% income tax", "10-year renewable", "200+ nationalities", "Family included"],
     tags: ["tax-free", "residency", "investment", "family"],
-    color: "#f0822d", href: "/countries/uae",
+    color: "#f0822d", href: "/visas/uae-golden-visa",
   },
   {
     country: "Portugal", flag: "🇵🇹", name: "Portugal Golden Visa",
     minBudget: 500000, currency: "€500K", duration: "5 years → citizenship",
     path: "Citizenship", benefits: ["EU citizenship path", "Schengen access", "Low stay requirement", "Family included"],
     tags: ["citizenship", "eu", "schengen", "investment"],
-    color: "#16b286", href: "/countries/portugal",
+    color: "#16b286", href: "/visas/portugal-golden-visa",
   },
   {
     country: "Turkey", flag: "🇹🇷", name: "Turkey Citizenship by Investment",
     minBudget: 400000, currency: "$400K", duration: "Permanent", path: "Citizenship",
     benefits: ["Full citizenship", "Visa-free 110+ countries", "Dual nationality", "Fast processing"],
     tags: ["citizenship", "affordable", "investment", "fast"],
-    color: "#3b82f6", href: "/countries/turkey",
+    color: "#3b82f6", href: "/visas/turkey-citizenship",
   },
   {
     country: "Cyprus", flag: "🇨🇾", name: "Cyprus Permanent Residency",
     minBudget: 300000, currency: "€300K", duration: "Permanent", path: "Residency",
     benefits: ["EU residency", "No tax on dividends", "Fast approval", "Family included"],
     tags: ["eu", "residency", "affordable", "dividend-free"],
-    color: "#8b5cf6", href: "/countries/cyprus",
+    color: "#8b5cf6", href: "/visas/cyprus-residency",
   },
   {
     country: "Malta", flag: "🇲🇹", name: "Malta Residency Programme",
     minBudget: 375000, currency: "€375K", duration: "Permanent", path: "Residency",
     benefits: ["EU residency", "Schengen access", "English speaking", "Strong banking"],
     tags: ["eu", "schengen", "residency", "english"],
-    color: "#ef4444", href: "/countries/malta",
+    color: "#ef4444", href: "/visas/malta-residency",
   },
   {
     country: "Hungary", flag: "🇭🇺", name: "Hungary Guest Investor Visa",
     minBudget: 500000, currency: "€500K", duration: "10 years", path: "Residency",
     benefits: ["EU residency", "Schengen access", "New 2024 program", "Low property prices"],
     tags: ["eu", "schengen", "residency", "new"],
-    color: "#f59e0b", href: "/countries/hungary",
+    color: "#f59e0b", href: "/visas/hungary-guest-investor",
   },
   {
     country: "Latvia", flag: "🇱🇻", name: "Latvia Residency by Investment",
     minBudget: 250000, currency: "€250K", duration: "5 years", path: "Residency",
     benefits: ["EU residency", "Schengen access", "Most affordable EU", "Renewable"],
     tags: ["eu", "schengen", "affordable", "residency"],
-    color: "#16b286", href: "/countries/latvia",
+    color: "#16b286", href: "/visas/latvia-residency",
   },
   {
     country: "Malaysia", flag: "🇲🇾", name: "Malaysia MM2H Visa",
     minBudget: 150000, currency: "$150K", duration: "10 years", path: "Long Stay",
     benefits: ["Low cost of living", "Tropical lifestyle", "Tax exemptions", "Property ownership"],
     tags: ["affordable", "lifestyle", "long-stay", "investment"],
-    color: "#06b6d4", href: "/countries/malaysia",
+    color: "#06b6d4", href: "/visas/malaysia-mm2h",
   },
 ];
 
@@ -108,38 +135,12 @@ export default function VisaCheckerPage() {
   return (
     <div id="wrapper">
       <Header1 />
+      <ToolPageHero config={HERO} />
 
-      <div className="page-title style-2">
-        <div className="tf-container">
-          <div className="row justify-center">
-            <div className="col-lg-8">
-              <div className="content-inner">
-                <div className="heading-title">
-                  <h2 className="title">Visa Eligibility Checker</h2>
-                  <ul className="breadcrumb justify-center">
-                    <li><Link className="home fw-6 text-color-3" href="/">Home</Link></li>
-                    <li><Link className="home fw-6 text-color-3" href="/visas">Visas</Link></li>
-                    <li>Eligibility Checker</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <section style={{ background: "linear-gradient(135deg,#f8fafc 0%,#fff7ed 100%)", padding: "60px 0 80px" }}>
+      <section id="visa-checker-tool" style={{ background: "linear-gradient(135deg,#f8fafc 0%,#fff7ed 100%)", padding: "60px 0 80px" }}>
         <div className="tf-container">
           <div className="row justify-center">
             <div className="col-lg-9">
-
-              <div className="heading-section text-center mb-48">
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(240,130,45,0.1)", border: "1px solid rgba(240,130,45,0.3)", borderRadius: 20, padding: "5px 16px", marginBottom: 16 }}>
-                  <span style={{ fontSize: 12, color: "#f0822d", fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase" }}>🎫 Visa Tool</span>
-                </div>
-                <h2 className="title">Find Your Best Visa Program</h2>
-                <p className="text-1">Answer 2 quick questions to see which Golden Visa or residency program matches your budget and goals.</p>
-              </div>
 
               <div style={{ background: "#fff", borderRadius: 20, boxShadow: "0 8px 40px rgba(0,0,0,0.08)", border: "1px solid rgba(240,130,45,0.15)", overflow: "hidden", marginBottom: 32 }}>
                 <div style={{ background: "linear-gradient(90deg,#f0822d,#e56c1a)", padding: "18px 32px", display: "flex", alignItems: "center", gap: 10 }}>
