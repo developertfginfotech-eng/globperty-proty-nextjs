@@ -13,7 +13,6 @@ const MENU = [
         items: [
           { icon: "🏠", label: "Buy Property",            sub: "Apartments, villas, land & more",         href: "/listings?status=buy" },
           { icon: "🔑", label: "Rent Property",           sub: "Long-term rentals worldwide",              href: "/listings?status=rent" },
-          { icon: "🏷", label: "Sell Property",           sub: "List your property for sale",             href: "/add-property" },
           { icon: "🏖", label: "Short Stay / Holiday Let",sub: "Serviced & holiday apartments",           href: "/listings?type=short-stay" },
           { icon: "🎓", label: "Student Housing",         sub: "Rentals near universities worldwide",     href: "/listings?type=student" },
           { icon: "🏗", label: "New Projects & Off-Plan", sub: "Upcoming launches & pre-launch deals",    href: "/project-list" },
@@ -153,15 +152,13 @@ function SmartPanel({ children, onEnter, onLeave, navItemWidth = 80 }) {
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    // Reset to natural left-aligned position first
     el.style.left = "0";
     el.style.right = "auto";
     const rect = el.getBoundingClientRect();
     const vw = window.innerWidth;
     if (rect.right > vw - 12) {
-      // Flip: align panel's right edge to the nav item's right edge
-      el.style.left = "auto";
-      el.style.right = "0";
+      // Shift left by exact overflow amount so right edge stays within viewport
+      el.style.left = `${vw - 12 - rect.right}px`;
     }
   });
 
@@ -201,7 +198,7 @@ function MegaItem({ item }) {
       href={item.href}
       style={{
         display: "flex",
-        alignItems: "flex-start",
+        alignItems: "center",
         gap: 9,
         padding: "6px 8px 6px 6px",
         borderRadius: 6,
@@ -235,9 +232,9 @@ function MegaItem({ item }) {
       }}>
         {item.icon}
       </span>
-      <div style={{ paddingTop: 2 }}>
+      <div>
         <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{item.label}</div>
-        {item.sub && <div style={{ fontSize: 11, color: "#9ca3af", lineHeight: 1.3, marginTop: 1 }}>{item.sub}</div>}
+        {item.sub && <div style={{ fontSize: 11, color: "#9ca3af", lineHeight: 1.3, marginTop: 2 }}>{item.sub}</div>}
       </div>
     </Link>
   );
