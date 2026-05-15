@@ -8,12 +8,17 @@ export default function DashboardNav({ color = "" }) {
   const [userName, setUserName] = useState("");
   const [favCount, setFavCount] = useState(0);
   const [role, setRole] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     try {
+      const token = localStorage.getItem("authToken");
       const user = JSON.parse(localStorage.getItem("user") || "{}");
-      if (user?.name) setUserName(user.name.split(" ")[0]);
-      if (user?.role) setRole(user.role);
+      if (token && user?.name) {
+        setIsLoggedIn(true);
+        setUserName(user.name.split(" ")[0]);
+        if (user?.role) setRole(user.role);
+      }
     } catch {}
     apiClient.get("/favorites")
       .then((res) => setFavCount((res.data.favorites || []).length))
@@ -56,7 +61,7 @@ export default function DashboardNav({ color = "" }) {
         <i className="icon-CaretDown" />
       </div>
       <div className=" menu-user">
-        <Link className="dropdown-item" href={`/dashboard`}>
+        {isLoggedIn && <Link className="dropdown-item" href={`/dashboard`}>
           <svg
             width={20}
             height={20}
@@ -94,8 +99,8 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           Dashboards
-        </Link>
-        <Link className="dropdown-item" href={`/my-profile`}>
+        </Link>}
+        {isLoggedIn && <Link className="dropdown-item" href={`/my-profile`}>
           <svg
             width={20}
             height={20}
@@ -182,8 +187,8 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           My profile
-        </Link>
-        <Link className="dropdown-item" href={`/my-package`}>
+        </Link>}
+        {isLoggedIn && <Link className="dropdown-item" href={`/my-package`}>
           <svg
             width={20}
             height={20}
@@ -214,8 +219,8 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           My package
-        </Link>
-        <Link className="dropdown-item" href={`/my-favorites`}>
+        </Link>}
+        {isLoggedIn && <Link className="dropdown-item" href={`/my-favorites`}>
           <svg
             width={20}
             height={20}
@@ -246,8 +251,8 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           My favorites {favCount > 0 ? `(${favCount})` : ""}
-        </Link>
-        <Link className="dropdown-item" href={`/my-save-search`}>
+        </Link>}
+        {isLoggedIn && <Link className="dropdown-item" href={`/my-save-search`}>
           <svg
             width={20}
             height={20}
@@ -278,8 +283,8 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           My save searches
-        </Link>
-        <Link className="dropdown-item" href={`/review`}>
+        </Link>}
+        {isLoggedIn && <Link className="dropdown-item" href={`/review`}>
           <svg
             width={20}
             height={20}
@@ -310,8 +315,8 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           Reviews
-        </Link>
-        <Link className="dropdown-item" href={`/my-property`}>
+        </Link>}
+        {isLoggedIn && <Link className="dropdown-item" href={`/my-property`}>
           <svg
             width={20}
             height={20}
@@ -356,8 +361,8 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           My properties
-        </Link>
-        {!isBuyer && <Link className="dropdown-item " href={`/add-property`}>
+        </Link>}
+        {isLoggedIn && !isBuyer && <Link className="dropdown-item " href={`/add-property`}>
           <svg
             width={20}
             height={20}
@@ -389,7 +394,7 @@ export default function DashboardNav({ color = "" }) {
           </svg>
           Add property
         </Link>}
-        <div className="dropdown-item ">
+        {!isLoggedIn && <div className="dropdown-item ">
           <svg
             width={20}
             height={20}
@@ -410,8 +415,8 @@ export default function DashboardNav({ color = "" }) {
             <span>/</span>
             <Link href="/register">register</Link>
           </div>
-        </div>
-        <a className="dropdown-item" href="#" onClick={handleLogout}>
+        </div>}
+        {isLoggedIn && <a className="dropdown-item" href="#" onClick={handleLogout}>
           <svg
             width={20}
             height={20}
@@ -442,7 +447,7 @@ export default function DashboardNav({ color = "" }) {
             />
           </svg>
           Logout
-        </a>
+        </a>}
       </div>
     </div>
   );
