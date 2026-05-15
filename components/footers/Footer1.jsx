@@ -70,7 +70,7 @@ const COMPANY = [
 ];
 
 const FOR_AGENTS = [
-  { label: "List Your Properties", badge: "FREE", href: "/add-property" },
+  { label: "List Your Properties", badge: "FREE", href: "/list-your-properties" },
   { label: "Create Agent Profile",              href: "/my-profile" },
   { label: "Agent Dashboard",                   href: "/dashboard" },
   { label: "Buy Leads",                         href: "/buy-leads" },

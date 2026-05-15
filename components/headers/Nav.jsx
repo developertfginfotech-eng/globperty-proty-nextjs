@@ -124,7 +124,7 @@ const MENU = [
         title: "AGENTS & DEVELOPERS",
         cols: 3,
         items: [
-          { icon: "📋", label: "List Your Properties",   sub: "Free during launch phase",                href: "/add-property" },
+          { icon: "📋", label: "List Your Properties",   sub: "Free during launch phase",                href: "/list-your-properties" },
           { icon: "👤", label: "Create Agent Profile",   sub: "Verified badge & public profile",         href: "/my-profile" },
           { icon: "📊", label: "Agent Dashboard",        sub: "Manage listings, leads & analytics",      href: "/dashboard" },
           { icon: "📦", label: "Developer Packages",     sub: "Promote entire projects & launches",      href: "/developer-packages" },
