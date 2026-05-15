@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 
 const MENU = [
   {
@@ -150,13 +150,14 @@ const MENU = [
 function SmartPanel({ children, onEnter, onLeave }) {
   const ref = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
+    el.style.left = "0";
     const rect = el.getBoundingClientRect();
     const vw = window.innerWidth;
     if (rect.right > vw - 12) {
-      el.style.left = `${-(rect.right - vw + 12)}px`;
+      el.style.left = `${vw - 12 - rect.right}px`;
     }
   });
 
@@ -167,18 +168,24 @@ function SmartPanel({ children, onEnter, onLeave }) {
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
-      {/* Triangle pointer */}
-      <div style={{
-        position: "absolute",
-        top: 8,
-        left: 28,
-        width: 0,
-        height: 0,
-        borderLeft: "9px solid transparent",
-        borderRight: "9px solid transparent",
-        borderBottom: "9px solid #f0822d",
-        zIndex: 10000,
-      }} />
+      {/* Triangle pointer — orange outer + white inner */}
+      <div style={{ position: "absolute", top: 9, left: 32, zIndex: 10000 }}>
+        <div style={{
+          width: 0, height: 0,
+          borderLeft: "11px solid transparent",
+          borderRight: "11px solid transparent",
+          borderBottom: "11px solid #f0822d",
+        }} />
+        <div style={{
+          width: 0, height: 0,
+          borderLeft: "9px solid transparent",
+          borderRight: "9px solid transparent",
+          borderBottom: "9px solid #fff",
+          position: "absolute",
+          top: 3,
+          left: -9,
+        }} />
+      </div>
       {children}
     </div>
   );
