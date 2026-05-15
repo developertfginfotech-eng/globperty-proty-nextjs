@@ -86,7 +86,7 @@ export default function Dashboard() {
         </div>
 
         {/* KYC status banner */}
-        {role && role !== "buyer" && kycStatus && kycStatus !== "verified" && (
+        {role && role !== "buyer" && role !== "admin" && role !== "super_admin" && kycStatus && kycStatus !== "verified" && (
           <div style={{
             marginBottom: 24,
             padding: "14px 20px",

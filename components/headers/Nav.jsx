@@ -123,9 +123,9 @@ const MENU = [
         title: "AGENTS & DEVELOPERS",
         cols: 3,
         items: [
-          { icon: "📋", label: "List Your Properties",   sub: "Free during launch phase",                href: "/list-your-properties" },
-          { icon: "👤", label: "Create Agent Profile",   sub: "Verified badge & public profile",         href: "/create-agent-profile" },
-          { icon: "📊", label: "Agent Dashboard",        sub: "Manage listings, leads & analytics",      href: "/dashboard" },
+          { icon: "📋", label: "List Your Property",     sub: "Free during launch phase",                href: "/add-property", target: "_blank" },
+          { icon: "👤", label: "Create Agent Profile",   sub: "Verified badge & public profile",         href: "/create-agent-profile", target: "_blank" },
+          { icon: "📊", label: "Agent Dashboard",        sub: "Manage listings, leads & analytics",      href: "/dashboard", target: "_blank" },
           { icon: "📦", label: "Developer Packages",     sub: "Promote entire projects & launches",      href: "/developer-packages" },
           { icon: "💡", label: "Buy Leads",              sub: "Pay per verified buyer lead",             href: "/buy-leads" },
           { icon: "🎪", label: "Exhibit at Virtual Expo",sub: "Present to global buyers live",           href: "/virtual-expo" },
@@ -177,6 +177,7 @@ function MegaItem({ item }) {
   return (
     <Link
       href={item.href}
+      target={item.target || undefined}
       style={{
         display: "flex",
         alignItems: "center",
