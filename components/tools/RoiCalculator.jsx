@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 import axios from "axios";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
@@ -50,16 +49,6 @@ export default function RoiCalculator() {
       <div className="tf-container">
         <div className="box-calculate" style={{ background: "#fff", boxShadow: "0 8px 60px rgba(0,0,0,0.15)" }}>
 
-          <div style={{ position: "relative", overflow: "hidden", maxHeight: 320 }}>
-            <Image
-              src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&h=320&fit=crop"
-              alt="ROI and capital growth estimator"
-              width={1200}
-              height={320}
-              style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }}
-            />
-          </div>
-
           <form className="form-pre-approved" onSubmit={e => { e.preventDefault(); calculate(); }}>
             <div style={{ marginBottom: 24 }}>
               <h3 style={{ fontSize: 24, fontWeight: 800, color: "#111827", marginBottom: 6 }}>ROI & Capital Growth Estimator</h3>
@@ -67,25 +56,25 @@ export default function RoiCalculator() {
             </div>
             <div className="row g-3" style={{ marginBottom: 24 }}>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Purchase Price ($)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Purchase Price ($)</label>
                 <fieldset>
                   <input type="number" className="form-control" placeholder="e.g. 400000" value={form.purchasePrice} onChange={e => set("purchasePrice", e.target.value)} style={{ height: 48 }} />
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Annual Rental Income ($)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Annual Rental Income ($)</label>
                 <fieldset>
                   <input type="number" className="form-control" placeholder="e.g. 24000" value={form.annualRent} onChange={e => set("annualRent", e.target.value)} style={{ height: 48 }} />
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Annual Growth (%)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Annual Growth (%)</label>
                 <fieldset>
                   <input type="number" className="form-control" placeholder="e.g. 5" value={form.annualGrowth} onChange={e => set("annualGrowth", e.target.value)} style={{ height: 48 }} />
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Investment Period (years)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Investment Period (years)</label>
                 <fieldset>
                   <select className="form-control" value={form.years} onChange={e => set("years", e.target.value)} style={{ height: 48, background: "#fff" }}>
                     {[3,5,7,10].map(y => <option key={y} value={y}>{y} years</option>)}
@@ -93,7 +82,7 @@ export default function RoiCalculator() {
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Country (optional)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Country (optional)</label>
                 <fieldset>
                   <select className="form-control" value={form.country} onChange={e => set("country", e.target.value)} style={{ height: 48, background: "#fff" }}>
                     <option value="">Select country</option>

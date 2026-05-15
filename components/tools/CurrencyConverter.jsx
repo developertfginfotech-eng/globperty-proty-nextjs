@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 
 const RATES = {
   USD: 1, EUR: 0.92, GBP: 0.79, AED: 3.67, AUD: 1.53, CAD: 1.36,
@@ -32,16 +31,6 @@ export default function CurrencyConverter() {
       <div className="tf-container">
         <div className="box-calculate" style={{ background: "#fff", boxShadow: "0 8px 60px rgba(0,0,0,0.15)" }}>
 
-          <div style={{ position: "relative", overflow: "hidden", maxHeight: 320 }}>
-            <Image
-              src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200&h=320&fit=crop"
-              alt="Property currency converter"
-              width={1200}
-              height={320}
-              style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }}
-            />
-          </div>
-
           <form className="form-pre-approved" onSubmit={e => e.preventDefault()}>
             <div style={{ marginBottom: 24 }}>
               <h3 style={{ fontSize: 24, fontWeight: 800, color: "#111827", marginBottom: 6 }}>Property Currency Converter</h3>
@@ -49,7 +38,7 @@ export default function CurrencyConverter() {
             </div>
 
             <div style={{ marginBottom: 24 }}>
-              <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Amount</label>
+              <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Amount</label>
               <fieldset>
                 <input
                   type="number"
@@ -63,7 +52,7 @@ export default function CurrencyConverter() {
 
             <div className="row g-3" style={{ alignItems: "center", marginBottom: 28 }}>
               <div className="col-5">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>From</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>From</label>
                 <fieldset>
                   <select className="form-control" value={from} onChange={e => setFrom(e.target.value)} style={{ height: 48, background: "#fff" }}>
                     {currencies.map(c => <option key={c} value={c}>{c} — {CURRENCY_NAMES[c]}</option>)}
@@ -79,7 +68,7 @@ export default function CurrencyConverter() {
                 >⇄</button>
               </div>
               <div className="col-5">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>To</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>To</label>
                 <fieldset>
                   <select className="form-control" value={to} onChange={e => setTo(e.target.value)} style={{ height: 48, background: "#fff" }}>
                     {currencies.map(c => <option key={c} value={c}>{c} — {CURRENCY_NAMES[c]}</option>)}

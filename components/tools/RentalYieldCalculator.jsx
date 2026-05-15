@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 import axios from "axios";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
@@ -40,16 +39,6 @@ export default function RentalYieldCalculator() {
       <div className="tf-container">
         <div className="box-calculate" style={{ background: "#fff", boxShadow: "0 8px 60px rgba(0,0,0,0.15)" }}>
 
-          <div style={{ position: "relative", overflow: "hidden", maxHeight: 320 }}>
-            <Image
-              src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=320&fit=crop"
-              alt="Rental yield calculator"
-              width={1200}
-              height={320}
-              style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }}
-            />
-          </div>
-
           <form className="form-pre-approved" onSubmit={e => { e.preventDefault(); calculate(); }}>
             <div style={{ marginBottom: 24 }}>
               <h3 style={{ fontSize: 24, fontWeight: 800, color: "#111827", marginBottom: 6 }}>Calculate Rental Yield</h3>
@@ -57,19 +46,19 @@ export default function RentalYieldCalculator() {
             </div>
             <div className="row g-3" style={{ marginBottom: 24 }}>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Property Value ($)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Property Value ($)</label>
                 <fieldset>
                   <input type="number" className="form-control" placeholder="e.g. 500000" value={form.propertyValue} onChange={e => set("propertyValue", e.target.value)} style={{ height: 48 }} />
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Monthly Rent ($)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Monthly Rent ($)</label>
                 <fieldset>
                   <input type="number" className="form-control" placeholder="e.g. 2500" value={form.monthlyRent} onChange={e => set("monthlyRent", e.target.value)} style={{ height: 48 }} />
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Country (optional)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Country (optional)</label>
                 <fieldset>
                   <select className="form-control" value={form.country} onChange={e => set("country", e.target.value)} style={{ height: 48, background: "#fff" }}>
                     <option value="">Select country</option>
@@ -78,7 +67,7 @@ export default function RentalYieldCalculator() {
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Property Type</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Property Type</label>
                 <fieldset>
                   <select className="form-control" value={form.type} onChange={e => set("type", e.target.value)} style={{ height: 48, background: "#fff" }}>
                     {TYPES.map(t => <option key={t} value={t}>{t}</option>)}

@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 
 const COUNTRIES = ["UAE","USA","Portugal","Australia","Turkey","Cyprus","Malta","Canada","Hungary","Latvia","Philippines","Malaysia"];
 
@@ -42,16 +41,6 @@ export default function MortgageCalculator() {
       <div className="tf-container">
         <div className="box-calculate" style={{ background: "#fff", boxShadow: "0 8px 60px rgba(0,0,0,0.15)" }}>
 
-          <div style={{ position: "relative", overflow: "hidden", maxHeight: 320 }}>
-            <Image
-              src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&h=320&fit=crop"
-              alt="Calculate mortgage payments"
-              width={1200}
-              height={320}
-              style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }}
-            />
-          </div>
-
           <form className="form-pre-approved" onSubmit={e => { e.preventDefault(); calculate(); }}>
             <div style={{ marginBottom: 24 }}>
               <h3 style={{ fontSize: 24, fontWeight: 800, color: "#111827", marginBottom: 6 }}>Calculate Mortgage Payments</h3>
@@ -59,25 +48,25 @@ export default function MortgageCalculator() {
             </div>
             <div className="row g-3" style={{ marginBottom: 24 }}>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Property Price ($)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Property Price ($)</label>
                 <fieldset>
                   <input type="number" className="form-control" placeholder="e.g. 500000" value={form.propertyPrice} onChange={e => set("propertyPrice", e.target.value)} style={{ height: 48 }} />
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Down Payment (%)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Down Payment (%)</label>
                 <fieldset>
                   <input type="number" className="form-control" placeholder="e.g. 20" value={form.downPayment} onChange={e => set("downPayment", e.target.value)} style={{ height: 48 }} />
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Annual Interest Rate (%)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Annual Interest Rate (%)</label>
                 <fieldset>
                   <input type="number" className="form-control" placeholder="e.g. 4.5" value={form.interestRate} onChange={e => set("interestRate", e.target.value)} style={{ height: 48 }} />
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Loan Term</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Loan Term</label>
                 <fieldset>
                   <select className="form-control" value={form.loanTermYears} onChange={e => set("loanTermYears", e.target.value)} style={{ height: 48, background: "#fff" }}>
                     {[5,10,15,20,25,30].map(y => <option key={y} value={y}>{y} years</option>)}
@@ -85,7 +74,7 @@ export default function MortgageCalculator() {
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Country (optional)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Country (optional)</label>
                 <fieldset>
                   <select className="form-control" value={form.country} onChange={e => set("country", e.target.value)} style={{ height: 48, background: "#fff" }}>
                     <option value="">Select country</option>

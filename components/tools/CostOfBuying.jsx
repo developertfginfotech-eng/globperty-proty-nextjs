@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
 
 const COUNTRY_COSTS = {
   UAE:         { stampDuty: 4,   agentFee: 2,   legalFee: 0.5, registration: 0.25, label: "DLD Transfer Fee 4% + Registration" },
@@ -42,16 +41,6 @@ export default function CostOfBuying() {
       <div className="tf-container">
         <div className="box-calculate" style={{ background: "#fff", boxShadow: "0 8px 60px rgba(0,0,0,0.15)" }}>
 
-          <div style={{ position: "relative", overflow: "hidden", maxHeight: 320 }}>
-            <Image
-              src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&h=320&fit=crop"
-              alt="Cost of buying calculator"
-              width={1200}
-              height={320}
-              style={{ width: "100%", height: 320, objectFit: "cover", display: "block" }}
-            />
-          </div>
-
           <form className="form-pre-approved" onSubmit={e => { e.preventDefault(); calculate(); }}>
             <div style={{ marginBottom: 24 }}>
               <h3 style={{ fontSize: 24, fontWeight: 800, color: "#111827", marginBottom: 6 }}>Cost of Buying Calculator</h3>
@@ -59,7 +48,7 @@ export default function CostOfBuying() {
             </div>
             <div className="row g-3" style={{ marginBottom: 24 }}>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Property Price ($)</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Property Price ($)</label>
                 <fieldset>
                   <input
                     type="number"
@@ -72,7 +61,7 @@ export default function CostOfBuying() {
                 </fieldset>
               </div>
               <div className="col-md-6">
-                <label className="fw-6" style={{ display: "block", marginBottom: 8, color: "#374151" }}>Country</label>
+                <label style={{ display: "block", marginBottom: 8, fontSize: 14, fontWeight: 600, color: "#374151", fontFamily: "inherit" }}>Country</label>
                 <fieldset>
                   <select
                     className="form-control"
