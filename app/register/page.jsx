@@ -170,11 +170,10 @@ export default function RegisterPage() {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                   {section.items.map(item => (
-                    <Link key={item.href} href={item.href} target="_blank" style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px", borderRadius: 8, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", textDecoration: "none", transition: "background 0.15s" }}
+                    <Link key={item.href} href={item.href} target="_blank" style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", borderRadius: 8, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", textDecoration: "none", transition: "background 0.15s" }}
                       onMouseEnter={e => e.currentTarget.style.background = "rgba(240,130,45,0.15)"}
                       onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}
                     >
-                      <span style={{ fontSize: 16, flexShrink: 0 }}>{item.icon}</span>
                       <div>
                         <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
                         <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.3 }}>{item.sub}</div>
@@ -224,7 +223,7 @@ export default function RegisterPage() {
                 <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
                   <fieldset className="box-fieldset" style={{ flex: "0 0 160px" }}>
                     <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Country</label>
-                    <select className="form-control" name="country" value={form.country} onChange={handleChange} style={{ fontSize: 13, fontFamily: "inherit" }}>
+                    <select className="form-control" name="country" value={form.country} onChange={handleChange} style={{ fontSize: 13, fontFamily: "inherit", height: 44 }}>
                       {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </fieldset>
