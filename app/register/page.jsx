@@ -90,7 +90,7 @@ export default function RegisterPage() {
 
         {/* Left panel */}
         <div style={{
-          flex: "0 0 44%",
+          flex: "0 0 55%",
           backgroundImage: "url('/images/banner/luxury-home-night.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -120,7 +120,7 @@ export default function RegisterPage() {
           {/* Middle: Headline + features */}
           <div style={{ position: "relative", zIndex: 1 }}>
             <div style={{ marginBottom: 32 }}>
-              <h2 style={{ fontSize: 30, fontWeight: 800, color: "#fff", lineHeight: 1.25, marginBottom: 12 }}>
+              <h2 style={{ fontSize: 36, fontWeight: 800, color: "#fff", lineHeight: 1.25, marginBottom: 12 }}>
                 Your Global<br />
                 <span style={{ color: "#f0822d" }}>Real Estate Platform</span>
               </h2>
@@ -130,8 +130,8 @@ export default function RegisterPage() {
             <div style={{ display: "flex", gap: 12, marginBottom: 32 }}>
               {STATS.map(s => (
                 <div key={s.value} style={{ flex: 1, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, padding: "14px 12px", textAlign: "center" }}>
-                  <div style={{ fontSize: 20, fontWeight: 800, color: "#f0822d", lineHeight: 1 }}>{s.value}</div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.55)", marginTop: 4, fontWeight: 500 }}>{s.label}</div>
+                  <div style={{ fontSize: 24, fontWeight: 800, color: "#f0822d", lineHeight: 1 }}>{s.value}</div>
+                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4, fontWeight: 500 }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -139,7 +139,7 @@ export default function RegisterPage() {
             {/* Agent & Partner links — display only, not clickable */}
             {AGENT_SECTIONS.map(section => (
               <div key={section.title} style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 11, fontWeight: 800, color: "#f0822d", letterSpacing: 1.4, textTransform: "uppercase", marginBottom: 8 }}>
+                <div style={{ fontSize: 13, fontWeight: 800, color: "#f0822d", letterSpacing: 1.4, textTransform: "uppercase", marginBottom: 8 }}>
                   {section.title}
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
@@ -150,8 +150,8 @@ export default function RegisterPage() {
                       onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)"; }}
                     >
                       <div>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
-                        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.3 }}>{item.sub}</div>
+                        <div style={{ fontSize: 16, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
+                        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.3 }}>{item.sub}</div>
                       </div>
                     </div>
                   ))}
