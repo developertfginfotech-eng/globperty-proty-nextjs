@@ -280,7 +280,7 @@ export default function GlobpertyCopilot() {
   return (
     <div style={{
       display: 'flex', height: '100vh',
-      fontFamily: "'Inter', -apple-system, sans-serif",
+      fontFamily: "'Lexend', sans-serif",
       background: '#f5f5f7',
     }}>
 

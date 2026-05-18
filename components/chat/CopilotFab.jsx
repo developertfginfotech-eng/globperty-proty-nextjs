@@ -17,7 +17,7 @@ export default function CopilotFab() {
         boxShadow: "0 4px 20px rgba(15,52,96,0.45)",
         border: "1.5px solid rgba(235,103,83,0.5)",
         whiteSpace: "nowrap",
-        fontFamily: "'Inter', -apple-system, sans-serif",
+        fontFamily: "'Lexend', sans-serif",
       }}
     >
       <span style={{ fontSize: 16 }}>🤖</span>
