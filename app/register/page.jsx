@@ -91,7 +91,7 @@ export default function RegisterPage() {
         {/* Left panel */}
         <div style={{
           flex: "0 0 44%",
-          backgroundImage: "url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80')",
+          backgroundImage: "url('/images/banner/luxury-home-night.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "relative",
