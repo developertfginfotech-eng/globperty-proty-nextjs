@@ -103,7 +103,7 @@ export default function RegisterPage() {
           overflowX: "hidden",
         }}>
           {/* Gradient overlay */}
-          <div style={{ position: "fixed", top: 0, left: 0, width: "44%", height: "100%", background: "linear-gradient(160deg, rgba(10,18,35,0.93) 0%, rgba(20,40,50,0.85) 60%, rgba(240,130,45,0.18) 100%)", pointerEvents: "none", zIndex: 0 }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(10,18,35,0.93) 0%, rgba(20,40,50,0.88) 60%, rgba(240,130,45,0.18) 100%)", pointerEvents: "none", zIndex: 0 }} />
 
           {/* Top: Logo */}
           <div style={{ position: "relative", zIndex: 1 }}>
