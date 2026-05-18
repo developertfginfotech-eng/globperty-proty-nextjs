@@ -6,10 +6,10 @@ const API = process.env.NEXT_PUBLIC_API_URL;
 const COUNTRIES = ["UAE","USA","Portugal","Australia","Turkey","Cyprus","Malta","Canada","Hungary","Latvia","Philippines","Malaysia"];
 const TYPES = ["Apartment","Villa","House","Penthouse","Commercial","Land"];
 
-const Field = ({ label, icon, children, hint }) => (
+const Field = ({ label, children, hint }) => (
   <div>
     <label style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8, fontSize: 13, fontWeight: 700, color: "#374151", fontFamily: "inherit", textTransform: "uppercase", letterSpacing: 0.5 }}>
-      <span style={{ fontSize: 15 }}>{icon}</span> {label}
+      {label}
     </label>
     {children}
     {hint && <p style={{ fontSize: 11, color: "#9ca3af", marginTop: 5, fontFamily: "inherit" }}>{hint}</p>}
@@ -67,7 +67,7 @@ export default function RentalYieldCalculator() {
           <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", padding: "40px 40px 36px" }}>
             <div style={{ textAlign: "center" }}>
               <span style={{ display: "inline-block", background: "rgba(240,130,45,0.2)", color: "#f0822d", fontSize: 12, fontWeight: 700, borderRadius: 20, padding: "4px 14px", marginBottom: 14, fontFamily: "inherit", letterSpacing: 0.5 }}>
-                📊 RENTAL YIELD CALCULATOR
+                RENTAL YIELD CALCULATOR
               </span>
               <h3 style={{ fontSize: 26, fontWeight: 900, color: "#fff", marginBottom: 8, fontFamily: "inherit" }}>Calculate Rental Yield</h3>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, fontFamily: "inherit", margin: 0 }}>Discover your gross and net annual return across 12 global markets.</p>
@@ -79,7 +79,7 @@ export default function RentalYieldCalculator() {
 
             <div className="row g-3" style={{ marginBottom: 24 }}>
               <div className="col-md-6">
-                <Field label="Property Value" icon="🏠" hint="Enter the purchase price in USD">
+                <Field label="Property Value" hint="Enter the purchase price in USD">
                   <fieldset style={{ position: "relative" }}>
                     <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: 14, fontWeight: 700, color: "#6b7280", fontFamily: "inherit", zIndex: 1 }}>$</span>
                     <input type="number" className="form-control" placeholder="500,000" value={form.propertyValue} onChange={e => set("propertyValue", e.target.value)}
@@ -88,7 +88,7 @@ export default function RentalYieldCalculator() {
                 </Field>
               </div>
               <div className="col-md-6">
-                <Field label="Monthly Rent" icon="💰" hint="Expected monthly rental income">
+                <Field label="Monthly Rent" hint="Expected monthly rental income">
                   <fieldset style={{ position: "relative" }}>
                     <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: 14, fontWeight: 700, color: "#6b7280", fontFamily: "inherit", zIndex: 1 }}>$</span>
                     <input type="number" className="form-control" placeholder="2,500" value={form.monthlyRent} onChange={e => set("monthlyRent", e.target.value)}
@@ -97,7 +97,7 @@ export default function RentalYieldCalculator() {
                 </Field>
               </div>
               <div className="col-md-6">
-                <Field label="Country" icon="🌍" hint="Optional — for market comparison">
+                <Field label="Country" hint="Optional — for market comparison">
                   <fieldset>
                     <select className="form-control" value={form.country} onChange={e => set("country", e.target.value)} style={{ ...inputStyle }}>
                       <option value="">Select country</option>
@@ -107,7 +107,7 @@ export default function RentalYieldCalculator() {
                 </Field>
               </div>
               <div className="col-md-6">
-                <Field label="Property Type" icon="🏢">
+                <Field label="Property Type">
                   <fieldset>
                     <select className="form-control" value={form.type} onChange={e => set("type", e.target.value)} style={{ ...inputStyle }}>
                       {TYPES.map(t => <option key={t} value={t}>{t}</option>)}
@@ -136,14 +136,13 @@ export default function RentalYieldCalculator() {
                 <div style={{ fontSize: 11, fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 1, marginBottom: 14, fontFamily: "inherit" }}>Your Results</div>
                 <div className="row g-3 mb-20">
                   {[
-                    { label: "Gross Yield",          value: `${result.grossYield}%`,  icon: "📈", color: "#16b286", bg: "linear-gradient(135deg,#f0fdf4,#dcfce7)" },
-                    { label: "Net Yield (est.)",     value: `${result.netYield}%`,    icon: "💰", color: "#f0822d", bg: "linear-gradient(135deg,#fff7ed,#fed7aa33)" },
-                    { label: "Annual Rental Income", value: `$${result.annualRent}`,  icon: "🏠", color: "#3b82f6", bg: "linear-gradient(135deg,#eff6ff,#bfdbfe33)" },
-                    { label: "Break-even (months)",  value: result.monthsToBreakEven, icon: "⏱", color: "#8b5cf6", bg: "linear-gradient(135deg,#f5f3ff,#ddd6fe33)" },
+                    { label: "Gross Yield",          value: `${result.grossYield}%`,  color: "#16b286", bg: "linear-gradient(135deg,#f0fdf4,#dcfce7)" },
+                    { label: "Net Yield (est.)",     value: `${result.netYield}%`,    color: "#f0822d", bg: "linear-gradient(135deg,#fff7ed,#fed7aa33)" },
+                    { label: "Annual Rental Income", value: `$${result.annualRent}`,  color: "#3b82f6", bg: "linear-gradient(135deg,#eff6ff,#bfdbfe33)" },
+                    { label: "Break-even (months)",  value: result.monthsToBreakEven, color: "#8b5cf6", bg: "linear-gradient(135deg,#f5f3ff,#ddd6fe33)" },
                   ].map(card => (
                     <div key={card.label} className="col-6">
                       <div style={{ background: card.bg, borderRadius: 14, padding: "20px", border: `1.5px solid ${card.color}25`, textAlign: "center" }}>
-                        <div style={{ fontSize: 24, marginBottom: 8 }}>{card.icon}</div>
                         <div style={{ fontSize: 26, fontWeight: 900, color: card.color, marginBottom: 4, fontFamily: "inherit" }}>{card.value}</div>
                         <div style={{ fontSize: 11, color: "#6b7280", fontWeight: 600, fontFamily: "inherit", textTransform: "uppercase", letterSpacing: 0.5 }}>{card.label}</div>
                       </div>
@@ -153,7 +152,6 @@ export default function RentalYieldCalculator() {
 
                 {result.marketYield && (
                   <div style={{ background: "linear-gradient(135deg,#f0fdf4,#dcfce7)", borderRadius: 12, padding: "16px 20px", border: "1.5px solid #16b28630", display: "flex", alignItems: "center", gap: 14 }}>
-                    <span style={{ fontSize: 28 }}>📍</span>
                     <div>
                       <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 2, fontFamily: "inherit", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>Market Average — {form.country}</div>
                       <div style={{ fontSize: 22, fontWeight: 900, color: "#16b286", fontFamily: "inherit" }}>{result.marketYield}%</div>

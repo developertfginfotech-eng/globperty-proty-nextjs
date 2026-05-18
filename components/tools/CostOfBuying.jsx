@@ -16,10 +16,10 @@ const COUNTRY_COSTS = {
   Malaysia:    { stampDuty: 3,   agentFee: 3,   legalFee: 0.5, registration: 0.1,  label: "Stamp duty up to 3%" },
 };
 
-const Field = ({ label, icon, children, hint }) => (
+const Field = ({ label, children, hint }) => (
   <div>
     <label style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8, fontSize: 13, fontWeight: 700, color: "#374151", fontFamily: "inherit", textTransform: "uppercase", letterSpacing: 0.5 }}>
-      <span style={{ fontSize: 15 }}>{icon}</span> {label}
+      {label}
     </label>
     {children}
     {hint && <p style={{ fontSize: 11, color: "#9ca3af", marginTop: 5, fontFamily: "inherit" }}>{hint}</p>}
@@ -59,7 +59,7 @@ export default function CostOfBuying() {
           <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", padding: "40px 40px 36px" }}>
             <div style={{ textAlign: "center" }}>
               <span style={{ display: "inline-block", background: "rgba(240,130,45,0.2)", color: "#f0822d", fontSize: 12, fontWeight: 700, borderRadius: 20, padding: "4px 14px", marginBottom: 14, fontFamily: "inherit", letterSpacing: 0.5 }}>
-                💰 COST OF BUYING CALCULATOR
+                COST OF BUYING CALCULATOR
               </span>
               <h3 style={{ fontSize: 26, fontWeight: 900, color: "#fff", marginBottom: 8, fontFamily: "inherit" }}>Cost of Buying Calculator</h3>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, fontFamily: "inherit", margin: 0 }}>See all purchase taxes and fees for your target country before you commit.</p>
@@ -69,7 +69,7 @@ export default function CostOfBuying() {
           <form className="form-pre-approved" onSubmit={e => { e.preventDefault(); calculate(); }} style={{ padding: "32px 40px" }}>
             <div className="row g-3" style={{ marginBottom: 24 }}>
               <div className="col-md-6">
-                <Field label="Property Price" icon="🏠" hint="Total purchase price in USD">
+                <Field label="Property Price" hint="Total purchase price in USD">
                   <fieldset style={{ position: "relative" }}>
                     <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: 14, fontWeight: 700, color: "#6b7280", fontFamily: "inherit", zIndex: 1 }}>$</span>
                     <input type="number" className="form-control" value={price} onChange={e => setPrice(e.target.value)} placeholder="300,000" style={{ ...inputStyle, paddingLeft: 28 }} />
@@ -77,7 +77,7 @@ export default function CostOfBuying() {
                 </Field>
               </div>
               <div className="col-md-6">
-                <Field label="Country" icon="🌍" hint="Select your target investment market">
+                <Field label="Country" hint="Select your target investment market">
                   <fieldset>
                     <select className="form-control" value={country} onChange={e => setCountry(e.target.value)} style={{ ...inputStyle }}>
                       {Object.keys(COUNTRY_COSTS).map(c => <option key={c} value={c}>{c}</option>)}
@@ -98,20 +98,19 @@ export default function CostOfBuying() {
             {result && (
               <div style={{ marginTop: 32 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg,#fff7ed,#fed7aa33)", border: "1px solid #fed7aa", borderRadius: 12, padding: "12px 18px", marginBottom: 20, fontSize: 13, color: "#92400e", fontFamily: "inherit" }}>
-                  <span>ℹ️</span> {result.label}
+                  {result.label}
                 </div>
 
                 <div className="row g-3 mb-16">
                   {[
-                    { label: "Stamp / Transfer Duty", pct: result.stampPct, value: result.stamp, icon: "📋", color: "#ef4444", bg: "linear-gradient(135deg,#fef2f2,#fecaca33)" },
-                    { label: "Agent Fee",             pct: result.agentPct, value: result.agent, icon: "🤝", color: "#f59e0b", bg: "linear-gradient(135deg,#fffbeb,#fde68a33)" },
-                    { label: "Legal / Notary Fee",    pct: result.legalPct, value: result.legal, icon: "⚖️", color: "#3b82f6", bg: "linear-gradient(135deg,#eff6ff,#bfdbfe33)" },
-                    { label: "Land Registration",     pct: result.regPct,   value: result.reg,   icon: "📁", color: "#8b5cf6", bg: "linear-gradient(135deg,#f5f3ff,#ddd6fe33)" },
+                    { label: "Stamp / Transfer Duty", pct: result.stampPct, value: result.stamp, color: "#ef4444", bg: "linear-gradient(135deg,#fef2f2,#fecaca33)" },
+                    { label: "Agent Fee",             pct: result.agentPct, value: result.agent, color: "#f59e0b", bg: "linear-gradient(135deg,#fffbeb,#fde68a33)" },
+                    { label: "Legal / Notary Fee",    pct: result.legalPct, value: result.legal, color: "#3b82f6", bg: "linear-gradient(135deg,#eff6ff,#bfdbfe33)" },
+                    { label: "Land Registration",     pct: result.regPct,   value: result.reg,   color: "#8b5cf6", bg: "linear-gradient(135deg,#f5f3ff,#ddd6fe33)" },
                   ].map(row => (
                     <div key={row.label} className="col-6">
                       <div style={{ background: row.bg, borderRadius: 14, padding: "18px", border: `1.5px solid ${row.color}25` }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
-                          <span style={{ fontSize: 22 }}>{row.icon}</span>
+                        <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-start", marginBottom: 8 }}>
                           <span style={{ fontSize: 11, fontWeight: 700, color: row.color, background: `${row.color}15`, borderRadius: 10, padding: "2px 8px", fontFamily: "inherit" }}>{row.pct}%</span>
                         </div>
                         <div style={{ fontSize: 20, fontWeight: 900, color: row.color, marginBottom: 4, fontFamily: "inherit" }}>${fmt(row.value)}</div>

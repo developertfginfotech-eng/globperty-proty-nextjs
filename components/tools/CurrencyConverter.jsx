@@ -14,10 +14,10 @@ const CURRENCY_NAMES = {
   SGD: "Singapore Dollar", JPY: "Japanese Yen", CHF: "Swiss Franc", CYP: "Cypriot Pound",
 };
 
-const Field = ({ label, icon, children }) => (
+const Field = ({ label, children }) => (
   <div>
     <label style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8, fontSize: 13, fontWeight: 700, color: "#374151", fontFamily: "inherit", textTransform: "uppercase", letterSpacing: 0.5 }}>
-      <span style={{ fontSize: 15 }}>{icon}</span> {label}
+      {label}
     </label>
     {children}
   </div>
@@ -48,7 +48,7 @@ export default function CurrencyConverter() {
           <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", padding: "40px 40px 36px" }}>
             <div style={{ textAlign: "center" }}>
               <span style={{ display: "inline-block", background: "rgba(240,130,45,0.2)", color: "#f0822d", fontSize: 12, fontWeight: 700, borderRadius: 20, padding: "4px 14px", marginBottom: 14, fontFamily: "inherit", letterSpacing: 0.5 }}>
-                💱 PROPERTY CURRENCY CONVERTER
+                PROPERTY CURRENCY CONVERTER
               </span>
               <h3 style={{ fontSize: 26, fontWeight: 900, color: "#fff", marginBottom: 8, fontFamily: "inherit" }}>Property Currency Converter</h3>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, fontFamily: "inherit", margin: 0 }}>Instantly convert property prices across 17 investment currencies with indicative rates.</p>
@@ -58,7 +58,7 @@ export default function CurrencyConverter() {
           <form className="form-pre-approved" onSubmit={e => e.preventDefault()} style={{ padding: "32px 40px" }}>
 
             <div style={{ marginBottom: 24 }}>
-              <Field label="Amount" icon="💵">
+              <Field label="Amount">
                 <fieldset>
                   <input type="number" className="form-control" value={amount} onChange={e => setAmount(e.target.value)}
                     style={{ ...inputStyle, height: 54, fontSize: 20, fontWeight: 700 }} />
@@ -68,7 +68,7 @@ export default function CurrencyConverter() {
 
             <div className="row g-3" style={{ alignItems: "flex-end", marginBottom: 28 }}>
               <div className="col-5">
-                <Field label="From" icon="🔵">
+                <Field label="From">
                   <fieldset>
                     <select className="form-control" value={from} onChange={e => setFrom(e.target.value)} style={{ ...inputStyle }}>
                       {currencies.map(c => <option key={c} value={c}>{c} — {CURRENCY_NAMES[c]}</option>)}
@@ -83,7 +83,7 @@ export default function CurrencyConverter() {
                 </button>
               </div>
               <div className="col-5">
-                <Field label="To" icon="🟠">
+                <Field label="To">
                   <fieldset>
                     <select className="form-control" value={to} onChange={e => setTo(e.target.value)} style={{ ...inputStyle }}>
                       {currencies.map(c => <option key={c} value={c}>{c} — {CURRENCY_NAMES[c]}</option>)}
