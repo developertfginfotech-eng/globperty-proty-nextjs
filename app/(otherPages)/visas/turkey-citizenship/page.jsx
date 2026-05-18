@@ -10,7 +10,7 @@ const VISA = {
   country: "Turkey",
   hero: {
     bgImage: "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=1400&q=80",
-    badge: "🇹🇷 Turkey Citizenship by Investment",
+  badge: "Turkey Citizenship by Investment",
     titleWhite: "Turkey Citizenship ",
     titleOrange: "by Investment",
     tagline: "Obtain full Turkish citizenship in as little as 3–6 months through property investment from $400,000. No residency requirement, dual citizenship allowed.",
@@ -21,9 +21,9 @@ const VISA = {
       { value: "110+", label: "Visa-Free Countries" },
       { value: "Full", label: "Citizenship" },
     ],
-    primaryCta: { href: "/contact", label: "📞 Speak to a Visa Expert" },
-    secondaryCta: { href: "/visa-checker", label: "✅ Check My Eligibility" },
-    snapshotTitle: "🇹🇷 Citizenship at a Glance",
+  primaryCta: { href: "/contact", label: "Speak to a Visa Expert"},
+  secondaryCta: { href: "/visa-checker", label: "Check My Eligibility"},
+  snapshotTitle: "Citizenship at a Glance",
     snapshot: [
       { key: "Min. Property Value", value: "$400,000",          color: "#f0822d" },
       { key: "Processing Time",     value: "3–6 Months",        color: "#16b286" },

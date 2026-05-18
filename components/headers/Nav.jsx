@@ -102,7 +102,7 @@ const MENU = [
     label: "Tools",
     sections: [
       {
-        title: "CALCULATORS & TOOLS",
+        title: "INVESTMENT CALCULATORS",
         cols: 3,
         items: [
           { icon: "📊", label: "Rental Yield Calculator",        sub: "Annual return % by country & area",       href: "/rental-yield" },
@@ -110,35 +110,15 @@ const MENU = [
           { icon: "🏦", label: "Mortgage Calculator",            sub: "Monthly repayments & eligibility",         href: "/home-loan-process" },
           { icon: "💱", label: "Currency Converter",             sub: "Live exchange rates — 17 currencies",      href: "/currency-converter" },
           { icon: "💰", label: "Cost of Buying Calculator",      sub: "All purchase fees & taxes per country",    href: "/cost-of-buying" },
+        ],
+      },
+      {
+        title: "RESEARCH & AI TOOLS",
+        cols: 3,
+        items: [
           { icon: "🗺", label: "Neighbourhood Explorer",         sub: "Find best areas by budget & lifestyle",    href: "/listings" },
           { icon: "🤖", label: "AI Property Assistant",          sub: "Chat & find your perfect property",        href: "/copilot" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Agents",
-    sections: [
-      {
-        title: "AGENTS & DEVELOPERS",
-        cols: 3,
-        items: [
-          { icon: "📋", label: "List Your Property",     sub: "Free during launch phase",                href: "/add-property", target: "_blank" },
-          { icon: "👤", label: "Create Agent Profile",   sub: "Verified badge & public profile",         href: "/create-agent-profile", target: "_blank" },
-          { icon: "📊", label: "Agent Dashboard",        sub: "Manage listings, leads & analytics",      href: "/dashboard", target: "_blank" },
-          { icon: "📦", label: "Developer Packages",     sub: "Promote entire projects & launches",      href: "/developer-packages" },
-          { icon: "💡", label: "Buy Leads",              sub: "Pay per verified buyer lead",             href: "/buy-leads" },
-          { icon: "🎪", label: "Exhibit at Virtual Expo",sub: "Present to global buyers live",           href: "/virtual-expo" },
-        ],
-      },
-      {
-        title: "BUSINESS PARTNERS",
-        cols: 3,
-        items: [
-          { icon: "🏦", label: "Finance Partner Sign Up", sub: "Banks, mortgage & insurance firms",      href: "/finance-partner" },
-          { icon: "⚖️", label: "Legal Partner Sign Up",   sub: "Property lawyers & notaries",            href: "/legal-partner" },
-          { icon: "📣", label: "Advertise on Globperty",  sub: "Featured listings, banners & sponsorship",href: "/advertise" },
-          { icon: "🤝", label: "Partner With Us",         sub: "Relocation, visa & concierge firms",     href: "/partner" },
+          { icon: "🔍", label: "Visa Eligibility Checker",       sub: "Find your best golden visa program",       href: "/visa-checker" },
         ],
       },
     ],
@@ -164,7 +144,7 @@ function SmartPanel({ children, onEnter, onLeave, navItemWidth = 80 }) {
   return (
     <div
       ref={ref}
-      style={{ position: "absolute", top: "100%", left: 0, zIndex: 9999, paddingTop: 8 }}
+      style={{ position: "absolute", top: "100%", left: 0, zIndex: 9999, paddingTop: 18 }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
     >
@@ -182,7 +162,7 @@ function MegaItem({ item }) {
         display: "flex",
         alignItems: "center",
         gap: 9,
-        padding: "6px 8px 6px 6px",
+        padding: "9px 10px 9px 8px",
         borderRadius: 6,
         textDecoration: "none",
         transition: "all 0.15s",
@@ -317,18 +297,18 @@ function MegaPanel({ menu }) {
       border: "1px solid #efefef",
       borderTopColor: "#f0822d",
       minWidth: 700,
-      padding: "14px 20px 16px",
+      padding: "20px 24px 20px",
     }}>
       {menu.sections.map((section, si) => (
-        <div key={si} style={{ marginBottom: si < menu.sections.length - 1 ? 12 : 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+        <div key={si} style={{ marginBottom: si < menu.sections.length - 1 ? 20 : 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#f0822d", flexShrink: 0 }} />
             <span style={{ fontSize: 9.5, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1 }}>
               {section.title}
             </span>
             <div style={{ flex: 1, height: 1, background: "#f0f0f0" }} />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.cols}, 1fr)`, gap: "1px 4px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: `repeat(${section.cols}, 1fr)`, gap: "6px 12px" }}>
             {section.items.map((item, ii) => <MegaItem key={ii} item={item} />)}
           </div>
         </div>

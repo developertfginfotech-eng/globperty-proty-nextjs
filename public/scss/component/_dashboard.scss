@@ -12,7 +12,7 @@
     transition: all 0.4s ease;
   }
   .main-content-inner {
-    padding: 111px 56px 0;
+    padding: 30px 56px 0;
     &.style-2 {
       width: 100%;
     }
@@ -118,7 +118,7 @@
   position: fixed;
   min-width: 304px;
   background: var(--White);
-  top: 78px;
+  top: 0;
   padding: 32px;
   overflow-y: auto;
   z-index: 998;

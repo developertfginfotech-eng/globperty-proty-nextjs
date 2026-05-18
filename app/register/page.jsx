@@ -1,105 +1,55 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import Header1 from "@/components/headers/Header1";
 import { register } from "@/utils/authApi";
 import { useRouter } from "next/navigation";
 
 const COUNTRIES = [
-  "UAE", "USA", "UK", "Australia", "Canada", "Portugal", "Turkey", "Cyprus",
-  "Malta", "Hungary", "Latvia", "Philippines", "Malaysia", "Singapore", "India",
-  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia",
-  "Austria", "Azerbaijan", "Bahrain", "Bangladesh", "Belarus", "Belgium", "Bolivia",
-  "Bosnia", "Brazil", "Bulgaria", "Cambodia", "Cameroon", "Chile", "China", "Colombia",
-  "Congo", "Costa Rica", "Croatia", "Cuba", "Czech Republic", "Denmark",
-  "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Estonia", "Ethiopia",
-  "Finland", "France", "Georgia", "Germany", "Ghana", "Greece", "Guatemala",
-  "Honduras", "Hong Kong", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
-  "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait",
-  "Kyrgyzstan", "Lebanon", "Libya", "Lithuania", "Luxembourg", "Macau",
-  "Maldives", "Mauritius", "Mexico", "Moldova", "Mongolia", "Morocco",
-  "Mozambique", "Myanmar", "Nepal", "Netherlands", "New Zealand", "Nicaragua",
-  "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Paraguay",
-  "Peru", "Poland", "Qatar", "Romania", "Russia", "Saudi Arabia", "Senegal",
-  "Serbia", "Slovakia", "Slovenia", "Somalia", "South Africa", "South Korea",
-  "Spain", "Sri Lanka", "Sudan", "Sweden", "Switzerland", "Syria", "Taiwan",
-  "Tajikistan", "Tanzania", "Thailand", "Tunisia", "Turkmenistan", "Uganda",
-  "Ukraine", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zimbabwe",
+  "UAE", "USA", "Portugal", "Canada", "Australia",
+  "Turkey", "Cyprus", "Malta", "Hungary", "Latvia",
+  "Philippines", "Malaysia",
 ];
 const COUNTRY_CODES = {
-  UAE: "+971", USA: "+1", UK: "+44", Australia: "+61", Canada: "+1",
-  Portugal: "+351", Turkey: "+90", Cyprus: "+357", Malta: "+356", Hungary: "+36",
-  Latvia: "+371", Philippines: "+63", Malaysia: "+60", Singapore: "+65", India: "+91",
-  Afghanistan: "+93", Albania: "+355", Algeria: "+213", Andorra: "+376", Angola: "+244",
-  Argentina: "+54", Armenia: "+374", Austria: "+43", Azerbaijan: "+994", Bahrain: "+973",
-  Bangladesh: "+880", Belarus: "+375", Belgium: "+32", Bolivia: "+591", Bosnia: "+387",
-  Brazil: "+55", Bulgaria: "+359", Cambodia: "+855", Cameroon: "+237", Chile: "+56",
-  China: "+86", Colombia: "+57", Congo: "+243", "Costa Rica": "+506", Croatia: "+385",
-  Cuba: "+53", "Czech Republic": "+420", Denmark: "+45", "Dominican Republic": "+1-809",
-  Ecuador: "+593", Egypt: "+20", "El Salvador": "+503", Estonia: "+372", Ethiopia: "+251",
-  Finland: "+358", France: "+33", Georgia: "+995", Germany: "+49", Ghana: "+233",
-  Greece: "+30", Guatemala: "+502", Honduras: "+504", "Hong Kong": "+852",
-  Indonesia: "+62", Iran: "+98", Iraq: "+964", Ireland: "+353", Israel: "+972",
-  Italy: "+39", Jamaica: "+1-876", Japan: "+81", Jordan: "+962", Kazakhstan: "+7",
-  Kenya: "+254", Kuwait: "+965", Kyrgyzstan: "+996", Lebanon: "+961", Libya: "+218",
-  Lithuania: "+370", Luxembourg: "+352", Macau: "+853", Maldives: "+960",
-  Mauritius: "+230", Mexico: "+52", Moldova: "+373", Mongolia: "+976", Morocco: "+212",
-  Mozambique: "+258", Myanmar: "+95", Nepal: "+977", Netherlands: "+31",
-  "New Zealand": "+64", Nicaragua: "+505", Nigeria: "+234", Norway: "+47", Oman: "+968",
-  Pakistan: "+92", Palestine: "+970", Panama: "+507", Paraguay: "+595", Peru: "+51",
-  Poland: "+48", Qatar: "+974", Romania: "+40", Russia: "+7", "Saudi Arabia": "+966",
-  Senegal: "+221", Serbia: "+381", Slovakia: "+421", Slovenia: "+386", Somalia: "+252",
-  "South Africa": "+27", "South Korea": "+82", Spain: "+34", "Sri Lanka": "+94",
-  Sudan: "+249", Sweden: "+46", Switzerland: "+41", Syria: "+963", Taiwan: "+886",
-  Tajikistan: "+992", Tanzania: "+255", Thailand: "+66", Tunisia: "+216",
-  Turkmenistan: "+993", Uganda: "+256", Ukraine: "+380", Uruguay: "+598",
-  Uzbekistan: "+998", Venezuela: "+58", Vietnam: "+84", Yemen: "+967", Zimbabwe: "+263",
+  UAE: "+971", USA: "+1", Portugal: "+351", Canada: "+1", Australia: "+61",
+  Turkey: "+90", Cyprus: "+357", Malta: "+356", Hungary: "+36", Latvia: "+371",
+  Philippines: "+63", Malaysia: "+60",
 };
 
-const UserIcon = () => (
-  <svg className="icon" width={18} height={18} viewBox="0 0 18 18" fill="none">
-    <path d="M13.4869 14.0435C12.9628 13.3497 12.2848 12.787 11.5063 12.3998C10.7277 12.0126 9.86989 11.8115 9.00038 11.8123C8.13086 11.8115 7.27304 12.0126 6.49449 12.3998C5.71594 12.787 5.03793 13.3497 4.51388 14.0435M13.4869 14.0435C14.5095 13.1339 15.2307 11.9349 15.5563 10.6056C15.8818 9.27625 15.7956 7.87934 15.309 6.60014C14.8224 5.32093 13.9584 4.21986 12.8317 3.44295C11.7049 2.66604 10.3686 2.25 9 2.25C7.63137 2.25 6.29508 2.66604 5.16833 3.44295C4.04158 4.21986 3.17762 5.32093 2.69103 6.60014C2.20443 7.87934 2.11819 9.27625 2.44374 10.6056C2.76929 11.9349 3.49125 13.1339 4.51388 14.0435M13.4869 14.0435C12.2524 15.1447 10.6546 15.7521 9.00038 15.7498C7.3459 15.7523 5.74855 15.1448 4.51388 14.0435M11.2504 7.31228C11.2504 7.90902 11.0133 8.48131 10.5914 8.90327C10.1694 9.32523 9.59711 9.56228 9.00038 9.56228C8.40364 9.56228 7.83134 9.32523 7.40939 8.90327C6.98743 8.48131 6.75038 7.90902 6.75038 7.31228C6.75038 6.71554 6.98743 6.14325 7.40939 5.72129C7.83134 5.29933 8.40364 5.06228 9.00038 5.06228C9.59711 5.06228 10.1694 5.29933 10.5914 5.72129C11.0133 6.14325 11.2504 6.71554 11.2504 7.31228Z" stroke="#A3ABB0" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-const EmailIcon = () => (
-  <svg className="icon" width={18} height={18} viewBox="0 0 18 18" fill="none">
-    <path d="M16.3125 5.0625V12.9375C16.3125 13.3851 16.1347 13.8143 15.8182 14.1307C15.5018 14.4472 15.0726 14.625 14.625 14.625H3.375C2.92745 14.625 2.49822 14.4472 2.18176 14.1307C1.86529 13.8143 1.6875 13.3851 1.6875 12.9375V5.0625M16.3125 5.0625C16.3125 4.61495 16.1347 4.18573 15.8182 3.86926C15.5018 3.55279 15.0726 3.375 14.625 3.375H3.375C2.92745 3.375 2.49822 3.55279 2.18176 3.86926C1.86529 4.18573 1.6875 4.61495 1.6875 5.0625M16.3125 5.0625V5.24475C16.3125 5.53286 16.2388 5.81618 16.0983 6.06772C15.9578 6.31926 15.7553 6.53065 15.51 6.68175L9.885 10.143C9.61891 10.3069 9.31252 10.3937 9 10.3937C8.68748 10.3937 8.38109 10.3069 8.115 10.143L2.49 6.6825C2.24469 6.5314 2.04215 6.32001 1.90168 6.06847C1.7612 5.81693 1.68747 5.53361 1.6875 5.2455V5.0625" stroke="#A3ABB0" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-const LockIcon = () => (
-  <svg className="icon" width={18} height={18} viewBox="0 0 18 18" fill="none">
-    <path d="M12.375 7.875V5.0625C12.375 4.16739 12.0194 3.30895 11.3865 2.67601C10.7535 2.04308 9.89511 1.6875 9 1.6875C8.10489 1.6875 7.24645 2.04308 6.61351 2.67601C5.98058 3.30895 5.625 4.16739 5.625 5.0625V7.875M5.0625 16.3125H12.9375C13.3851 16.3125 13.8143 16.1347 14.1307 15.8182C14.4472 15.5018 14.625 15.0726 14.625 14.625V9.5625C14.625 9.11495 14.4472 8.68573 14.1307 8.36926C13.8143 8.05279 13.3851 7.875 12.9375 7.875H5.0625C4.61495 7.875 4.18573 8.05279 3.86926 8.36926C3.55279 8.68573 3.375 9.11495 3.375 9.5625V14.625C3.375 15.0726 3.55279 15.5018 3.86926 15.8182C4.18573 16.1347 4.61495 16.3125 5.0625 16.3125Z" stroke="#A3ABB0" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
 const EyeIcon = ({ open }) => open ? (
-  <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#A3ABB0" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+  <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
   </svg>
 ) : (
-  <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#A3ABB0" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+  <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
     <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>
   </svg>
 );
+
+const STATS = [
+  { value: "50K+", label: "Active Buyers" },
+  { value: "12",   label: "Countries" },
+  { value: "Free", label: "To Join" },
+];
 
 const AGENT_SECTIONS = [
   {
     title: "AGENTS & DEVELOPERS",
     items: [
-      { icon: "📋", label: "List Your Property",      sub: "Free during launch phase",           href: "/add-property" },
-      { icon: "👤", label: "Create Agent Profile",    sub: "Verified badge & public profile",     href: "/create-agent-profile" },
-      { icon: "📊", label: "Agent Dashboard",         sub: "Manage listings, leads & analytics",  href: "/dashboard" },
-      { icon: "📦", label: "Developer Packages",      sub: "Promote entire projects & launches",  href: "/developer-packages" },
-      { icon: "💡", label: "Buy Leads",               sub: "Pay per verified buyer lead",          href: "/buy-leads" },
-      { icon: "🎪", label: "Exhibit at Virtual Expo", sub: "Present to global buyers live",        href: "/virtual-expo" },
+      { label: "List Your Property",      sub: "Free during launch phase",           href: "/add-property" },
+      { label: "Create Agent Profile",    sub: "Verified badge & public profile",     href: "/create-agent-profile" },
+      { label: "Agent Dashboard",         sub: "Manage listings, leads & analytics",  href: "/dashboard" },
+      { label: "Developer Packages",      sub: "Promote entire projects & launches",  href: "/developer-packages" },
+      { label: "Buy Leads",               sub: "Pay per verified buyer lead",          href: "/buy-leads" },
+      { label: "Exhibit at Virtual Expo", sub: "Present to global buyers live",        href: "/virtual-expo" },
     ],
   },
   {
     title: "BUSINESS PARTNERS",
     items: [
-      { icon: "🏦", label: "Finance Partner Sign Up", sub: "Banks, mortgage & insurance firms",   href: "/finance-partner" },
-      { icon: "⚖️", label: "Legal Partner Sign Up",   sub: "Property lawyers & notaries",         href: "/legal-partner" },
-      { icon: "📣", label: "Advertise on Globperty",  sub: "Featured listings, banners & sponsorship", href: "/advertise" },
-      { icon: "🤝", label: "Partner With Us",         sub: "Relocation, visa & concierge firms",  href: "/partner" },
+      { label: "Finance Partner Sign Up", sub: "Banks, mortgage & insurance firms",        href: "/finance-partner" },
+      { label: "Legal Partner Sign Up",   sub: "Property lawyers & notaries",              href: "/legal-partner" },
+      { label: "Advertise on Globperty",  sub: "Featured listings, banners & sponsorship", href: "/advertise" },
+      { label: "Partner With Us",         sub: "Relocation, visa & concierge firms",       href: "/partner" },
     ],
   },
 ];
@@ -140,131 +90,210 @@ export default function RegisterPage() {
 
         {/* Left panel */}
         <div style={{
-          flex: "0 0 42%",
-          backgroundImage: "url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80')",
+          flex: "0 0 44%",
+          backgroundImage: "url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "relative",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "60px 48px",
+          justifyContent: "space-between",
+          padding: "44px 48px",
+          overflowY: "auto",
+          overflowX: "hidden",
         }}>
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(15,23,42,0.88) 0%, rgba(15,32,39,0.82) 100%)" }} />
+          {/* Gradient overlay */}
+          <div style={{ position: "fixed", top: 0, left: 0, width: "44%", height: "100%", background: "linear-gradient(160deg, rgba(10,18,35,0.93) 0%, rgba(20,40,50,0.85) 60%, rgba(240,130,45,0.18) 100%)", pointerEvents: "none", zIndex: 0 }} />
+
+          {/* Top: Logo */}
           <div style={{ position: "relative", zIndex: 1 }}>
-            <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 40, textDecoration: "none" }}>
-              <span style={{ fontSize: 22, fontWeight: 800, color: "#fff", letterSpacing: "-0.5px" }}>Globperty</span>
+            <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+              </div>
+              <span style={{ fontSize: 20, fontWeight: 800, color: "#fff", letterSpacing: "-0.3px" }}>Globperty</span>
             </Link>
-            <h2 style={{ fontSize: 24, fontWeight: 800, color: "#fff", lineHeight: 1.3, marginBottom: 8 }}>
-              Start Your Journey with<br />
-              <span style={{ color: "#f0822d" }}>Globperty Today</span>
-            </h2>
-            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", marginBottom: 20, lineHeight: 1.6 }}>
-              Join our global real estate platform and reach buyers worldwide.
-            </p>
+          </div>
+
+          {/* Middle: Headline + features */}
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <div style={{ marginBottom: 32 }}>
+              <h2 style={{ fontSize: 30, fontWeight: 800, color: "#fff", lineHeight: 1.25, marginBottom: 12 }}>
+                Your Global<br />
+                <span style={{ color: "#f0822d" }}>Real Estate Platform</span>
+              </h2>
+              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, maxWidth: 320 }}>
+                Join 50,000+ buyers, sellers and agents across 12 countries. Free to register.
+              </p>
+            </div>
+
+            {/* Stats row */}
+            <div style={{ display: "flex", gap: 12, marginBottom: 32 }}>
+              {STATS.map(s => (
+                <div key={s.value} style={{ flex: 1, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, padding: "14px 12px", textAlign: "center" }}>
+                  <div style={{ fontSize: 20, fontWeight: 800, color: "#f0822d", lineHeight: 1 }}>{s.value}</div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.55)", marginTop: 4, fontWeight: 500 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Agent & Partner links */}
             {AGENT_SECTIONS.map(section => (
-              <div key={section.title} style={{ marginBottom: 16 }}>
-                <div style={{ fontSize: 10, fontWeight: 800, color: "#f0822d", letterSpacing: 1.2, textTransform: "uppercase", marginBottom: 10 }}>
+              <div key={section.title} style={{ marginBottom: 14 }}>
+                <div style={{ fontSize: 9.5, fontWeight: 800, color: "#f0822d", letterSpacing: 1.4, textTransform: "uppercase", marginBottom: 8 }}>
                   {section.title}
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                   {section.items.map(item => (
-                    <Link key={item.href} href={item.href} target="_blank" style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", borderRadius: 8, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", textDecoration: "none", transition: "background 0.15s" }}
-                      onMouseEnter={e => e.currentTarget.style.background = "rgba(240,130,45,0.15)"}
-                      onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}
+                    <Link key={item.href} href={item.href} target="_blank"
+                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 14px", borderRadius: 9, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", textDecoration: "none", transition: "all 0.15s" }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(240,130,45,0.14)"; e.currentTarget.style.borderColor = "rgba(240,130,45,0.35)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)"; }}
                     >
                       <div>
                         <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
-                        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.3 }}>{item.sub}</div>
+                        <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.45)", lineHeight: 1.3 }}>{item.sub}</div>
                       </div>
+                      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 18l6-6-6-6"/>
+                      </svg>
                     </Link>
                   ))}
                 </div>
               </div>
             ))}
           </div>
+
+          {/* Bottom: Already have account */}
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)" }}>
+              Already have an account?{" "}
+              <Link href="/login" style={{ color: "#f0822d", fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
+            </p>
+          </div>
         </div>
 
         {/* Right panel */}
-        <div style={{ flex: 1, background: "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
-          <div style={{ width: "100%", maxWidth: 440 }}>
-            <div style={{ background: "#fff", borderRadius: 16, boxShadow: "0 4px 30px rgba(0,0,0,0.08)", padding: "36px 36px" }}>
-              <h3 style={{ fontSize: 24, fontWeight: 800, color: "#111827", marginBottom: 6 }}>Sign Up</h3>
-              <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 24 }}>Create your free Globperty account.</p>
+        <div style={{ flex: 1, background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
+          <div style={{ width: "100%", maxWidth: 430 }}>
+
+            {/* Header */}
+            <div style={{ marginBottom: 28, textAlign: "center" }}>
+              <h3 style={{ fontSize: 26, fontWeight: 800, color: "#111827", marginBottom: 6 }}>Create Account</h3>
+              <p style={{ fontSize: 14, color: "#9ca3af" }}>Free forever. No credit card required.</p>
+            </div>
+
+            <div style={{ background: "#fff", borderRadius: 20, boxShadow: "0 4px 40px rgba(0,0,0,0.07)", border: "1px solid #f0f0f0", padding: "32px 32px" }}>
 
               {error && (
                 <div style={{ color: "#dc3545", fontSize: 13, marginBottom: 16, padding: "10px 14px", background: "#fff2f2", borderRadius: 8, border: "1px solid #fecaca" }}>{error}</div>
               )}
 
               <form onSubmit={handleSubmit}>
-                <fieldset className="box-fieldset" style={{ marginBottom: 14 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>I am a</label>
-                  <div style={{ display: "flex", gap: 8 }}>
-                    {[{ value: "buyer", label: "Buyer" }, { value: "seller", label: "Seller" }].map(opt => (
+
+                {/* Role selector */}
+                <div style={{ marginBottom: 18 }}>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", display: "block", marginBottom: 8, textTransform: "uppercase", letterSpacing: 0.8 }}>I am a</label>
+                  <div style={{ display: "flex", gap: 8, background: "#f3f4f6", borderRadius: 12, padding: 4 }}>
+                    {[
+                      { value: "buyer",  label: "Buyer" },
+                      { value: "seller", label: "Seller" },
+                      { value: "broker", label: "Agent" },
+                    ].map(opt => (
                       <button key={opt.value} type="button" onClick={() => setForm(f => ({ ...f, role: opt.value }))}
-                        style={{ flex: 1, padding: "10px", borderRadius: 8, border: `2px solid ${form.role === opt.value ? "#f0822d" : "#e5e7eb"}`, background: form.role === opt.value ? "#fff7ed" : "#f9fafb", cursor: "pointer", fontSize: 13, fontWeight: 700, color: form.role === opt.value ? "#f0822d" : "#374151" }}>
+                        style={{
+                          flex: 1, padding: "9px 8px", borderRadius: 9, border: "none",
+                          background: form.role === opt.value ? "#fff" : "transparent",
+                          boxShadow: form.role === opt.value ? "0 1px 6px rgba(0,0,0,0.1)" : "none",
+                          cursor: "pointer", fontSize: 13, fontWeight: 700,
+                          color: form.role === opt.value ? "#f0822d" : "#9ca3af",
+                          transition: "all 0.15s",
+                        }}>
                         {opt.label}
                       </button>
                     ))}
                   </div>
-                </fieldset>
-
-                <fieldset className="box-fieldset" style={{ marginBottom: 14 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Full Name</label>
-                  <input type="text" className="form-control" name="name" placeholder="Enter your full name" value={form.name} onChange={handleChange} required />
-                </fieldset>
-
-                <fieldset className="box-fieldset" style={{ marginBottom: 14 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Email address</label>
-                  <input type="email" className="form-control" name="email" placeholder="your@email.com" value={form.email} onChange={handleChange} required />
-                </fieldset>
-
-                <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
-                  <fieldset className="box-fieldset" style={{ flex: "0 0 160px" }}>
-                    <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Country</label>
-                    <select className="form-control" name="country" value={form.country} onChange={handleChange} style={{ fontSize: 13, fontFamily: "inherit", height: 44 }}>
-                      {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
-                  </fieldset>
-                  <fieldset className="box-fieldset" style={{ flex: 1 }}>
-                    <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Phone</label>
-                    <div style={{ display: "flex", alignItems: "center", border: "1px solid #e5e7eb", borderRadius: 8, background: "#f9fafb", overflow: "hidden" }}>
-                      <span style={{ padding: "0 10px", color: "#374151", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", borderRight: "1px solid #e5e7eb", height: "100%", display: "flex", alignItems: "center", minHeight: 44 }}>{countryCode}</span>
-                      <input type="tel" name="phone" placeholder="Phone number" value={form.phone} onChange={handleChange} style={{ flex: 1, border: "none", outline: "none", background: "transparent", padding: "0 12px", fontSize: 13, fontFamily: "inherit", height: 44 }} />
-                    </div>
-                  </fieldset>
                 </div>
 
-                <fieldset className="box-fieldset" style={{ marginBottom: 14 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Password</label>
+                {/* Full Name */}
+                <div style={{ marginBottom: 14 }}>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", display: "block", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.8 }}>Full Name</label>
+                  <input type="text" className="form-control" name="name" placeholder="Your full name" value={form.name} onChange={handleChange} required
+                    style={{ borderRadius: 10, border: "1.5px solid #e5e7eb", fontSize: 14, height: 46 }} />
+                </div>
+
+                {/* Email */}
+                <div style={{ marginBottom: 14 }}>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", display: "block", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.8 }}>Email Address</label>
+                  <input type="email" className="form-control" name="email" placeholder="your@email.com" value={form.email} onChange={handleChange} required
+                    style={{ borderRadius: 10, border: "1.5px solid #e5e7eb", fontSize: 14, height: 46 }} />
+                </div>
+
+                {/* Country + Phone */}
+                <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
+                  <div style={{ flex: "0 0 150px" }}>
+                    <label style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", display: "block", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.8 }}>Country</label>
+                    <select className="form-control" name="country" value={form.country} onChange={handleChange}
+                      style={{ borderRadius: 10, border: "1.5px solid #e5e7eb", fontSize: 13, height: 46, fontFamily: "inherit" }}>
+                      {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <label style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", display: "block", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.8 }}>Phone</label>
+                    <div style={{ display: "flex", alignItems: "center", border: "1.5px solid #e5e7eb", borderRadius: 10, background: "#fff", overflow: "hidden", height: 46 }}>
+                      <span style={{ padding: "0 10px", color: "#374151", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", borderRight: "1.5px solid #e5e7eb", height: "100%", display: "flex", alignItems: "center" }}>{countryCode}</span>
+                      <input type="tel" name="phone" placeholder="Phone number" value={form.phone} onChange={handleChange}
+                        style={{ flex: 1, border: "none", outline: "none", background: "transparent", padding: "0 12px", fontSize: 13, fontFamily: "inherit", height: "100%" }} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Password */}
+                <div style={{ marginBottom: 14 }}>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", display: "block", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.8 }}>Password</label>
                   <div style={{ position: "relative" }}>
-                    <input type={showPassword ? "text" : "password"} className="form-control" name="password" placeholder="Create a password" value={form.password} onChange={handleChange} required style={{ paddingRight: 42 }} />
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}>
+                    <input type={showPassword ? "text" : "password"} className="form-control" name="password" placeholder="Create a password" value={form.password} onChange={handleChange} required
+                      style={{ borderRadius: 10, border: "1.5px solid #e5e7eb", fontSize: 14, height: 46, paddingRight: 44 }} />
+                    <button type="button" onClick={() => setShowPassword(!showPassword)}
+                      style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
                       <EyeIcon open={showPassword} />
                     </button>
                   </div>
-                </fieldset>
+                </div>
 
-                <fieldset className="box-fieldset" style={{ marginBottom: 20 }}>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Confirm Password</label>
+                {/* Confirm Password */}
+                <div style={{ marginBottom: 22 }}>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", display: "block", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.8 }}>Confirm Password</label>
                   <div style={{ position: "relative" }}>
-                    <input type={showConfirm ? "text" : "password"} className="form-control" name="confirmPassword" placeholder="Confirm password" value={form.confirmPassword} onChange={handleChange} required style={{ paddingRight: 42 }} />
-                    <button type="button" onClick={() => setShowConfirm(!showConfirm)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}>
+                    <input type={showConfirm ? "text" : "password"} className="form-control" name="confirmPassword" placeholder="Confirm password" value={form.confirmPassword} onChange={handleChange} required
+                      style={{ borderRadius: 10, border: "1.5px solid #e5e7eb", fontSize: 14, height: 46, paddingRight: 44 }} />
+                    <button type="button" onClick={() => setShowConfirm(!showConfirm)}
+                      style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex" }}>
                       <EyeIcon open={showConfirm} />
                     </button>
                   </div>
-                </fieldset>
+                </div>
 
-                <button type="submit" className="tf-btn bg-color-primary w-100" disabled={loading} style={{ height: 48, fontSize: 15, fontWeight: 700, borderRadius: 10, marginBottom: 16 }}>
-                  {loading ? "Creating account..." : "Sign Up"}
+                <button type="submit" disabled={loading}
+                  style={{ width: "100%", height: 50, background: "linear-gradient(90deg, #f0822d, #e56c1a)", border: "none", borderRadius: 12, fontSize: 15, fontWeight: 700, color: "#fff", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1, marginBottom: 16, letterSpacing: 0.3 }}>
+                  {loading ? "Creating account…" : "Create Free Account"}
                 </button>
 
-                <p style={{ textAlign: "center", fontSize: 13, color: "#6b7280" }}>
+                <p style={{ textAlign: "center", fontSize: 13, color: "#9ca3af" }}>
                   Already have an account?{" "}
-                  <Link href="/login" style={{ color: "#f0822d", fontWeight: 600, textDecoration: "none" }}>Login</Link>
+                  <Link href="/login" style={{ color: "#f0822d", fontWeight: 600, textDecoration: "none" }}>Sign in</Link>
                 </p>
               </form>
             </div>
+
+            <p style={{ textAlign: "center", fontSize: 11, color: "#d1d5db", marginTop: 20, lineHeight: 1.6 }}>
+              By registering you agree to our{" "}
+              <Link href="/terms" style={{ color: "#9ca3af", textDecoration: "underline" }}>Terms of Service</Link>
+              {" "}and{" "}
+              <Link href="/privacy" style={{ color: "#9ca3af", textDecoration: "underline" }}>Privacy Policy</Link>
+            </p>
           </div>
         </div>
 

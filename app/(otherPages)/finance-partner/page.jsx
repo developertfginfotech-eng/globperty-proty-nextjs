@@ -10,7 +10,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=1400&q=80",
-  badge: "🏦 Finance Partners — Banks, Mortgage & Insurance",
+  badge: "Finance Partners — Banks, Mortgage & Insurance",
   titleWhite: "Finance Partner ",
   titleOrange: "Sign Up",
   tagline: "Connect your mortgage, banking or insurance products with 50,000+ verified property buyers actively searching across 12 countries. Co-branded placement and qualified referrals.",
@@ -21,9 +21,9 @@ const HERO = {
     { value: "Verified", label: "Buyer Network" },
     { value: "Co-Brand", label: "Placement" },
   ],
-  primaryCta: { href: "/contact", label: "🏦 Become a Finance Partner" },
-  secondaryCta: { href: "/register", label: "📋 Register Your Firm" },
-  snapshotTitle: "🏦 Partnership Benefits",
+  primaryCta: { href: "/contact", label: "Become a Finance Partner"},
+  secondaryCta: { href: "/register", label: "Register Your Firm"},
+  snapshotTitle: "Partnership Benefits",
   snapshot: [
     { key: "Partner Listing",      value: "Finance Directory",     color: "#f0822d" },
     { key: "Co-Branded Tools",     value: "Mortgage Calculator",   color: "#16b286" },

@@ -10,7 +10,7 @@ const VISA = {
   country: "Latvia",
   hero: {
     bgImage: "https://images.unsplash.com/photo-1562629648-cf9b4ac0d580?w=1400&q=80",
-    badge: "🇱🇻 Latvia Residency by Investment",
+  badge: "Latvia Residency by Investment",
     titleWhite: "Latvia Residency ",
     titleOrange: "by Investment",
     tagline: "One of Europe's most affordable EU residency routes. Obtain Latvian residency through property investment from €250,000 with Schengen zone access.",
@@ -21,9 +21,9 @@ const VISA = {
       { value: "EU", label: "Member State" },
       { value: "Schengen", label: "Access" },
     ],
-    primaryCta: { href: "/contact", label: "📞 Speak to a Visa Expert" },
-    secondaryCta: { href: "/visa-checker", label: "✅ Check My Eligibility" },
-    snapshotTitle: "🇱🇻 Residency at a Glance",
+  primaryCta: { href: "/contact", label: "Speak to a Visa Expert"},
+  secondaryCta: { href: "/visa-checker", label: "Check My Eligibility"},
+  snapshotTitle: "Residency at a Glance",
     snapshot: [
       { key: "Min. Property Value",   value: "€250,000",           color: "#f0822d" },
       { key: "State Duty",            value: "5% of property value", color: "#16b286" },

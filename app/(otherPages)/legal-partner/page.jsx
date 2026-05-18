@@ -10,7 +10,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1400&q=80",
-  badge: "⚖️ Legal Partners — Property Lawyers & Notaries",
+  badge: "Legal Partners — Property Lawyers & Notaries",
   titleWhite: "Legal Partner ",
   titleOrange: "Sign Up",
   tagline: "Connect your property law firm or notary practice with international buyers needing legal services across 12 countries. Verified referrals from active buyers.",
@@ -21,9 +21,9 @@ const HERO = {
     { value: "Legal", label: "Service Directory" },
     { value: "Verified", label: "Referrals" },
   ],
-  primaryCta: { href: "/contact", label: "⚖️ Become a Legal Partner" },
-  secondaryCta: { href: "/register", label: "📋 Register Your Firm" },
-  snapshotTitle: "⚖️ Partnership Benefits",
+  primaryCta: { href: "/contact", label: "Become a Legal Partner"},
+  secondaryCta: { href: "/register", label: "Register Your Firm"},
+  snapshotTitle: "Partnership Benefits",
   snapshot: [
     { key: "Legal Directory",      value: "Featured Listing",      color: "#f0822d" },
     { key: "Buyer Stage",          value: "Due Diligence Phase",   color: "#16b286" },

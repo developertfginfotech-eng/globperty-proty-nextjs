@@ -10,7 +10,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1400&q=80",
-  badge: "💡 Buy Leads — Verified Buyer Enquiries",
+  badge: "Buy Leads — Verified Buyer Enquiries",
   titleWhite: "Buy Verified ",
   titleOrange: "Buyer Leads",
   tagline: "Every lead is KYC-verified and budget-qualified. Pay only for real, identity-confirmed buyers who match your property type and price range.",
@@ -21,9 +21,9 @@ const HERO = {
     { value: "12", label: "Countries" },
     { value: "Real-Time", label: "Delivery" },
   ],
-  primaryCta: { href: "/contact", label: "💡 Start Buying Leads" },
-  secondaryCta: { href: "/register", label: "🔑 Create Agent Account" },
-  snapshotTitle: "💡 Lead Quality Guarantee",
+  primaryCta: { href: "/contact", label: "Start Buying Leads"},
+  secondaryCta: { href: "/register", label: "Create Agent Account"},
+  snapshotTitle: "Lead Quality Guarantee",
   snapshot: [
     { key: "Identity Verified",    value: "KYC Confirmed",         color: "#f0822d" },
     { key: "Budget Confirmed",     value: "Yes — Self-Declared",   color: "#16b286" },

@@ -10,7 +10,7 @@ const VISA = {
   country: "Malaysia",
   hero: {
     bgImage: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1400&q=80",
-    badge: "🇲🇾 Malaysia MM2H Visa",
+  badge: "Malaysia MM2H Visa",
     titleWhite: "Malaysia ",
     titleOrange: "MM2H Visa",
     tagline: "Malaysia's My Second Home (MM2H) programme offers a 5-year renewable long-stay visa for retirees, investors and property owners seeking an affordable Asian base.",
@@ -21,9 +21,9 @@ const VISA = {
       { value: "Renewable", label: "Indefinitely" },
       { value: "Asia", label: "Strategic Base" },
     ],
-    primaryCta: { href: "/contact", label: "📞 Speak to a Visa Expert" },
-    secondaryCta: { href: "/visa-checker", label: "✅ Check My Eligibility" },
-    snapshotTitle: "🇲🇾 MM2H at a Glance",
+  primaryCta: { href: "/contact", label: "Speak to a Visa Expert"},
+  secondaryCta: { href: "/visa-checker", label: "Check My Eligibility"},
+  snapshotTitle: "MM2H at a Glance",
     snapshot: [
       { key: "Min. Bank Balance",   value: "RM 1,500,000 (≈$320K)",  color: "#f0822d" },
       { key: "Fixed Deposit",       value: "RM 1,000,000",            color: "#16b286" },

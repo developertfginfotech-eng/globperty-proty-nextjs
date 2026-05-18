@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../public/main.scss";
 import "odometer/themes/odometer-theme-default.css"; // Import theme
 import "photoswipe/style.css";
@@ -15,6 +15,11 @@ import CopilotFab from "@/components/chat/CopilotFab";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("authToken"));
+  }, [pathname]);
   if (typeof window !== "undefined") {
     import("bootstrap/dist/js/bootstrap.esm").then((module) => {
       // Module is imported, you can access any exported functionality if
@@ -81,8 +86,12 @@ export default function RootLayout({ children }) {
         <SettingsHandler />
         <Login />
         <Register />
-        <ChatWidget />
-        <CopilotFab />
+        {isLoggedIn && pathname !== "/login" && pathname !== "/register" && (
+          <>
+            <ChatWidget />
+            <CopilotFab />
+          </>
+        )}
       </body>
     </html>
   );

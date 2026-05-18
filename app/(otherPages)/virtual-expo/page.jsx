@@ -10,7 +10,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1400&q=80",
-  badge: "🎪 Virtual Property Expo — Live Global Reach",
+  badge: "Virtual Property Expo — Live Global Reach",
   titleWhite: "Exhibit at the ",
   titleOrange: "Virtual Expo",
   tagline: "Present your property project live to thousands of pre-qualified international buyers. Interactive Q&A, real-time enquiries and global brand exposure — from anywhere in the world.",
@@ -21,9 +21,9 @@ const HERO = {
     { value: "12", label: "Countries" },
     { value: "Real-Time", label: "Enquiries" },
   ],
-  primaryCta: { href: "/contact", label: "🎪 Reserve Your Expo Slot" },
-  secondaryCta: { href: "/register", label: "📋 Register as Exhibitor" },
-  snapshotTitle: "🎪 Expo at a Glance",
+  primaryCta: { href: "/contact", label: "Reserve Your Expo Slot"},
+  secondaryCta: { href: "/register", label: "Register as Exhibitor"},
+  snapshotTitle: "Expo at a Glance",
   snapshot: [
     { key: "Session Format",       value: "Live + Recorded",       color: "#f0822d" },
     { key: "Audience",             value: "Verified Buyers Only",  color: "#16b286" },

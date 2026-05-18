@@ -10,7 +10,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1400&q=80",
-  badge: "📣 Advertise — Featured Placements & Sponsorship",
+  badge: "Advertise — Featured Placements & Sponsorship",
   titleWhite: "Advertise on ",
   titleOrange: "Globperty",
   tagline: "Put your brand, listing or project in front of 50,000+ verified international property buyers. Homepage banners, featured listings, country-targeted ads and sponsorship packages.",
@@ -21,9 +21,9 @@ const HERO = {
     { value: "Targeted", label: "by Country" },
     { value: "Premium", label: "Placement" },
   ],
-  primaryCta: { href: "/contact", label: "📣 Get Advertising Rates" },
-  secondaryCta: { href: "/register", label: "📋 Register Your Account" },
-  snapshotTitle: "📣 Ad Formats",
+  primaryCta: { href: "/contact", label: "Get Advertising Rates"},
+  secondaryCta: { href: "/register", label: "Register Your Account"},
+  snapshotTitle: "Ad Formats",
   snapshot: [
     { key: "Homepage Banner",      value: "Hero + Mid-Page",       color: "#f0822d" },
     { key: "Featured Listings",    value: "Top of Category",       color: "#16b286" },

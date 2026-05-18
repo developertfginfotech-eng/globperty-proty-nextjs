@@ -10,7 +10,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1400&q=80",
-  badge: "🤝 Partner With Us — Relocation & Concierge Firms",
+  badge: "Partner With Us — Relocation & Concierge Firms",
   titleWhite: "Partner ",
   titleOrange: "With Us",
   tagline: "Join the Globperty partner network as a relocation, visa, concierge or property management firm. Get referrals from international buyers who need end-to-end support.",
@@ -21,9 +21,9 @@ const HERO = {
     { value: "End-to-End", label: "Buyer Support" },
     { value: "Referrals", label: "Direct to You" },
   ],
-  primaryCta: { href: "/contact", label: "🤝 Become a Partner" },
-  secondaryCta: { href: "/register", label: "📋 Register Your Business" },
-  snapshotTitle: "🤝 Partner Types",
+  primaryCta: { href: "/contact", label: "Become a Partner"},
+  secondaryCta: { href: "/register", label: "Register Your Business"},
+  snapshotTitle: "Partner Types",
   snapshot: [
     { key: "Relocation Firms",     value: "Welcome",               color: "#f0822d" },
     { key: "Visa Consultants",     value: "Welcome",               color: "#16b286" },

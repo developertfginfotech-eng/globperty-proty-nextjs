@@ -10,7 +10,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1400&q=80",
-  badge: "👤 Agent Profiles — Build Your Brand",
+  badge: "Agent Profiles — Build Your Brand",
   titleWhite: "Create Your Verified ",
   titleOrange: "Agent Profile",
   tagline: "Get a public-facing agent profile with verified badge on Globperty. Showcase your listings, expertise and track record to 50,000+ international property buyers.",
@@ -21,9 +21,9 @@ const HERO = {
     { value: "12", label: "Countries" },
     { value: "24h", label: "Profile Live" },
   ],
-  primaryCta: { href: "/register", label: "👤 Create My Profile — Free" },
-  secondaryCta: { href: "/contact", label: "💬 Talk to Our Team" },
-  snapshotTitle: "👤 Profile Features",
+  primaryCta: { href: "/register", label: "Create My Profile — Free"},
+  secondaryCta: { href: "/contact", label: "Talk to Our Team"},
+  snapshotTitle: "Profile Features",
   snapshot: [
     { key: "Verified Badge",     value: "KYC Verified",       color: "#f0822d" },
     { key: "Public Profile URL", value: "globperty.com/agent/you", color: "#16b286" },

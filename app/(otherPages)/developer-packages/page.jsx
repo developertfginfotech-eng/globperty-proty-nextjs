@@ -10,7 +10,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=80",
-  badge: "📦 Developer Packages — Global Project Promotion",
+  badge: "Developer Packages — Global Project Promotion",
   titleWhite: "Promote Your ",
   titleOrange: "Development Project",
   tagline: "Reach 50,000+ international buyers with your off-plan or completed development. Dedicated project page, AI-matched leads, banner ads and virtual expo presence.",
@@ -21,9 +21,9 @@ const HERO = {
     { value: "AI", label: "Lead Matching" },
     { value: "Live", label: "Virtual Expo" },
   ],
-  primaryCta: { href: "/contact", label: "📦 Get a Developer Package" },
-  secondaryCta: { href: "/register", label: "🏗 Register as Developer" },
-  snapshotTitle: "📦 Package Highlights",
+  primaryCta: { href: "/contact", label: "Get a Developer Package"},
+  secondaryCta: { href: "/register", label: "Register as Developer"},
+  snapshotTitle: "Package Highlights",
   snapshot: [
     { key: "Dedicated Project Page",  value: "Branded + SEO",         color: "#f0822d" },
     { key: "AI Buyer Matching",       value: "Budget + Location",     color: "#16b286" },

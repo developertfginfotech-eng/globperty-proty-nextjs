@@ -10,7 +10,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80",
-  badge: "🏠 List Your Property — Free During Launch",
+  badge: "List Your Property — Free During Launch",
   titleWhite: "Reach Global Buyers ",
   titleOrange: "For Free",
   tagline: "List your property on Globperty and connect with 50,000+ verified international buyers across 12 countries. No upfront cost during our launch phase.",
@@ -21,9 +21,9 @@ const HERO = {
     { value: "Free", label: "During Launch" },
     { value: "24h",  label: "Listing Live" },
   ],
-  primaryCta:   { href: "/register", label: "🏠 Start Listing Now — Free" },
-  secondaryCta: { href: "/contact",  label: "💬 Talk to Our Team" },
-  snapshotTitle: "🏠 Who Can List?",
+  primaryCta:  { href: "/register", label: "Start Listing Now — Free"},
+  secondaryCta: { href: "/contact", label: "Talk to Our Team"},
+  snapshotTitle: "Who Can List?",
   snapshot: [
     { key: "Private Sellers",    value: "100% Free",       color: "#f0822d" },
     { key: "Agents & Brokers",   value: "Free + Premium",  color: "#16b286" },

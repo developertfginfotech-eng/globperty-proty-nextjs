@@ -10,7 +10,7 @@ const VISA = {
   country: "Hungary",
   hero: {
     bgImage: "https://images.unsplash.com/photo-1565881606991-789a8dff9ddd?w=1400&q=80",
-    badge: "🇭🇺 Hungary Guest Investor Visa",
+  badge: "Hungary Guest Investor Visa",
     titleWhite: "Hungary Guest ",
     titleOrange: "Investor Visa",
     tagline: "New 2024 programme. Obtain 10-year EU residency in Hungary through property or fund investment from €500,000. Schengen access with minimal stay requirements.",
@@ -21,9 +21,9 @@ const VISA = {
       { value: "2024", label: "Programme Launch" },
       { value: "Schengen", label: "Access" },
     ],
-    primaryCta: { href: "/contact", label: "📞 Speak to a Visa Expert" },
-    secondaryCta: { href: "/visa-checker", label: "✅ Check My Eligibility" },
-    snapshotTitle: "🇭🇺 Visa at a Glance",
+  primaryCta: { href: "/contact", label: "Speak to a Visa Expert"},
+  secondaryCta: { href: "/visa-checker", label: "Check My Eligibility"},
+  snapshotTitle: "Visa at a Glance",
     snapshot: [
       { key: "Min. Property Value",  value: "€500,000",            color: "#f0822d" },
       { key: "Fund Option",          value: "€250,000 (fund)",     color: "#16b286" },
