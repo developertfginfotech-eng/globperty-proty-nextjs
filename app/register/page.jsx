@@ -72,7 +72,7 @@ export default function RegisterPage() {
     setError("");
     try {
       await register({ name: form.name, email: form.email, password: form.password, phone: form.phone, country: form.country, countryCode, role: form.role });
-      if (form.role === "broker" || form.role === "seller") {
+      if (form.role === "seller") {
         window.location.href = "/kyc-property-verification";
       } else {
         window.location.href = "/";
@@ -124,9 +124,6 @@ export default function RegisterPage() {
                 Your Global<br />
                 <span style={{ color: "#f0822d" }}>Real Estate Platform</span>
               </h2>
-              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, maxWidth: 320 }}>
-                Join 50,000+ buyers, sellers and agents across 12 countries. Free to register.
-              </p>
             </div>
 
             {/* Stats row */}
@@ -142,19 +139,19 @@ export default function RegisterPage() {
             {/* Agent & Partner links — display only, not clickable */}
             {AGENT_SECTIONS.map(section => (
               <div key={section.title} style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 9.5, fontWeight: 800, color: "#f0822d", letterSpacing: 1.4, textTransform: "uppercase", marginBottom: 8 }}>
+                <div style={{ fontSize: 11, fontWeight: 800, color: "#f0822d", letterSpacing: 1.4, textTransform: "uppercase", marginBottom: 8 }}>
                   {section.title}
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                   {section.items.map(item => (
                     <div key={item.href}
-                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 14px", borderRadius: 9, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", transition: "all 0.15s", cursor: "default" }}
+                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", borderRadius: 9, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", transition: "all 0.15s", cursor: "default" }}
                       onMouseEnter={e => { e.currentTarget.style.background = "rgba(240,130,45,0.14)"; e.currentTarget.style.borderColor = "rgba(240,130,45,0.35)"; }}
                       onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)"; }}
                     >
                       <div>
-                        <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
-                        <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.45)", lineHeight: 1.3 }}>{item.sub}</div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
+                        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.3 }}>{item.sub}</div>
                       </div>
                     </div>
                   ))}
@@ -197,7 +194,7 @@ export default function RegisterPage() {
                     {[
                       { value: "buyer",  label: "Buyer" },
                       { value: "seller", label: "Seller" },
-                      { value: "broker", label: "Agent" },
+                      { value: "other",  label: "Other" },
                     ].map(opt => (
                       <button key={opt.value} type="button" onClick={() => setForm(f => ({ ...f, role: opt.value }))}
                         style={{

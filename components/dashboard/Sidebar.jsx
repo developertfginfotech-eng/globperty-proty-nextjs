@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
@@ -25,14 +24,13 @@ export default function Sidebar() {
     <div className="wrap-sidebar">
       <div className="sidebar-menu-dashboard">
         <div style={{ padding: "20px 24px 12px", borderBottom: "1px solid #f0f0f0" }}>
-          <Link href="/" style={{ display: "inline-block" }}>
-            <Image
-              src="/images/logo/globperty-logo.svg"
-              alt="Globperty"
-              width={140}
-              height={36}
-              style={{ objectFit: "contain" }}
-            />
+          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
+            <div style={{ width: 34, height: 34, borderRadius: 9, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width={19} height={19} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
+              </svg>
+            </div>
+            <span style={{ fontSize: 17, fontWeight: 800, color: "#111827", letterSpacing: "-0.3px" }}>Globperty</span>
           </Link>
         </div>
         <div className="menu-box">
