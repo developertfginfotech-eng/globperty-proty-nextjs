@@ -109,7 +109,7 @@ export default function Hero() {
     <div
       className="page-title home02"
       style={{
-        backgroundImage: "url('/images/section/page-title-2.jpg')",
+        backgroundImage: "url('/images/banner/luxury-home-night.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "scroll",
