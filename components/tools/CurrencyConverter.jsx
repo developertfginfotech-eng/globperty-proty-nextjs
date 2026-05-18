@@ -46,7 +46,7 @@ export default function CurrencyConverter() {
         <div style={{ background: "#fff", borderRadius: 20, boxShadow: "0 8px 60px rgba(0,0,0,0.12)", overflow: "hidden" }}>
 
           <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", padding: "40px 40px 36px" }}>
-            <div>
+            <div style={{ textAlign: "center" }}>
               <span style={{ display: "inline-block", background: "rgba(240,130,45,0.2)", color: "#f0822d", fontSize: 12, fontWeight: 700, borderRadius: 20, padding: "4px 14px", marginBottom: 14, fontFamily: "inherit", letterSpacing: 0.5 }}>
                 💱 PROPERTY CURRENCY CONVERTER
               </span>
@@ -93,14 +93,14 @@ export default function CurrencyConverter() {
               </div>
             </div>
 
-            <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", borderRadius: 16, padding: "28px 32px", textAlign: "center", marginBottom: 24 }}>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginBottom: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: 1, fontFamily: "inherit" }}>
+            <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", borderRadius: 14, padding: "16px 24px", textAlign: "center", marginBottom: 24, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", fontWeight: 600, textTransform: "uppercase", letterSpacing: 1, fontFamily: "inherit" }}>
                 {parseFloat(amount || 0).toLocaleString()} {from} equals
               </div>
-              <div style={{ fontSize: 44, fontWeight: 900, color: "#f0822d", letterSpacing: -1, fontFamily: "inherit" }}>
-                {convert(amount || 0, from, to)} <span style={{ fontSize: 22, fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>{to}</span>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "#f0822d", letterSpacing: -0.5, fontFamily: "inherit" }}>
+                {convert(amount || 0, from, to)} <span style={{ fontSize: 16, fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>{to}</span>
               </div>
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 12, fontFamily: "inherit" }}>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", fontFamily: "inherit" }}>
                 1 {from} = {convert(1, from, to)} {to} &nbsp;·&nbsp; 1 {to} = {convert(1, to, from)} {from}
               </div>
             </div>
@@ -110,7 +110,7 @@ export default function CurrencyConverter() {
                 Quick Conversions — {amount || 0} {from}
               </div>
               <div className="row g-2">
-                {["USD","EUR","GBP","AED","AUD","INR"].filter(c => c !== from).slice(0, 6).map(c => (
+                {["USD","EUR","GBP","AED","AUD","INR"].filter(c => c !== from).slice(0, 5).map(c => (
                   <div key={c} className="col-4">
                     <div style={{ background: "#f9fafb", border: "1.5px solid #e5e7eb", borderRadius: 12, padding: "14px 16px" }}>
                       <div style={{ fontSize: 11, color: "#9ca3af", fontWeight: 700, marginBottom: 4, fontFamily: "inherit", textTransform: "uppercase", letterSpacing: 0.5 }}>{c}</div>

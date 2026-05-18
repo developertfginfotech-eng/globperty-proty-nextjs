@@ -64,8 +64,7 @@ export default function LoginPage() {
 
   return (
     <div id="wrapper">
-      <Header1 />
-      <div style={{ minHeight: "calc(100vh - 80px)", display: "flex" }}>
+      <div style={{ minHeight: "100vh", display: "flex" }}>
 
         {/* Left panel — dark with features */}
         <div style={{
@@ -131,16 +130,12 @@ export default function LoginPage() {
               <form onSubmit={handleSubmit}>
                 <fieldset className="box-fieldset" style={{ marginBottom: 16 }}>
                   <label htmlFor="login-email" style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 6 }}>Email address</label>
-                  <div className="ip-field">
-                    <UserIcon />
-                    <input type="email" className="form-control" id="login-email" name="email" placeholder="your@email.com" value={form.email} onChange={handleChange} required />
-                  </div>
+                  <input type="email" className="form-control" id="login-email" name="email" placeholder="your@email.com" value={form.email} onChange={handleChange} required />
                 </fieldset>
 
                 <fieldset className="box-fieldset" style={{ marginBottom: 8 }}>
                   <label htmlFor="login-pass" style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 6 }}>Password</label>
                   <div className="ip-field" style={{ display: "flex", alignItems: "center", overflow: "visible" }}>
-                    <LockIcon />
                     <input
                       type={showPassword ? "text" : "password"}
                       className="form-control"

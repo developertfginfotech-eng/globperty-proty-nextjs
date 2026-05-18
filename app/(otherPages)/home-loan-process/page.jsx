@@ -12,7 +12,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "/images/section/page-title-2.jpg",
-  badge: "🏦 Finance Tools — Mortgage Calculator",
+  badge: "Finance Tools — Mortgage Calculator",
   titleWhite: "Calculate Mortgage ",
   titleOrange: "Payments",
   tagline: "Estimate your monthly repayments for property in UAE, Portugal, Australia and 9 more markets. Compare rates and plan your budget before you commit.",
@@ -23,9 +23,9 @@ const HERO = {
     { value: "12+",   label: "Markets Covered" },
     { value: "80%",   label: "Max UAE LTV" },
   ],
-  primaryCta:   { href: "/listings",      label: "🏠 Browse Global Properties" },
-  secondaryCta: { href: "/rental-yield",  label: "📊 Rental Yield Calculator" },
-  snapshotTitle: "🏦 Mortgage Rates by Country",
+  primaryCta:   { href: "/listings",      label: "Browse Global Properties" },
+  secondaryCta: { href: "/rental-yield",  label: "Rental Yield Calculator" },
+  snapshotTitle: "Mortgage Rates by Country",
   snapshot: [
     { key: "UAE",         value: "2.5–4% p.a.",  color: "#f0822d" },
     { key: "Portugal",    value: "3–5% p.a.",     color: "#16b286" },
@@ -50,7 +50,7 @@ export default function Page() {
       <Header1 />
       <ToolPageHero config={HERO} />
 
-      <div className="main-content">
+      <div className="main-content" style={{ paddingTop: "60px" }}>
 
         {/* Calculator first */}
         <MortgageCalculator />

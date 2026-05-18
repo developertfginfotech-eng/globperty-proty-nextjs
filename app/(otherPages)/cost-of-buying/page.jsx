@@ -12,7 +12,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "/images/section/page-title-1.jpg",
-  badge: "💰 Finance Tools — All Fees & Taxes",
+  badge: "Finance Tools — All Fees & Taxes",
   titleWhite: "Cost of Buying ",
   titleOrange: "Calculator",
   tagline: "Know your true purchase cost before you buy. Stamp duty, agent fees, legal costs and registration — calculated for 12 countries.",
@@ -23,9 +23,9 @@ const HERO = {
     { value: "6.5%", label: "Portugal IMT" },
     { value: "5%",   label: "Australia Duty" },
   ],
-  primaryCta:   { href: "/listings",      label: "🏠 Browse Global Properties" },
-  secondaryCta: { href: "/rental-yield",  label: "📊 Rental Yield Calculator" },
-  snapshotTitle: "💰 Transfer Fees by Country",
+  primaryCta:   { href: "/listings",      label: "Browse Global Properties" },
+  secondaryCta: { href: "/rental-yield",  label: "Rental Yield Calculator" },
+  snapshotTitle: "Transfer Fees by Country",
   snapshot: [
     { key: "UAE (DLD)",      value: "4% + 0.25%",  color: "#f0822d" },
     { key: "Portugal (IMT)", value: "Up to 6.5%",   color: "#f0822d" },
@@ -50,7 +50,7 @@ export default function Page() {
       <Header1 />
       <ToolPageHero config={HERO} />
 
-      <div className="main-content">
+      <div className="main-content" style={{ paddingTop: "60px" }}>
 
         {/* Calculator first */}
         <CostOfBuying />

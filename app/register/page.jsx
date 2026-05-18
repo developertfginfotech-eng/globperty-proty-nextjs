@@ -81,13 +81,27 @@ const EyeIcon = ({ open }) => open ? (
   </svg>
 );
 
-const FEATURES = [
-  "List properties for free during our launch phase",
-  "Get a verified agent badge and public profile",
-  "Access buyer leads from 100+ countries",
-  "Track analytics: views, enquiries, shortlists",
-  "Golden Visa & residency programme tools",
-  "AI-powered property matching for your clients",
+const AGENT_SECTIONS = [
+  {
+    title: "AGENTS & DEVELOPERS",
+    items: [
+      { icon: "📋", label: "List Your Property",      sub: "Free during launch phase",           href: "/add-property" },
+      { icon: "👤", label: "Create Agent Profile",    sub: "Verified badge & public profile",     href: "/create-agent-profile" },
+      { icon: "📊", label: "Agent Dashboard",         sub: "Manage listings, leads & analytics",  href: "/dashboard" },
+      { icon: "📦", label: "Developer Packages",      sub: "Promote entire projects & launches",  href: "/developer-packages" },
+      { icon: "💡", label: "Buy Leads",               sub: "Pay per verified buyer lead",          href: "/buy-leads" },
+      { icon: "🎪", label: "Exhibit at Virtual Expo", sub: "Present to global buyers live",        href: "/virtual-expo" },
+    ],
+  },
+  {
+    title: "BUSINESS PARTNERS",
+    items: [
+      { icon: "🏦", label: "Finance Partner Sign Up", sub: "Banks, mortgage & insurance firms",   href: "/finance-partner" },
+      { icon: "⚖️", label: "Legal Partner Sign Up",   sub: "Property lawyers & notaries",         href: "/legal-partner" },
+      { icon: "📣", label: "Advertise on Globperty",  sub: "Featured listings, banners & sponsorship", href: "/advertise" },
+      { icon: "🤝", label: "Partner With Us",         sub: "Relocation, visa & concierge firms",  href: "/partner" },
+    ],
+  },
 ];
 
 export default function RegisterPage() {
@@ -142,23 +156,34 @@ export default function RegisterPage() {
             <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 40, textDecoration: "none" }}>
               <span style={{ fontSize: 22, fontWeight: 800, color: "#fff", letterSpacing: "-0.5px" }}>Globperty</span>
             </Link>
-            <h2 style={{ fontSize: 28, fontWeight: 800, color: "#fff", lineHeight: 1.3, marginBottom: 12 }}>
+            <h2 style={{ fontSize: 24, fontWeight: 800, color: "#fff", lineHeight: 1.3, marginBottom: 8 }}>
               Start Your Journey with<br />
               <span style={{ color: "#f0822d" }}>Globperty Today</span>
             </h2>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.65)", marginBottom: 32, lineHeight: 1.7 }}>
+            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", marginBottom: 20, lineHeight: 1.6 }}>
               Join our global real estate platform and reach buyers worldwide.
             </p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 14 }}>
-              {FEATURES.map((f, i) => (
-                <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                  <span style={{ width: 20, height: 20, borderRadius: "50%", background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
-                    <svg width={11} height={11} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                  </span>
-                  <span style={{ fontSize: 13.5, color: "rgba(255,255,255,0.82)", lineHeight: 1.5 }}>{f}</span>
-                </li>
-              ))}
-            </ul>
+            {AGENT_SECTIONS.map(section => (
+              <div key={section.title} style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 10, fontWeight: 800, color: "#f0822d", letterSpacing: 1.2, textTransform: "uppercase", marginBottom: 10 }}>
+                  {section.title}
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  {section.items.map(item => (
+                    <Link key={item.href} href={item.href} target="_blank" style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px", borderRadius: 8, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", textDecoration: "none", transition: "background 0.15s" }}
+                      onMouseEnter={e => e.currentTarget.style.background = "rgba(240,130,45,0.15)"}
+                      onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}
+                    >
+                      <span style={{ fontSize: 16, flexShrink: 0 }}>{item.icon}</span>
+                      <div>
+                        <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
+                        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.3 }}>{item.sub}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -188,38 +213,35 @@ export default function RegisterPage() {
 
                 <fieldset className="box-fieldset" style={{ marginBottom: 14 }}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Full Name</label>
-                  <div className="ip-field"><UserIcon /><input type="text" className="form-control" name="name" placeholder="Enter your full name" value={form.name} onChange={handleChange} required /></div>
+                  <input type="text" className="form-control" name="name" placeholder="Enter your full name" value={form.name} onChange={handleChange} required />
                 </fieldset>
 
                 <fieldset className="box-fieldset" style={{ marginBottom: 14 }}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Email address</label>
-                  <div className="ip-field"><EmailIcon /><input type="email" className="form-control" name="email" placeholder="your@email.com" value={form.email} onChange={handleChange} required /></div>
+                  <input type="email" className="form-control" name="email" placeholder="your@email.com" value={form.email} onChange={handleChange} required />
                 </fieldset>
 
                 <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
                   <fieldset className="box-fieldset" style={{ flex: "0 0 160px" }}>
                     <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Country</label>
-                    <div className="ip-field" style={{ padding: "0 8px" }}>
-                      <select className="form-control" name="country" value={form.country} onChange={handleChange} style={{ border: "none", outline: "none", background: "transparent", width: "100%", fontSize: 13, fontFamily: "inherit" }}>
-                        {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
-                      </select>
-                    </div>
+                    <select className="form-control" name="country" value={form.country} onChange={handleChange} style={{ fontSize: 13, fontFamily: "inherit" }}>
+                      {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
                   </fieldset>
                   <fieldset className="box-fieldset" style={{ flex: 1 }}>
                     <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Phone</label>
-                    <div className="ip-field" style={{ gap: 4 }}>
-                      <span style={{ padding: "0 6px", color: "#5C5E61", fontSize: 12, whiteSpace: "nowrap" }}>{countryCode}</span>
-                      <input type="tel" className="form-control" name="phone" placeholder="Phone number" value={form.phone} onChange={handleChange} style={{ fontFamily: "inherit", fontSize: 13 }} />
+                    <div style={{ display: "flex", alignItems: "center", border: "1px solid #e5e7eb", borderRadius: 8, background: "#f9fafb", overflow: "hidden" }}>
+                      <span style={{ padding: "0 10px", color: "#374151", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", borderRight: "1px solid #e5e7eb", height: "100%", display: "flex", alignItems: "center", minHeight: 44 }}>{countryCode}</span>
+                      <input type="tel" name="phone" placeholder="Phone number" value={form.phone} onChange={handleChange} style={{ flex: 1, border: "none", outline: "none", background: "transparent", padding: "0 12px", fontSize: 13, fontFamily: "inherit", height: 44 }} />
                     </div>
                   </fieldset>
                 </div>
 
                 <fieldset className="box-fieldset" style={{ marginBottom: 14 }}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Password</label>
-                  <div className="ip-field" style={{ position: "relative" }}>
-                    <LockIcon />
-                    <input type={showPassword ? "text" : "password"} className="form-control" name="password" placeholder="Create a password" value={form.password} onChange={handleChange} required style={{ paddingRight: 36 }} />
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}>
+                  <div style={{ position: "relative" }}>
+                    <input type={showPassword ? "text" : "password"} className="form-control" name="password" placeholder="Create a password" value={form.password} onChange={handleChange} required style={{ paddingRight: 42 }} />
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}>
                       <EyeIcon open={showPassword} />
                     </button>
                   </div>
@@ -227,10 +249,9 @@ export default function RegisterPage() {
 
                 <fieldset className="box-fieldset" style={{ marginBottom: 20 }}>
                   <label style={{ fontSize: 13, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Confirm Password</label>
-                  <div className="ip-field" style={{ position: "relative" }}>
-                    <LockIcon />
-                    <input type={showConfirm ? "text" : "password"} className="form-control" name="confirmPassword" placeholder="Confirm password" value={form.confirmPassword} onChange={handleChange} required style={{ paddingRight: 36 }} />
-                    <button type="button" onClick={() => setShowConfirm(!showConfirm)} style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}>
+                  <div style={{ position: "relative" }}>
+                    <input type={showConfirm ? "text" : "password"} className="form-control" name="confirmPassword" placeholder="Confirm password" value={form.confirmPassword} onChange={handleChange} required style={{ paddingRight: 42 }} />
+                    <button type="button" onClick={() => setShowConfirm(!showConfirm)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}>
                       <EyeIcon open={showConfirm} />
                     </button>
                   </div>

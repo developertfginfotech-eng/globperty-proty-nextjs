@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const HERO = {
   bgImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1400&q=80",
-  badge: "🎫 Visa Tool — Eligibility Checker",
+  badge: "Visa Tool — Eligibility Checker",
   titleWhite: "Find Your Best ",
   titleOrange: "Visa Program",
   tagline: "Answer 2 quick questions to see which Golden Visa or residency programme matches your investment budget and lifestyle goals.",
@@ -18,9 +18,9 @@ const HERO = {
     { value: "2 min", label: "To Complete" },
     { value: "AI", label: "Matched Results" },
   ],
-  primaryCta: { href: "#visa-checker-tool", label: "🎫 Check My Eligibility" },
-  secondaryCta: { href: "/contact", label: "💬 Speak to a Visa Expert" },
-  snapshotTitle: "🌍 Programmes Available",
+  primaryCta: { href: "#visa-checker-tool", label: "Check My Eligibility" },
+  secondaryCta: { href: "/contact", label: "Speak to a Visa Expert" },
+  snapshotTitle: "Programmes Available",
   snapshot: [
     { key: "UAE Golden Visa",     value: "From AED 2M",    color: "#f0822d" },
     { key: "Portugal",            value: "From €500K",     color: "#16b286" },
@@ -137,7 +137,7 @@ export default function VisaCheckerPage() {
       <Header1 />
       <ToolPageHero config={HERO} />
 
-      <section id="visa-checker-tool" style={{ background: "linear-gradient(135deg,#f8fafc 0%,#fff7ed 100%)", padding: "60px 0 80px" }}>
+      <section id="visa-checker-tool" style={{ background: "linear-gradient(135deg,#f8fafc 0%,#fff7ed 100%)", padding: "60px 0 80px", marginTop: "60px" }}>
         <div className="tf-container">
           <div className="row justify-center">
             <div className="col-lg-9">

@@ -12,7 +12,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "/images/section/page-title-5.jpg",
-  badge: "💱 Finance Tools — 17 Currencies",
+  badge: "Finance Tools — 17 Currencies",
   titleWhite: "Property Currency ",
   titleOrange: "Converter",
   tagline: "Convert property prices instantly across 17 investment currencies. USD, EUR, AED, GBP and more — tailored for global real estate buyers.",
@@ -23,8 +23,8 @@ const HERO = {
     { value: "€0.92",    label: "1 USD = EUR" },
     { value: "₹83.5",    label: "1 USD = INR" },
   ],
-  primaryCta:   { href: "/listings",      label: "🏠 Browse Global Properties" },
-  secondaryCta: { href: "/rental-yield",  label: "📊 Rental Yield Calculator" },
+  primaryCta:   { href: "/listings",      label: "Browse Global Properties" },
+  secondaryCta: { href: "/rental-yield",  label: "Rental Yield Calculator" },
   snapshotTitle: "Key Exchange Rates",
   snapshot: [
     { key: "1 USD → AED",  value: "3.674",   color: "#f0822d" },
@@ -50,7 +50,7 @@ export default function Page() {
       <Header1 />
       <ToolPageHero config={HERO} />
 
-      <div className="main-content">
+      <div className="main-content" style={{ paddingTop: "60px" }}>
 
         {/* Calculator first */}
         <CurrencyConverter />

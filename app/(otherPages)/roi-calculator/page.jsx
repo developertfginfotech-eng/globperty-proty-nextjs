@@ -12,7 +12,7 @@ export const metadata = {
 
 const HERO = {
   bgImage: "/images/section/page-title-4.jpg",
-  badge: "📈 Investment Tools — 5 & 10 Year Projections",
+  badge: "Investment Tools — 5 & 10 Year Projections",
   titleWhite: "ROI & Capital Growth ",
   titleOrange: "Estimator",
   tagline: "Project your 5–10 year property investment returns including rental income and capital appreciation across global markets.",
@@ -23,9 +23,9 @@ const HERO = {
     { value: "12+",   label: "Markets Covered" },
     { value: "Live",  label: "Market Hotspots" },
   ],
-  primaryCta:   { href: "/listings", label: "🏠 Browse Investment Properties" },
-  secondaryCta: { href: "/copilot",  label: "🤖 AI Investment Advice" },
-  snapshotTitle: "📈 Market Growth Indicators",
+  primaryCta:   { href: "/listings", label: "Browse Investment Properties" },
+  secondaryCta: { href: "/copilot",  label: "AI Investment Advice" },
+  snapshotTitle: "Market Growth Indicators",
   snapshot: [
     { key: "UAE Avg Growth",   value: "↑ 7–12% p.a.", color: "#f0822d" },
     { key: "Portugal",         value: "↑ 5–8% p.a.",  color: "#16b286" },
@@ -50,7 +50,7 @@ export default function Page() {
       <Header1 />
       <ToolPageHero config={HERO} />
 
-      <div className="main-content">
+      <div className="main-content" style={{ paddingTop: "60px" }}>
 
         {/* Calculator first */}
         <RoiCalculator />
