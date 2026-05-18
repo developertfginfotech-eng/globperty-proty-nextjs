@@ -11,25 +11,25 @@ const MENU = [
         title: "BY PURPOSE",
         cols: 3,
         items: [
-          { icon: "🏠", label: "Buy Property",            sub: "Apartments, villas, land & more",         href: "/listings?status=buy" },
-          { icon: "🔑", label: "Rent Property",           sub: "Long-term rentals worldwide",              href: "/listings?status=rent" },
-          { icon: "🏖", label: "Short Stay / Holiday Let",sub: "Serviced & holiday apartments",           href: "/listings?type=short-stay" },
-          { icon: "🎓", label: "Student Housing",         sub: "Rentals near universities worldwide",     href: "/listings?type=student" },
-          { icon: "🏗", label: "New Projects & Off-Plan", sub: "Upcoming launches & pre-launch deals",    href: "/project-list" },
-          { icon: "🤝", label: "Roommate / Shared Housing",sub: "Find flatmates internationally",         href: "/listings?type=shared" },
+          { label: "Buy Property",            sub: "Apartments, villas, land & more",         href: "/listings?status=buy" },
+          { label: "Rent Property",           sub: "Long-term rentals worldwide",              href: "/listings?status=rent" },
+          { label: "Short Stay / Holiday Let",sub: "Serviced & holiday apartments",           href: "/listings?type=short-stay" },
+          { label: "Student Housing",         sub: "Rentals near universities worldwide",     href: "/listings?type=student" },
+          { label: "New Projects & Off-Plan", sub: "Upcoming launches & pre-launch deals",    href: "/project-list" },
+          { label: "Roommate / Shared Housing",sub: "Find flatmates internationally",         href: "/listings?type=shared" },
         ],
       },
       {
         title: "BY PROPERTY TYPE",
         cols: 3,
         items: [
-          { icon: "🏢", label: "Apartments & Flats",      sub: "",  href: "/listings?type=Apartment" },
-          { icon: "🏡", label: "Villas & Houses",         sub: "",  href: "/listings?type=Villa" },
-          { icon: "🏘", label: "Townhouses",              sub: "",  href: "/listings?type=townhouse" },
-          { icon: "🏙", label: "Penthouses",              sub: "",  href: "/listings?type=Penthouse" },
-          { icon: "🏬", label: "Commercial Property",     sub: "",  href: "/listings?type=Office" },
-          { icon: "🌿", label: "Land & Plots",            sub: "",  href: "/listings?type=land" },
-          { icon: "🏭", label: "Warehouses & Industrial", sub: "",  href: "/listings?type=warehouse" },
+          { label: "Apartments & Flats",      sub: "",  href: "/listings?type=Apartment" },
+          { label: "Villas & Houses",         sub: "",  href: "/listings?type=Villa" },
+          { label: "Townhouses",              sub: "",  href: "/listings?type=townhouse" },
+          { label: "Penthouses",              sub: "",  href: "/listings?type=Penthouse" },
+          { label: "Commercial Property",     sub: "",  href: "/listings?type=Office" },
+          { label: "Land & Plots",            sub: "",  href: "/listings?type=land" },
+          { label: "Warehouses & Industrial", sub: "",  href: "/listings?type=warehouse" },
         ],
       },
     ],
@@ -76,24 +76,24 @@ const MENU = [
         title: "BY COUNTRY PROGRAM",
         cols: 3,
         items: [
-          { icon: "🇦🇪", label: "UAE Golden Visa",               sub: "From AED 2M property investment",  href: "/visas/uae-golden-visa" },
-          { icon: "🇵🇹", label: "Portugal Golden Visa",          sub: "From €500K investment",            href: "/visas/portugal-golden-visa" },
-          { icon: "🇹🇷", label: "Turkey Citizenship by Investment", sub: "From $400K property",           href: "/visas/turkey-citizenship" },
-          { icon: "🇨🇾", label: "Cyprus Permanent Residency",    sub: "From €300K property",              href: "/visas/cyprus-residency" },
-          { icon: "🇲🇹", label: "Malta Residency Programme",     sub: "From €375K property",              href: "/visas/malta-residency" },
-          { icon: "🇭🇺", label: "Hungary Guest Investor Visa",   sub: "From €500K property — new 2024",   href: "/visas/hungary-guest-investor" },
-          { icon: "🇱🇻", label: "Latvia Residency by Investment",sub: "From €250K property",              href: "/visas/latvia-residency" },
-          { icon: "🇲🇾", label: "Malaysia MM2H Visa",            sub: "Long-stay visa for property owners",href: "/visas/malaysia-mm2h" },
+          { label: "UAE Golden Visa",               sub: "From AED 2M property investment",  href: "/visas/uae-golden-visa" },
+          { label: "Portugal Golden Visa",          sub: "From €500K investment",            href: "/visas/portugal-golden-visa" },
+          { label: "Turkey Citizenship by Investment", sub: "From $400K property",           href: "/visas/turkey-citizenship" },
+          { label: "Cyprus Permanent Residency",    sub: "From €300K property",              href: "/visas/cyprus-residency" },
+          { label: "Malta Residency Programme",     sub: "From €375K property",              href: "/visas/malta-residency" },
+          { label: "Hungary Guest Investor Visa",   sub: "From €500K property — new 2024",   href: "/visas/hungary-guest-investor" },
+          { label: "Latvia Residency by Investment",sub: "From €250K property",              href: "/visas/latvia-residency" },
+          { label: "Malaysia MM2H Visa",            sub: "Long-stay visa for property owners",href: "/visas/malaysia-mm2h" },
         ],
       },
       {
         title: "TOOLS & COMPARISONS",
         cols: 3,
         items: [
-          { icon: "🔍", label: "Visa Eligibility Checker",    sub: "Which country suits your budget?",    href: "/visa-checker" },
-          { icon: "📊", label: "Compare All Visa Programs",   sub: "Side-by-side table of all programs",  href: "/visa-comparison" },
-          { icon: "🌐", label: "AI Visa Advisor",             sub: "Chat to find your best visa path",    href: "/copilot" },
-          { icon: "📞", label: "Speak to a Visa Consultant",  sub: "Connect with verified visa experts",  href: "/contact" },
+          { label: "Visa Eligibility Checker",    sub: "Which country suits your budget?",    href: "/visa-checker" },
+          { label: "Compare All Visa Programs",   sub: "Side-by-side table of all programs",  href: "/visa-comparison" },
+          { label: "AI Visa Advisor",             sub: "Chat to find your best visa path",    href: "/copilot" },
+          { label: "Speak to a Visa Consultant",  sub: "Connect with verified visa experts",  href: "/contact" },
         ],
       },
     ],
@@ -103,22 +103,22 @@ const MENU = [
     sections: [
       {
         title: "INVESTMENT CALCULATORS",
-        cols: 3,
+        cols: 2,
         items: [
-          { icon: "📊", label: "Rental Yield Calculator",        sub: "Annual return % by country & area",       href: "/rental-yield" },
-          { icon: "📈", label: "ROI & Capital Growth Estimator", sub: "5 & 10 year investment projections",       href: "/roi-calculator" },
-          { icon: "🏦", label: "Mortgage Calculator",            sub: "Monthly repayments & eligibility",         href: "/home-loan-process" },
-          { icon: "💱", label: "Currency Converter",             sub: "Live exchange rates — 17 currencies",      href: "/currency-converter" },
-          { icon: "💰", label: "Cost of Buying Calculator",      sub: "All purchase fees & taxes per country",    href: "/cost-of-buying" },
+          { label: "Rental Yield Calculator",        sub: "Annual return % by country & area",       href: "/rental-yield" },
+          { label: "ROI & Capital Growth Estimator", sub: "5 & 10 year investment projections",       href: "/roi-calculator" },
+          { label: "Mortgage Calculator",            sub: "Monthly repayments & eligibility",         href: "/home-loan-process" },
+          { label: "Currency Converter",             sub: "Live exchange rates — 17 currencies",      href: "/currency-converter" },
+          { label: "Cost of Buying Calculator",      sub: "All purchase fees & taxes per country",    href: "/cost-of-buying" },
         ],
       },
       {
         title: "RESEARCH & AI TOOLS",
-        cols: 3,
+        cols: 2,
         items: [
-          { icon: "🗺", label: "Neighbourhood Explorer",         sub: "Find best areas by budget & lifestyle",    href: "/listings" },
-          { icon: "🤖", label: "AI Property Assistant",          sub: "Chat & find your perfect property",        href: "/copilot" },
-          { icon: "🔍", label: "Visa Eligibility Checker",       sub: "Find your best golden visa program",       href: "/visa-checker" },
+          { label: "Neighbourhood Explorer",         sub: "Find best areas by budget & lifestyle",    href: "/listings" },
+          { label: "AI Property Assistant",          sub: "Chat & find your perfect property",        href: "/copilot" },
+          { label: "Visa Eligibility Checker",       sub: "Find your best golden visa program",       href: "/visa-checker" },
         ],
       },
     ],
@@ -179,21 +179,23 @@ function MegaItem({ item }) {
         e.currentTarget.style.borderLeftColor = "transparent";
       }}
     >
-      <span style={{
-        fontSize: 16,
-        lineHeight: 1,
-        flexShrink: 0,
-        width: 32,
-        height: 32,
-        background: "#fff4ec",
-        borderRadius: 7,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 1,
-      }}>
-        {item.icon}
-      </span>
+      {item.icon && (
+        <span style={{
+          fontSize: 16,
+          lineHeight: 1,
+          flexShrink: 0,
+          width: 32,
+          height: 32,
+          background: "#fff4ec",
+          borderRadius: 7,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: 1,
+        }}>
+          {item.icon}
+        </span>
+      )}
       <div>
         <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{item.label}</div>
         {item.sub && <div style={{ fontSize: 11, color: "#9ca3af", lineHeight: 1.3, marginTop: 2 }}>{item.sub}</div>}

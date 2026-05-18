@@ -10,6 +10,8 @@ function extend(custom, defaults) {
     }
   }
   return custom;
+
+  
 }
 
 function isMobile(agent) {

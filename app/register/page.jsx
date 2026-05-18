@@ -139,7 +139,7 @@ export default function RegisterPage() {
               ))}
             </div>
 
-            {/* Agent & Partner links */}
+            {/* Agent & Partner links — display only, not clickable */}
             {AGENT_SECTIONS.map(section => (
               <div key={section.title} style={{ marginBottom: 14 }}>
                 <div style={{ fontSize: 9.5, fontWeight: 800, color: "#f0822d", letterSpacing: 1.4, textTransform: "uppercase", marginBottom: 8 }}>
@@ -147,8 +147,8 @@ export default function RegisterPage() {
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                   {section.items.map(item => (
-                    <Link key={item.href} href={item.href} target="_blank"
-                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 14px", borderRadius: 9, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", textDecoration: "none", transition: "all 0.15s" }}
+                    <div key={item.href}
+                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 14px", borderRadius: 9, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", transition: "all 0.15s", cursor: "default" }}
                       onMouseEnter={e => { e.currentTarget.style.background = "rgba(240,130,45,0.14)"; e.currentTarget.style.borderColor = "rgba(240,130,45,0.35)"; }}
                       onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)"; }}
                     >
@@ -156,10 +156,7 @@ export default function RegisterPage() {
                         <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
                         <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.45)", lineHeight: 1.3 }}>{item.sub}</div>
                       </div>
-                      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M9 18l6-6-6-6"/>
-                      </svg>
-                    </Link>
+                    </div>
                   ))}
                 </div>
               </div>

@@ -45,7 +45,7 @@ function FilterTopInner() {
   };
 
   return (
-    <section className="flat-title style-2" style={{ paddingTop: 90 }}>
+    <section className="flat-title style-2" style={{ paddingTop: 10 }}>
       <div className="tf-container">
         <div className="row">
           <div className="col-lg-12">
