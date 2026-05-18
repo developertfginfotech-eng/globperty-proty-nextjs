@@ -198,8 +198,8 @@ function MegaItem({ item }) {
         </span>
       )}
       <div>
-        <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{item.label}</div>
-        {item.sub && <div style={{ fontSize: 11, color: "#9ca3af", lineHeight: 1.3, marginTop: 2 }}>{item.sub}</div>}
+        <div style={{ fontSize: 15, fontWeight: 600, color: "#111827", lineHeight: 1.3 }}>{item.label}</div>
+        {item.sub && <div style={{ fontSize: 12.5, color: "#9ca3af", lineHeight: 1.3, marginTop: 2 }}>{item.sub}</div>}
       </div>
     </Link>
   );
@@ -306,7 +306,7 @@ function MegaPanel({ menu }) {
         <div key={si} style={{ marginBottom: si < menu.sections.length - 1 ? 20 : 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#f0822d", flexShrink: 0 }} />
-            <span style={{ fontSize: 9.5, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", textTransform: "uppercase", letterSpacing: 1 }}>
               {section.title}
             </span>
             <div style={{ flex: 1, height: 1, background: "#f0f0f0" }} />
