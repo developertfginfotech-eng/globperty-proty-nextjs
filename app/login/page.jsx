@@ -68,9 +68,9 @@ export default function LoginPage() {
 
         {/* Left panel — dark with features */}
         <div style={{
-          flex: "0 0 42%",
+          flex: "0 0 55%",
           background: "linear-gradient(160deg, #0f172a 0%, #1e293b 60%, #0f2027 100%)",
-          backgroundImage: "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')",
+          backgroundImage: "url('/images/banner/luxury-home-night.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "relative",
