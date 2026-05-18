@@ -129,7 +129,7 @@ export default function RegisterPage() {
             {/* Stats row */}
             <div style={{ display: "flex", gap: 12, marginBottom: 32 }}>
               {STATS.map(s => (
-                <div key={s.value} style={{ flex: 1, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 12, padding: "14px 12px", textAlign: "center" }}>
+                <div key={s.value} style={{ flex: 1, background: "rgba(10,18,40,0.82)", border: "1px solid rgba(255,255,255,0.18)", borderRadius: 12, padding: "14px 12px", textAlign: "center" }}>
                   <div style={{ fontSize: 24, fontWeight: 800, color: "#f0822d", lineHeight: 1 }}>{s.value}</div>
                   <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4, fontWeight: 500 }}>{s.label}</div>
                 </div>
@@ -139,19 +139,19 @@ export default function RegisterPage() {
             {/* Agent & Partner links — display only, not clickable */}
             {AGENT_SECTIONS.map(section => (
               <div key={section.title} style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 13, fontWeight: 800, color: "#f0822d", letterSpacing: 1.4, textTransform: "uppercase", marginBottom: 8 }}>
+                <div style={{ fontSize: 15, fontWeight: 800, color: "#f0822d", letterSpacing: 1.4, textTransform: "uppercase", marginBottom: 8 }}>
                   {section.title}
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                   {section.items.map(item => (
                     <div key={item.href}
-                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", borderRadius: 9, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", transition: "all 0.15s", cursor: "default" }}
-                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(240,130,45,0.14)"; e.currentTarget.style.borderColor = "rgba(240,130,45,0.35)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)"; }}
+                      style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", borderRadius: 9, background: "rgba(10,18,40,0.82)", border: "1px solid rgba(255,255,255,0.14)", transition: "all 0.15s", cursor: "default" }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(240,130,45,0.25)"; e.currentTarget.style.borderColor = "rgba(240,130,45,0.5)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "rgba(10,18,40,0.82)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)"; }}
                     >
                       <div>
-                        <div style={{ fontSize: 16, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
-                        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.3 }}>{item.sub}</div>
+                        <div style={{ fontSize: 19, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{item.label}</div>
+                        <div style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.3 }}>{item.sub}</div>
                       </div>
                     </div>
                   ))}
