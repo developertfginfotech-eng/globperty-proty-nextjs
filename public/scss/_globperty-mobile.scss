@@ -1,0 +1,197 @@
+// ============================================================
+// Globperty Mobile Responsive Overrides
+// ============================================================
+
+// ---- Login / Register two-column layout ----
+@media (max-width: 767px) {
+  .glb-auth-left {
+    display: none !important;
+  }
+  .glb-auth-right {
+    padding: 24px 16px !important;
+  }
+  .glb-auth-right > div {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 24px 18px !important;
+  }
+}
+
+// ---- Dashboard sidebar ----
+@media (max-width: 991px) {
+  .page-layout {
+    .main-content {
+      padding-left: 0 !important;
+      width: 100%;
+    }
+    .main-content-inner {
+      padding: 20px 16px 0 !important;
+    }
+    .sidebar-menu-dashboard {
+      transform: translateX(-100%);
+      z-index: 9999;
+    }
+    &.open-sidebar .sidebar-menu-dashboard {
+      transform: translateX(0);
+    }
+  }
+  .wrap-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    height: 100vh;
+  }
+}
+
+// ---- Navigation / Header ----
+@media (max-width: 991px) {
+  .navigation,
+  .nav-ul,
+  .header-nav-main {
+    display: none !important;
+  }
+  .mobile-button {
+    display: flex !important;
+  }
+  .header-right .btn-add {
+    display: none !important;
+  }
+}
+
+// ---- Hero search bar ----
+@media (max-width: 767px) {
+  .hero-search-bar {
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+  }
+  .hero-dd-wrap {
+    width: 100% !important;
+  }
+  .hero-dd-btn {
+    width: 100% !important;
+  }
+  .hero-search-submit {
+    width: 100% !important;
+    justify-content: center !important;
+    border-radius: 10px !important;
+    padding: 12px !important;
+  }
+  .hero-mic-btn,
+  .hero-filter-btn {
+    display: none !important;
+  }
+  .hero-search-tabs {
+    gap: 6px !important;
+  }
+  .content-inner .heading-title h1 {
+    font-size: 28px !important;
+  }
+}
+
+// ---- Tool calculators ----
+@media (max-width: 575px) {
+  .section-calculate .tf-container {
+    padding: 0 12px !important;
+  }
+  .section-calculate > div > div {
+    border-radius: 12px !important;
+  }
+  div[style*="padding: \"40px 40px\""],
+  div[style*="padding:\"40px 40px\""] {
+    padding: 24px 20px !important;
+  }
+  .form-pre-approved {
+    padding: 20px 16px !important;
+  }
+  .col-6,
+  .col-4 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+// ---- Property listing filters ----
+@media (max-width: 767px) {
+  .wg-filter.style-2 .form-title.style-2 {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .wg-filter.style-2 .form-title.style-2 fieldset,
+  .wg-filter.style-2 .form-title.style-2 select {
+    width: 100% !important;
+    min-width: unset !important;
+  }
+  .wg-filter.style-2 .wrap-btn {
+    width: 100% !important;
+  }
+  .wg-filter.style-2 .wrap-btn .tf-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+// ---- Property grid ----
+@media (max-width: 575px) {
+  .col-md-6 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+// ---- Dashboard stat cards ----
+@media (max-width: 575px) {
+  .flat-counter-v2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+// ---- Copilot / AI Chat page ----
+@media (max-width: 767px) {
+  .copilot-layout {
+    flex-direction: column !important;
+    height: auto !important;
+  }
+  .copilot-sidebar {
+    width: 100% !important;
+    max-height: 200px !important;
+    overflow-y: auto !important;
+  }
+}
+
+// ---- General spacing ----
+@media (max-width: 575px) {
+  .tf-container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .flat-spacing-1 {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+}
+
+// ---- Inner page hero (ToolPageHero) ----
+@media (max-width: 575px) {
+  .flat-title {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+  .flat-title .title {
+    font-size: 24px !important;
+  }
+}
+
+// ---- Country cards / Neighbourhood cards ----
+@media (max-width: 575px) {
+  .col-lg-3,
+  .col-md-4,
+  .col-sm-6 {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+}

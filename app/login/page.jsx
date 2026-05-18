@@ -67,7 +67,7 @@ export default function LoginPage() {
       <div style={{ minHeight: "100vh", display: "flex" }}>
 
         {/* Left panel — dark with features */}
-        <div style={{
+        <div className="glb-auth-left" style={{
           flex: "0 0 55%",
           background: "linear-gradient(160deg, #0f172a 0%, #1e293b 60%, #0f2027 100%)",
           backgroundImage: "url('/images/banner/luxury-home-night.jpg')",
@@ -112,7 +112,7 @@ export default function LoginPage() {
         </div>
 
         {/* Right panel — light with form */}
-        <div style={{
+        <div className="glb-auth-right" style={{
           flex: 1,
           background: "#f1f5f9",
           display: "flex",

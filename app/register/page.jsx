@@ -89,7 +89,7 @@ export default function RegisterPage() {
       <div style={{ minHeight: "100vh", display: "flex" }}>
 
         {/* Left panel */}
-        <div style={{
+        <div className="glb-auth-left" style={{
           flex: "0 0 55%",
           backgroundImage: "url('/images/banner/luxury-home-night.jpg')",
           backgroundSize: "cover",
@@ -170,7 +170,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Right panel */}
-        <div style={{ flex: 1, background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
+        <div className="glb-auth-right" style={{ flex: 1, background: "#f8fafc", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 24px" }}>
           <div style={{ width: "100%", maxWidth: 430 }}>
 
             {/* Header */}
