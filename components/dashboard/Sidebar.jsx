@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
@@ -23,6 +24,17 @@ export default function Sidebar() {
   return (
     <div className="wrap-sidebar">
       <div className="sidebar-menu-dashboard">
+        <div style={{ padding: "20px 24px 12px", borderBottom: "1px solid #f0f0f0" }}>
+          <Link href="/" style={{ display: "inline-block" }}>
+            <Image
+              src="/images/logo/globperty-logo.svg"
+              alt="Globperty"
+              width={140}
+              height={36}
+              style={{ objectFit: "contain" }}
+            />
+          </Link>
+        </div>
         <div className="menu-box">
           <ul className="box-menu-dashboard">
             <li
