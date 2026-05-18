@@ -178,7 +178,7 @@ export default function RegisterPage() {
 
             {/* Header */}
             <div style={{ marginBottom: 28, textAlign: "center" }}>
-              <h3 style={{ fontSize: 26, fontWeight: 800, color: "#111827", marginBottom: 6 }}>Create Account</h3>
+              <h3 style={{ fontSize: 26, fontWeight: 800, color: "#111827", marginBottom: 6, fontFamily: "'Lexend', sans-serif" }}>Create Account</h3>
               <p style={{ fontSize: 14, color: "#9ca3af" }}>Free forever. No credit card required.</p>
             </div>
 
