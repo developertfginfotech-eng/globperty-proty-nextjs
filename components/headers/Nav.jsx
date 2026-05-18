@@ -125,20 +125,21 @@ const MENU = [
   },
 ];
 
-function SmartPanel({ children, onEnter, onLeave, navItemWidth = 80 }) {
+function SmartPanel({ children, onEnter, onLeave }) {
   const ref = useRef(null);
 
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    el.style.left = "0";
-    el.style.right = "auto";
-    const rect = el.getBoundingClientRect();
+    const panelWidth = el.offsetWidth;
     const vw = window.innerWidth;
-    if (rect.right > vw - 12) {
-      // Shift left by exact overflow amount so right edge stays within viewport
-      el.style.left = `${vw - 12 - rect.right}px`;
-    }
+    const parent = el.parentElement;
+    const parentRect = parent ? parent.getBoundingClientRect() : { left: 0 };
+    // Center panel in viewport
+    const centeredLeft = (vw - panelWidth) / 2 - parentRect.left;
+    // Clamp so it doesn't overflow either edge
+    const clamped = Math.max(12 - parentRect.left, Math.min(centeredLeft, vw - panelWidth - 12 - parentRect.left));
+    el.style.left = `${clamped}px`;
   });
 
   return (
