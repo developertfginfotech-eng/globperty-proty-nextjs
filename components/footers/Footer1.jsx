@@ -169,7 +169,7 @@ export default function Footer1() {
     <footer style={{ background: "#0d1b2a", color: "#c9d1d9", fontFamily: "inherit" }}>
 
       {/* Newsletter Banner */}
-      <div style={{ background: "#112240", borderBottom: "1px solid #1a3050", padding: "20px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+      <div className="glb-footer-newsletter" style={{ background: "#112240", borderBottom: "1px solid #1a3050", padding: "20px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
             <span style={{ fontSize: 20 }}>🌍</span>
@@ -177,7 +177,7 @@ export default function Footer1() {
           </div>
           <p style={{ margin: 0, fontSize: 13, color: "#8b949e" }}>Get weekly investment insights, Golden Visa updates &amp; exclusive property deals — free</p>
         </div>
-        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        <div className="glb-footer-newsletter-form" style={{ display: "flex", gap: 10, alignItems: "center" }}>
           <input
             type="email"
             placeholder="Enter your email address"
@@ -195,8 +195,8 @@ export default function Footer1() {
       </div>
 
       {/* Main Footer Columns */}
-      <div style={{ padding: "48px 40px 32px", maxWidth: 1400, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "260px 1fr 1fr 1fr 1fr", gap: 40 }}>
+      <div className="glb-footer-section" style={{ padding: "48px 40px 32px", maxWidth: 1400, margin: "0 auto" }}>
+        <div className="glb-footer-cols" style={{ display: "grid", gridTemplateColumns: "260px 1fr 1fr 1fr 1fr", gap: 40 }}>
 
           {/* Brand column */}
           <div>
@@ -285,11 +285,11 @@ export default function Footer1() {
       </div>
 
       {/* Country Grid */}
-      <div style={{ borderTop: "1px solid #1a3050", padding: "40px 40px", maxWidth: 1400, margin: "0 auto" }}>
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "40px 40px", maxWidth: 1400, margin: "0 auto" }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 32 }}>
           Browse Properties by Country &amp; City — All Destinations
         </p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "32px 24px" }}>
+        <div className="glb-footer-countries-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "32px 24px" }}>
           {COUNTRIES.map(c => (
             <div key={c.name}>
               <h6 style={{ color: "#fff", fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
@@ -308,7 +308,7 @@ export default function Footer1() {
       </div>
 
       {/* Popular Searches */}
-      <div style={{ borderTop: "1px solid #1a3050", padding: "28px 40px", maxWidth: 1400, margin: "0 auto" }}>
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "28px 40px", maxWidth: 1400, margin: "0 auto" }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: "#6e7681", textTransform: "uppercase", marginBottom: 14 }}>Popular Searches:</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {POPULAR_SEARCHES.map(s => (
@@ -318,7 +318,7 @@ export default function Footer1() {
       </div>
 
       {/* Popular Guides */}
-      <div style={{ borderTop: "1px solid #1a3050", padding: "24px 40px", maxWidth: 1400, margin: "0 auto" }}>
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "24px 40px", maxWidth: 1400, margin: "0 auto" }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: "#6e7681", textTransform: "uppercase", marginBottom: 12 }}>Popular Guides &amp; Resources</p>
         <p style={{ fontSize: 12, color: "#6e7681", lineHeight: 2 }}>
           {POPULAR_GUIDES.map((g, i) => (
@@ -331,7 +331,7 @@ export default function Footer1() {
       </div>
 
       {/* Trust Badges */}
-      <div style={{ borderTop: "1px solid #1a3050", padding: "20px 40px", maxWidth: 1400, margin: "0 auto" }}>
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "20px 40px", maxWidth: 1400, margin: "0 auto" }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 32px" }}>
           {TRUST_BADGES.map(b => (
             <div key={b.text} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#8b949e" }}>
@@ -342,7 +342,7 @@ export default function Footer1() {
       </div>
 
       {/* Quick Nav Bar */}
-      <div style={{ borderTop: "1px solid #1a3050", padding: "16px 40px", maxWidth: 1400, margin: "0 auto" }}>
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "16px 40px", maxWidth: 1400, margin: "0 auto" }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 0", alignItems: "center" }}>
           {[
             { label: "Properties", href: "/listings" },
@@ -364,7 +364,7 @@ export default function Footer1() {
       </div>
 
       {/* Legal / Bottom bar */}
-      <div style={{ borderTop: "1px solid #1a3050", padding: "20px 40px", maxWidth: 1400, margin: "0 auto" }}>
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "20px 40px", maxWidth: 1400, margin: "0 auto" }}>
         <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 4 }}>© 2025 Globperty LLC. All rights reserved. Registered in the United States of America.</p>
         <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 16 }}>Globperty is an independent property portal. All listings are provided by verified third-party agents and developers. Globperty does not provide legal, financial or immigration advice.</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 0", alignItems: "center" }}>

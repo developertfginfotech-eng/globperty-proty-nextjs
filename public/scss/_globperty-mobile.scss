@@ -1,14 +1,27 @@
 // ============================================================
 // Globperty Mobile Responsive Overrides
+// Covers: all Android & iPhone sizes
+// Breakpoints: 1199px · 991px · 767px · 575px · 374px
 // ============================================================
 
-// ---- Login / Register two-column layout ----
+// ---- Base: images & media never overflow ----
+img,
+video,
+iframe,
+embed,
+object {
+  max-width: 100%;
+  height: auto;
+}
+
+// ---- 1. Login / Register two-column auth layout ----
 @media (max-width: 767px) {
   .glb-auth-left {
     display: none !important;
   }
   .glb-auth-right {
     padding: 24px 16px !important;
+    min-height: 100vh !important;
   }
   .glb-auth-right > div {
     max-width: 100% !important;
@@ -17,34 +30,7 @@
   }
 }
 
-// ---- Dashboard sidebar ----
-@media (max-width: 991px) {
-  .page-layout {
-    .main-content {
-      padding-left: 0 !important;
-      width: 100%;
-    }
-    .main-content-inner {
-      padding: 20px 16px 0 !important;
-    }
-    .sidebar-menu-dashboard {
-      transform: translateX(-100%);
-      z-index: 9999;
-    }
-    &.open-sidebar .sidebar-menu-dashboard {
-      transform: translateX(0);
-    }
-  }
-  .wrap-sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 9999;
-    height: 100vh;
-  }
-}
-
-// ---- Navigation / Header ----
+// ---- 2. Navigation / Header ----
 @media (max-width: 991px) {
   .navigation,
   .nav-ul,
@@ -57,9 +43,12 @@
   .header-right .btn-add {
     display: none !important;
   }
+  .header-nav {
+    gap: 8px !important;
+  }
 }
 
-// ---- Hero search bar ----
+// ---- 3. Hero search bar ----
 @media (max-width: 767px) {
   .hero-search-bar {
     flex-direction: column !important;
@@ -85,23 +74,130 @@
   }
   .hero-search-tabs {
     gap: 6px !important;
+    flex-wrap: wrap !important;
   }
   .content-inner .heading-title h1 {
     font-size: 28px !important;
   }
 }
 
-// ---- Tool calculators ----
+@media (max-width: 575px) {
+  .content-inner .heading-title h1 {
+    font-size: 22px !important;
+    line-height: 1.3 !important;
+  }
+  .content-inner .heading-title p {
+    font-size: 14px !important;
+  }
+}
+
+// ---- 4. Dashboard sidebar ----
+@media (max-width: 991px) {
+  .page-layout {
+    .main-content {
+      padding-left: 0 !important;
+      width: 100% !important;
+    }
+    .main-content-inner {
+      padding: 20px 16px 0 !important;
+    }
+    .sidebar-menu-dashboard {
+      transform: translateX(-100%);
+      z-index: 9999;
+    }
+    &.open-sidebar .sidebar-menu-dashboard {
+      transform: translateX(0);
+    }
+  }
+  .wrap-sidebar {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    height: 100vh;
+  }
+}
+
+// ---- 5. Footer ----
+@media (max-width: 1199px) {
+  .glb-footer-cols {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .glb-footer-newsletter {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 20px !important;
+    gap: 14px !important;
+  }
+  .glb-footer-newsletter-form {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+  }
+  .glb-footer-newsletter-form input[type="email"] {
+    flex: 1 1 160px !important;
+    width: auto !important;
+    min-width: 0 !important;
+  }
+  .glb-footer-cols {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 28px !important;
+  }
+  .glb-footer-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .glb-footer-countries-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .glb-footer-cols {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px 16px !important;
+  }
+  .glb-footer-countries-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px 12px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .glb-footer-newsletter {
+    padding: 16px !important;
+  }
+  .glb-footer-newsletter-form {
+    flex-direction: column !important;
+  }
+  .glb-footer-newsletter-form input[type="email"] {
+    width: 100% !important;
+  }
+  .glb-footer-newsletter-form button {
+    width: 100% !important;
+  }
+  .glb-footer-cols {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px 12px !important;
+  }
+  .glb-footer-section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .glb-footer-countries-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+// ---- 6. Tool calculators ----
 @media (max-width: 575px) {
   .section-calculate .tf-container {
     padding: 0 12px !important;
   }
   .section-calculate > div > div {
     border-radius: 12px !important;
-  }
-  div[style*="padding: \"40px 40px\""],
-  div[style*="padding:\"40px 40px\""] {
-    padding: 24px 20px !important;
   }
   .form-pre-approved {
     padding: 20px 16px !important;
@@ -114,7 +210,7 @@
   }
 }
 
-// ---- Property listing filters ----
+// ---- 7. Property listing filters ----
 @media (max-width: 767px) {
   .wg-filter.style-2 .form-title.style-2 {
     flex-direction: column !important;
@@ -134,7 +230,7 @@
   }
 }
 
-// ---- Property grid ----
+// ---- 8. Property grid cards ----
 @media (max-width: 575px) {
   .col-md-6 {
     width: 100% !important;
@@ -143,14 +239,14 @@
   }
 }
 
-// ---- Dashboard stat cards ----
+// ---- 9. Dashboard stat cards ----
 @media (max-width: 575px) {
   .flat-counter-v2 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
-// ---- Copilot / AI Chat page ----
+// ---- 10. Copilot / AI Chat page ----
 @media (max-width: 767px) {
   .copilot-layout {
     flex-direction: column !important;
@@ -163,7 +259,7 @@
   }
 }
 
-// ---- General spacing ----
+// ---- 11. General container spacing ----
 @media (max-width: 575px) {
   .tf-container {
     padding-left: 16px !important;
@@ -175,7 +271,7 @@
   }
 }
 
-// ---- Inner page hero (ToolPageHero) ----
+// ---- 12. Inner page hero (ToolPageHero) ----
 @media (max-width: 575px) {
   .flat-title {
     padding-top: 20px !important;
@@ -186,12 +282,116 @@
   }
 }
 
-// ---- Country cards / Neighbourhood cards ----
+// ---- 13. Country / Neighbourhood cards ----
 @media (max-width: 575px) {
   .col-lg-3,
   .col-md-4,
   .col-sm-6 {
     flex: 0 0 50% !important;
     max-width: 50% !important;
+  }
+}
+
+// ---- 14. Section typography ----
+@media (max-width: 575px) {
+  .tf-title h2,
+  h2.fw-7 {
+    font-size: 22px !important;
+    line-height: 1.3 !important;
+  }
+  h3,
+  .h3 {
+    font-size: 20px !important;
+  }
+}
+
+// ---- 15. Form inputs — prevent iOS zoom on focus ----
+@media (max-width: 767px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+// ---- 16. Buttons — minimum 44px touch target ----
+@media (max-width: 767px) {
+  .tf-btn,
+  .btn {
+    min-height: 44px !important;
+  }
+}
+
+// ---- 17. Tables — horizontal scroll on mobile ----
+@media (max-width: 767px) {
+  .table-responsive-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+// ---- 18. Modals — full screen on small phones ----
+@media (max-width: 575px) {
+  .modal-dialog {
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  .modal-content {
+    border-radius: 0 !important;
+  }
+}
+
+// ---- 19. Mobile menu offcanvas max-width ----
+@media (max-width: 991px) {
+  .offcanvas.offcanvas-start {
+    max-width: 85vw !important;
+    width: 320px !important;
+  }
+}
+
+// ---- 20. Country page tabs — horizontal scroll ----
+@media (max-width: 767px) {
+  .glb-country-tabs {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px !important;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+// ---- 21. Map height on mobile ----
+@media (max-width: 767px) {
+  .map-wrap,
+  .leaflet-container {
+    height: 260px !important;
+  }
+}
+
+// ---- 22. Very small phones (iPhone SE, Galaxy A) ≤374px ----
+@media (max-width: 374px) {
+  .tf-container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  .flat-title .title {
+    font-size: 20px !important;
+  }
+  .content-inner .heading-title h1 {
+    font-size: 20px !important;
+  }
+  .glb-footer-cols {
+    grid-template-columns: 1fr !important;
+  }
+  .glb-footer-countries-grid {
+    grid-template-columns: 1fr !important;
   }
 }
