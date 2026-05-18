@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function SettingsHandler() {
+  return null;
   const pathname = usePathname();
   const [isDark, setIsDark] = useState(false);
   const [isRtl, setIsRtl] = useState(false);
