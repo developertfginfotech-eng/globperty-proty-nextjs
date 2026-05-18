@@ -136,8 +136,7 @@ export default function RegisterPage() {
 
   return (
     <div id="wrapper">
-      <Header1 />
-      <div style={{ minHeight: "calc(100vh - 80px)", display: "flex" }}>
+      <div style={{ minHeight: "100vh", display: "flex" }}>
 
         {/* Left panel */}
         <div style={{
