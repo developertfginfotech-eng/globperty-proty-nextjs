@@ -89,7 +89,7 @@ export default function RootLayout({ children }) {
         <SettingsHandler />
         <Login />
         <Register />
-        {isLoggedIn && pathname !== "/login" && pathname !== "/register" && (
+        {isLoggedIn && pathname !== "/login" && pathname !== "/register" && pathname !== "/kyc-property-verification" && (
           <>
             <ChatWidget />
             <CopilotFab />
