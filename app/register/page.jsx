@@ -67,6 +67,8 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!form.phone.trim()) { setError("Phone number is required"); return; }
+    if (!/^\d{5,15}$/.test(form.phone.trim())) { setError("Enter a valid phone number (digits only, 5–15 digits)"); return; }
     if (form.password !== form.confirmPassword) { setError("Passwords do not match"); return; }
     setLoading(true);
     setError("");
