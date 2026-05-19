@@ -46,7 +46,7 @@ export default function Sidebar() {
                 pathname == "/dashboard" ? "active" : ""
               } `}
             >
-              <Link className="nav-menu-link" href={`/dashboard`}>
+              <Link className="nav-menu-link" href={`/dashboard`} style={{ position: "relative" }}>
                 <svg
                   width={20}
                   height={20}
@@ -84,6 +84,24 @@ export default function Sidebar() {
                   />
                 </svg>
                 Dashboards
+                {unreadCount > 0 && (
+                  <span style={{
+                    position: "absolute",
+                    top: 6,
+                    right: 10,
+                    background: "#f0822d",
+                    color: "#fff",
+                    fontSize: 10,
+                    fontWeight: 800,
+                    borderRadius: "50%",
+                    width: 18,
+                    height: 18,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    lineHeight: 1,
+                  }}>{unreadCount > 99 ? "99+" : unreadCount}</span>
+                )}
               </Link>
             </li>
             <li
@@ -384,46 +402,19 @@ export default function Sidebar() {
                 Reviews
               </Link>
             </li>
-            {/* Notifications */}
-            <li className={`nav-menu-item ${pathname == "/notifications" ? "active" : ""}`}>
-              <Link className="nav-menu-link" href="/notifications" style={{ position: "relative" }}>
-                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 2.5C7.23858 2.5 5 4.73858 5 7.5V11.25L3.33333 12.9167V13.75H16.6667V12.9167L15 11.25V7.5C15 4.73858 12.7614 2.5 10 2.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M8.33203 13.75C8.33203 14.671 9.07869 15.4167 9.9987 15.4167C10.9187 15.4167 11.6654 14.671 11.6654 13.75" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                Notifications
-                {unreadCount > 0 && (
-                  <span style={{
-                    position: "absolute",
-                    top: 6,
-                    right: 10,
-                    background: "#f0822d",
-                    color: "#fff",
-                    fontSize: 10,
-                    fontWeight: 800,
-                    borderRadius: "50%",
-                    width: 18,
-                    height: 18,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    lineHeight: 1,
-                  }}>{unreadCount > 99 ? "99+" : unreadCount}</span>
-                )}
-              </Link>
-            </li>
-
-            {/* Deal Tracker */}
-            <li className={`nav-menu-item ${pathname == "/deal-tracker" ? "active" : ""}`}>
-              <Link className="nav-menu-link" href="/deal-tracker">
-                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2.5 14.1667V16.6667H6.66667V14.1667H2.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M7.91797 10V16.6667H12.0846V10H7.91797Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M13.332 5.83337V16.6667H17.4987V5.83337H13.332Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                Deal Tracker
-              </Link>
-            </li>
+            {/* Buyer: My Deals */}
+            {isBuyer && (
+              <li className={`nav-menu-item ${pathname == "/deals" ? "active" : ""}`}>
+                <Link className="nav-menu-link" href="/deals">
+                  <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.5 14.1667V16.6667H6.66667V14.1667H2.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M7.91797 10V16.6667H12.0846V10H7.91797Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M13.332 5.83337V16.6667H17.4987V5.83337H13.332Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  My Deals
+                </Link>
+              </li>
+            )}
 
             {/* Buyer: My Offers */}
             {isBuyer && (
@@ -442,34 +433,23 @@ export default function Sidebar() {
             {/* Seller-only items */}
             {!isBuyer && (
               <>
-                <li className={`nav-menu-item ${pathname == "/offers" ? "active" : ""}`}>
-                  <Link className="nav-menu-link" href="/offers">
+                <li className={`nav-menu-item ${pathname == "/deals" ? "active" : ""}`}>
+                  <Link className="nav-menu-link" href="/deals">
                     <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M2.5 5.83337C2.5 4.91290 3.24619 4.16671 4.16667 4.16671H15.8333C16.7538 4.16671 17.5 4.91290 17.5 5.83337V14.1667C17.5 15.0872 16.7538 15.8334 15.8333 15.8334H4.16667C3.24619 15.8334 2.5 15.0872 2.5 14.1667V5.83337Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M2.5 7.5H17.5" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M6.66797 11.6667H13.3346" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M2.5 14.1667V16.6667H6.66667V14.1667H2.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M7.91797 10V16.6667H12.0846V10H7.91797Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M13.332 5.83337V16.6667H17.4987V5.83337H13.332Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    Manage Offers
+                    Deals & Offers
                   </Link>
                 </li>
-                <li className={`nav-menu-item ${pathname == "/listing-analytics" ? "active" : ""}`}>
-                  <Link className="nav-menu-link" href="/listing-analytics">
+                <li className={`nav-menu-item ${pathname == "/analytics" ? "active" : ""}`}>
+                  <Link className="nav-menu-link" href="/analytics">
                     <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M2.5 15.8334L6.66667 10L10.8333 12.5L15 5.83337" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
                       <path d="M13.332 5.83337H17.4987V10.0001" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    Listing Analytics
-                  </Link>
-                </li>
-                <li className={`nav-menu-item ${pathname == "/leads" ? "active" : ""}`}>
-                  <Link className="nav-menu-link" href="/leads">
-                    <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M13.332 2.5C14.6954 2.5 15.832 3.63667 15.832 5C15.832 6.36333 14.6954 7.5 13.332 7.5" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M14.582 11.6667C15.9454 11.6667 17.082 12.6667 17.082 13.75V15.4167" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M7.5013 10.8334C9.34225 10.8334 10.8346 9.34103 10.8346 7.50008C10.8346 5.65913 9.34225 4.16675 7.5013 4.16675C5.66035 4.16675 4.16797 5.65913 4.16797 7.50008C4.16797 9.34103 5.66035 10.8334 7.5013 10.8334Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M2.91797 17.5V15.8333C2.91797 14.9129 3.66416 14.1667 4.58464 14.1667H10.418C11.3384 14.1667 12.0846 14.9129 12.0846 15.8333V17.5" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    CRM Leads
+                    Analytics
                   </Link>
                 </li>
               </>
