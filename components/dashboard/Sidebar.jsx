@@ -25,7 +25,7 @@ export default function Sidebar() {
   return (
     <div className="wrap-sidebar">
       <div className="sidebar-menu-dashboard" style={{ background: "linear-gradient(180deg, #0d1b2a 0%, #0f2040 100%)", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <div style={{ padding: "14px 22px 18px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+        <div style={{ padding: "6px 22px 18px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
           <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 11, textDecoration: "none" }}>
             <div style={{ width: 40, height: 40, borderRadius: 11, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "0 2px 10px rgba(240,130,45,0.45)" }}>
               <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
