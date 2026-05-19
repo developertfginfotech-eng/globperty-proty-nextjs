@@ -439,14 +439,9 @@ export default function Sidebar() {
               </li>
             )}
 
-            {/* Seller Tools */}
+            {/* Seller-only items */}
             {!isBuyer && (
               <>
-                <li style={{ padding: "12px 20px 4px", pointerEvents: "none" }}>
-                  <span style={{ fontSize: 10, fontWeight: 700, color: "rgba(168,171,174,0.6)", letterSpacing: "1.2px", textTransform: "uppercase" }}>
-                    SELLER TOOLS
-                  </span>
-                </li>
                 <li className={`nav-menu-item ${pathname == "/offers" ? "active" : ""}`}>
                   <Link className="nav-menu-link" href="/offers">
                     <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
