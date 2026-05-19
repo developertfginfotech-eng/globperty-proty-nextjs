@@ -29,7 +29,7 @@ export default function Sidebar() {
   return (
     <div className="wrap-sidebar">
       <div className="sidebar-menu-dashboard" style={{ background: "linear-gradient(180deg, #0d1b2a 0%, #0f2040 100%)", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <div style={{ padding: "6px 22px 18px", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ padding: "6px 22px 18px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
           <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 11, textDecoration: "none" }}>
             <div style={{ width: 40, height: 40, borderRadius: 11, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "0 2px 10px rgba(240,130,45,0.45)" }}>
               <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
@@ -37,17 +37,6 @@ export default function Sidebar() {
               </svg>
             </div>
             <span style={{ fontSize: 22, fontWeight: 800, color: "#fff", letterSpacing: "-0.4px", fontFamily: "'Lexend', sans-serif" }}>Globperty</span>
-          </Link>
-          <Link href="/notifications" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, borderRadius: 10, background: "rgba(255,255,255,0.07)", flexShrink: 0, textDecoration: "none" }}>
-            <svg width={18} height={18} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 2.5C7.23858 2.5 5 4.73858 5 7.5V11.25L3.33333 12.9167V13.75H16.6667V12.9167L15 11.25V7.5C15 4.73858 12.7614 2.5 10 2.5Z" stroke="rgba(255,255,255,0.6)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M8.33203 13.75C8.33203 14.671 9.07869 15.4167 9.9987 15.4167C10.9187 15.4167 11.6654 14.671 11.6654 13.75" stroke="rgba(255,255,255,0.6)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            {unreadCount > 0 && (
-              <span style={{ position: "absolute", top: 4, right: 4, background: "#f0822d", color: "#fff", fontSize: 9, fontWeight: 800, borderRadius: "50%", width: 16, height: 16, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}>
-                {unreadCount > 99 ? "99+" : unreadCount}
-              </span>
-            )}
           </Link>
         </div>
         <div className="menu-box" style={{ paddingTop: 10 }}>
@@ -395,6 +384,22 @@ export default function Sidebar() {
                 Reviews
               </Link>
             </li>
+            {/* Notifications */}
+            <li className={`nav-menu-item ${pathname === "/notifications" ? "active" : ""}`}>
+              <Link className="nav-menu-link" href="/notifications" style={{ position: "relative" }}>
+                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 2.5C7.23858 2.5 5 4.73858 5 7.5V11.25L3.33333 12.9167V13.75H16.6667V12.9167L15 11.25V7.5C15 4.73858 12.7614 2.5 10 2.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M8.33203 13.75C8.33203 14.671 9.07869 15.4167 9.9987 15.4167C10.9187 15.4167 11.6654 14.671 11.6654 13.75" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Notifications
+                {unreadCount > 0 && (
+                  <span style={{ position: "absolute", top: 6, right: 10, background: "#f0822d", color: "#fff", fontSize: 10, fontWeight: 800, borderRadius: "50%", width: 18, height: 18, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}>
+                    {unreadCount > 99 ? "99+" : unreadCount}
+                  </span>
+                )}
+              </Link>
+            </li>
+
             {/* Buyer: My Deals */}
             {isBuyer && (
               <li className={`nav-menu-item ${pathname == "/deals" ? "active" : ""}`}>
