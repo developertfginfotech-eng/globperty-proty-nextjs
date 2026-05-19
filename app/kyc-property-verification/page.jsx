@@ -854,7 +854,18 @@ const PropertyKYCVerification = () => {
               <span style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", letterSpacing: 1.5, textTransform: "uppercase" }}>Identity Verification</span>
             </div>
             <h1 style={{ fontSize: 36, fontWeight: 800, color: "#fff", marginBottom: 10, lineHeight: 1.2 }}>KYC Verification</h1>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.5)", marginBottom: 0 }}>Complete your identity verification to access real estate services</p>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.5)", marginBottom: 28 }}>Complete your identity verification to access real estate services</p>
+            <div style={{ display: "flex", justifyContent: "center", gap: 32, flexWrap: "wrap" }}>
+              {[
+                { label: "Bank-Level Security", icon: <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> },
+                { label: "24-hr Processing", icon: <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> },
+                { label: "GDPR Compliant", icon: <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> },
+              ].map(b => (
+                <div key={b.label} style={{ display: "flex", alignItems: "center", gap: 7, color: "rgba(255,255,255,0.55)", fontSize: 12, fontWeight: 600 }}>
+                  {b.icon}<span>{b.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -869,34 +880,42 @@ const PropertyKYCVerification = () => {
 
         <div className="row mb40">
           <div className="col-lg-10 mx-auto">
-            <div style={{ background: "#fff", borderRadius: 14, padding: "24px 32px", border: "1px solid #e5e7eb", boxShadow: "0 2px 8px rgba(0,0,0,0.04)", display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative" }}>
+            <div style={{ background: "#fff", borderRadius: 14, padding: "28px 32px 22px", border: "1px solid #e5e7eb", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative" }}>
               {hasCountry ? (
-                // 3 steps when country is pre-filled
-                [1, 2, 3].map((s) => (
-                  <div key={s} className="text-center" style={{ flex: 1, zIndex: 1 }}>
-                    <div style={{ width: "50px", height: "50px", borderRadius: "50%", backgroundColor: step >= s ? "#f0822d" : "#e5e7eb", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "700", margin: "0 auto 10px" }}>
-                      {s}
+                [1, 2, 3].map((s) => {
+                  const done = step > s;
+                  const active = step === s;
+                  const labels = { 1: "Account Type", 2: "Documents", 3: "Review" };
+                  return (
+                    <div key={s} className="text-center" style={{ flex: 1, zIndex: 1 }}>
+                      <div style={{ width: 52, height: 52, borderRadius: "50%", background: done ? "#16a34a" : active ? "#f0822d" : "#f3f4f6", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 10px", boxShadow: done ? "0 2px 10px rgba(22,163,74,0.3)" : active ? "0 2px 14px rgba(240,130,45,0.35)" : "none", transition: "all 0.3s", border: active ? "3px solid rgba(240,130,45,0.2)" : done ? "3px solid rgba(22,163,74,0.15)" : "2px solid #e5e7eb" }}>
+                        {done ? <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> : <span style={{ fontSize: 17, fontWeight: 800, color: active ? "#fff" : "#9ca3af" }}>{s}</span>}
+                      </div>
+                      <small style={{ fontSize: "11px", fontWeight: "700", color: done ? "#16a34a" : active ? "#f0822d" : "#9ca3af", textTransform: "uppercase", letterSpacing: "0.7px", display: "block" }}>
+                        {labels[s]}
+                      </small>
                     </div>
-                    <small style={{ fontSize: "13px", fontWeight: "600", color: step >= s ? "#f0822d" : "#9ca3af" }}>
-                      {s === 1 && "Account Type"} {s === 2 && "Documents"} {s === 3 && "Review"}
-                    </small>
-                  </div>
-                ))
+                  );
+                })
               ) : (
-                // 4 steps when country needs to be selected
-                [1, 2, 3, 4].map((s) => (
-                  <div key={s} className="text-center" style={{ flex: 1, zIndex: 1 }}>
-                    <div style={{ width: "50px", height: "50px", borderRadius: "50%", backgroundColor: step >= s ? "#f0822d" : "#e5e7eb", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "700", margin: "0 auto 10px" }}>
-                      {s}
+                [1, 2, 3, 4].map((s) => {
+                  const done = step > s;
+                  const active = step === s;
+                  const labels = { 1: "Country", 2: "Account Type", 3: "Documents", 4: "Review" };
+                  return (
+                    <div key={s} className="text-center" style={{ flex: 1, zIndex: 1 }}>
+                      <div style={{ width: 52, height: 52, borderRadius: "50%", background: done ? "#16a34a" : active ? "#f0822d" : "#f3f4f6", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 10px", boxShadow: done ? "0 2px 10px rgba(22,163,74,0.3)" : active ? "0 2px 14px rgba(240,130,45,0.35)" : "none", transition: "all 0.3s", border: active ? "3px solid rgba(240,130,45,0.2)" : done ? "3px solid rgba(22,163,74,0.15)" : "2px solid #e5e7eb" }}>
+                        {done ? <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> : <span style={{ fontSize: 17, fontWeight: 800, color: active ? "#fff" : "#9ca3af" }}>{s}</span>}
+                      </div>
+                      <small style={{ fontSize: "11px", fontWeight: "700", color: done ? "#16a34a" : active ? "#f0822d" : "#9ca3af", textTransform: "uppercase", letterSpacing: "0.7px", display: "block" }}>
+                        {labels[s]}
+                      </small>
                     </div>
-                    <small style={{ fontSize: "13px", fontWeight: "600", color: step >= s ? "#f0822d" : "#9ca3af" }}>
-                      {s === 1 && "Country"} {s === 2 && "Account Type"} {s === 3 && "Documents"} {s === 4 && "Review"}
-                    </small>
-                  </div>
-                ))
+                  );
+                })
               )}
-              <div style={{ position: "absolute", top: "25px", left: "10%", right: "10%", height: "2px", backgroundColor: "#e5e7eb", zIndex: 0 }}>
-                <div style={{ height: "100%", backgroundColor: "#f0822d", width: `${((step - 1) / (getTotalSteps() - 1)) * 100}%`, transition: "width 0.3s ease" }} />
+              <div style={{ position: "absolute", top: "39px", left: "calc(8% + 26px)", right: "calc(8% + 26px)", height: "2px", backgroundColor: "#e5e7eb", zIndex: 0 }}>
+                <div style={{ height: "100%", background: "linear-gradient(90deg, #16a34a, #f0822d)", width: `${((step - 1) / (getTotalSteps() - 1)) * 100}%`, transition: "width 0.4s ease" }} />
               </div>
             </div>
           </div>
@@ -904,17 +923,8 @@ const PropertyKYCVerification = () => {
 
         <div className="row">
           <div className="col-lg-10 mx-auto">
-            <div style={{ background: "#fff", borderRadius: 16, boxShadow: "0 4px 32px rgba(0,0,0,0.08)", padding: "40px 40px 32px", border: "1px solid #e5e7eb" }}>
-              <div style={{ textAlign: "center", marginBottom: 32 }}>
-                <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-                  <div style={{ width: 38, height: 38, borderRadius: 10, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
-                    </svg>
-                  </div>
-                  <span style={{ fontSize: 22, fontWeight: 800, color: "#111827", letterSpacing: "-0.3px" }}>Globperty</span>
-                </Link>
-              </div>
+            <div style={{ background: "#fff", borderRadius: 16, boxShadow: "0 4px 32px rgba(0,0,0,0.08)", padding: "44px 44px 36px", border: "1px solid #e5e7eb", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: "linear-gradient(90deg, #f0822d 0%, #e56c1a 60%, #f0982d 100%)" }} />
 
               {error && (
                 <div
@@ -963,14 +973,21 @@ const PropertyKYCVerification = () => {
               <form onSubmit={handleSubmit}>
                 {!hasCountry && step === 1 && (
                   <div className="step-content">
-                    <h4 className="mb30" style={{ fontSize: "22px", fontWeight: "700", color: "#1f2937" }}>
-                      <i className="fas fa-globe me-2" style={{ color: "#f0822d" }}></i>Select Your Country
-                    </h4>
+                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(240,130,45,0.1)", border: "1.5px solid rgba(240,130,45,0.25)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                      </div>
+                      <div>
+                        <h4 style={{ fontSize: 20, fontWeight: 800, color: "#111827", margin: 0, lineHeight: 1.2 }}>Select Your Country</h4>
+                        <p style={{ fontSize: 13, color: "#9ca3af", margin: "3px 0 0" }}>Choose the country where your property is registered</p>
+                      </div>
+                    </div>
                     <div className="row">
                       {COUNTRIES.map(c => (
                         <div key={c} className="col-md-4 mb20">
-                          <div onClick={() => setCountry(c)} style={{ cursor: 'pointer', minHeight: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, border: country === c ? '2px solid #f0822d' : '1.5px solid #e5e7eb', background: country === c ? 'rgba(240,130,45,0.06)' : '#fff', transition: 'all 0.15s', padding: '12px 16px' }}>
-                            <h6 style={{ margin: 0, fontWeight: country === c ? '700' : '600', color: country === c ? '#f0822d' : '#1f2937' }}>{c}</h6>
+                          <div onClick={() => setCountry(c)} style={{ cursor: 'pointer', minHeight: '72px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 12, border: country === c ? '2px solid #f0822d' : '1.5px solid #e5e7eb', background: country === c ? 'rgba(240,130,45,0.07)' : '#fff', transition: 'all 0.15s', padding: '14px 16px', boxShadow: country === c ? '0 2px 12px rgba(240,130,45,0.15)' : '0 1px 3px rgba(0,0,0,0.04)', position: 'relative' }}>
+                            {country === c && <div style={{ position: 'absolute', top: 7, right: 7, width: 18, height: 18, borderRadius: '50%', background: '#f0822d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><svg width={9} height={9} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>}
+                            <span style={{ margin: 0, fontWeight: 700, fontSize: 14, color: country === c ? '#f0822d' : '#374151' }}>{c}</span>
                           </div>
                         </div>
                       ))}
@@ -993,7 +1010,8 @@ const PropertyKYCVerification = () => {
                         const active = accountType === type.value;
                         return (
                           <div key={type.value} className="col-md-6 mb20">
-                            <div onClick={() => setAccountType(type.value)} style={{ cursor: 'pointer', minHeight: '100px', display: 'flex', alignItems: 'flex-start', gap: 14, borderRadius: 12, border: active ? '2px solid #f0822d' : '1.5px solid #e5e7eb', background: active ? 'rgba(240,130,45,0.06)' : '#fff', transition: 'all 0.15s', padding: '16px 18px', boxShadow: active ? '0 2px 12px rgba(240,130,45,0.12)' : '0 1px 4px rgba(0,0,0,0.04)' }}>
+                            <div onClick={() => setAccountType(type.value)} style={{ cursor: 'pointer', minHeight: '100px', display: 'flex', alignItems: 'flex-start', gap: 14, borderRadius: 12, border: active ? '2px solid #f0822d' : '1.5px solid #e5e7eb', background: active ? 'rgba(240,130,45,0.06)' : '#fff', transition: 'all 0.15s', padding: '16px 18px', boxShadow: active ? '0 3px 16px rgba(240,130,45,0.18)' : '0 1px 4px rgba(0,0,0,0.04)', position: 'relative' }}>
+                            {active && <div style={{ position: 'absolute', top: 10, right: 10, width: 22, height: 22, borderRadius: '50%', background: '#f0822d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><svg width={11} height={11} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>}
                               <div style={{ width: 40, height: 40, borderRadius: 10, background: active ? '#f0822d' : '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: active ? '#fff' : '#6b7280', transition: 'all 0.15s' }}>
                                 {type.icon}
                               </div>
@@ -1013,12 +1031,20 @@ const PropertyKYCVerification = () => {
                   <div className="step-content">
                     {reqLoading ? <div className="text-center p-5"><p>Loading requirements...</p></div> : !requirements ? <div className="text-center p-5"><p className="text-danger">Unable to load requirements</p></div> : (
                       <>
-                        <h4 className="mb30"><i className="fas fa-file-upload me-2" style={{ color: "#f0822d" }}></i>Submit Required Documents</h4>
+                        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
+                          <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(240,130,45,0.1)", border: "1.5px solid rgba(240,130,45,0.25)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                            <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                          </div>
+                          <div>
+                            <h4 style={{ fontSize: 20, fontWeight: 800, color: "#111827", margin: 0, lineHeight: 1.2 }}>Submit Required Documents</h4>
+                            <p style={{ fontSize: 13, color: "#9ca3af", margin: "3px 0 0" }}>Upload clear, legible copies of all required documents</p>
+                          </div>
+                        </div>
 
                         {/* Show Company Information for company account types */}
                         {(accountType === 'real_estate_brokerage' || accountType === 'property_management') ? (
                           <>
-                            <h6 className="mb20" style={{ fontSize: "16px", fontWeight: "700" }}>Company Information</h6>
+                            <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Company Information</h6>
                             <div className="row mb30">
                               <div className="col-md-6 mb20">
                                 <label className="form-label fw600">Company Name *</label>
@@ -1128,7 +1154,7 @@ const PropertyKYCVerification = () => {
                             </div>
 
                             {/* Authorized Signatory Details - For Brokerage, Property Management, and Developer */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Authorized Signatory Details *</h6>
+                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Authorized Signatory Details *</h6>
                             <div className="row mb30">
                               <div className="col-md-6 mb20">
                                 <label className="form-label fw600">Authorized Signatory Full Name *</label>
@@ -1296,7 +1322,7 @@ const PropertyKYCVerification = () => {
                             {/* Principal Broker Information - USA Real Estate Brokerage Company ONLY */}
                             {accountType === 'real_estate_brokerage' && country === 'USA' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Principal / Managing Broker Information *</h6>
+                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Principal / Managing Broker Information *</h6>
                                 <p className="text-muted mb20" style={{ fontSize: "13px" }}>
                                   In the USA, every real estate brokerage must designate a Principal/Managing Broker who holds the broker license.
                                 </p>
@@ -1347,7 +1373,7 @@ const PropertyKYCVerification = () => {
                             {/* UBO Details - USA Real Estate Brokerage Company */}
                             {accountType === 'real_estate_brokerage' && country === 'USA' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Beneficial Ownership Information (UBO) *</h6>
+                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Beneficial Ownership Information (UBO) *</h6>
                                 <p className="text-muted mb20" style={{ fontSize: "13px" }}>
                                   Under FinCEN regulations, companies must disclose all beneficial owners (individuals with 25% or more ownership or substantial control).
                                 </p>
@@ -1384,7 +1410,7 @@ const PropertyKYCVerification = () => {
                             {/* UBO Details - For Property Developer */}
                             {accountType === 'property_developer' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Ultimate Beneficial Owner (UBO) Details *</h6>
+                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Ultimate Beneficial Owner (UBO) Details *</h6>
                                 <div className="row mb30">
                                   <div className="col-md-6 mb20">
                                     <label className="form-label fw600">UBO Name(s) (≥25% ownership) *</label>
@@ -1413,7 +1439,7 @@ const PropertyKYCVerification = () => {
                                   </div>
                                 </div>
 
-                                <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Project Scope *</h6>
+                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Project Scope *</h6>
                                 <div className="row mb30">
                                   <div className="col-md-12 mb20">
                                     <label className="form-label fw600">Developer Role *</label>
@@ -1436,7 +1462,7 @@ const PropertyKYCVerification = () => {
                             )}
 
                             {/* AML / Compliance Declarations - For Companies */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>AML / Compliance Declarations *</h6>
+                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>AML / Compliance Declarations *</h6>
                             <div className="row mb30">
                               <div className="col-12">
                                 <div className="form-check mb15">
@@ -1485,7 +1511,7 @@ const PropertyKYCVerification = () => {
                             </div>
 
                             {/* Consent & Authorization - For Companies */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Consent & Authorization *</h6>
+                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Consent & Authorization *</h6>
                             <div className="row mb30">
                               <div className="col-12 mb20">
                                 <div className="form-check mb15">
@@ -1559,7 +1585,7 @@ const PropertyKYCVerification = () => {
                           </>
                         ) : (
                           <>
-                            <h6 className="mb20" style={{ fontSize: "16px", fontWeight: "700" }}>Personal Information</h6>
+                            <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Personal Information</h6>
                             <div className="row mb30">
                               <div className="col-md-6 mb20">
                                 <label className="form-label fw600">Full Name *</label>
@@ -1635,7 +1661,7 @@ const PropertyKYCVerification = () => {
                             {/* Brokerage Firm Details - Only for Real Estate Agents */}
                             {accountType === 'real_estate_agent' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Brokerage Firm Details *</h6>
+                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Brokerage Firm Details *</h6>
                                 <div className="row mb30">
                                   <div className="col-md-6 mb20">
                                     <label className="form-label fw600">Brokerage Firm Name *</label>
@@ -1696,7 +1722,7 @@ const PropertyKYCVerification = () => {
                             </div>
 
                             {/* AML / Sanctions Declarations */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>AML / Sanctions Declarations *</h6>
+                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>AML / Sanctions Declarations *</h6>
                             <div className="row mb30">
                               <div className="col-12">
                                 <div className="form-check mb15">
@@ -1745,7 +1771,7 @@ const PropertyKYCVerification = () => {
                             </div>
 
                             {/* Consent & Authorization */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Consent & Authorization *</h6>
+                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Consent & Authorization *</h6>
                             <div className="row mb30">
                               <div className="col-12 mb20">
                                 <div className="form-check mb15">
@@ -1808,7 +1834,7 @@ const PropertyKYCVerification = () => {
                             {/* POA/Representative Specific Fields */}
                             {accountType === 'poa_representative' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Principal (Grantor) Details *</h6>
+                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Principal (Grantor) Details *</h6>
                                 <div className="row mb30">
                                   <div className="col-md-6 mb20">
                                     <label className="form-label fw600">Principal Full Name *</label>
@@ -1854,7 +1880,7 @@ const PropertyKYCVerification = () => {
                                   </div>
                                 </div>
 
-                                <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>POA Validity *</h6>
+                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>POA Validity *</h6>
                                 <div className="row mb30">
                                   <div className="col-md-6 mb20">
                                     <label className="form-label fw600">POA Issue Date *</label>
@@ -1937,7 +1963,7 @@ const PropertyKYCVerification = () => {
                                   </div>
                                 </div>
 
-                                <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Scope of Authority *</h6>
+                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Scope of Authority *</h6>
                                 <div className="row mb30">
                                   <div className="col-12">
                                     <p className="mb15 text-muted">Select all authorized actions:</p>
@@ -2000,7 +2026,7 @@ const PropertyKYCVerification = () => {
                             )}
                           </>
                         )}
-                        <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Required Documents</h6>
+                        <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Required Documents</h6>
                         <div className="row mb30">
                           {requirements.documents?.map((doc, idx) => (
                             <div key={doc.key} className="col-md-12" style={{ paddingTop: idx > 0 ? 20 : 0, marginBottom: 20, borderTop: idx > 0 ? '1px solid #e5e7eb' : 'none' }}>
@@ -2047,7 +2073,7 @@ const PropertyKYCVerification = () => {
                         </div>
                         {requirements.additionalFields && requirements.additionalFields.length > 0 && (
                           <>
-                            <h6 className="mb20 mt40" style={{ fontSize: "16px", fontWeight: "700" }}>Country-Specific Information</h6>
+                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Country-Specific Information</h6>
                             <div className="row mb30">
                               {requirements.additionalFields.map(field => (
                                 <div key={field.key} className="col-md-6 mb20">
@@ -2069,20 +2095,30 @@ const PropertyKYCVerification = () => {
 
                 {((hasCountry && step === 3) || (!hasCountry && step === 4)) && (
                   <div className="step-content">
-                    <h4 className="mb30"><i className="fas fa-check-circle me-2" style={{ color: "#f0822d" }}></i>Review Your Submission</h4>
+                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(22,163,74,0.1)", border: "1.5px solid rgba(22,163,74,0.25)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                      </div>
+                      <div>
+                        <h4 style={{ fontSize: 20, fontWeight: 800, color: "#111827", margin: 0, lineHeight: 1.2 }}>Review Your Submission</h4>
+                        <p style={{ fontSize: 13, color: "#9ca3af", margin: "3px 0 0" }}>Confirm all details are correct before submitting</p>
+                      </div>
+                    </div>
                     <div className="mb30">
                       {(accountType === 'real_estate_brokerage' || accountType === 'property_management') ? (
                         <>
-                          <h6 className="mb20" style={{ fontSize: "16px", fontWeight: "700" }}>Company Information</h6>
+                          <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Company Information</h6>
+                          <div style={{ background: "#f8fafc", borderRadius: 10, border: "1px solid #e5e7eb", padding: "16px 20px", marginBottom: 20 }}>
                           <div className="row">
-                            <div className="col-md-6"><small className="text-muted">Company Name:</small><p className="fw600">{formData.companyInfo.companyName}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Registration Number:</small><p className="fw600">{formData.companyInfo.registrationNumber}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Company Email:</small><p className="fw600">{formData.companyInfo.companyEmail}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Company Phone:</small><p className="fw600">{formData.companyInfo.companyPhone}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Country:</small><p className="fw600">{country}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Account Type:</small><p className="fw600">{ACCOUNT_TYPES.find(t => t.value === accountType)?.label}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Company Name</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.companyInfo.companyName || "—"}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Registration Number</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.companyInfo.registrationNumber || "—"}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Company Email</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.companyInfo.companyEmail || "—"}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Company Phone</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.companyInfo.companyPhone || "—"}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Country</small><p className="fw600" style={{ marginBottom: 0, color: "#111827" }}>{country}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Account Type</small><p className="fw600" style={{ marginBottom: 0, color: "#111827" }}>{ACCOUNT_TYPES.find(t => t.value === accountType)?.label}</p></div>
                           </div>
-                          <h6 className="mb20 mt30" style={{ fontSize: "16px", fontWeight: "700" }}>Company Address</h6>
+                          </div>
+                          <h6 className="mb20 mt30" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Company Address</h6>
                           <div className="row">
                             <div className="col-md-6"><small className="text-muted">Address:</small><p className="fw600">{formData.companyInfo.companyAddress.line1}</p></div>
                             <div className="col-md-6"><small className="text-muted">{getAddressFieldConfig(country).stateLabel}:</small><p className="fw600">{formData.companyInfo.companyAddress.state}</p></div>
@@ -2094,17 +2130,18 @@ const PropertyKYCVerification = () => {
                         </>
                       ) : (
                         <>
-                          <h6 className="mb20" style={{ fontSize: "16px", fontWeight: "700" }}>Personal Information</h6>
+                          <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Personal Information</h6>
+                          <div style={{ background: "#f8fafc", borderRadius: 10, border: "1px solid #e5e7eb", padding: "16px 20px", marginBottom: 20 }}>
                           <div className="row">
-                            <div className="col-md-6"><small className="text-muted">Full Name:</small><p className="fw600">{formData.personalInfo.fullName}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Email:</small><p className="fw600">{formData.personalInfo.email}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Phone:</small><p className="fw600">{formData.personalInfo.phone}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Date of Birth:</small><p className="fw600">{formData.personalInfo.dateOfBirth ? new Date(formData.personalInfo.dateOfBirth).toLocaleDateString() : 'N/A'}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Nationality:</small><p className="fw600">{formData.personalInfo.nationality || 'N/A'}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Country:</small><p className="fw600">{country}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Account Type:</small><p className="fw600">{ACCOUNT_TYPES.find(t => t.value === accountType)?.label}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Tax Residence Country:</small><p className="fw600">{formData.personalInfo.taxResidenceCountry || 'N/A'}</p></div>
-                            <div className="col-md-6"><small className="text-muted">Tax Identification Number:</small><p className="fw600">{formData.personalInfo.taxIdentificationNumber || 'Not provided'}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Full Name</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.personalInfo.fullName || "—"}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Email</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.personalInfo.email || "—"}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Phone</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.personalInfo.phone || "—"}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Date of Birth</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.personalInfo.dateOfBirth ? new Date(formData.personalInfo.dateOfBirth).toLocaleDateString() : "—"}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Nationality</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.personalInfo.nationality || "—"}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Country</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{country}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Account Type</small><p className="fw600" style={{ marginBottom: 0, color: "#111827" }}>{ACCOUNT_TYPES.find(t => t.value === accountType)?.label}</p></div>
+                            <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Tax Identification Number</small><p className="fw600" style={{ marginBottom: 0, color: "#111827" }}>{formData.personalInfo.taxIdentificationNumber || "Not provided"}</p></div>
+                          </div>
                           </div>
                         </>
                       )}
@@ -2113,7 +2150,7 @@ const PropertyKYCVerification = () => {
                     {/* Show Country-Specific Additional Data if any */}
                     {requirements && requirements.additionalFields && requirements.additionalFields.length > 0 && Object.keys(formData.additionalData).length > 0 && (
                       <div className="mb30">
-                        <h6 className="mb20" style={{ fontSize: "16px", fontWeight: "700" }}>Country-Specific Information</h6>
+                        <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Country-Specific Information</h6>
                         <div className="row">
                           {requirements.additionalFields.map(field => (
                             formData.additionalData[field.key] && (
@@ -2129,17 +2166,22 @@ const PropertyKYCVerification = () => {
 
                     {/* Show uploaded documents */}
                     <div className="mb30">
-                      <h6 className="mb20" style={{ fontSize: "16px", fontWeight: "700" }}>Documents</h6>
+                      <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Documents</h6>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                       {requirements?.documents?.map(doc => {
                         const f = files[doc.key];
                         const uploaded = doc.hasFrontBack ? (f?.front || f?.back) : !!f;
                         return (
-                          <div key={doc.key} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                            <span style={{ color: uploaded ? "#16a34a" : "#dc2626", fontWeight: 600 }}>{uploaded ? "✓" : "✗"}</span>
-                            <span style={{ fontSize: 14, color: uploaded ? "#374151" : "#dc2626" }}>{doc.label}{doc.required ? " *" : " (Optional)"}</span>
+                          <div key={doc.key} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderRadius: 8, background: uploaded ? "rgba(22,163,74,0.05)" : "rgba(220,38,38,0.04)", border: `1px solid ${uploaded ? "rgba(22,163,74,0.2)" : "rgba(220,38,38,0.15)"}` }}>
+                            <div style={{ width: 24, height: 24, borderRadius: "50%", background: uploaded ? "#16a34a" : "#dc2626", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                              {uploaded ? <svg width={11} height={11} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> : <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>}
+                            </div>
+                            <span style={{ fontSize: 13, fontWeight: 600, color: uploaded ? "#374151" : "#dc2626", flex: 1 }}>{doc.label}</span>
+                            <span style={{ fontSize: 11, fontWeight: 600, color: uploaded ? "#16a34a" : "#9ca3af", textTransform: "uppercase", letterSpacing: 0.5 }}>{uploaded ? "Uploaded" : doc.required ? "Required" : "Optional"}</span>
                           </div>
                         );
                       })}
+                      </div>
                     </div>
                     <div className="checkbox-style1 mb20">
                       <label className="custom_checkbox">
@@ -2158,42 +2200,39 @@ const PropertyKYCVerification = () => {
                   </div>
                 )}
 
-                <div style={{ margin: '32px 0 0', borderTop: '1px solid #e5e7eb', paddingTop: 24, textAlign: 'center' }}>
-                  <p style={{ fontSize: 13, color: '#9ca3af', marginBottom: 10 }}>
-                    Not ready yet? You can complete this later from your dashboard.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => router.push('/dashboard')}
-                    style={{
-                      background: '#f9fafb',
-                      border: '1px solid #e5e7eb',
-                      color: '#6b7280',
-                      fontSize: 13,
-                      fontWeight: 600,
-                      cursor: 'pointer',
-                      padding: '8px 22px',
-                      borderRadius: 8,
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: 6,
-                      transition: 'background 0.2s',
-                    }}
-                  >
-                    Skip for now
-                    <span style={{ fontSize: 16, lineHeight: 1 }}>→</span>
-                  </button>
-                </div>
-
-                <div className="d-flex justify-content-between align-items-center mt30">
-                  {step > 1 && <button type="button" className="btn btn-lg" style={{ background: "#f8fafc", color: "#374151", border: "1.5px solid #e5e7eb", fontWeight: 600, borderRadius: 10, padding: "11px 28px" }} onClick={() => setStep(step - 1)}><i className="fas fa-arrow-left me-2"></i> Previous</button>}
-                  {step < getTotalSteps() ? (
-                    <button type="button" className="btn btn-lg ms-auto" onClick={() => setStep(step + 1)} disabled={!canProceedToNextStep()} style={{ opacity: !canProceedToNextStep() ? 0.5 : 1, background: "#f0822d", color: "#fff", fontWeight: 700, border: "none", borderRadius: 10, padding: "12px 32px" }}>Next <i className="fas fa-arrow-right ms-2"></i></button>
-                  ) : (
-                    <button type="submit" className="btn btn-lg ms-auto" disabled={loading || !formData.agreeToTerms} style={{ opacity: (loading || !formData.agreeToTerms) ? 0.5 : 1, background: "#f0822d", color: "#fff", fontWeight: 700, border: "none", borderRadius: 10, padding: "12px 32px" }}>
-                      {loading ? (<><span className="spinner-border spinner-border-sm me-2" role="status"></span>Submitting...</>) : (<><i className="fas fa-check me-2"></i> Submit KYC</>)}
-                    </button>
-                  )}
+                <div style={{ margin: '36px 0 0', borderTop: '1px solid #f0f2f5', paddingTop: 24 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      {step > 1 && (
+                        <button type="button" onClick={() => setStep(step - 1)}
+                          style={{ background: "#f8fafc", color: "#374151", border: "1.5px solid #e5e7eb", fontWeight: 700, borderRadius: 10, padding: "12px 24px", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", gap: 8, transition: "all 0.15s" }}>
+                          <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                          Previous
+                        </button>
+                      )}
+                      <button type="button" onClick={() => router.push('/dashboard')}
+                        style={{ background: "transparent", border: "none", color: "#9ca3af", fontSize: 13, fontWeight: 600, cursor: "pointer", padding: "12px 8px", display: "flex", alignItems: "center", gap: 5 }}>
+                        Skip for now
+                        <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      </button>
+                    </div>
+                    {step < getTotalSteps() ? (
+                      <button type="button" onClick={() => setStep(step + 1)} disabled={!canProceedToNextStep()}
+                        style={{ opacity: !canProceedToNextStep() ? 0.45 : 1, background: "linear-gradient(90deg, #f0822d, #e56c1a)", color: "#fff", fontWeight: 700, border: "none", borderRadius: 10, padding: "13px 36px", cursor: !canProceedToNextStep() ? "not-allowed" : "pointer", fontSize: 14, display: "flex", alignItems: "center", gap: 8, boxShadow: canProceedToNextStep() ? "0 2px 12px rgba(240,130,45,0.35)" : "none", transition: "all 0.2s" }}>
+                        Continue
+                        <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      </button>
+                    ) : (
+                      <button type="submit" disabled={loading || !formData.agreeToTerms}
+                        style={{ opacity: (loading || !formData.agreeToTerms) ? 0.5 : 1, background: "linear-gradient(90deg, #f0822d, #e56c1a)", color: "#fff", fontWeight: 700, border: "none", borderRadius: 10, padding: "13px 36px", cursor: (loading || !formData.agreeToTerms) ? "not-allowed" : "pointer", fontSize: 14, display: "flex", alignItems: "center", gap: 8, boxShadow: (!loading && formData.agreeToTerms) ? "0 2px 14px rgba(240,130,45,0.4)" : "none" }}>
+                        {loading ? (
+                          <><span className="spinner-border spinner-border-sm" role="status" style={{ width: 16, height: 16, borderWidth: 2 }} />Submitting…</>
+                        ) : (
+                          <><svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Submit KYC</>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </form>
             </div>
