@@ -136,120 +136,6 @@ export default function Sidebar() {
             </li>
             <li
               className={`nav-menu-item ${
-                pathname == "/my-favorites" ? "active" : ""
-              } `}
-            >
-              <Link className="nav-menu-link" href={`/my-favorites`}>
-                <svg
-                  width={20}
-                  height={20}
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3.33203 18.3333H14.9987C15.4407 18.3333 15.8646 18.1577 16.1772 17.8451C16.4898 17.5326 16.6654 17.1087 16.6654 16.6666V5.83329L12.4987 1.66663H4.9987C4.55667 1.66663 4.13275 1.84222 3.82019 2.15478C3.50763 2.46734 3.33203 2.89127 3.33203 3.33329V4.99996"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11.668 1.66663V4.99996C11.668 5.44199 11.8436 5.86591 12.1561 6.17847C12.4687 6.49103 12.8926 6.66663 13.3346 6.66663H16.668"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M8.574 8.91662C8.28934 8.63239 7.92648 8.43938 7.53169 8.3622C7.1369 8.28503 6.72807 8.32718 6.35733 8.48329C6.11566 8.58329 5.89066 8.73329 5.70733 8.92496L5.41566 9.20829L5.124 8.92496C4.84097 8.641 4.48002 8.44744 4.08689 8.36882C3.69376 8.29019 3.28613 8.33003 2.91566 8.48329C2.66566 8.58329 2.449 8.73329 2.25733 8.92496C1.46566 9.70829 1.424 11.0333 2.424 12.0416L5.41566 15L8.41566 12.0416C9.41566 11.0333 9.36566 9.70829 8.574 8.92496V8.91662Z"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                My favorites {favCount > 0 ? `(${favCount})` : ""}
-              </Link>
-            </li>
-            <li
-              className={`nav-menu-item ${
-                pathname == "/review" ? "active" : ""
-              } `}
-            >
-              <Link className="nav-menu-link" href={`/review`}>
-                <svg
-                  width={20}
-                  height={20}
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M6.66797 9.99996C7.11 9.99996 7.53392 9.82436 7.84648 9.5118C8.15904 9.19924 8.33464 8.77532 8.33464 8.33329V6.66663H6.66797"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11.668 9.99996C12.11 9.99996 12.5339 9.82436 12.8465 9.5118C13.159 9.19924 13.3346 8.77532 13.3346 8.33329V6.66663H11.668"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                Reviews
-              </Link>
-            </li>
-            {!isBuyer && <li
-              className={`nav-menu-item ${
-                pathname == "/add-property" ? "active" : ""
-              } `}
-            >
-              <Link className="nav-menu-link" href={`/add-property`}>
-                <svg
-                  width={20}
-                  height={20}
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14.9987 4.16663L12.987 2.15496C12.6745 1.84238 12.2507 1.66672 11.8087 1.66663H4.9987C4.55667 1.66663 4.13275 1.84222 3.82019 2.15478C3.50763 2.46734 3.33203 2.89127 3.33203 3.33329V16.6666C3.33203 17.1087 3.50763 17.5326 3.82019 17.8451C4.13275 18.1577 4.55667 18.3333 4.9987 18.3333H14.9987C15.4407 18.3333 15.8646 18.1577 16.1772 17.8451C16.4898 17.5326 16.6654 17.1087 16.6654 16.6666"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M17.8168 10.5217C18.1487 10.1897 18.3352 9.73947 18.3352 9.27C18.3352 8.80054 18.1487 8.3503 17.8168 8.01834C17.4848 7.68637 17.0346 7.49988 16.5651 7.49988C16.0956 7.49988 15.6454 7.68637 15.3134 8.01834L11.9718 11.3617C11.7736 11.5597 11.6286 11.8044 11.5501 12.0733L10.8526 14.465C10.8317 14.5367 10.8304 14.6127 10.849 14.6851C10.8675 14.7574 10.9052 14.8235 10.958 14.8763C11.0108 14.9291 11.0768 14.9668 11.1492 14.9853C11.2216 15.0038 11.2976 15.0026 11.3693 14.9817L13.7609 14.2842C14.0298 14.2057 14.2746 14.0606 14.4726 13.8625L17.8168 10.5217Z"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M6.66797 15H7.5013"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                Add property
-              </Link>
-            </li>}
-            <li
-              className={`nav-menu-item ${
                 pathname == "/my-property" ? "active" : ""
               } `}
             >
@@ -342,6 +228,44 @@ export default function Sidebar() {
                 My properties
               </Link>
             </li>
+            {!isBuyer && <li
+              className={`nav-menu-item ${
+                pathname == "/add-property" ? "active" : ""
+              } `}
+            >
+              <Link className="nav-menu-link" href={`/add-property`}>
+                <svg
+                  width={20}
+                  height={20}
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.9987 4.16663L12.987 2.15496C12.6745 1.84238 12.2507 1.66672 11.8087 1.66663H4.9987C4.55667 1.66663 4.13275 1.84222 3.82019 2.15478C3.50763 2.46734 3.33203 2.89127 3.33203 3.33329V16.6666C3.33203 17.1087 3.50763 17.5326 3.82019 17.8451C4.13275 18.1577 4.55667 18.3333 4.9987 18.3333H14.9987C15.4407 18.3333 15.8646 18.1577 16.1772 17.8451C16.4898 17.5326 16.6654 17.1087 16.6654 16.6666"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M17.8168 10.5217C18.1487 10.1897 18.3352 9.73947 18.3352 9.27C18.3352 8.80054 18.1487 8.3503 17.8168 8.01834C17.4848 7.68637 17.0346 7.49988 16.5651 7.49988C16.0956 7.49988 15.6454 7.68637 15.3134 8.01834L11.9718 11.3617C11.7736 11.5597 11.6286 11.8044 11.5501 12.0733L10.8526 14.465C10.8317 14.5367 10.8304 14.6127 10.849 14.6851C10.8675 14.7574 10.9052 14.8235 10.958 14.8763C11.0108 14.9291 11.0768 14.9668 11.1492 14.9853C11.2216 15.0038 11.2976 15.0026 11.3693 14.9817L13.7609 14.2842C14.0298 14.2057 14.2746 14.0606 14.4726 13.8625L17.8168 10.5217Z"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M6.66797 15H7.5013"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                Add property
+              </Link>
+            </li>}
             <li
               className={`nav-menu-item ${
                 pathname == "/my-package" ? "active" : ""
@@ -377,7 +301,83 @@ export default function Sidebar() {
                     strokeLinejoin="round"
                   />
                 </svg>
-                My Plan
+                My Plans
+              </Link>
+            </li>
+            <li
+              className={`nav-menu-item ${
+                pathname == "/my-favorites" ? "active" : ""
+              } `}
+            >
+              <Link className="nav-menu-link" href={`/my-favorites`}>
+                <svg
+                  width={20}
+                  height={20}
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.33203 18.3333H14.9987C15.4407 18.3333 15.8646 18.1577 16.1772 17.8451C16.4898 17.5326 16.6654 17.1087 16.6654 16.6666V5.83329L12.4987 1.66663H4.9987C4.55667 1.66663 4.13275 1.84222 3.82019 2.15478C3.50763 2.46734 3.33203 2.89127 3.33203 3.33329V4.99996"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M11.668 1.66663V4.99996C11.668 5.44199 11.8436 5.86591 12.1561 6.17847C12.4687 6.49103 12.8926 6.66663 13.3346 6.66663H16.668"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M8.574 8.91662C8.28934 8.63239 7.92648 8.43938 7.53169 8.3622C7.1369 8.28503 6.72807 8.32718 6.35733 8.48329C6.11566 8.58329 5.89066 8.73329 5.70733 8.92496L5.41566 9.20829L5.124 8.92496C4.84097 8.641 4.48002 8.44744 4.08689 8.36882C3.69376 8.29019 3.28613 8.33003 2.91566 8.48329C2.66566 8.58329 2.449 8.73329 2.25733 8.92496C1.46566 9.70829 1.424 11.0333 2.424 12.0416L5.41566 15L8.41566 12.0416C9.41566 11.0333 9.36566 9.70829 8.574 8.92496V8.91662Z"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                My favorites {favCount > 0 ? `(${favCount})` : ""}
+              </Link>
+            </li>
+            <li
+              className={`nav-menu-item ${
+                pathname == "/review" ? "active" : ""
+              } `}
+            >
+              <Link className="nav-menu-link" href={`/review`}>
+                <svg
+                  width={20}
+                  height={20}
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M6.66797 9.99996C7.11 9.99996 7.53392 9.82436 7.84648 9.5118C8.15904 9.19924 8.33464 8.77532 8.33464 8.33329V6.66663H6.66797"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M11.668 9.99996C12.11 9.99996 12.5339 9.82436 12.8465 9.5118C13.159 9.19924 13.3346 8.77532 13.3346 8.33329V6.66663H11.668"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                Reviews
               </Link>
             </li>
             <li className={`nav-menu-item `}>
