@@ -285,13 +285,20 @@ export default function Analytics() {
     );
   }
 
+  const [marketError, setMarketError] = useState("");
+
   const fetchMarket = async (city) => {
+    if (!city.trim()) return;
     setMarketLoading(true);
+    setMarketError("");
+    setMarketData(null);
     try {
-      const res = await apiClient.get(`/market-intelligence/overview?city=${encodeURIComponent(city)}`);
-      setMarketData(res.data?.data || res.data || null);
-    } catch {
-      setMarketData(null);
+      const res = await apiClient.get(`/market-intelligence/overview?city=${encodeURIComponent(city.trim())}`);
+      const d = res.data?.data || res.data || null;
+      setMarketData(d);
+    } catch (err) {
+      const msg = err?.response?.data?.message || "";
+      setMarketError(msg || "No data found for this city. Try a different city name.");
     }
     setMarketLoading(false);
   };
@@ -464,59 +471,115 @@ export default function Analytics() {
 
               {marketLoading && <div style={{ padding: 40, textAlign: "center", color: "#888" }}>Loading market data…</div>}
 
-              {!marketLoading && !marketData && (
+              {!marketLoading && marketError && (
+                <div style={{ padding: "20px 24px", background: "#FEF2F2", border: "1px solid #EF4444", borderRadius: 10, color: "#EF4444", fontSize: 14, fontWeight: 600 }}>
+                  {marketError}
+                </div>
+              )}
+
+              {!marketLoading && !marketData && !marketError && (
                 <div style={{ padding: 40, textAlign: "center", color: "#888" }}>
                   Enter a city name and click Search to view market data.
                 </div>
               )}
 
-              {!marketLoading && marketData && (
-                <div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12, marginBottom: 24 }}>
-                    {[
-                      { label: "Avg Price", value: marketData.averagePrice ? `$${Number(marketData.averagePrice).toLocaleString()}` : "—", color: "#3B82F6", bg: "#EFF6FF" },
-                      { label: "Median Price", value: marketData.medianPrice ? `$${Number(marketData.medianPrice).toLocaleString()}` : "—", color: "#f0822d", bg: "#FFF7ED" },
-                      { label: "Total Listings", value: marketData.totalListings ?? "—", color: "#10B981", bg: "#ECFDF5" },
-                      { label: "Avg Price/sqft", value: marketData.avgPricePerSqft ? `$${Number(marketData.avgPricePerSqft).toLocaleString()}` : "—", color: "#8B5CF6", bg: "#F5F3FF" },
-                    ].map((s) => (
-                      <div key={s.label} style={{ background: s.bg, borderRadius: 10, padding: "14px 16px", borderLeft: `3px solid ${s.color}` }}>
-                        <div style={{ fontSize: 22, fontWeight: 800, color: s.color }}>{s.value}</div>
-                        <div style={{ fontSize: 12, fontWeight: 600, color: "#555", marginTop: 2 }}>{s.label}</div>
+              {!marketLoading && marketData && (() => {
+                const ps = marketData.priceStats || {};
+                const dist = marketData.distribution || {};
+                const propTypes = dist.propertyTypes || {};
+                const adTypes = dist.adTypes || {};
+                return (
+                  <div>
+                    {/* Location header */}
+                    <div style={{ marginBottom: 20, fontSize: 13, color: "#888" }}>
+                      Showing data for <strong style={{ color: "#1a2332" }}>{marketData.location?.city || marketCity}</strong>
+                      {" · "}{marketData.totalListings} active listings
+                      {marketData.listingGrowth !== undefined && (
+                        <span style={{ marginLeft: 8, color: marketData.listingGrowth >= 0 ? "#10B981" : "#EF4444", fontWeight: 600 }}>
+                          {marketData.listingGrowth >= 0 ? "▲" : "▼"} {Math.abs(marketData.listingGrowth)}% vs last month
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Stat cards */}
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12, marginBottom: 24 }}>
+                      {[
+                        { label: "Avg Price", value: ps.average ? `$${Number(ps.average).toLocaleString()}` : "—", color: "#3B82F6", bg: "#EFF6FF" },
+                        { label: "Median Price", value: ps.median ? `$${Number(ps.median).toLocaleString()}` : "—", color: "#f0822d", bg: "#FFF7ED" },
+                        { label: "Total Listings", value: marketData.totalListings ?? "—", color: "#10B981", bg: "#ECFDF5" },
+                        { label: "Avg Price/sqft", value: ps.avgPricePerSqft ? `$${Number(ps.avgPricePerSqft).toLocaleString()}` : "—", color: "#8B5CF6", bg: "#F5F3FF" },
+                        { label: "Min Price", value: ps.min ? `$${Number(ps.min).toLocaleString()}` : "—", color: "#6B7280", bg: "#F3F4F6" },
+                        { label: "Max Price", value: ps.max ? `$${Number(ps.max).toLocaleString()}` : "—", color: "#6B7280", bg: "#F3F4F6" },
+                      ].map((s) => (
+                        <div key={s.label} style={{ background: s.bg, borderRadius: 10, padding: "14px 16px", borderLeft: `3px solid ${s.color}` }}>
+                          <div style={{ fontSize: 18, fontWeight: 800, color: s.color }}>{s.value}</div>
+                          <div style={{ fontSize: 12, fontWeight: 600, color: "#555", marginTop: 2 }}>{s.label}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+                      {/* Property type breakdown */}
+                      {Object.keys(propTypes).length > 0 && (
+                        <div style={{ background: "#f8fafc", border: "1px solid #eef0f3", borderRadius: 12, padding: 16 }}>
+                          <div style={{ fontWeight: 700, fontSize: 13, color: "#1a2332", marginBottom: 12 }}>Property Types</div>
+                          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                            {Object.entries(propTypes).map(([type, count]) => {
+                              const total = Object.values(propTypes).reduce((s, v) => s + v, 0);
+                              const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+                              return (
+                                <div key={type}>
+                                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#555", marginBottom: 4 }}>
+                                    <span style={{ fontWeight: 600 }}>{type || "Other"}</span>
+                                    <span>{count} ({pct}%)</span>
+                                  </div>
+                                  <div style={{ height: 5, background: "#eee", borderRadius: 3 }}>
+                                    <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg,#f0822d,#e56c1a)", borderRadius: 3 }} />
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* For Sale vs Rent */}
+                      {(adTypes.rent !== undefined || adTypes.resale !== undefined) && (
+                        <div style={{ background: "#f8fafc", border: "1px solid #eef0f3", borderRadius: 12, padding: 16 }}>
+                          <div style={{ fontWeight: 700, fontSize: 13, color: "#1a2332", marginBottom: 12 }}>Sale vs Rent</div>
+                          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                            {[
+                              { label: "For Sale", value: adTypes.resale || 0, color: "#3B82F6" },
+                              { label: "For Rent", value: adTypes.rent || 0, color: "#10B981" },
+                            ].map(({ label, value, color }) => {
+                              const total = (adTypes.resale || 0) + (adTypes.rent || 0);
+                              const pct = total > 0 ? Math.round((value / total) * 100) : 0;
+                              return (
+                                <div key={label}>
+                                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#555", marginBottom: 4 }}>
+                                    <span style={{ fontWeight: 600 }}>{label}</span>
+                                    <span>{value} ({pct}%)</span>
+                                  </div>
+                                  <div style={{ height: 5, background: "#eee", borderRadius: 3 }}>
+                                    <div style={{ height: "100%", width: `${pct}%`, background: color, borderRadius: 3 }} />
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {marketData.insights && (
+                      <div style={{ background: "#ECFDF5", border: "1px solid #10B981", borderRadius: 12, padding: 16 }}>
+                        <div style={{ fontWeight: 700, fontSize: 13, color: "#10B981", marginBottom: 8 }}>AI Market Insights</div>
+                        <div style={{ fontSize: 13, color: "#555", lineHeight: 1.7 }}>{marketData.insights}</div>
                       </div>
-                    ))}
+                    )}
                   </div>
-
-                  {marketData.propertyTypeBreakdown && (
-                    <div style={{ background: "#f8fafc", border: "1px solid #eef0f3", borderRadius: 12, padding: 16, marginBottom: 16 }}>
-                      <div style={{ fontWeight: 700, fontSize: 13, color: "#1a2332", marginBottom: 12 }}>Property Type Breakdown</div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                        {Object.entries(marketData.propertyTypeBreakdown).map(([type, count]) => {
-                          const total = Object.values(marketData.propertyTypeBreakdown).reduce((s, v) => s + v, 0);
-                          const pct = total > 0 ? Math.round((count / total) * 100) : 0;
-                          return (
-                            <div key={type}>
-                              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#555", marginBottom: 4 }}>
-                                <span style={{ fontWeight: 600 }}>{type}</span>
-                                <span>{count} listings ({pct}%)</span>
-                              </div>
-                              <div style={{ height: 6, background: "#eee", borderRadius: 3 }}>
-                                <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg,#f0822d,#e56c1a)", borderRadius: 3 }} />
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {marketData.insights && (
-                    <div style={{ background: "#ECFDF5", border: "1px solid #10B981", borderRadius: 12, padding: 16 }}>
-                      <div style={{ fontWeight: 700, fontSize: 13, color: "#10B981", marginBottom: 8 }}>Market Insights</div>
-                      <div style={{ fontSize: 13, color: "#555", lineHeight: 1.6 }}>{marketData.insights}</div>
-                    </div>
-                  )}
-                </div>
-              )}
+                );
+              })()}
             </>
           )}
 
