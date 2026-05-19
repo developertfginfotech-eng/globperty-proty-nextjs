@@ -395,3 +395,116 @@ object {
     grid-template-columns: 1fr !important;
   }
 }
+
+// ============================================================
+// Premium Form Theme — KYC & inner pages
+// ============================================================
+
+// Inputs, selects, textareas
+.form-control,
+.form-select {
+  border: 1.5px solid #e5e7eb !important;
+  border-radius: 10px !important;
+  padding: 11px 14px !important;
+  font-size: 14px !important;
+  color: #111827 !important;
+  background: #fafafa !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+  box-shadow: none !important;
+
+  &:focus {
+    border-color: #f0822d !important;
+    box-shadow: 0 0 0 3px rgba(240, 130, 45, 0.1) !important;
+    background: #fff !important;
+    outline: none !important;
+  }
+
+  &::placeholder {
+    color: #9ca3af !important;
+    font-size: 13px !important;
+  }
+}
+
+// Labels
+.form-label,
+label.fw600,
+.fw600 {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #374151 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  margin-bottom: 6px !important;
+}
+
+// Section sub-headings (h6 inside KYC form)
+.step-content h6,
+.log-reg-form h6 {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #111827 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  padding-bottom: 10px !important;
+  border-bottom: 2px solid #f0822d !important;
+  margin-bottom: 20px !important;
+}
+
+// Section headings (h4)
+.step-content h4 {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #111827 !important;
+}
+
+// Checkboxes — orange accent
+.form-check-input:checked {
+  background-color: #f0822d !important;
+  border-color: #f0822d !important;
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 3px rgba(240, 130, 45, 0.15) !important;
+  border-color: #f0822d !important;
+}
+
+.form-check-label {
+  font-size: 14px !important;
+  color: #374151 !important;
+}
+
+// Alert info override
+.alert-info {
+  background-color: rgba(240, 130, 45, 0.08) !important;
+  border: 1.5px solid rgba(240, 130, 45, 0.3) !important;
+  color: #92400e !important;
+  border-radius: 10px !important;
+}
+
+// Alert danger override
+.alert-danger {
+  border-radius: 10px !important;
+}
+
+// File upload areas
+input[type="file"].form-control {
+  padding: 8px 14px !important;
+  cursor: pointer !important;
+}
+
+// Small helper text
+.form-text,
+small.text-muted {
+  font-size: 12px !important;
+  color: #6b7280 !important;
+}
+
+// Text muted
+.text-muted {
+  color: #6b7280 !important;
+}
+
+// Step content row spacing
+.step-content .row {
+  --bs-gutter-x: 20px;
+}
