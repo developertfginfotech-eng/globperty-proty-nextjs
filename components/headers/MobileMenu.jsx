@@ -1,24 +1,67 @@
 "use client";
-import { blogMenu, homes, otherPages, propertyLinks } from "@/data/menu";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
+const propertiesByPurpose = [
+  { label: "Buy Property", sub: "Apartments, villas, land & more", href: "/listings?status=buy" },
+  { label: "Rent Property", sub: "Long-term rentals worldwide", href: "/listings?status=rent" },
+  { label: "Short Stay / Holiday Let", sub: "Serviced & holiday apartments", href: "/listings?type=short-stay" },
+  { label: "Student Housing", sub: "Rentals near universities worldwide", href: "/listings?type=student" },
+  { label: "New Projects & Off-Plan", sub: "Upcoming launches & pre-launch deals", href: "/project-list" },
+  { label: "Roommate / Shared Housing", sub: "Find flatmates internationally", href: "/listings?type=shared" },
+];
+
+const propertiesByType = [
+  { label: "Apartments & Flats", href: "/listings?type=Apartment" },
+  { label: "Villas & Houses", href: "/listings?type=Villa" },
+  { label: "Townhouses", href: "/listings?type=townhouse" },
+  { label: "Penthouses", href: "/listings?type=Penthouse" },
+  { label: "Commercial Property", href: "/listings?type=Office" },
+  { label: "Land & Plots", href: "/listings?type=land" },
+  { label: "Warehouses & Industrial", href: "/listings?type=warehouse" },
+];
+
+const countries = [
+  { icon: "🇦🇪", label: "UAE", href: "/countries/uae" },
+  { icon: "🇺🇸", label: "USA", href: "/countries/usa" },
+  { icon: "🇵🇹", label: "Portugal", href: "/countries/portugal" },
+  { icon: "🇦🇺", label: "Australia", href: "/countries/australia" },
+  { icon: "🇹🇷", label: "Turkey", href: "/countries/turkey" },
+  { icon: "🇨🇾", label: "Cyprus", href: "/countries/cyprus" },
+  { icon: "🇲🇹", label: "Malta", href: "/countries/malta" },
+  { icon: "🇨🇦", label: "Canada", href: "/countries/canada" },
+  { icon: "🇭🇺", label: "Hungary", href: "/countries/hungary" },
+  { icon: "🇱🇻", label: "Latvia", href: "/countries/latvia" },
+  { icon: "🇵🇭", label: "Philippines", href: "/countries/philippines" },
+  { icon: "🇲🇾", label: "Malaysia", href: "/countries/malaysia" },
+];
+
+const visas = [
+  { label: "UAE Golden Visa", href: "/visas/uae-golden-visa" },
+  { label: "Portugal Golden Visa", href: "/visas/portugal-golden-visa" },
+  { label: "Turkey Citizenship by Investment", href: "/visas/turkey-citizenship" },
+  { label: "Cyprus Permanent Residency", href: "/visas/cyprus-residency" },
+  { label: "Malta Residency Programme", href: "/visas/malta-residency" },
+  { label: "Hungary Guest Investor Visa", href: "/visas/hungary-guest-investor" },
+  { label: "Latvia Residency by Investment", href: "/visas/latvia-residency" },
+  { label: "Malaysia MM2H Visa", href: "/visas/malaysia-mm2h" },
+  { label: "Visa Eligibility Checker", href: "/visa-checker" },
+];
+
+const tools = [
+  { label: "Rental Yield Calculator", href: "/rental-yield" },
+  { label: "ROI & Capital Growth Estimator", href: "/roi-calculator" },
+  { label: "Mortgage Calculator", href: "/home-loan-process" },
+  { label: "Currency Converter", href: "/currency-converter" },
+  { label: "Cost of Buying Calculator", href: "/cost-of-buying" },
+  { label: "AI Property Assistant", href: "/copilot" },
+  { label: "Visa Eligibility Checker", href: "/visa-checker" },
+];
+
 export default function MobileMenu() {
   const pathname = usePathname();
-  const isParentActive = (menus) =>
-    menus.some((menu) =>
-      menu.submenu
-        ? menu.submenu.some((item) =>
-            item.submenu
-              ? item.submenu.some(
-                  (item) => item.href.split("/")[1] === pathname.split("/")[1]
-                )
-              : item.href.split("/")[1] === pathname.split("/")[1]
-          )
-        : menu.href.split("/")[1] === pathname.split("/")[1]
-    );
+
   return (
     <div
       className="offcanvas offcanvas-start mobile-nav-wrap"
@@ -28,290 +71,168 @@ export default function MobileMenu() {
     >
       <div className="offcanvas-header top-nav-mobile">
         <div className="offcanvas-title">
-          <Link href={`/`}>
-            <Image
-              alt=""
-              src="/images/logo/logo@2x.png"
-              width={272}
-              height={84}
-            />
+          <Link href="/" style={{ fontSize: 22, fontWeight: 700, color: "#f0822d", textDecoration: "none", letterSpacing: "-0.5px" }}>
+            Globperty
           </Link>
         </div>
         <div data-bs-dismiss="offcanvas" aria-label="Close">
           <i className="icon-close" />
         </div>
       </div>
+
       <div className="offcanvas-body inner-mobile-nav">
         <div className="mb-body">
           <ul id="menu-mobile-menu">
-            <li
-              className={`menu-item menu-item-has-children-mobile  ${
-                homes.some((elm) => elm.href == pathname)
-                  ? "current-menu-item"
-                  : ""
-              } `}
-            >
+
+            {/* Properties */}
+            <li className="menu-item menu-item-has-children-mobile">
               <a
-                href="#dropdown-menu-one"
+                href="#dropdown-properties"
                 className="item-menu-mobile collapsed"
                 data-bs-toggle="collapse"
-                aria-expanded="true"
-                aria-controls="dropdown-menu-one"
+                aria-expanded="false"
+                aria-controls="dropdown-properties"
               >
-                Home
+                Properties
               </a>
-              <div
-                id="dropdown-menu-one"
-                className="collapse"
-                data-bs-parent="#menu-mobile-menu"
-              >
+              <div id="dropdown-properties" className="collapse" data-bs-parent="#menu-mobile-menu">
                 <ul className="sub-mobile">
-                  {homes.map((link, i) => (
-                    <li
-                      key={i}
-                      className={
-                        pathname == link.href
-                          ? "menu-item current-item"
-                          : "menu-item "
-                      }
+                  {/* By Purpose */}
+                  <li className="menu-item menu-item-has-children-mobile-2">
+                    <a
+                      href="#sub-by-purpose"
+                      className="item-menu-mobile collapsed"
+                      data-bs-toggle="collapse"
+                      aria-expanded="false"
+                      aria-controls="sub-by-purpose"
+                      style={{ fontWeight: 600, color: "#f0822d", fontSize: 12, textTransform: "uppercase", letterSpacing: 1 }}
                     >
-                      <Link href={link.href}>{link.label}</Link>
+                      By Purpose
+                    </a>
+                    <div id="sub-by-purpose" className="collapse" data-bs-parent="#dropdown-properties">
+                      <ul className="sub-mobile">
+                        {propertiesByPurpose.map((item, i) => (
+                          <li key={i} className={`menu-item ${pathname === item.href ? "current-item" : ""}`}>
+                            <Link href={item.href} className="item-menu-mobile">{item.label}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                  {/* By Property Type */}
+                  <li className="menu-item menu-item-has-children-mobile-2">
+                    <a
+                      href="#sub-by-type"
+                      className="item-menu-mobile collapsed"
+                      data-bs-toggle="collapse"
+                      aria-expanded="false"
+                      aria-controls="sub-by-type"
+                      style={{ fontWeight: 600, color: "#f0822d", fontSize: 12, textTransform: "uppercase", letterSpacing: 1 }}
+                    >
+                      By Property Type
+                    </a>
+                    <div id="sub-by-type" className="collapse" data-bs-parent="#dropdown-properties">
+                      <ul className="sub-mobile">
+                        {propertiesByType.map((item, i) => (
+                          <li key={i} className={`menu-item ${pathname === item.href ? "current-item" : ""}`}>
+                            <Link href={item.href} className="item-menu-mobile">{item.label}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            {/* Countries */}
+            <li className="menu-item menu-item-has-children-mobile">
+              <a
+                href="#dropdown-countries"
+                className="item-menu-mobile collapsed"
+                data-bs-toggle="collapse"
+                aria-expanded="false"
+                aria-controls="dropdown-countries"
+              >
+                Countries
+              </a>
+              <div id="dropdown-countries" className="collapse" data-bs-parent="#menu-mobile-menu">
+                <ul className="sub-mobile">
+                  {countries.map((c, i) => (
+                    <li key={i} className={`menu-item ${pathname === c.href ? "current-item" : ""}`}>
+                      <Link href={c.href} className="item-menu-mobile">
+                        <span style={{ marginRight: 8 }}>{c.icon}</span>{c.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
               </div>
             </li>
-            <li
-              className={`menu-item menu-item-has-children-mobile  ${
-                isParentActive(propertyLinks) ? "current-menu-item" : ""
-              } `}
-            >
+
+            {/* Visas */}
+            <li className="menu-item menu-item-has-children-mobile">
               <a
-                href="#dropdown-menu-two"
+                href="#dropdown-visas"
                 className="item-menu-mobile collapsed"
                 data-bs-toggle="collapse"
-                aria-expanded="true"
-                aria-controls="dropdown-menu-two"
+                aria-expanded="false"
+                aria-controls="dropdown-visas"
               >
-                Listing
+                Visas
               </a>
-              <div
-                id="dropdown-menu-two"
-                className="collapse"
-                data-bs-parent="#menu-mobile-menu"
-              >
+              <div id="dropdown-visas" className="collapse" data-bs-parent="#menu-mobile-menu">
                 <ul className="sub-mobile">
-                  {propertyLinks.map((links, i) => (
-                    <li
-                      key={i}
-                      className={`menu-item menu-item-has-children-mobile-2 ${
-                        isParentActive(links.submenu) ? "current-menu-item" : ""
-                      }`}
-                    >
-                      <a
-                        href="#sub-layout"
-                        className="item-menu-mobile collapsed"
-                        data-bs-toggle="collapse"
-                        aria-expanded="true"
-                        aria-controls="sub-agents"
-                      >
-                        {links.title}
-                      </a>
-                      <div
-                        id="sub-layout"
-                        className="collapse"
-                        data-bs-parent="#dropdown-menu-two"
-                      >
-                        <ul className="sub-mobile">
-                          {links.submenu.map((link, i2) => (
-                            <li
-                              key={i2}
-                              className={
-                                pathname.split("/")[1] ==
-                                link.href.split("/")[1]
-                                  ? "menu-item current-item"
-                                  : "menu-item "
-                              }
-                            >
-                              <Link
-                                href={link.href}
-                                className="item-menu-mobile"
-                              >
-                                {link.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                  {visas.map((v, i) => (
+                    <li key={i} className={`menu-item ${pathname === v.href ? "current-item" : ""}`}>
+                      <Link href={v.href} className="item-menu-mobile">{v.label}</Link>
                     </li>
                   ))}
                 </ul>
               </div>
             </li>
-            <li
-              className={`menu-item menu-item-has-children-mobile   ${
-                isParentActive(otherPages) ? "current-menu-item" : ""
-              } `}
-            >
+
+            {/* Tools */}
+            <li className="menu-item menu-item-has-children-mobile">
               <a
-                href="#dropdown-menu-four"
+                href="#dropdown-tools"
                 className="item-menu-mobile collapsed"
                 data-bs-toggle="collapse"
-                aria-expanded="true"
-                aria-controls="dropdown-menu-four"
+                aria-expanded="false"
+                aria-controls="dropdown-tools"
               >
-                Pages
+                Tools
               </a>
-              <div
-                id="dropdown-menu-four"
-                className="collapse"
-                data-bs-parent="#menu-mobile-menu"
-              >
+              <div id="dropdown-tools" className="collapse" data-bs-parent="#menu-mobile-menu">
                 <ul className="sub-mobile">
-                  {otherPages.map((links, i) => (
-                    <React.Fragment key={i}>
-                      {links.submenu ? (
-                        <li
-                          className={`menu-item menu-item-has-children-mobile-2   ${
-                            isParentActive(links.submenu || [])
-                              ? "current-menu-item"
-                              : ""
-                          }   `}
-                        >
-                          <a
-                            href="#sub-agents"
-                            className="item-menu-mobile collapsed"
-                            data-bs-toggle="collapse"
-                            aria-expanded="true"
-                            aria-controls="sub-agents"
-                          >
-                            {links.title}
-                          </a>
-                          <div
-                            id="sub-agents"
-                            className="collapse"
-                            data-bs-parent="#dropdown-menu-four"
-                          >
-                            <ul className="sub-mobile">
-                              {links.submenu.map((link, i2) => (
-                                <li
-                                  className={`menu-item ${
-                                    link.href?.split("/")[1] ==
-                                    pathname.split("/")[1]
-                                      ? "current-item"
-                                      : ""
-                                  }`}
-                                  key={i2}
-                                >
-                                  <Link
-                                    href={link.href}
-                                    className="item-menu-mobile"
-                                  >
-                                    {link.label}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </li>
-                      ) : (
-                        <li
-                          className={`menu-item ${
-                            links.href?.split("/")[1] == pathname.split("/")[1]
-                              ? "current-item"
-                              : ""
-                          }`}
-                        >
-                          <Link href={links.href}>{links.label}</Link>
-                        </li>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </ul>
-              </div>
-            </li>
-            <li
-              className={`menu-item menu-item-has-children-mobile ${
-                isParentActive(blogMenu) ? "current-menu-item" : ""
-              } `}
-            >
-              <a
-                href="#dropdown-menu-five"
-                className="item-menu-mobile collapsed"
-                data-bs-toggle="collapse"
-                aria-expanded="true"
-                aria-controls="dropdown-menu-five"
-              >
-                Blogs
-              </a>
-              <div
-                id="dropdown-menu-five"
-                className="collapse"
-                data-bs-parent="#menu-mobile-menu"
-              >
-                <ul className="sub-mobile">
-                  {blogMenu.map((link, i) => (
-                    <li
-                      key={i}
-                      className={
-                        link.href.split("/")[1] == pathname.split("/")[1]
-                          ? "menu-item current-item"
-                          : "menu-item"
-                      }
-                    >
-                      <Link href={link.href}>{link.label}</Link>
+                  {tools.map((t, i) => (
+                    <li key={i} className={`menu-item ${pathname === t.href ? "current-item" : ""}`}>
+                      <Link href={t.href} className="item-menu-mobile">{t.label}</Link>
                     </li>
                   ))}
                 </ul>
               </div>
             </li>
-            <li
-              className={`menu-item ${
-                "/contact" == pathname ? "current-item" : ""
-              }`}
-            >
-              <Link href={`/contact`} className="tem-menu-mobile">
-                {" "}
-                Contact
-              </Link>
+
+            {/* Contact — direct link */}
+            <li className={`menu-item ${pathname === "/contact" ? "current-item" : ""}`}>
+              <Link href="/contact" className="item-menu-mobile">Contact</Link>
             </li>
+
           </ul>
+
+          {/* Footer info */}
           <div className="support">
-            <a href="#" className="text-need">
-              {" "}
-              Need help?
-            </a>
+            <a href="#" className="text-need">Need help?</a>
             <ul className="mb-info">
-              <li>
-                Call Us Now: <span className="number">1-555-678-8888</span>
-              </li>
-              <li>
-                Support 24/7: <a href="#">themesflat@gmail.com</a>
-              </li>
+              <li>Email: <a href="mailto:hi@globperty.com">hi@globperty.com</a></li>
               <li>
                 <div className="wrap-social">
                   <p>Follow us:</p>
                   <ul className="tf-social style-2">
-                    <li>
-                      <a href="#">
-                        <i className="icon-fb" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="icon-X" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="icon-linked" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="icon-ins" />
-                      </a>
-                    </li>
+                    <li><a href="#"><i className="icon-fb" /></a></li>
+                    <li><a href="#"><i className="icon-X" /></a></li>
+                    <li><a href="#"><i className="icon-linked" /></a></li>
+                    <li><a href="#"><i className="icon-ins" /></a></li>
                   </ul>
                 </div>
               </li>
