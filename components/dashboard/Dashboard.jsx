@@ -237,12 +237,15 @@ function BuyerDashboard() {
 
 // ─── Seller/Broker dashboard ─────────────────────────────────────────────────
 
+const NOTIF_ICONS = { offer: "💰", tour: "📅", property: "🏠", message: "💬", system: "🔔" };
+
 function SellerDashboard({ role, kycStatus }) {
   const [stats, setStats] = useState({ totalProperties: 0, totalFavorites: 0, totalReviews: 0 });
   const [pendingCount, setPendingCount] = useState(0);
   const [favorites, setFavorites] = useState([]);
   const [inquiries, setInquiries] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -252,12 +255,17 @@ function SellerDashboard({ role, kycStatus }) {
       apiClient.get("/favorites"),
       apiClient.get("/inquiries"),
       apiClient.get("/reviews/my-properties"),
-    ]).then(([statsRes, propsRes, favsRes, inqRes, revRes]) => {
+      apiClient.get("/notifications"),
+    ]).then(([statsRes, propsRes, favsRes, inqRes, revRes, notifRes]) => {
       if (statsRes.status === "fulfilled") setStats(statsRes.value.data.stats || {});
       if (propsRes.status === "fulfilled") setPendingCount(propsRes.value.filter((p) => p.status === "pending").length);
       if (favsRes.status === "fulfilled") setFavorites(favsRes.value.data.favorites || []);
       if (inqRes.status === "fulfilled") setInquiries((inqRes.value.data.data || []).slice(0, 4));
       if (revRes.status === "fulfilled") setReviews((revRes.value.data.reviews || []).slice(0, 5));
+      if (notifRes.status === "fulfilled") {
+        const raw = notifRes.value.data;
+        setNotifications((Array.isArray(raw) ? raw : (raw?.notifications || [])).slice(0, 4));
+      }
       setLoading(false);
     });
   }, []);
@@ -476,6 +484,41 @@ function SellerDashboard({ role, kycStatus }) {
                         <i key={i} className="icon-star" style={{ color: i < (rev.rating || 5) ? "#f59e0b" : "#d1d5db" }} />
                       ))}
                     </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* Recent Notifications */}
+          <div className="widget-box-2 mess-box mt-20" style={{ borderRadius: 16, border: "1px solid #e8eaf0", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", overflow: "hidden", marginTop: 20 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: "1px solid #f3f4f6" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ width: 4, height: 18, background: "#f0822d", borderRadius: 2 }} />
+                <h5 style={{ margin: 0, fontSize: 15, fontWeight: 800, color: "#111827" }}>Notifications</h5>
+              </div>
+              <Link href="/notifications" style={{ fontSize: 12, fontWeight: 700, color: "#f0822d", textDecoration: "none" }}>View all →</Link>
+            </div>
+            {loading ? (
+              <div style={{ padding: 16, color: "#888", fontSize: 13 }}>Loading…</div>
+            ) : notifications.length === 0 ? (
+              <div style={{ padding: 16, color: "#888", fontSize: 13 }}>No notifications yet.</div>
+            ) : (
+              <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                {notifications.map((n) => (
+                  <li key={n._id} style={{
+                    display: "flex", alignItems: "flex-start", gap: 10,
+                    padding: "12px 16px",
+                    borderBottom: "1px solid #f9fafb",
+                    background: n.isRead ? "transparent" : "rgba(240,130,45,0.04)",
+                    borderLeft: n.isRead ? "none" : "3px solid #f0822d",
+                  }}>
+                    <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{NOTIF_ICONS[n.type] || "🔔"}</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, fontWeight: n.isRead ? 500 : 700, color: "#111827", lineHeight: 1.4 }}>{n.title}</div>
+                      <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 2 }}>{timeAgo(n.createdAt)}</div>
+                    </div>
+                    {!n.isRead && <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#f0822d", flexShrink: 0, marginTop: 5 }} />}
                   </li>
                 ))}
               </ul>
