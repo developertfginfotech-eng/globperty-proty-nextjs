@@ -508,3 +508,35 @@ small.text-muted {
 .step-content .row {
   --bs-gutter-x: 20px;
 }
+
+// KYC spin animation for loading state
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// KYC file input enhanced
+.step-content input[type="file"].form-control {
+  height: auto !important;
+  padding: 20px 14px !important;
+  border: 2px dashed #d1d5db !important;
+  border-radius: 10px !important;
+  background: #f9fafb !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  transition: border-color 0.2s, background 0.2s !important;
+  &:hover {
+    border-color: #f0822d !important;
+    background: rgba(240,130,45,0.04) !important;
+  }
+}
+
+// KYC form card hover effect on inputs
+.step-content .form-control:hover {
+  border-color: #c8cacd !important;
+}
+
+// Country cards grid gap
+.step-content .col-md-4 {
+  margin-bottom: 14px !important;
+}

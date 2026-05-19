@@ -838,7 +838,14 @@ const PropertyKYCVerification = () => {
     }
   };
 
-  if (checking) return <div className="container mt-5 text-center"><p>Loading...</p></div>;
+  if (checking) return (
+    <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ textAlign: "center" }}>
+        <div style={{ width: 48, height: 48, border: "3px solid #f0822d", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 16px" }} />
+        <p style={{ color: "#6b7280", fontWeight: 600, fontSize: 14 }}>Loading your KYC status…</p>
+      </div>
+    </div>
+  );
 
   return (
     <div id="wrapper">
@@ -846,22 +853,29 @@ const PropertyKYCVerification = () => {
       <div className="main-content">
 
       {/* Dark hero banner */}
-      <div style={{ background: "linear-gradient(135deg, #0d1b2a 0%, #112240 60%, #0a1628 100%)", padding: "60px 0 44px", borderBottom: "1px solid #1a3050" }}>
-        <div className="tf-container">
+      <div style={{ background: "linear-gradient(135deg, #0b1829 0%, #0f2040 50%, #0d1a35 100%)", padding: "72px 0 56px", borderBottom: "1px solid rgba(240,130,45,0.15)", position: "relative", overflow: "hidden" }}>
+        {/* Decorative glows */}
+        <div style={{ position: "absolute", top: -80, left: "10%", width: 350, height: 350, borderRadius: "50%", background: "radial-gradient(circle, rgba(240,130,45,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -60, right: "8%", width: 280, height: 280, borderRadius: "50%", background: "radial-gradient(circle, rgba(17,34,64,0.9) 0%, rgba(240,130,45,0.06) 70%, transparent 100%)", pointerEvents: "none" }} />
+        {/* Subtle grid pattern */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
+        <div className="tf-container" style={{ position: "relative", zIndex: 1 }}>
           <div style={{ textAlign: "center" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(240,130,45,0.12)", border: "1px solid rgba(240,130,45,0.3)", borderRadius: 20, padding: "6px 16px", marginBottom: 16 }}>
-              <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", letterSpacing: 1.5, textTransform: "uppercase" }}>Identity Verification</span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(240,130,45,0.14)", border: "1px solid rgba(240,130,45,0.4)", borderRadius: 24, padding: "7px 18px", marginBottom: 20, backdropFilter: "blur(4px)" }}>
+              <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", letterSpacing: 2, textTransform: "uppercase" }}>Identity Verification</span>
             </div>
-            <h1 style={{ fontSize: 36, fontWeight: 800, color: "#fff", marginBottom: 10, lineHeight: 1.2 }}>KYC Verification</h1>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.5)", marginBottom: 28 }}>Complete your identity verification to access real estate services</p>
-            <div style={{ display: "flex", justifyContent: "center", gap: 32, flexWrap: "wrap" }}>
+            <h1 style={{ fontSize: 44, fontWeight: 900, color: "#fff", marginBottom: 12, lineHeight: 1.15, letterSpacing: "-0.5px" }}>
+              KYC <span style={{ color: "#f0822d" }}>Verification</span>
+            </h1>
+            <p style={{ fontSize: 16, color: "rgba(255,255,255,0.45)", marginBottom: 36, maxWidth: 480, marginLeft: "auto", marginRight: "auto" }}>Complete your identity verification to unlock full access to real estate services</p>
+            <div style={{ display: "flex", justifyContent: "center", gap: 8, flexWrap: "wrap" }}>
               {[
                 { label: "Bank-Level Security", icon: <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> },
                 { label: "24-hr Processing", icon: <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> },
                 { label: "GDPR Compliant", icon: <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg> },
               ].map(b => (
-                <div key={b.label} style={{ display: "flex", alignItems: "center", gap: 7, color: "rgba(255,255,255,0.55)", fontSize: 12, fontWeight: 600 }}>
+                <div key={b.label} style={{ display: "flex", alignItems: "center", gap: 7, color: "rgba(255,255,255,0.6)", fontSize: 12, fontWeight: 600, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "6px 14px" }}>
                   {b.icon}<span>{b.label}</span>
                 </div>
               ))}
@@ -870,17 +884,17 @@ const PropertyKYCVerification = () => {
         </div>
       </div>
 
-      <div style={{ background: "#f8fafc", minHeight: "60vh", paddingBottom: 60 }}>
+      <div style={{ background: "linear-gradient(180deg, #eef2f7 0%, #f4f6f9 100%)", minHeight: "60vh", paddingBottom: 60 }}>
       <div className="tf-container">
         <div className="row">
           <div className="col-lg-10 mx-auto">
-            <div style={{ height: 32 }} />
+            <div style={{ height: 28 }} />
           </div>
         </div>
 
         <div className="row mb40">
           <div className="col-lg-10 mx-auto">
-            <div style={{ background: "#fff", borderRadius: 14, padding: "28px 32px 22px", border: "1px solid #e5e7eb", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative" }}>
+            <div style={{ background: "#fff", borderRadius: 16, padding: "28px 32px 22px", border: "1px solid #e2e6ed", boxShadow: "0 4px 20px rgba(0,0,0,0.07)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative" }}>
               {hasCountry ? (
                 [1, 2, 3].map((s) => {
                   const done = step > s;
@@ -997,27 +1011,37 @@ const PropertyKYCVerification = () => {
 
                 {((hasCountry && step === 1) || (!hasCountry && step === 2)) && (
                   <div className="step-content">
-                    <div className="alert mb20" style={{ backgroundColor: "rgba(240,130,45,0.08)", border: "1.5px solid rgba(240,130,45,0.3)", borderRadius: "10px", padding: "14px 18px" }}>
-                      <i className="fas fa-globe me-2" style={{ color: "#f0822d" }}></i>
-                      <strong>Registered Country:</strong> <span style={{ fontSize: "16px", fontWeight: "600" }}>{country}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 14, background: "linear-gradient(135deg, rgba(240,130,45,0.08) 0%, rgba(240,130,45,0.03) 100%)", border: "1.5px solid rgba(240,130,45,0.25)", borderRadius: 14, padding: "14px 20px", marginBottom: 28 }}>
+                      <div style={{ width: 42, height: 42, borderRadius: 10, background: "rgba(240,130,45,0.15)", border: "1.5px solid rgba(240,130,45,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.9, marginBottom: 2 }}>Registered Country</div>
+                        <div style={{ fontSize: 17, fontWeight: 800, color: "#f0822d", letterSpacing: "-0.2px" }}>{country}</div>
+                      </div>
+                      <div style={{ marginLeft: "auto", background: "#f0822d", color: "#fff", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 20, letterSpacing: 0.5 }}>Verified</div>
                     </div>
-                    <div style={{ marginBottom: 24 }}>
-                      <h4 style={{ fontSize: 22, fontWeight: 800, color: "#111827", marginBottom: 4 }}>Select Your Account Type</h4>
-                      <p style={{ fontSize: 14, color: "#6b7280", margin: 0 }}>Choose the option that best describes how you use Globperty</p>
+                    <div style={{ marginBottom: 28 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                        <div style={{ width: 4, height: 24, background: "#f0822d", borderRadius: 2 }} />
+                        <h4 style={{ fontSize: 22, fontWeight: 900, color: "#111827", margin: 0, letterSpacing: "-0.3px" }}>Select Your Account Type</h4>
+                      </div>
+                      <p style={{ fontSize: 14, color: "#6b7280", margin: "0 0 0 14px" }}>Choose the option that best describes how you use Globperty</p>
                     </div>
                     <div className="row">
                       {ACCOUNT_TYPES.map(type => {
                         const active = accountType === type.value;
                         return (
                           <div key={type.value} className="col-md-6 mb20">
-                            <div onClick={() => setAccountType(type.value)} style={{ cursor: 'pointer', minHeight: '100px', display: 'flex', alignItems: 'flex-start', gap: 14, borderRadius: 12, border: active ? '2px solid #f0822d' : '1.5px solid #e5e7eb', background: active ? 'rgba(240,130,45,0.06)' : '#fff', transition: 'all 0.15s', padding: '16px 18px', boxShadow: active ? '0 3px 16px rgba(240,130,45,0.18)' : '0 1px 4px rgba(0,0,0,0.04)', position: 'relative' }}>
-                            {active && <div style={{ position: 'absolute', top: 10, right: 10, width: 22, height: 22, borderRadius: '50%', background: '#f0822d', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><svg width={11} height={11} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>}
-                              <div style={{ width: 40, height: 40, borderRadius: 10, background: active ? '#f0822d' : '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: active ? '#fff' : '#6b7280', transition: 'all 0.15s' }}>
+                            <div onClick={() => setAccountType(type.value)} style={{ cursor: 'pointer', minHeight: '112px', display: 'flex', alignItems: 'flex-start', gap: 16, borderRadius: 14, border: active ? '2px solid #f0822d' : '1.5px solid #e8eaf0', background: active ? 'linear-gradient(135deg, rgba(240,130,45,0.07) 0%, rgba(240,130,45,0.02) 100%)' : '#fff', transition: 'all 0.18s', padding: '18px 20px', boxShadow: active ? '0 4px 20px rgba(240,130,45,0.2)' : '0 1px 6px rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}>
+                              {active && <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: 'linear-gradient(180deg, #f0822d, #e56c1a)', borderRadius: '14px 0 0 14px' }} />}
+                              {active && <div style={{ position: 'absolute', top: 10, right: 10, width: 24, height: 24, borderRadius: '50%', background: 'linear-gradient(135deg, #f0822d, #e56c1a)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 6px rgba(240,130,45,0.4)' }}><svg width={11} height={11} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>}
+                              <div style={{ width: 48, height: 48, borderRadius: 12, background: active ? 'linear-gradient(135deg, #f0822d, #e56c1a)' : 'linear-gradient(135deg, #f3f4f6, #e9eaed)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: active ? '#fff' : '#6b7280', transition: 'all 0.18s', boxShadow: active ? '0 3px 10px rgba(240,130,45,0.35)' : 'none' }}>
                                 {type.icon}
                               </div>
-                              <div>
-                                <div style={{ fontWeight: 700, fontSize: 14, color: active ? '#f0822d' : '#111827', marginBottom: 4, lineHeight: 1.3 }}>{type.label}</div>
-                                <div style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.5 }}>{type.desc}</div>
+                              <div style={{ flex: 1, paddingLeft: active ? 4 : 0, transition: 'padding 0.18s' }}>
+                                <div style={{ fontWeight: 800, fontSize: 14, color: active ? '#f0822d' : '#111827', marginBottom: 5, lineHeight: 1.3, letterSpacing: '-0.1px' }}>{type.label}</div>
+                                <div style={{ fontSize: 12, color: active ? '#6b5240' : '#9ca3af', lineHeight: 1.6 }}>{type.desc}</div>
                               </div>
                             </div>
                           </div>
