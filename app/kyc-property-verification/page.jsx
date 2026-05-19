@@ -2160,9 +2160,9 @@ const PropertyKYCVerification = () => {
           </div>
         </div>
       </div>
-      </div>{/* end tf-container */}
-      </div>{/* end bg wrapper */}
-      </div>{/* end main-content */}
+      </div>
+      </div>
+      </div>
       <Footer1 />
     </div>
   );
