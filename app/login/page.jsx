@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Header1 from "@/components/headers/Header1";
 import { login } from "@/utils/authApi";
+import CaptchaWidget from "@/components/common/CaptchaWidget";
 
 const UserIcon = () => (
   <svg className="icon" width={18} height={18} viewBox="0 0 18 18" fill="none">
@@ -42,6 +43,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [captchaOk, setCaptchaOk] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -50,6 +52,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!captchaOk) { setError("Please complete the security check"); return; }
     setLoading(true);
     setError("");
     try {
@@ -161,7 +164,8 @@ export default function LoginPage() {
                   <a href="#" style={{ fontSize: 12, color: "#f0822d", textDecoration: "none", fontWeight: 500 }}>Forgot password?</a>
                 </div>
 
-                <button type="submit" className="tf-btn bg-color-primary w-100" disabled={loading} style={{ height: 48, fontSize: 15, fontWeight: 700, borderRadius: 10, marginBottom: 16 }}>
+                <CaptchaWidget onVerify={setCaptchaOk} />
+                <button type="submit" className="tf-btn bg-color-primary w-100" disabled={loading || !captchaOk} style={{ height: 48, fontSize: 15, fontWeight: 700, borderRadius: 10, marginBottom: 16, opacity: captchaOk ? 1 : 0.6 }}>
                   {loading ? "Logging in..." : "Login"}
                 </button>
 

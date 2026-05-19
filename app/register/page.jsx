@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { register } from "@/utils/authApi";
 import { useRouter } from "next/navigation";
+import CaptchaWidget from "@/components/common/CaptchaWidget";
 
 const COUNTRIES = [
   "UAE", "USA", "Portugal", "Canada", "Australia",
@@ -61,6 +62,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [captchaOk, setCaptchaOk] = useState(false);
 
   const countryCode = COUNTRY_CODES[form.country] || "+1";
   const handleChange = (e) => { setForm({ ...form, [e.target.name]: e.target.value }); setError(""); };
@@ -70,6 +72,7 @@ export default function RegisterPage() {
     if (!form.phone.trim()) { setError("Phone number is required"); return; }
     if (!/^\d{5,15}$/.test(form.phone.trim())) { setError("Enter a valid phone number (digits only, 5–15 digits)"); return; }
     if (form.password !== form.confirmPassword) { setError("Passwords do not match"); return; }
+    if (!captchaOk) { setError("Please complete the security check"); return; }
     setLoading(true);
     setError("");
     try {
@@ -273,8 +276,10 @@ export default function RegisterPage() {
                   </div>
                 </div>
 
-                <button type="submit" disabled={loading}
-                  style={{ width: "100%", height: 50, background: "linear-gradient(90deg, #f0822d, #e56c1a)", border: "none", borderRadius: 12, fontSize: 15, fontWeight: 700, color: "#fff", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1, marginBottom: 16, letterSpacing: 0.3 }}>
+                <CaptchaWidget onVerify={setCaptchaOk} />
+
+                <button type="submit" disabled={loading || !captchaOk}
+                  style={{ width: "100%", height: 50, background: "linear-gradient(90deg, #f0822d, #e56c1a)", border: "none", borderRadius: 12, fontSize: 15, fontWeight: 700, color: "#fff", cursor: (loading || !captchaOk) ? "not-allowed" : "pointer", opacity: (loading || !captchaOk) ? 0.6 : 1, marginBottom: 16, letterSpacing: 0.3 }}>
                   {loading ? "Creating account…" : "Create Free Account"}
                 </button>
 
