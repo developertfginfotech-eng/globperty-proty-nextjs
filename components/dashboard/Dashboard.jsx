@@ -492,12 +492,9 @@ function SellerDashboard({ role, kycStatus }) {
 
           {/* Recent Notifications */}
           <div className="widget-box-2 mess-box mt-20" style={{ borderRadius: 16, border: "1px solid #e8eaf0", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", overflow: "hidden", marginTop: 20 }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: "1px solid #f3f4f6" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <div style={{ width: 4, height: 18, background: "#f0822d", borderRadius: 2 }} />
-                <h5 style={{ margin: 0, fontSize: 15, fontWeight: 800, color: "#111827" }}>Notifications</h5>
-              </div>
-              <Link href="/notifications" style={{ fontSize: 12, fontWeight: 700, color: "#f0822d", textDecoration: "none" }}>View all →</Link>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "16px 20px", borderBottom: "1px solid #f3f4f6" }}>
+              <div style={{ width: 4, height: 18, background: "#f0822d", borderRadius: 2 }} />
+              <h5 style={{ margin: 0, fontSize: 15, fontWeight: 800, color: "#111827" }}>Notifications</h5>
             </div>
             {loading ? (
               <div style={{ padding: 16, color: "#888", fontSize: 13 }}>Loading…</div>
