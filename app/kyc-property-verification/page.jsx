@@ -6,6 +6,8 @@ import { kycAPI } from "@/utils/kycApi";
 import { useKYCRequirements } from "@/hooks/useKYCRequirements";
 import Image from "next/image";
 import Link from "next/link";
+import Header1 from "@/components/headers/Header1";
+import Footer1 from "@/components/footers/Footer1";
 
 const COUNTRIES = ['UAE', 'USA', 'Portugal', 'Canada', 'Australia', 'Turkey', 'Cyprus', 'Malta', 'Hungary', 'Latvia', 'Philippines', 'Malaysia'];
 
@@ -809,28 +811,43 @@ const PropertyKYCVerification = () => {
   if (checking) return <div className="container mt-5 text-center"><p>Loading...</p></div>;
 
   return (
-    <div className="our-login">
-      <div className="container">
+    <div id="wrapper">
+      <Header1 />
+      <div className="main-content">
+
+      {/* Dark hero banner */}
+      <div style={{ background: "linear-gradient(135deg, #0d1b2a 0%, #112240 60%, #0a1628 100%)", padding: "60px 0 44px", borderBottom: "1px solid #1a3050" }}>
+        <div className="tf-container">
+          <div style={{ textAlign: "center" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(240,130,45,0.12)", border: "1px solid rgba(240,130,45,0.3)", borderRadius: 20, padding: "6px 16px", marginBottom: 16 }}>
+              <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span style={{ fontSize: 11, fontWeight: 700, color: "#f0822d", letterSpacing: 1.5, textTransform: "uppercase" }}>Identity Verification</span>
+            </div>
+            <h1 style={{ fontSize: 36, fontWeight: 800, color: "#fff", marginBottom: 10, lineHeight: 1.2 }}>KYC Verification</h1>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.5)", marginBottom: 0 }}>Complete your identity verification to access real estate services</p>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ background: "#f8fafc", minHeight: "60vh", paddingBottom: 60 }}>
+      <div className="tf-container">
         <div className="row">
           <div className="col-lg-10 mx-auto">
-            <div className="text-center mb50">
-              <h2 className="title" style={{ fontSize: "32px", fontWeight: "700" }}>KYC Verification</h2>
-              <p className="paragraph" style={{ fontSize: "16px", color: "#6b7280" }}>Complete your identity verification to access real estate services</p>
-            </div>
+            <div style={{ height: 32 }} />
           </div>
         </div>
 
         <div className="row mb40">
           <div className="col-lg-10 mx-auto">
-            <div className="d-flex justify-content-between align-items-center" style={{ position: "relative" }}>
+            <div style={{ background: "#fff", borderRadius: 14, padding: "24px 32px", border: "1px solid #e5e7eb", boxShadow: "0 2px 8px rgba(0,0,0,0.04)", display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative" }}>
               {hasCountry ? (
                 // 3 steps when country is pre-filled
                 [1, 2, 3].map((s) => (
                   <div key={s} className="text-center" style={{ flex: 1, zIndex: 1 }}>
-                    <div style={{ width: "50px", height: "50px", borderRadius: "50%", backgroundColor: step >= s ? "#eb6753" : "#e5e7eb", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "700", margin: "0 auto 10px" }}>
+                    <div style={{ width: "50px", height: "50px", borderRadius: "50%", backgroundColor: step >= s ? "#f0822d" : "#e5e7eb", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "700", margin: "0 auto 10px" }}>
                       {s}
                     </div>
-                    <small style={{ fontSize: "13px", fontWeight: "600", color: step >= s ? "#eb6753" : "#9ca3af" }}>
+                    <small style={{ fontSize: "13px", fontWeight: "600", color: step >= s ? "#f0822d" : "#9ca3af" }}>
                       {s === 1 && "Account Type"} {s === 2 && "Documents"} {s === 3 && "Review"}
                     </small>
                   </div>
@@ -839,17 +856,17 @@ const PropertyKYCVerification = () => {
                 // 4 steps when country needs to be selected
                 [1, 2, 3, 4].map((s) => (
                   <div key={s} className="text-center" style={{ flex: 1, zIndex: 1 }}>
-                    <div style={{ width: "50px", height: "50px", borderRadius: "50%", backgroundColor: step >= s ? "#eb6753" : "#e5e7eb", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "700", margin: "0 auto 10px" }}>
+                    <div style={{ width: "50px", height: "50px", borderRadius: "50%", backgroundColor: step >= s ? "#f0822d" : "#e5e7eb", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "700", margin: "0 auto 10px" }}>
                       {s}
                     </div>
-                    <small style={{ fontSize: "13px", fontWeight: "600", color: step >= s ? "#eb6753" : "#9ca3af" }}>
+                    <small style={{ fontSize: "13px", fontWeight: "600", color: step >= s ? "#f0822d" : "#9ca3af" }}>
                       {s === 1 && "Country"} {s === 2 && "Account Type"} {s === 3 && "Documents"} {s === 4 && "Review"}
                     </small>
                   </div>
                 ))
               )}
               <div style={{ position: "absolute", top: "25px", left: "10%", right: "10%", height: "2px", backgroundColor: "#e5e7eb", zIndex: 0 }}>
-                <div style={{ height: "100%", backgroundColor: "#eb6753", width: `${((step - 1) / (getTotalSteps() - 1)) * 100}%`, transition: "width 0.3s ease" }} />
+                <div style={{ height: "100%", backgroundColor: "#f0822d", width: `${((step - 1) / (getTotalSteps() - 1)) * 100}%`, transition: "width 0.3s ease" }} />
               </div>
             </div>
           </div>
@@ -857,10 +874,16 @@ const PropertyKYCVerification = () => {
 
         <div className="row">
           <div className="col-lg-10 mx-auto">
-            <div className="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
-              <div className="text-center mb40">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/logo/globperty-logo.svg" alt="Globperty" height={44} style={{ height: 44, width: "auto" }} />
+            <div style={{ background: "#fff", borderRadius: 16, boxShadow: "0 4px 32px rgba(0,0,0,0.08)", padding: "40px 40px 32px", border: "1px solid #e5e7eb" }}>
+              <div style={{ textAlign: "center", marginBottom: 32 }}>
+                <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+                  <div style={{ width: 38, height: 38, borderRadius: 10, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
+                    </svg>
+                  </div>
+                  <span style={{ fontSize: 22, fontWeight: 800, color: "#111827", letterSpacing: "-0.3px" }}>Globperty</span>
+                </Link>
               </div>
 
               {error && (
@@ -911,13 +934,13 @@ const PropertyKYCVerification = () => {
                 {!hasCountry && step === 1 && (
                   <div className="step-content">
                     <h4 className="mb30" style={{ fontSize: "22px", fontWeight: "700", color: "#1f2937" }}>
-                      <i className="fas fa-globe me-2" style={{ color: "#eb6753" }}></i>Select Your Country
+                      <i className="fas fa-globe me-2" style={{ color: "#f0822d" }}></i>Select Your Country
                     </h4>
                     <div className="row">
                       {COUNTRIES.map(c => (
                         <div key={c} className="col-md-4 mb20">
-                          <div className={`p-3 border rounded ${country === c ? 'border-danger bg-light' : 'border-secondary'}`} onClick={() => setCountry(c)} style={{ cursor: 'pointer', borderWidth: country === c ? '2px' : '1px', minHeight: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <h6 style={{ margin: 0, fontWeight: country === c ? '700' : '600', color: country === c ? '#eb6753' : '#1f2937' }}>{c}</h6>
+                          <div onClick={() => setCountry(c)} style={{ cursor: 'pointer', minHeight: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, border: country === c ? '2px solid #f0822d' : '1.5px solid #e5e7eb', background: country === c ? 'rgba(240,130,45,0.06)' : '#fff', transition: 'all 0.15s', padding: '12px 16px' }}>
+                            <h6 style={{ margin: 0, fontWeight: country === c ? '700' : '600', color: country === c ? '#f0822d' : '#1f2937' }}>{c}</h6>
                           </div>
                         </div>
                       ))}
@@ -927,18 +950,18 @@ const PropertyKYCVerification = () => {
 
                 {((hasCountry && step === 1) || (!hasCountry && step === 2)) && (
                   <div className="step-content">
-                    <div className="alert alert-info mb20" style={{ backgroundColor: "#e0f2fe", border: "1px solid #0284c7", borderRadius: "8px", padding: "15px" }}>
-                      <i className="fas fa-globe me-2" style={{ color: "#0c4a6e" }}></i>
+                    <div className="alert mb20" style={{ backgroundColor: "rgba(240,130,45,0.08)", border: "1.5px solid rgba(240,130,45,0.3)", borderRadius: "10px", padding: "14px 18px" }}>
+                      <i className="fas fa-globe me-2" style={{ color: "#f0822d" }}></i>
                       <strong>Registered Country:</strong> <span style={{ fontSize: "16px", fontWeight: "600" }}>{country}</span>
                     </div>
                     <h4 className="mb30" style={{ fontSize: "22px", fontWeight: "700", color: "#1f2937" }}>
-                      <i className="fas fa-briefcase me-2" style={{ color: "#eb6753" }}></i>Select Your Account Type
+                      <i className="fas fa-briefcase me-2" style={{ color: "#f0822d" }}></i>Select Your Account Type
                     </h4>
                     <div className="row">
                       {ACCOUNT_TYPES.map(type => (
                         <div key={type.value} className="col-md-6 mb20">
-                          <div className={`p-3 border rounded ${accountType === type.value ? 'border-danger bg-light' : 'border-secondary'}`} onClick={() => setAccountType(type.value)} style={{ cursor: 'pointer', borderWidth: accountType === type.value ? '2px' : '1px', minHeight: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <h6 style={{ margin: 0, fontWeight: accountType === type.value ? '700' : '600', color: accountType === type.value ? '#eb6753' : '#1f2937', textAlign: 'center' }}>{type.label}</h6>
+                          <div onClick={() => setAccountType(type.value)} style={{ cursor: 'pointer', minHeight: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 10, border: accountType === type.value ? '2px solid #f0822d' : '1.5px solid #e5e7eb', background: accountType === type.value ? 'rgba(240,130,45,0.06)' : '#fff', transition: 'all 0.15s', padding: '12px 16px' }}>
+                            <h6 style={{ margin: 0, fontWeight: accountType === type.value ? '700' : '600', color: accountType === type.value ? '#f0822d' : '#1f2937', textAlign: 'center' }}>{type.label}</h6>
                           </div>
                         </div>
                       ))}
@@ -950,7 +973,7 @@ const PropertyKYCVerification = () => {
                   <div className="step-content">
                     {reqLoading ? <div className="text-center p-5"><p>Loading requirements...</p></div> : !requirements ? <div className="text-center p-5"><p className="text-danger">Unable to load requirements</p></div> : (
                       <>
-                        <h4 className="mb30"><i className="fas fa-file-upload me-2" style={{ color: "#eb6753" }}></i>Submit Required Documents</h4>
+                        <h4 className="mb30"><i className="fas fa-file-upload me-2" style={{ color: "#f0822d" }}></i>Submit Required Documents</h4>
 
                         {/* Show Company Information for company account types */}
                         {(accountType === 'real_estate_brokerage' || accountType === 'property_management') ? (
@@ -2006,7 +2029,7 @@ const PropertyKYCVerification = () => {
 
                 {((hasCountry && step === 3) || (!hasCountry && step === 4)) && (
                   <div className="step-content">
-                    <h4 className="mb30"><i className="fas fa-check-circle me-2" style={{ color: "#eb6753" }}></i>Review Your Submission</h4>
+                    <h4 className="mb30"><i className="fas fa-check-circle me-2" style={{ color: "#f0822d" }}></i>Review Your Submission</h4>
                     <div className="mb30">
                       {(accountType === 'real_estate_brokerage' || accountType === 'property_management') ? (
                         <>
@@ -2123,11 +2146,11 @@ const PropertyKYCVerification = () => {
                 </div>
 
                 <div className="d-flex justify-content-between align-items-center mt30">
-                  {step > 1 && <button type="button" className="btn btn-border-light-2 btn-lg" onClick={() => setStep(step - 1)}><i className="fas fa-arrow-left me-2"></i> Previous</button>}
+                  {step > 1 && <button type="button" className="btn btn-lg" style={{ background: "#f8fafc", color: "#374151", border: "1.5px solid #e5e7eb", fontWeight: 600, borderRadius: 10, padding: "11px 28px" }} onClick={() => setStep(step - 1)}><i className="fas fa-arrow-left me-2"></i> Previous</button>}
                   {step < getTotalSteps() ? (
-                    <button type="button" className="btn btn-danger btn-lg ms-auto" onClick={() => setStep(step + 1)} disabled={!canProceedToNextStep()} style={{ opacity: !canProceedToNextStep() ? 0.5 : 1 }}>Next <i className="fas fa-arrow-right ms-2"></i></button>
+                    <button type="button" className="btn btn-lg ms-auto" onClick={() => setStep(step + 1)} disabled={!canProceedToNextStep()} style={{ opacity: !canProceedToNextStep() ? 0.5 : 1, background: "#f0822d", color: "#fff", fontWeight: 700, border: "none", borderRadius: 10, padding: "12px 32px" }}>Next <i className="fas fa-arrow-right ms-2"></i></button>
                   ) : (
-                    <button type="submit" className="btn btn-danger btn-lg ms-auto" disabled={loading || !formData.agreeToTerms} style={{ opacity: (loading || !formData.agreeToTerms) ? 0.5 : 1 }}>
+                    <button type="submit" className="btn btn-lg ms-auto" disabled={loading || !formData.agreeToTerms} style={{ opacity: (loading || !formData.agreeToTerms) ? 0.5 : 1, background: "#f0822d", color: "#fff", fontWeight: 700, border: "none", borderRadius: 10, padding: "12px 32px" }}>
                       {loading ? (<><span className="spinner-border spinner-border-sm me-2" role="status"></span>Submitting...</>) : (<><i className="fas fa-check me-2"></i> Submit KYC</>)}
                     </button>
                   )}
@@ -2137,6 +2160,10 @@ const PropertyKYCVerification = () => {
           </div>
         </div>
       </div>
+      </div>{/* end tf-container */}
+      </div>{/* end bg wrapper */}
+      </div>{/* end main-content */}
+      <Footer1 />
     </div>
   );
 };
