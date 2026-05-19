@@ -43,6 +43,35 @@ function AnalyticsStatusBadge({ status }) {
   );
 }
 
+function listingQualityScore(p) {
+  let score = 0;
+  if (p.propertyName || p.title) score += 10;
+  if (p.description && p.description.length > 80) score += 20;
+  if (Array.isArray(p.images) && p.images.length >= 3) score += 25;
+  else if (Array.isArray(p.images) && p.images.length >= 1) score += 12;
+  if (p.price) score += 15;
+  if (p.city || p.location || p.address) score += 10;
+  if (p.beds || p.bedrooms) score += 5;
+  if (p.baths || p.bathrooms) score += 5;
+  if (p.size || p.area) score += 5;
+  if (p.amenities && p.amenities.length > 0) score += 5;
+  return Math.min(score, 100);
+}
+
+function QualityScore({ score }) {
+  const color = score >= 80 ? "#10B981" : score >= 50 ? "#f0822d" : "#EF4444";
+  const label = score >= 80 ? "Excellent" : score >= 50 ? "Good" : "Needs work";
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div style={{ fontSize: 12, fontWeight: 600, color, minWidth: 70 }}>Score: {score}%</div>
+      <div style={{ flex: 1, height: 5, background: "#f0f0f0", borderRadius: 3 }}>
+        <div style={{ height: "100%", width: `${score}%`, background: color, borderRadius: 3, transition: "width 0.5s" }} />
+      </div>
+      <span style={{ fontSize: 11, fontWeight: 600, color, minWidth: 60 }}>{label}</span>
+    </div>
+  );
+}
+
 function StatBox({ label, value, icon }) {
   return (
     <div style={{
@@ -93,6 +122,11 @@ export default function Analytics() {
   const [properties, setProperties] = useState([]);
   const [savesMap, setSavesMap] = useState({});
   const [inquiriesMap, setInquiriesMap] = useState({});
+
+  // Market Intelligence state
+  const [marketCity, setMarketCity] = useState("Dubai");
+  const [marketData, setMarketData] = useState(null);
+  const [marketLoading, setMarketLoading] = useState(false);
 
   // CRM Leads state
   const [leads, setLeads] = useState([]);
@@ -251,6 +285,17 @@ export default function Analytics() {
     );
   }
 
+  const fetchMarket = async (city) => {
+    setMarketLoading(true);
+    try {
+      const res = await apiClient.get(`/market-intelligence/overview?city=${encodeURIComponent(city)}`);
+      setMarketData(res.data?.data || res.data || null);
+    } catch {
+      setMarketData(null);
+    }
+    setMarketLoading(false);
+  };
+
   const tabStyle = (tabKey) => ({
     padding: "8px 22px",
     borderRadius: 20,
@@ -283,6 +328,9 @@ export default function Analytics() {
             </button>
             <button style={tabStyle("leads")} onClick={() => setActiveTab("leads")}>
               CRM Leads
+            </button>
+            <button style={tabStyle("market")} onClick={() => { setActiveTab("market"); if (!marketData) fetchMarket(marketCity); }}>
+              Market Reference
             </button>
           </div>
 
@@ -365,6 +413,11 @@ export default function Analytics() {
                             <StatBox label="Inquiries" value={inquiries} icon="💬" />
                           </div>
 
+                          <div style={{ marginBottom: 10 }}>
+                            <div style={{ fontSize: 11, color: "#888", marginBottom: 4, fontWeight: 600 }}>Listing Quality</div>
+                            <QualityScore score={listingQualityScore(p)} />
+                          </div>
+
                           <div>
                             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#888", marginBottom: 4 }}>
                               <span>Relative Views</span>
@@ -384,6 +437,84 @@ export default function Analytics() {
                       </div>
                     );
                   })}
+                </div>
+              )}
+            </>
+          )}
+
+          {/* ── Market Reference Tab ── */}
+          {activeTab === "market" && (
+            <>
+              <h3 className="title">Market Price Reference</h3>
+              <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
+                <input
+                  value={marketCity}
+                  onChange={(e) => setMarketCity(e.target.value)}
+                  placeholder="Enter city (e.g. Dubai)"
+                  style={{ flex: 1, minWidth: 160, padding: "8px 14px", border: "1px solid #e0e3e8", borderRadius: 8, fontSize: 13, outline: "none" }}
+                  onKeyDown={(e) => e.key === "Enter" && fetchMarket(marketCity)}
+                />
+                <button
+                  onClick={() => fetchMarket(marketCity)}
+                  style={{ background: "#f0822d", color: "#fff", border: "none", borderRadius: 8, padding: "9px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+                >
+                  Search
+                </button>
+              </div>
+
+              {marketLoading && <div style={{ padding: 40, textAlign: "center", color: "#888" }}>Loading market data…</div>}
+
+              {!marketLoading && !marketData && (
+                <div style={{ padding: 40, textAlign: "center", color: "#888" }}>
+                  Enter a city name and click Search to view market data.
+                </div>
+              )}
+
+              {!marketLoading && marketData && (
+                <div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12, marginBottom: 24 }}>
+                    {[
+                      { label: "Avg Price", value: marketData.averagePrice ? `$${Number(marketData.averagePrice).toLocaleString()}` : "—", color: "#3B82F6", bg: "#EFF6FF" },
+                      { label: "Median Price", value: marketData.medianPrice ? `$${Number(marketData.medianPrice).toLocaleString()}` : "—", color: "#f0822d", bg: "#FFF7ED" },
+                      { label: "Total Listings", value: marketData.totalListings ?? "—", color: "#10B981", bg: "#ECFDF5" },
+                      { label: "Avg Price/sqft", value: marketData.avgPricePerSqft ? `$${Number(marketData.avgPricePerSqft).toLocaleString()}` : "—", color: "#8B5CF6", bg: "#F5F3FF" },
+                    ].map((s) => (
+                      <div key={s.label} style={{ background: s.bg, borderRadius: 10, padding: "14px 16px", borderLeft: `3px solid ${s.color}` }}>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: s.color }}>{s.value}</div>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: "#555", marginTop: 2 }}>{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {marketData.propertyTypeBreakdown && (
+                    <div style={{ background: "#f8fafc", border: "1px solid #eef0f3", borderRadius: 12, padding: 16, marginBottom: 16 }}>
+                      <div style={{ fontWeight: 700, fontSize: 13, color: "#1a2332", marginBottom: 12 }}>Property Type Breakdown</div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                        {Object.entries(marketData.propertyTypeBreakdown).map(([type, count]) => {
+                          const total = Object.values(marketData.propertyTypeBreakdown).reduce((s, v) => s + v, 0);
+                          const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+                          return (
+                            <div key={type}>
+                              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#555", marginBottom: 4 }}>
+                                <span style={{ fontWeight: 600 }}>{type}</span>
+                                <span>{count} listings ({pct}%)</span>
+                              </div>
+                              <div style={{ height: 6, background: "#eee", borderRadius: 3 }}>
+                                <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg,#f0822d,#e56c1a)", borderRadius: 3 }} />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {marketData.insights && (
+                    <div style={{ background: "#ECFDF5", border: "1px solid #10B981", borderRadius: 12, padding: 16 }}>
+                      <div style={{ fontWeight: 700, fontSize: 13, color: "#10B981", marginBottom: 8 }}>Market Insights</div>
+                      <div style={{ fontSize: 13, color: "#555", lineHeight: 1.6 }}>{marketData.insights}</div>
+                    </div>
+                  )}
                 </div>
               )}
             </>

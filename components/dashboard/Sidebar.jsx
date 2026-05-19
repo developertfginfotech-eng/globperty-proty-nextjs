@@ -428,6 +428,22 @@ export default function Sidebar() {
               </li>
             )}
 
+            {/* Buyer: Price Alerts */}
+            {isBuyer && (
+              <li className={`nav-menu-item ${pathname == "/price-alerts" ? "active" : ""}`}>
+                <Link className="nav-menu-link" href="/price-alerts">
+                  <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 1.66663C7.70001 1.66663 5.83334 3.53329 5.83334 5.83329V10.8333L4.16667 12.5V13.3333H15.8333V12.5L14.1667 10.8333V5.83329C14.1667 3.53329 12.3 1.66663 10 1.66663Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M8.33334 13.3334C8.33334 14.254 9.07953 15.0001 10 15.0001C10.9205 15.0001 11.6667 14.254 11.6667 13.3334" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="14.5" cy="5.5" r="3.5" fill="#f0822d" stroke="none"/>
+                    <line x1="14.5" y1="3.5" x2="14.5" y2="5.5" stroke="#fff" strokeWidth="1.2" strokeLinecap="round"/>
+                    <circle cx="14.5" cy="7" r="0.6" fill="#fff"/>
+                  </svg>
+                  Price Alerts
+                </Link>
+              </li>
+            )}
+
             {/* Seller-only items */}
             {!isBuyer && (
               <>
@@ -452,6 +468,41 @@ export default function Sidebar() {
                 </li>
               </>
             )}
+
+            {/* Visits — all roles */}
+            <li className={`nav-menu-item ${pathname == "/visits" ? "active" : ""}`}>
+              <Link className="nav-menu-link" href="/visits">
+                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2.5" y="4.16663" width="15" height="13.3333" rx="1.5" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M13.332 2.5V5.83333" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M6.66797 2.5V5.83333" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2.5 8.33337H17.5" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Visits
+              </Link>
+            </li>
+
+            {/* Messages — all roles */}
+            <li className={`nav-menu-item ${pathname == "/messages" ? "active" : ""}`}>
+              <Link className="nav-menu-link" href="/messages">
+                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                AI Assistant
+              </Link>
+            </li>
+
+            {/* Support */}
+            <li className={`nav-menu-item ${pathname == "/support" ? "active" : ""}`}>
+              <Link className="nav-menu-link" href="/support">
+                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="10" cy="10" r="7.5" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M7.5 7.5C7.5 6.11929 8.61929 5 10 5C11.3807 5 12.5 6.11929 12.5 7.5C12.5 8.88071 11.3807 10 10 10V11.6667" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <circle cx="10" cy="13.75" r="0.833333" fill="#A8ABAE"/>
+                </svg>
+                Help & Support
+              </Link>
+            </li>
 
             <li className={`nav-menu-item `}>
               <Link className="nav-menu-link" href={`/`}>

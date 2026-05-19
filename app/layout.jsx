@@ -21,6 +21,7 @@ export default function RootLayout({ children }) {
     "/dashboard", "/my-profile", "/my-property", "/add-property",
     "/my-package", "/my-favorites", "/review", "/notifications",
     "/my-offers", "/offers", "/deal-tracker", "/listing-analytics", "/leads",
+    "/deals", "/analytics", "/visits", "/price-alerts", "/messages", "/support",
   ];
   const isDashboard = dashboardPaths.some((p) => pathname === p || pathname.startsWith(p + "/"));
 
