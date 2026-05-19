@@ -73,7 +73,8 @@ export default function RegisterPage() {
     setLoading(true);
     setError("");
     try {
-      await register({ name: form.name, email: form.email, password: form.password, phone: form.phone, country: form.country, countryCode, role: form.role });
+      const backendRole = form.role === "other" ? "buyer" : form.role;
+      await register({ name: form.name, email: form.email, password: form.password, phone: form.phone, country: form.country, countryCode, role: backendRole });
       if (form.role === "seller") {
         window.location.href = "/kyc-property-verification";
       } else {
