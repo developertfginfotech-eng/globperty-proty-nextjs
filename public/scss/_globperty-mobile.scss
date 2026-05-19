@@ -509,6 +509,59 @@ small.text-muted {
   --bs-gutter-x: 20px;
 }
 
+// ============================================================
+// Dashboard dark sidebar & premium card styles
+// ============================================================
+
+.sidebar-menu-dashboard .nav-menu-link {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  transition: color 0.15s, background 0.15s !important;
+
+  svg path, svg circle, svg polyline, svg line, svg rect, svg polygon {
+    stroke: rgba(255, 255, 255, 0.45) !important;
+    transition: stroke 0.15s !important;
+  }
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    svg path, svg circle, svg polyline, svg line, svg rect, svg polygon {
+      stroke: rgba(255, 255, 255, 0.8) !important;
+    }
+  }
+}
+
+.sidebar-menu-dashboard .nav-menu-item.active .nav-menu-link {
+  color: #fff !important;
+  background: rgba(240, 130, 45, 0.18) !important;
+  border-left: 3px solid #f0822d !important;
+  font-weight: 700 !important;
+
+  svg path, svg circle, svg polyline, svg line, svg rect, svg polygon {
+    stroke: #f0822d !important;
+  }
+}
+
+// Dashboard main content background
+.main-content-inner {
+  background: #f4f6f9 !important;
+}
+
+// Dashboard stat card grid responsive
+@media (max-width: 991px) {
+  .glb-stat-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 575px) {
+  .glb-stat-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+}
+
 // KYC spin animation for loading state
 @keyframes spin {
   from { transform: rotate(0deg); }

@@ -8,6 +8,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const [favCount, setFavCount] = useState(0);
   const [role, setRole] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     apiClient.get("/favorites")
@@ -16,21 +17,22 @@ export default function Sidebar() {
     try {
       const u = JSON.parse(localStorage.getItem("user") || "{}");
       setRole(u.role || "");
+      setUserName(u.name || u.email || "");
     } catch {}
   }, []);
 
   const isBuyer = role === "buyer";
   return (
     <div className="wrap-sidebar">
-      <div className="sidebar-menu-dashboard">
-        <div style={{ padding: "20px 24px 12px", borderBottom: "1px solid #f0f0f0" }}>
-          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <svg width={19} height={19} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+      <div className="sidebar-menu-dashboard" style={{ background: "linear-gradient(180deg, #0d1b2a 0%, #0f2040 100%)", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <div style={{ padding: "22px 24px 16px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "0 2px 8px rgba(240,130,45,0.4)" }}>
+              <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
               </svg>
             </div>
-            <span style={{ fontSize: 17, fontWeight: 800, color: "#111827", letterSpacing: "-0.3px" }}>Globperty</span>
+            <span style={{ fontSize: 18, fontWeight: 800, color: "#fff", letterSpacing: "-0.3px", fontFamily: "'Lexend', sans-serif" }}>Globperty</span>
           </Link>
         </div>
         <div className="menu-box">
@@ -167,7 +169,7 @@ export default function Sidebar() {
                     strokeLinejoin="round"
                   />
                 </svg>
-                My package
+                My Plan
               </Link>
             </li>
             <li
@@ -206,44 +208,6 @@ export default function Sidebar() {
                   />
                 </svg>
                 My favorites {favCount > 0 ? `(${favCount})` : ""}
-              </Link>
-            </li>
-            <li
-              className={`nav-menu-item ${
-                pathname == "/my-save-search" ? "active" : ""
-              } `}
-            >
-              <Link className="nav-menu-link" href={`/my-save-search`}>
-                <svg
-                  width={20}
-                  height={20}
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8.91797 16.6666H3.33464C2.89261 16.6666 2.46868 16.491 2.15612 16.1785C1.84356 15.8659 1.66797 15.442 1.66797 15V4.16662C1.66797 3.7246 1.84356 3.30067 2.15612 2.98811C2.46868 2.67555 2.89261 2.49996 3.33464 2.49996H6.58464C6.86337 2.49723 7.13835 2.56445 7.38438 2.69547C7.63042 2.8265 7.83967 3.01715 7.99297 3.24996L8.66797 4.24996C8.81973 4.4804 9.02632 4.66956 9.26922 4.80046C9.51212 4.93136 9.78371 4.99991 10.0596 4.99996H16.668C17.11 4.99996 17.5339 5.17555 17.8465 5.48811C18.159 5.80067 18.3346 6.2246 18.3346 6.66662V10.0833"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M17.5013 17.5L15.918 15.9166"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M14.168 16.6666C15.5487 16.6666 16.668 15.5473 16.668 14.1666C16.668 12.7859 15.5487 11.6666 14.168 11.6666C12.7873 11.6666 11.668 12.7859 11.668 14.1666C11.668 15.5473 12.7873 16.6666 14.168 16.6666Z"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                My save searches
               </Link>
             </li>
             <li
@@ -452,6 +416,21 @@ export default function Sidebar() {
             </li>
           </ul>
         </div>
+
+        {/* User info at bottom */}
+        {userName && (
+          <div style={{ padding: "16px 20px", borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: "auto" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 38, height: 38, borderRadius: "50%", background: "linear-gradient(135deg, #f0822d, #e56c1a)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "0 2px 8px rgba(240,130,45,0.35)" }}>
+                <span style={{ fontSize: 15, fontWeight: 800, color: "#fff" }}>{userName[0]?.toUpperCase()}</span>
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{userName}</div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", textTransform: "capitalize", fontWeight: 500 }}>{role || "user"}</div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

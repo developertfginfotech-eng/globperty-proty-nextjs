@@ -86,126 +86,85 @@ export default function Dashboard() {
         </div>
 
         {/* KYC status banner */}
-        {role && role !== "buyer" && role !== "admin" && role !== "super_admin" && kycStatus && kycStatus !== "verified" && (
-          <div style={{
-            marginBottom: 24,
-            padding: "14px 20px",
-            borderRadius: 10,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 12,
-            background: kycStatus === "pending" ? "#eff6ff" : kycStatus === "rejected" ? "#fee2e2" : "#fef9c3",
-            border: `1.5px solid ${kycStatus === "pending" ? "#93c5fd" : kycStatus === "rejected" ? "#fca5a5" : "#fbbf24"}`,
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: 22 }}>
-                {kycStatus === "pending" ? "⏳" : kycStatus === "rejected" ? "❌" : "⚠️"}
-              </span>
-              <div>
-                <strong style={{ fontSize: 15, color: "#1a1a1a" }}>
-                  {kycStatus === "pending" ? "KYC Under Review" : kycStatus === "rejected" ? "KYC Rejected" : "KYC Not Completed"}
-                </strong>
-                <p style={{ margin: 0, fontSize: 13, color: "#555" }}>
-                  {kycStatus === "pending"
-                    ? "Your documents are being reviewed. You'll be notified once approved."
-                    : kycStatus === "rejected"
-                    ? "Your KYC was rejected. Please resubmit your documents."
-                    : "Complete KYC verification to list properties on Globperty."}
-                </p>
+        {role && role !== "buyer" && role !== "admin" && role !== "super_admin" && kycStatus && kycStatus !== "verified" && (() => {
+          const cfg = {
+            pending:       { bg: "linear-gradient(135deg,#eff6ff,#dbeafe)", border: "#93c5fd", iconBg: "#3b82f6", label: "KYC Under Review",   sub: "Your documents are being verified. We'll notify you once approved.", icon: <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> },
+            rejected:      { bg: "linear-gradient(135deg,#fef2f2,#fee2e2)", border: "#fca5a5", iconBg: "#ef4444", label: "KYC Rejected",        sub: "Your KYC was rejected. Please resubmit your documents.", icon: <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> },
+            unsubmitted:   { bg: "linear-gradient(135deg,#fffbeb,#fef3c7)", border: "#fbbf24", iconBg: "#f59e0b", label: "KYC Not Completed",   sub: "Complete identity verification to list properties on Globperty.", icon: <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> },
+          };
+          const c = cfg[kycStatus] || cfg.unsubmitted;
+          return (
+            <div style={{ marginBottom: 24, padding: "16px 20px", borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, background: c.bg, border: `1.5px solid ${c.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ width: 42, height: 42, borderRadius: 11, background: c.iconBg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: `0 2px 8px ${c.border}` }}>{c.icon}</div>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 800, color: "#111827", marginBottom: 2, letterSpacing: "-0.1px" }}>{c.label}</div>
+                  <div style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.5 }}>{c.sub}</div>
+                </div>
               </div>
+              {kycStatus !== "pending" && (
+                <Link href="/kyc-property-verification" style={{ background: "#f0822d", color: "#fff", padding: "9px 20px", borderRadius: 9, fontSize: 13, fontWeight: 700, textDecoration: "none", whiteSpace: "nowrap", boxShadow: "0 2px 8px rgba(240,130,45,0.35)", display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  {kycStatus === "rejected" ? "Resubmit KYC" : "Complete KYC"}
+                  <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </Link>
+              )}
             </div>
-            {kycStatus !== "pending" && (
-              <Link href="/kyc-property-verification" style={{ background: "#eb6753", color: "#fff", padding: "8px 20px", borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>
-                {kycStatus === "rejected" ? "Resubmit KYC →" : "Complete KYC →"}
-              </Link>
-            )}
-          </div>
-        )}
+          );
+        })()}
 
         {/* Stats counters */}
-        <div className="flat-counter-v2 tf-counter">
-          <div className="counter-box">
-            <div className="box-icon">
-              <span className="icon">
-                <svg width={36} height={36} viewBox="0 0 36 36" fill="none">
-                  <path d="M22.5 3H9C8.20435 3 7.44129 3.31607 6.87868 3.87868C6.31607 4.44129 6 5.20435 6 6V30C6 30.7956 6.31607 31.5587 6.87868 32.1213C7.44129 32.6839 8.20435 33 9 33H27C27.7956 33 28.5587 32.6839 29.1213 32.1213C29.6839 31.5587 30 30.7956 30 30V10.5L22.5 3Z" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M21 3V9C21 9.79565 21.3161 10.5587 21.8787 11.1213C22.4413 11.6839 23.2044 12 24 12H30" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M12 19.5H15" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M21 19.5H24" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M12 25.5H15" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M21 25.5H24" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </div>
-            <div className="content-box">
-              <div className="title-count text-variant-1">Your listing</div>
-              <div className="box-count d-flex align-items-end">
-                <div className="number">{loading ? "—" : stats.totalProperties ?? 0}</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginBottom: 24 }}>
+          {[
+            {
+              label: "My Listings", value: loading ? "—" : stats.totalProperties ?? 0, href: "/my-property",
+              color: "#f0822d", lightBg: "rgba(240,130,45,0.08)",
+              icon: <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#f0822d" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>,
+            },
+            {
+              label: "Pending", value: loading ? "—" : pendingCount, href: "/my-property",
+              color: "#8b5cf6", lightBg: "rgba(139,92,246,0.08)",
+              icon: <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+            },
+            {
+              label: "Favorites", value: loading ? "—" : stats.totalFavorites ?? 0, href: "/my-favorites",
+              color: "#ef4444", lightBg: "rgba(239,68,68,0.08)",
+              icon: <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>,
+            },
+            {
+              label: "Reviews", value: loading ? "—" : stats.totalReviews ?? 0, href: "/review",
+              color: "#10b981", lightBg: "rgba(16,185,129,0.08)",
+              icon: <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>,
+            },
+          ].map(card => (
+            <Link key={card.label} href={card.href} style={{ textDecoration: "none" }}>
+              <div style={{ background: "#fff", borderRadius: 16, padding: "20px 22px", border: "1px solid #e8eaf0", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", transition: "all 0.2s", cursor: "pointer", position: "relative", overflow: "hidden" }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 6px 24px rgba(0,0,0,0.1)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 2px 12px rgba(0,0,0,0.05)"; e.currentTarget.style.transform = "none"; }}>
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: card.color, borderRadius: "16px 16px 0 0" }} />
+                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, background: card.lightBg, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    {card.icon}
+                  </div>
+                  <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: 4 }}><polyline points="9 18 15 12 9 6"/></svg>
+                </div>
+                <div style={{ fontSize: 28, fontWeight: 900, color: "#111827", letterSpacing: "-1px", lineHeight: 1, marginBottom: 6 }}>{card.value}</div>
+                <div style={{ fontSize: 13, color: "#6b7280", fontWeight: 600 }}>{card.label}</div>
               </div>
-            </div>
-          </div>
-
-          <div className="counter-box">
-            <div className="box-icon">
-              <span className="icon">
-                <svg width={36} height={36} viewBox="0 0 36 36" fill="none">
-                  <path d="M18.5061 32.991C15.4409 33.0945 12.4177 32.2559 9.84374 30.5882C7.26982 28.9206 5.26894 26.504 4.11073 23.6642C2.95253 20.8243 2.69265 17.6977 3.36614 14.7056C4.03962 11.7135 5.61409 8.9998 7.87737 6.9301C10.1407 4.86039 12.984 3.5342 16.0242 3.13022C19.0644 2.72624 22.1554 3.2639 24.8807 4.67074C27.6059 6.07757 29.8344 8.28598 31.2659 10.9984C32.6974 13.7107 33.263 16.7967 32.8866 19.8405" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M18 9V18L21 19.5" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M21 27L27 33L33 27" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M27 21V33" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </div>
-            <div className="content-box">
-              <div className="title-count text-variant-1">Pending</div>
-              <div className="box-count d-flex align-items-end">
-                <div className="number">{loading ? "—" : String(pendingCount).padStart(2, "0")}</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="counter-box">
-            <div className="box-icon">
-              <span className="icon">
-                <svg width={36} height={36} viewBox="0 0 36 36" fill="none">
-                  <path d="M6 33H27C27.7956 33 28.5587 32.6839 29.1213 32.1213C29.6839 31.5587 30 30.7956 30 30V10.5L22.5 3H9C8.20435 3 7.44129 3.31607 6.87868 3.87868C6.31607 4.44129 6 5.20435 6 6V9" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M21 3V9C21 9.79565 21.3161 10.5587 21.8787 11.1213C22.4413 11.6839 23.2044 12 24 12H30" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M15.4348 16.05C14.9224 15.5384 14.2692 15.191 13.5586 15.0521C12.848 14.9132 12.1121 14.989 11.4448 15.27C11.0098 15.45 10.6048 15.72 10.2748 16.065L9.74976 16.575L9.22476 16.065C8.71531 15.5539 8.0656 15.2055 7.35797 15.064C6.65033 14.9225 5.9166 14.9942 5.24976 15.27C4.79976 15.45 4.40976 15.72 4.06476 16.065C2.63976 17.475 2.56476 19.86 4.36476 21.675L9.74976 27L15.1498 21.675C16.9498 19.86 16.8598 17.475 15.4348 16.065V16.05Z" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </div>
-            <div className="content-box">
-              <div className="title-count text-variant-1">Favorites</div>
-              <div className="d-flex align-items-end">
-                <div className="number">{loading ? "—" : String(stats.totalFavorites ?? 0).padStart(2, "0")}</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="counter-box">
-            <div className="box-icon">
-              <span className="icon">
-                <svg width={36} height={36} viewBox="0 0 36 36" fill="none">
-                  <path d="M31.5 22.5C31.5 23.2956 31.1839 24.0587 30.6213 24.6213C30.0587 25.1839 29.2956 25.5 28.5 25.5H10.5L4.5 31.5V7.5C4.5 6.70435 4.81607 5.94129 5.37868 5.37868C5.94129 4.81607 6.70435 4.5 7.5 4.5H28.5C29.2956 4.5 30.0587 4.81607 30.6213 5.37868C31.1839 5.94129 31.5 6.70435 31.5 7.5V22.5Z" stroke="#F1913D" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </div>
-            <div className="content-box">
-              <div className="title-count text-variant-1">Reviews</div>
-              <div className="d-flex align-items-end">
-                <div className="number">{loading ? "—" : stats.totalReviews ?? 0}</div>
-              </div>
-            </div>
-          </div>
+            </Link>
+          ))}
         </div>
 
         <div className="row">
           <div className="col-xl-9">
             {/* My Favorites */}
-            <div className="widget-box-2 wd-listing mb-24">
-              <h3 className="title">My Favorites</h3>
+            <div className="widget-box-2 wd-listing mb-24" style={{ borderRadius: 16, border: "1px solid #e8eaf0", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", overflow: "hidden" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 24px", borderBottom: "1px solid #f3f4f6" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ width: 4, height: 20, background: "#f0822d", borderRadius: 2 }} />
+                  <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: "#111827", letterSpacing: "-0.2px" }}>My Favorites</h3>
+                </div>
+                <Link href="/my-favorites" style={{ fontSize: 12, fontWeight: 700, color: "#f0822d", textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}>View all <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg></Link>
+              </div>
               {loading ? (
                 <div style={{ padding: 32, textAlign: "center", color: "#888" }}>Loading…</div>
               ) : favorites.length === 0 ? (
@@ -289,8 +248,11 @@ export default function Dashboard() {
             </div>
 
             {/* Chart */}
-            <div className="widget-box-2 wd-chart">
-              <h5 className="title">Page Inside</h5>
+            <div className="widget-box-2 wd-chart" style={{ borderRadius: 16, border: "1px solid #e8eaf0", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", overflow: "hidden" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "18px 24px", borderBottom: "1px solid #f3f4f6" }}>
+                <div style={{ width: 4, height: 20, background: "#f0822d", borderRadius: 2 }} />
+                <h5 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: "#111827", letterSpacing: "-0.2px" }}>Page Visits</h5>
+              </div>
               <div className="chart-box">
                 <LineChart />
               </div>
@@ -299,8 +261,11 @@ export default function Dashboard() {
 
           <div className="col-xl-3">
             {/* Messages / Inquiries */}
-            <div className="widget-box-2 mess-box mb-20">
-              <h5 className="title">Messages</h5>
+            <div className="widget-box-2 mess-box mb-20" style={{ borderRadius: 16, border: "1px solid #e8eaf0", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", overflow: "hidden" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "16px 20px", borderBottom: "1px solid #f3f4f6" }}>
+                <div style={{ width: 4, height: 18, background: "#f0822d", borderRadius: 2 }} />
+                <h5 style={{ margin: 0, fontSize: 15, fontWeight: 800, color: "#111827" }}>Messages</h5>
+              </div>
               {loading ? (
                 <div style={{ padding: 16, color: "#888", fontSize: 13 }}>Loading…</div>
               ) : inquiries.length === 0 ? (
@@ -330,8 +295,11 @@ export default function Dashboard() {
             </div>
 
             {/* Recent Reviews */}
-            <div className="widget-box-2 mess-box">
-              <h5 className="title">Recent Reviews</h5>
+            <div className="widget-box-2 mess-box" style={{ borderRadius: 16, border: "1px solid #e8eaf0", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", overflow: "hidden" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "16px 20px", borderBottom: "1px solid #f3f4f6" }}>
+                <div style={{ width: 4, height: 18, background: "#f0822d", borderRadius: 2 }} />
+                <h5 style={{ margin: 0, fontSize: 15, fontWeight: 800, color: "#111827" }}>Recent Reviews</h5>
+              </div>
               {loading ? (
                 <div style={{ padding: 16, color: "#888", fontSize: 13 }}>Loading…</div>
               ) : reviews.length === 0 ? (
