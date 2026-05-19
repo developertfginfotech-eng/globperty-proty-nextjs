@@ -81,8 +81,10 @@ export default function DealTracker() {
       apiClient.get("/favorites"),
       apiClient.get(offersEndpoint),
     ]).then(([favRes, offersRes]) => {
-      const favs = favRes.status === "fulfilled" ? (favRes.value.data.favorites || []) : [];
-      const offers = offersRes.status === "fulfilled" ? (offersRes.value.data.offers || offersRes.value.data || []) : [];
+      const rawFavs = favRes.status === "fulfilled" ? favRes.value.data : null;
+      const favs = Array.isArray(rawFavs?.favorites) ? rawFavs.favorites : [];
+      const rawOffers = offersRes.status === "fulfilled" ? offersRes.value.data : null;
+      const offers = Array.isArray(rawOffers) ? rawOffers : (Array.isArray(rawOffers?.offers) ? rawOffers.offers : []);
 
       const shortlisted = favs.map((fav) => {
         const p = fav.propertyId || {};
