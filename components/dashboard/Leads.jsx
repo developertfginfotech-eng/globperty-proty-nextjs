@@ -48,15 +48,14 @@ export default function Leads() {
       apiClient.get("/inquiries"),
       apiClient.get("/favorites/my-properties"),
     ]).then(([propsRes, inqRes, favsRes]) => {
-      const props = propsRes.status === "fulfilled"
-        ? (propsRes.value.data.properties || propsRes.value.data || [])
-        : [];
-      const inqs = inqRes.status === "fulfilled"
-        ? (inqRes.value.data.inquiries || inqRes.value.data || [])
-        : [];
-      const favs = favsRes.status === "fulfilled"
-        ? (favsRes.value.data.favorites || favsRes.value.data || [])
-        : [];
+      const rawProps = propsRes.status === "fulfilled" ? propsRes.value.data : null;
+      const props = Array.isArray(rawProps) ? rawProps : (Array.isArray(rawProps?.properties) ? rawProps.properties : []);
+
+      const rawInqs = inqRes.status === "fulfilled" ? inqRes.value.data : null;
+      const inqs = Array.isArray(rawInqs) ? rawInqs : (Array.isArray(rawInqs?.inquiries) ? rawInqs.inquiries : (Array.isArray(rawInqs?.data) ? rawInqs.data : []));
+
+      const rawFavs = favsRes.status === "fulfilled" ? favsRes.value.data : null;
+      const favs = Array.isArray(rawFavs) ? rawFavs : (Array.isArray(rawFavs?.favorites) ? rawFavs.favorites : []);
 
       setPropertyCount(props.length);
 

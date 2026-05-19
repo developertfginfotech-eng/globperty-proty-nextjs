@@ -71,17 +71,14 @@ export default function ListingAnalytics() {
       apiClient.get("/favorites/my-properties"),
       apiClient.get("/inquiries"),
     ]).then(([propsRes, favsRes, inqRes]) => {
-      const props = propsRes.status === "fulfilled"
-        ? (propsRes.value.data.properties || propsRes.value.data || [])
-        : [];
+      const rawProps = propsRes.status === "fulfilled" ? propsRes.value.data : null;
+      const props = Array.isArray(rawProps) ? rawProps : (Array.isArray(rawProps?.properties) ? rawProps.properties : []);
 
-      const favs = favsRes.status === "fulfilled"
-        ? (favsRes.value.data.favorites || favsRes.value.data || [])
-        : [];
+      const rawFavs = favsRes.status === "fulfilled" ? favsRes.value.data : null;
+      const favs = Array.isArray(rawFavs) ? rawFavs : (Array.isArray(rawFavs?.favorites) ? rawFavs.favorites : []);
 
-      const inqs = inqRes.status === "fulfilled"
-        ? (inqRes.value.data.inquiries || inqRes.value.data || [])
-        : [];
+      const rawInqs = inqRes.status === "fulfilled" ? inqRes.value.data : null;
+      const inqs = Array.isArray(rawInqs) ? rawInqs : (Array.isArray(rawInqs?.inquiries) ? rawInqs.inquiries : (Array.isArray(rawInqs?.data) ? rawInqs.data : []));
 
       // Build saves count per property
       const sm = {};
