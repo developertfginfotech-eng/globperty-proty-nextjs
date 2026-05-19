@@ -2162,7 +2162,6 @@ const PropertyKYCVerification = () => {
       </div>
       </div>
       </div>
-      </div>
       <Footer1 />
     </div>
   );
