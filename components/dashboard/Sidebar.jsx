@@ -25,14 +25,14 @@ export default function Sidebar() {
   return (
     <div className="wrap-sidebar">
       <div className="sidebar-menu-dashboard" style={{ background: "linear-gradient(180deg, #0d1b2a 0%, #0f2040 100%)", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-        <div style={{ padding: "22px 24px 16px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "0 2px 8px rgba(240,130,45,0.4)" }}>
-              <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+        <div style={{ padding: "14px 22px 12px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+          <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: 11, textDecoration: "none" }}>
+            <div style={{ width: 40, height: 40, borderRadius: 11, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, boxShadow: "0 2px 10px rgba(240,130,45,0.45)" }}>
+              <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
               </svg>
             </div>
-            <span style={{ fontSize: 18, fontWeight: 800, color: "#fff", letterSpacing: "-0.3px", fontFamily: "'Lexend', sans-serif" }}>Globperty</span>
+            <span style={{ fontSize: 22, fontWeight: 800, color: "#fff", letterSpacing: "-0.4px", fontFamily: "'Lexend', sans-serif" }}>Globperty</span>
           </Link>
         </div>
         <div className="menu-box">
@@ -136,44 +136,6 @@ export default function Sidebar() {
             </li>
             <li
               className={`nav-menu-item ${
-                pathname == "/my-package" ? "active" : ""
-              } `}
-            >
-              <Link className="nav-menu-link" href={`/my-package`}>
-                <svg
-                  width={20}
-                  height={20}
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M2.5 7.5H17.5V15.8333C17.5 16.2754 17.3244 16.6993 17.0118 17.0118C16.6993 17.3244 16.2754 17.5 15.8333 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V7.5Z"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M2.5 7.50004L4.54167 3.41671C4.6808 3.14059 4.89401 2.90861 5.15744 2.74673C5.42087 2.58484 5.72414 2.49943 6.03333 2.50004H13.9667C14.2773 2.49788 14.5823 2.58256 14.8473 2.74453C15.1124 2.9065 15.3269 3.13931 15.4667 3.41671L17.5 7.50004"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10 2.5V7.5"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                My Plan
-              </Link>
-            </li>
-            <li
-              className={`nav-menu-item ${
                 pathname == "/my-favorites" ? "active" : ""
               } `}
             >
@@ -248,6 +210,44 @@ export default function Sidebar() {
                 Reviews
               </Link>
             </li>
+            {!isBuyer && <li
+              className={`nav-menu-item ${
+                pathname == "/add-property" ? "active" : ""
+              } `}
+            >
+              <Link className="nav-menu-link" href={`/add-property`}>
+                <svg
+                  width={20}
+                  height={20}
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.9987 4.16663L12.987 2.15496C12.6745 1.84238 12.2507 1.66672 11.8087 1.66663H4.9987C4.55667 1.66663 4.13275 1.84222 3.82019 2.15478C3.50763 2.46734 3.33203 2.89127 3.33203 3.33329V16.6666C3.33203 17.1087 3.50763 17.5326 3.82019 17.8451C4.13275 18.1577 4.55667 18.3333 4.9987 18.3333H14.9987C15.4407 18.3333 15.8646 18.1577 16.1772 17.8451C16.4898 17.5326 16.6654 17.1087 16.6654 16.6666"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M17.8168 10.5217C18.1487 10.1897 18.3352 9.73947 18.3352 9.27C18.3352 8.80054 18.1487 8.3503 17.8168 8.01834C17.4848 7.68637 17.0346 7.49988 16.5651 7.49988C16.0956 7.49988 15.6454 7.68637 15.3134 8.01834L11.9718 11.3617C11.7736 11.5597 11.6286 11.8044 11.5501 12.0733L10.8526 14.465C10.8317 14.5367 10.8304 14.6127 10.849 14.6851C10.8675 14.7574 10.9052 14.8235 10.958 14.8763C11.0108 14.9291 11.0768 14.9668 11.1492 14.9853C11.2216 15.0038 11.2976 15.0026 11.3693 14.9817L13.7609 14.2842C14.0298 14.2057 14.2746 14.0606 14.4726 13.8625L17.8168 10.5217Z"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M6.66797 15H7.5013"
+                    stroke="#A8ABAE"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                Add property
+              </Link>
+            </li>}
             <li
               className={`nav-menu-item ${
                 pathname == "/my-property" ? "active" : ""
@@ -342,12 +342,12 @@ export default function Sidebar() {
                 My properties
               </Link>
             </li>
-            {!isBuyer && <li
+            <li
               className={`nav-menu-item ${
-                pathname == "/add-property" ? "active" : ""
+                pathname == "/my-package" ? "active" : ""
               } `}
             >
-              <Link className="nav-menu-link" href={`/add-property`}>
+              <Link className="nav-menu-link" href={`/my-package`}>
                 <svg
                   width={20}
                   height={20}
@@ -356,30 +356,30 @@ export default function Sidebar() {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M14.9987 4.16663L12.987 2.15496C12.6745 1.84238 12.2507 1.66672 11.8087 1.66663H4.9987C4.55667 1.66663 4.13275 1.84222 3.82019 2.15478C3.50763 2.46734 3.33203 2.89127 3.33203 3.33329V16.6666C3.33203 17.1087 3.50763 17.5326 3.82019 17.8451C4.13275 18.1577 4.55667 18.3333 4.9987 18.3333H14.9987C15.4407 18.3333 15.8646 18.1577 16.1772 17.8451C16.4898 17.5326 16.6654 17.1087 16.6654 16.6666"
+                    d="M2.5 7.5H17.5V15.8333C17.5 16.2754 17.3244 16.6993 17.0118 17.0118C16.6993 17.3244 16.2754 17.5 15.8333 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V7.5Z"
                     stroke="#A8ABAE"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                   <path
-                    d="M17.8168 10.5217C18.1487 10.1897 18.3352 9.73947 18.3352 9.27C18.3352 8.80054 18.1487 8.3503 17.8168 8.01834C17.4848 7.68637 17.0346 7.49988 16.5651 7.49988C16.0956 7.49988 15.6454 7.68637 15.3134 8.01834L11.9718 11.3617C11.7736 11.5597 11.6286 11.8044 11.5501 12.0733L10.8526 14.465C10.8317 14.5367 10.8304 14.6127 10.849 14.6851C10.8675 14.7574 10.9052 14.8235 10.958 14.8763C11.0108 14.9291 11.0768 14.9668 11.1492 14.9853C11.2216 15.0038 11.2976 15.0026 11.3693 14.9817L13.7609 14.2842C14.0298 14.2057 14.2746 14.0606 14.4726 13.8625L17.8168 10.5217Z"
+                    d="M2.5 7.50004L4.54167 3.41671C4.6808 3.14059 4.89401 2.90861 5.15744 2.74673C5.42087 2.58484 5.72414 2.49943 6.03333 2.50004H13.9667C14.2773 2.49788 14.5823 2.58256 14.8473 2.74453C15.1124 2.9065 15.3269 3.13931 15.4667 3.41671L17.5 7.50004"
                     stroke="#A8ABAE"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                   <path
-                    d="M6.66797 15H7.5013"
+                    d="M10 2.5V7.5"
                     stroke="#A8ABAE"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
-                Add property
+                My Plan
               </Link>
-            </li>}
+            </li>
             <li className={`nav-menu-item `}>
               <Link className="nav-menu-link" href={`/`}>
                 <svg

@@ -8,7 +8,7 @@ export default function Package() {
           <span className="body-1">Show Dashboard</span>
         </div>
         <div className="widget-box-2 style-2 package">
-          <h3 className="title">My Package</h3>
+          <h3 className="title">My Plan</h3>
           <div className="flat-pricing">
             <div className="box box-style">
               <h3 className="sub-title fw-7">Basic</h3>

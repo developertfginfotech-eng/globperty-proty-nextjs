@@ -514,21 +514,21 @@ small.text-muted {
 // ============================================================
 
 .sidebar-menu-dashboard .nav-menu-link {
-  color: rgba(255, 255, 255, 0.6) !important;
-  font-size: 13.5px !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 14.5px !important;
   font-weight: 500 !important;
   transition: color 0.15s, background 0.15s !important;
 
   svg path, svg circle, svg polyline, svg line, svg rect, svg polygon {
-    stroke: rgba(255, 255, 255, 0.45) !important;
+    stroke: rgba(255, 255, 255, 0.65) !important;
     transition: stroke 0.15s !important;
   }
 
   &:hover {
-    color: rgba(255, 255, 255, 0.9) !important;
-    background: rgba(255, 255, 255, 0.06) !important;
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.07) !important;
     svg path, svg circle, svg polyline, svg line, svg rect, svg polygon {
-      stroke: rgba(255, 255, 255, 0.8) !important;
+      stroke: rgba(255, 255, 255, 0.9) !important;
     }
   }
 }
