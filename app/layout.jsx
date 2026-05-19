@@ -17,6 +17,13 @@ export default function RootLayout({ children }) {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const dashboardPaths = [
+    "/dashboard", "/my-profile", "/my-property", "/add-property",
+    "/my-package", "/my-favorites", "/review", "/notifications",
+    "/my-offers", "/offers", "/deal-tracker", "/listing-analytics", "/leads",
+  ];
+  const isDashboard = dashboardPaths.some((p) => pathname === p || pathname.startsWith(p + "/"));
+
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem("authToken"));
   }, [pathname]);
@@ -89,7 +96,7 @@ export default function RootLayout({ children }) {
         <SettingsHandler />
         <Login />
         <Register />
-        {isLoggedIn && pathname !== "/login" && pathname !== "/register" && pathname !== "/kyc-property-verification" && (
+        {isLoggedIn && !isDashboard && pathname !== "/login" && pathname !== "/register" && pathname !== "/kyc-property-verification" && (
           <>
             <ChatWidget />
             <CopilotFab />

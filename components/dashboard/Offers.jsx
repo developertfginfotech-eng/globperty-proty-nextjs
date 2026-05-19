@@ -143,22 +143,15 @@ export default function Offers() {
   const [counterOpenId, setCounterOpenId] = useState(null);
 
   useEffect(() => {
-    const fetchOffers = async () => {
-      try {
-        const [offersRes, profileRes] = await Promise.all([
-          apiClient.get("/offers/received"),
-          apiClient.get("/auth/me").catch(() => ({ data: null })),
-        ]);
-        setOffers(offersRes.data.offers || offersRes.data || []);
-        const userRole = profileRes?.data?.role || profileRes?.data?.user?.role || null;
-        setRole(userRole);
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchOffers();
+    try {
+      const u = JSON.parse(localStorage.getItem("user") || "{}");
+      setRole(u.role || "user");
+    } catch {}
+
+    apiClient.get("/offers/received")
+      .then((res) => setOffers(res.data.offers || res.data || []))
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleStatusChange = async (offerId, status) => {
