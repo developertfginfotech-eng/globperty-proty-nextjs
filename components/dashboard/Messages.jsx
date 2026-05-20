@@ -67,7 +67,7 @@ export default function Messages() {
 
     try {
       const res = await apiClient.post("/chat/query", { message: query });
-      const reply = res.data?.response || res.data?.reply || res.data?.data?.response || "I couldn't get a response. Please try again.";
+      const reply = res.data?.message || res.data?.response || res.data?.reply || "I couldn't get a response. Please try again.";
       setMessages((prev) => prev.map((m) => m.id === loadingId ? { role: "assistant", content: reply } : m));
     } catch {
       setMessages((prev) => prev.map((m) => m.id === loadingId ? { role: "assistant", content: "Sorry, I'm having trouble connecting. Please try again." } : m));
