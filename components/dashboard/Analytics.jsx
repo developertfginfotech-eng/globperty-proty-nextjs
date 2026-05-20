@@ -124,34 +124,42 @@ const STATUS_COLORS = {
   "Lost": { bg:"#FEF2F2", color:"#EF4444" },
 };
 
-const CRM_KEY = "crm_leads_v1";
-function loadCRM() { try { return JSON.parse(localStorage.getItem(CRM_KEY) || "{}"); } catch { return {}; } }
-function saveCRM(data) { localStorage.setItem(CRM_KEY, JSON.stringify(data)); }
-
 function LeadsTab({ leads, loading, propertyCount }) {
   const [crm, setCrm] = useState({});
+  const [crmLoading, setCrmLoading] = useState(true);
   const [expandedKey, setExpandedKey] = useState(null);
   const [noteInput, setNoteInput] = useState("");
   const [reminderInput, setReminderInput] = useState("");
+  const [saving, setSaving] = useState({});
 
-  useEffect(() => { setCrm(loadCRM()); }, []);
+  useEffect(() => {
+    apiClient.get("/leads/meta")
+      .then((res) => { if (res.data?.data) setCrm(res.data.data); })
+      .catch(() => {})
+      .finally(() => setCrmLoading(false));
+  }, []);
 
-  const updateCRM = (key, patch) => {
-    const next = { ...loadCRM(), [key]: { ...(loadCRM()[key] || {}), ...patch } };
-    saveCRM(next);
-    setCrm(next);
+  const updateCRM = async (key, patch) => {
+    // Optimistic update
+    setCrm((prev) => ({ ...prev, [key]: { ...(prev[key] || {}), ...patch } }));
+    setSaving((s) => ({ ...s, [key]: true }));
+    try {
+      const encodedKey = encodeURIComponent(key);
+      await apiClient.put(`/leads/meta/${encodedKey}`, patch);
+    } catch {}
+    setSaving((s) => ({ ...s, [key]: false }));
   };
 
   const openExpand = (key) => {
     if (expandedKey === key) { setExpandedKey(null); return; }
-    const d = loadCRM()[key] || {};
+    const d = crm[key] || {};
     setNoteInput(d.note || "");
-    setReminderInput(d.reminder || "");
+    setReminderInput(d.reminder ? new Date(d.reminder).toISOString().slice(0, 16) : "");
     setExpandedKey(key);
   };
 
   const saveNote = (key) => { updateCRM(key, { note: noteInput }); };
-  const saveReminder = (key) => { updateCRM(key, { reminder: reminderInput }); };
+  const saveReminder = (key) => { updateCRM(key, { reminder: reminderInput || null }); };
 
   const sourceLabel = (interactions) => {
     if (interactions.includes("Inquiry") && interactions.includes("Saved")) return "Inquiry + Saved";
@@ -217,7 +225,7 @@ function LeadsTab({ leads, loading, propertyCount }) {
                         rows={3}
                         style={{ width:"100%", fontSize:12, padding:"8px 10px", border:"1px solid #e0e3e8", borderRadius:8, resize:"vertical", outline:"none", boxSizing:"border-box", fontFamily:"inherit" }}
                       />
-                      <button onClick={() => saveNote(lead.key)} style={{ marginTop:6, fontSize:12, fontWeight:700, background:"#f0822d", color:"#fff", border:"none", borderRadius:6, padding:"5px 14px", cursor:"pointer" }}>Save Note</button>
+                      <button onClick={() => saveNote(lead.key)} disabled={saving[lead.key]} style={{ marginTop:6, fontSize:12, fontWeight:700, background: saving[lead.key] ? "#e0e3e8" : "#f0822d", color:"#fff", border:"none", borderRadius:6, padding:"5px 14px", cursor:"pointer" }}>{saving[lead.key] ? "Saving…" : "Save Note"}</button>
                       {d.note && <div style={{ marginTop:8, fontSize:12, color:"#555", fontStyle:"italic", background:"#fff", border:"1px solid #eee", borderRadius:6, padding:"6px 10px" }}>{d.note}</div>}
                     </div>
                     <div>
@@ -228,7 +236,7 @@ function LeadsTab({ leads, loading, propertyCount }) {
                         onChange={(e) => setReminderInput(e.target.value)}
                         style={{ width:"100%", fontSize:12, padding:"8px 10px", border:"1px solid #e0e3e8", borderRadius:8, outline:"none", boxSizing:"border-box" }}
                       />
-                      <button onClick={() => saveReminder(lead.key)} style={{ marginTop:6, fontSize:12, fontWeight:700, background:"#8B5CF6", color:"#fff", border:"none", borderRadius:6, padding:"5px 14px", cursor:"pointer" }}>Set Reminder</button>
+                      <button onClick={() => saveReminder(lead.key)} disabled={saving[lead.key]} style={{ marginTop:6, fontSize:12, fontWeight:700, background: saving[lead.key] ? "#e0e3e8" : "#8B5CF6", color:"#fff", border:"none", borderRadius:6, padding:"5px 14px", cursor:"pointer" }}>{saving[lead.key] ? "Saving…" : "Set Reminder"}</button>
                       {d.reminder && <div style={{ marginTop:8, fontSize:12, color:"#8B5CF6", fontWeight:600 }}>🔔 Reminder: {new Date(d.reminder).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}</div>}
                     </div>
                   </div>
