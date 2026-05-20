@@ -937,7 +937,7 @@ const PropertyKYCVerification = () => {
 
         <div className="row">
           <div className="col-lg-10 mx-auto">
-            <div style={{ background: "#fff", borderRadius: 16, boxShadow: "0 4px 32px rgba(0,0,0,0.08)", padding: "44px 44px 36px", border: "1px solid #e5e7eb", position: "relative", overflow: "hidden" }}>
+            <div className="kyc-form" style={{ background: "#fff", borderRadius: 16, boxShadow: "0 4px 32px rgba(0,0,0,0.08)", padding: "44px 44px 36px", border: "1px solid #e5e7eb", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: "linear-gradient(90deg, #f0822d 0%, #e56c1a 60%, #f0982d 100%)" }} />
 
               {error && (
@@ -1032,7 +1032,7 @@ const PropertyKYCVerification = () => {
                       {ACCOUNT_TYPES.map(type => {
                         const active = accountType === type.value;
                         return (
-                          <div key={type.value} className="col-md-6 mb20">
+                          <div key={type.value} className="col-md-6">
                             <div onClick={() => setAccountType(type.value)} style={{ cursor: 'pointer', minHeight: '112px', display: 'flex', alignItems: 'flex-start', gap: 16, borderRadius: 14, border: active ? '2px solid #f0822d' : '1.5px solid #e8eaf0', background: active ? 'linear-gradient(135deg, rgba(240,130,45,0.07) 0%, rgba(240,130,45,0.02) 100%)' : '#fff', transition: 'all 0.18s', padding: '18px 20px', boxShadow: active ? '0 4px 20px rgba(240,130,45,0.2)' : '0 1px 6px rgba(0,0,0,0.05)', position: 'relative', overflow: 'hidden' }}>
                               {active && <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, background: 'linear-gradient(180deg, #f0822d, #e56c1a)', borderRadius: '14px 0 0 14px' }} />}
                               {active && <div style={{ position: 'absolute', top: 10, right: 10, width: 24, height: 24, borderRadius: '50%', background: 'linear-gradient(135deg, #f0822d, #e56c1a)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 6px rgba(240,130,45,0.4)' }}><svg width={11} height={11} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>}
@@ -1068,13 +1068,13 @@ const PropertyKYCVerification = () => {
                         {/* Show Company Information for company account types */}
                         {(accountType === 'real_estate_brokerage' || accountType === 'property_management') ? (
                           <>
-                            <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Company Information</h6>
-                            <div className="row mb30">
-                              <div className="col-md-6 mb20">
+                            <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 8, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Company Information</div>
+                            <div className="row mb30" style={{ rowGap: '36px' }}>
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Company Name *</label>
                                 <input type="text" name="companyName" className="form-control" value={formData.companyInfo.companyName} onChange={handleCompanyInfoChange} placeholder="Enter company name" required />
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">{country === 'USA' ? 'State Filing Number *' : 'Registration Number *'}</label>
                                 <input type="text" name="registrationNumber" className="form-control" value={formData.companyInfo.registrationNumber} onChange={handleCompanyInfoChange} placeholder={country === 'USA' ? 'Enter state filing number' : 'Enter registration number'} required />
                               </div>
@@ -1082,12 +1082,12 @@ const PropertyKYCVerification = () => {
                               {/* USA-specific fields */}
                               {country === 'USA' && (
                                 <>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">EIN (Employer Identification Number) *</label>
                                     <input type="text" name="ein" className="form-control" value={formData.companyInfo.ein} onChange={handleCompanyInfoChange} placeholder="XX-XXXXXXX" required />
                                     <small className="text-muted">IRS-issued tax identification number</small>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Business Type *</label>
                                     <select name="businessType" className="form-control" value={formData.companyInfo.businessType} onChange={handleCompanyInfoChange} required>
                                       <option value="">Select business type</option>
@@ -1096,7 +1096,7 @@ const PropertyKYCVerification = () => {
                                       <option value="Partnership">Partnership</option>
                                     </select>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Tax Classification *</label>
                                     <select name="taxClassification" className="form-control" value={formData.companyInfo.taxClassification} onChange={handleCompanyInfoChange} required>
                                       <option value="">Select tax classification</option>
@@ -1110,16 +1110,16 @@ const PropertyKYCVerification = () => {
                                 </>
                               )}
 
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Company Email *</label>
                                 <input type="email" name="companyEmail" className="form-control" value={formData.companyInfo.companyEmail} onChange={handleCompanyInfoChange} placeholder="Enter company email" required />
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Company Phone *</label>
                                 <input type="tel" name="companyPhone" className="form-control" value={formData.companyInfo.companyPhone} onChange={handleCompanyInfoChange} placeholder="Enter company phone" required />
                               </div>
-                              <div className="col-md-6 mb20"><label className="form-label fw600">Company Address *</label><input type="text" name="companyAddress.line1" className="form-control" value={formData.companyInfo.companyAddress.line1} onChange={handleCompanyInfoChange} placeholder="Enter company address" required /></div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6"><label className="form-label fw600">Company Address *</label><input type="text" name="companyAddress.line1" className="form-control" value={formData.companyInfo.companyAddress.line1} onChange={handleCompanyInfoChange} placeholder="Enter company address" required /></div>
+                              <div className="col-md-6">
                                 <label className="form-label fw600">{getAddressFieldConfig(country).stateLabel} *</label>
                                 <input
                                   type="text"
@@ -1138,7 +1138,7 @@ const PropertyKYCVerification = () => {
                                   ))}
                                 </datalist>
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">{getAddressFieldConfig(country).cityLabel || 'City'} *</label>
                                 <input
                                   type="text"
@@ -1159,7 +1159,7 @@ const PropertyKYCVerification = () => {
                                 </datalist>
                               </div>
                               {getAddressFieldConfig(country).hasPostalCode && (
-                                <div className="col-md-6 mb20">
+                                <div className="col-md-6">
                                   <label className="form-label fw600">{getAddressFieldConfig(country).postalCodeLabel} *</label>
                                   <input
                                     type="text"
@@ -1178,9 +1178,9 @@ const PropertyKYCVerification = () => {
                             </div>
 
                             {/* Authorized Signatory Details - For Brokerage, Property Management, and Developer */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Authorized Signatory Details *</h6>
-                            <div className="row mb30">
-                              <div className="col-md-6 mb20">
+                            <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Authorized Signatory Details *</div>
+                            <div className="row mb30" style={{ rowGap: '36px' }}>
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Authorized Signatory Full Name *</label>
                                 <input
                                   type="text"
@@ -1192,7 +1192,7 @@ const PropertyKYCVerification = () => {
                                   required
                                 />
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Designation *</label>
                                 <select
                                   name="designation"
@@ -1209,7 +1209,7 @@ const PropertyKYCVerification = () => {
                                   <option value="Owner">Owner</option>
                                 </select>
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Authorization Basis *</label>
                                 <select
                                   name="authorizationBasis"
@@ -1226,7 +1226,7 @@ const PropertyKYCVerification = () => {
                               </div>
                               {/* Country-specific license fields for Real Estate Brokerage */}
                               {accountType === 'real_estate_brokerage' && country === 'UAE' && (
-                                <div className="col-md-6 mb20">
+                                <div className="col-md-6">
                                   <label className="form-label fw600">RERA Brokerage License Number *</label>
                                   <input
                                     type="text"
@@ -1242,7 +1242,7 @@ const PropertyKYCVerification = () => {
                               )}
                               {accountType === 'real_estate_brokerage' && country === 'USA' && (
                                 <>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">State Real Estate Brokerage License Number *</label>
                                     <input
                                       type="text"
@@ -1254,7 +1254,7 @@ const PropertyKYCVerification = () => {
                                       required
                                     />
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Issuing State *</label>
                                     <select
                                       name="issuingState"
@@ -1269,7 +1269,7 @@ const PropertyKYCVerification = () => {
                                       ))}
                                     </select>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">License Expiry Date *</label>
                                     <input
                                       type="date"
@@ -1285,7 +1285,7 @@ const PropertyKYCVerification = () => {
 
                               {/* Country-specific license fields for Property Management */}
                               {accountType === 'property_management' && country === 'UAE' && (
-                                <div className="col-md-6 mb20">
+                                <div className="col-md-6">
                                   <label className="form-label fw600">RERA Property Management License Number *</label>
                                   <input
                                     type="text"
@@ -1301,7 +1301,7 @@ const PropertyKYCVerification = () => {
                               )}
                               {accountType === 'property_management' && country === 'USA' && (
                                 <>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">State Property Management License Number *</label>
                                     <input
                                       type="text"
@@ -1313,7 +1313,7 @@ const PropertyKYCVerification = () => {
                                       required
                                     />
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Issuing State *</label>
                                     <select
                                       name="issuingState"
@@ -1328,7 +1328,7 @@ const PropertyKYCVerification = () => {
                                       ))}
                                     </select>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">License Expiry Date *</label>
                                     <input
                                       type="date"
@@ -1346,12 +1346,12 @@ const PropertyKYCVerification = () => {
                             {/* Principal Broker Information - USA Real Estate Brokerage Company ONLY */}
                             {accountType === 'real_estate_brokerage' && country === 'USA' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Principal / Managing Broker Information *</h6>
+                                <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Principal / Managing Broker Information *</div>
                                 <p className="text-muted mb20" style={{ fontSize: "13px" }}>
                                   In the USA, every real estate brokerage must designate a Principal/Managing Broker who holds the broker license.
                                 </p>
-                                <div className="row mb30">
-                                  <div className="col-md-6 mb20">
+                                <div className="row mb30" style={{ rowGap: '36px' }}>
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Principal Broker Full Name *</label>
                                     <input
                                       type="text"
@@ -1363,7 +1363,7 @@ const PropertyKYCVerification = () => {
                                       required
                                     />
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Broker License Number *</label>
                                     <input
                                       type="text"
@@ -1375,7 +1375,7 @@ const PropertyKYCVerification = () => {
                                       required
                                     />
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Issuing State *</label>
                                     <select
                                       name="issuingState"
@@ -1397,12 +1397,12 @@ const PropertyKYCVerification = () => {
                             {/* UBO Details - USA Real Estate Brokerage Company */}
                             {accountType === 'real_estate_brokerage' && country === 'USA' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Beneficial Ownership Information (UBO) *</h6>
+                                <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Beneficial Ownership Information (UBO) *</div>
                                 <p className="text-muted mb20" style={{ fontSize: "13px" }}>
                                   Under FinCEN regulations, companies must disclose all beneficial owners (individuals with 25% or more ownership or substantial control).
                                 </p>
-                                <div className="row mb30">
-                                  <div className="col-md-6 mb20">
+                                <div className="row mb30" style={{ rowGap: '36px' }}>
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Beneficial Owner Name(s) (≥25% ownership) *</label>
                                     <textarea
                                       name="uboNames"
@@ -1415,7 +1415,7 @@ const PropertyKYCVerification = () => {
                                     />
                                     <small className="text-muted">List all individuals with 25% or more ownership or control</small>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">UBO Nationality/Citizenship *</label>
                                     <input
                                       type="text"
@@ -1434,9 +1434,9 @@ const PropertyKYCVerification = () => {
                             {/* UBO Details - For Property Developer */}
                             {accountType === 'property_developer' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Ultimate Beneficial Owner (UBO) Details *</h6>
-                                <div className="row mb30">
-                                  <div className="col-md-6 mb20">
+                                <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Ultimate Beneficial Owner (UBO) Details *</div>
+                                <div className="row mb30" style={{ rowGap: '36px' }}>
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">UBO Name(s) (≥25% ownership) *</label>
                                     <input
                                       type="text"
@@ -1449,7 +1449,7 @@ const PropertyKYCVerification = () => {
                                     />
                                     <small className="text-muted">List all beneficial owners with 25% or more ownership</small>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">UBO Nationality *</label>
                                     <input
                                       type="text"
@@ -1463,8 +1463,8 @@ const PropertyKYCVerification = () => {
                                   </div>
                                 </div>
 
-                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Project Scope *</h6>
-                                <div className="row mb30">
+                                <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Project Scope *</div>
+                                <div className="row mb30" style={{ rowGap: '36px' }}>
                                   <div className="col-md-12 mb20">
                                     <label className="form-label fw600">Developer Role *</label>
                                     <select
@@ -1486,8 +1486,8 @@ const PropertyKYCVerification = () => {
                             )}
 
                             {/* AML / Compliance Declarations - For Companies */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>AML / Compliance Declarations *</h6>
-                            <div className="row mb30">
+                            <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />AML / Compliance Declarations *</div>
+                            <div className="row mb30" style={{ rowGap: '36px' }}>
                               <div className="col-12">
                                 <div className="form-check mb15">
                                   <input
@@ -1535,8 +1535,8 @@ const PropertyKYCVerification = () => {
                             </div>
 
                             {/* Consent & Authorization - For Companies */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Consent & Authorization *</h6>
-                            <div className="row mb30">
+                            <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Consent & Authorization *</div>
+                            <div className="row mb30" style={{ rowGap: '36px' }}>
                               <div className="col-12 mb20">
                                 <div className="form-check mb15">
                                   <input
@@ -1580,7 +1580,7 @@ const PropertyKYCVerification = () => {
                                   </div>
                                 )}
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Authorized Signatory Electronic Signature *</label>
                                 <input
                                   type="text"
@@ -1593,7 +1593,7 @@ const PropertyKYCVerification = () => {
                                 />
                                 <small className="text-muted">By typing the name, the signatory electronically signs this declaration</small>
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Date *</label>
                                 <input
                                   type="date"
@@ -1609,9 +1609,9 @@ const PropertyKYCVerification = () => {
                           </>
                         ) : (
                           <>
-                            <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Personal Information</h6>
-                            <div className="row mb30">
-                              <div className="col-md-6 mb20">
+                            <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 8, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Personal Information</div>
+                            <div className="row mb30" style={{ rowGap: '36px' }}>
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Full Name *</label>
                                 <input
                                   type="text"
@@ -1626,7 +1626,7 @@ const PropertyKYCVerification = () => {
                                 />
                                 <small className="text-muted">Pre-filled from your account</small>
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Email *</label>
                                 <input
                                   type="email"
@@ -1641,7 +1641,7 @@ const PropertyKYCVerification = () => {
                                 />
                                 <small className="text-muted">Pre-filled from your account</small>
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Phone *</label>
                                 <input
                                   type="tel"
@@ -1656,7 +1656,7 @@ const PropertyKYCVerification = () => {
                                 />
                                 <small className="text-muted">Pre-filled from your account</small>
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Date of Birth *</label>
                                 <input
                                   type="date"
@@ -1668,7 +1668,7 @@ const PropertyKYCVerification = () => {
                                   max={new Date().toISOString().split('T')[0]}
                                 />
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Nationality *</label>
                                 <input
                                   type="text"
@@ -1685,9 +1685,9 @@ const PropertyKYCVerification = () => {
                             {/* Brokerage Firm Details - Only for Real Estate Agents */}
                             {accountType === 'real_estate_agent' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Brokerage Firm Details *</h6>
-                                <div className="row mb30">
-                                  <div className="col-md-6 mb20">
+                                <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Brokerage Firm Details *</div>
+                                <div className="row mb30" style={{ rowGap: '36px' }}>
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Brokerage Firm Name *</label>
                                     <input
                                       type="text"
@@ -1700,7 +1700,7 @@ const PropertyKYCVerification = () => {
                                     />
                                     <small className="text-muted">Name of the brokerage you are affiliated with</small>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Brokerage RERA License Number *</label>
                                     <input
                                       type="text"
@@ -1718,8 +1718,8 @@ const PropertyKYCVerification = () => {
                             )}
 
                             {/* Tax Residence Information */}
-                            <div className="row mb30 mt40">
-                              <div className="col-md-6 mb20">
+                            <div className="row mb30 mt40" style={{ rowGap: '36px' }}>
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Country of Tax Residence *</label>
                                 <input
                                   type="text"
@@ -1731,7 +1731,7 @@ const PropertyKYCVerification = () => {
                                   required
                                 />
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Tax Identification Number (Optional)</label>
                                 <input
                                   type="text"
@@ -1746,8 +1746,8 @@ const PropertyKYCVerification = () => {
                             </div>
 
                             {/* AML / Sanctions Declarations */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>AML / Sanctions Declarations *</h6>
-                            <div className="row mb30">
+                            <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />AML / Sanctions Declarations *</div>
+                            <div className="row mb30" style={{ rowGap: '36px' }}>
                               <div className="col-12">
                                 <div className="form-check mb15">
                                   <input
@@ -1795,8 +1795,8 @@ const PropertyKYCVerification = () => {
                             </div>
 
                             {/* Consent & Authorization */}
-                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Consent & Authorization *</h6>
-                            <div className="row mb30">
+                            <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Consent & Authorization *</div>
+                            <div className="row mb30" style={{ rowGap: '36px' }}>
                               <div className="col-12 mb20">
                                 <div className="form-check mb15">
                                   <input
@@ -1828,7 +1828,7 @@ const PropertyKYCVerification = () => {
                                 </div>
                               </div>
                               <div className="col-12" style={{ borderTop: '1px solid #e5e7eb', marginTop: 10, marginBottom: 20 }} />
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Electronic Signature (Full Name) *</label>
                                 <input
                                   type="text"
@@ -1841,7 +1841,7 @@ const PropertyKYCVerification = () => {
                                 />
                                 <small className="text-muted">By typing your name, you electronically sign this declaration</small>
                               </div>
-                              <div className="col-md-6 mb20">
+                              <div className="col-md-6">
                                 <label className="form-label fw600">Date *</label>
                                 <input
                                   type="date"
@@ -1858,9 +1858,9 @@ const PropertyKYCVerification = () => {
                             {/* POA/Representative Specific Fields */}
                             {accountType === 'poa_representative' && (
                               <>
-                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Principal (Grantor) Details *</h6>
-                                <div className="row mb30">
-                                  <div className="col-md-6 mb20">
+                                <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Principal (Grantor) Details *</div>
+                                <div className="row mb30" style={{ rowGap: '36px' }}>
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Principal Full Name *</label>
                                     <input
                                       type="text"
@@ -1873,7 +1873,7 @@ const PropertyKYCVerification = () => {
                                     />
                                     <small className="text-muted">Name of the person who granted the Power of Attorney</small>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Principal Nationality *</label>
                                     <input
                                       type="text"
@@ -1885,7 +1885,7 @@ const PropertyKYCVerification = () => {
                                       required
                                     />
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Principal Relationship *</label>
                                     <select
                                       name="relationship"
@@ -1904,9 +1904,9 @@ const PropertyKYCVerification = () => {
                                   </div>
                                 </div>
 
-                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>POA Validity *</h6>
-                                <div className="row mb30">
-                                  <div className="col-md-6 mb20">
+                                <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />POA Validity *</div>
+                                <div className="row mb30" style={{ rowGap: '36px' }}>
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">POA Issue Date *</label>
                                     <input
                                       type="date"
@@ -1918,7 +1918,7 @@ const PropertyKYCVerification = () => {
                                       max={new Date().toISOString().split('T')[0]}
                                     />
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">POA Expiry Date</label>
                                     <input
                                       type="date"
@@ -1943,7 +1943,7 @@ const PropertyKYCVerification = () => {
                                       </label>
                                     </div>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">Jurisdiction (Country/State where POA was issued) *</label>
                                     <input
                                       type="text"
@@ -1956,7 +1956,7 @@ const PropertyKYCVerification = () => {
                                     />
                                     <small className="text-muted">POA validity depends on jurisdiction</small>
                                   </div>
-                                  <div className="col-md-6 mb20">
+                                  <div className="col-md-6">
                                     <label className="form-label fw600">POA Notarization / Legalization Type *</label>
                                     <select
                                       name="notarizationType"
@@ -1987,8 +1987,8 @@ const PropertyKYCVerification = () => {
                                   </div>
                                 </div>
 
-                                <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Scope of Authority *</h6>
-                                <div className="row mb30">
+                                <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Scope of Authority *</div>
+                                <div className="row mb30" style={{ rowGap: '36px' }}>
                                   <div className="col-12">
                                     <p className="mb15 text-muted">Select all authorized actions:</p>
                                     <div className="form-check mb15">
@@ -2050,8 +2050,8 @@ const PropertyKYCVerification = () => {
                             )}
                           </>
                         )}
-                        <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Required Documents</h6>
-                        <div className="row mb30">
+                        <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Required Documents</div>
+                        <div className="row mb30" style={{ rowGap: '36px' }}>
                           {requirements.documents?.map((doc, idx) => (
                             <div key={doc.key} className="col-md-12" style={{ paddingTop: idx > 0 ? 20 : 0, marginBottom: 20, borderTop: idx > 0 ? '1px solid #e5e7eb' : 'none' }}>
                               <label className="form-label fw600" style={{ fontSize: "15px", marginBottom: 10 }}>{doc.label} {doc.required ? '*' : '(Optional)'}</label>
@@ -2097,10 +2097,10 @@ const PropertyKYCVerification = () => {
                         </div>
                         {requirements.additionalFields && requirements.additionalFields.length > 0 && (
                           <>
-                            <h6 className="mb20 mt40" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Country-Specific Information</h6>
-                            <div className="row mb30">
+                            <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 40, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Country-Specific Information</div>
+                            <div className="row mb30" style={{ rowGap: '36px' }}>
                               {requirements.additionalFields.map(field => (
-                                <div key={field.key} className="col-md-6 mb20">
+                                <div key={field.key} className="col-md-6">
                                   <label className="form-label fw600">{field.label} {field.required ? '*' : '(Optional)'}</label>
                                   {field.type === 'textarea' ? (
                                     <textarea className="form-control" value={formData.additionalData[field.key] || ''} onChange={(e) => handleAdditionalDataChange(field.key, e.target.value)} required={field.required} rows="4" placeholder={`Enter ${field.label.toLowerCase()}`}></textarea>
@@ -2131,7 +2131,7 @@ const PropertyKYCVerification = () => {
                     <div className="mb30">
                       {(accountType === 'real_estate_brokerage' || accountType === 'property_management') ? (
                         <>
-                          <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Company Information</h6>
+                          <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 8, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Company Information</div>
                           <div style={{ background: "#f8fafc", borderRadius: 10, border: "1px solid #e5e7eb", padding: "16px 20px", marginBottom: 20 }}>
                           <div className="row">
                             <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Company Name</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.companyInfo.companyName || "—"}</p></div>
@@ -2142,7 +2142,7 @@ const PropertyKYCVerification = () => {
                             <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Account Type</small><p className="fw600" style={{ marginBottom: 0, color: "#111827" }}>{ACCOUNT_TYPES.find(t => t.value === accountType)?.label}</p></div>
                           </div>
                           </div>
-                          <h6 className="mb20 mt30" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Company Address</h6>
+                          <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 30, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Company Address</div>
                           <div className="row">
                             <div className="col-md-6"><small className="text-muted">Address:</small><p className="fw600">{formData.companyInfo.companyAddress.line1}</p></div>
                             <div className="col-md-6"><small className="text-muted">{getAddressFieldConfig(country).stateLabel}:</small><p className="fw600">{formData.companyInfo.companyAddress.state}</p></div>
@@ -2154,7 +2154,7 @@ const PropertyKYCVerification = () => {
                         </>
                       ) : (
                         <>
-                          <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Personal Information</h6>
+                          <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 8, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Personal Information</div>
                           <div style={{ background: "#f8fafc", borderRadius: 10, border: "1px solid #e5e7eb", padding: "16px 20px", marginBottom: 20 }}>
                           <div className="row">
                             <div className="col-md-6"><small style={{ fontSize: 11, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.6, fontWeight: 600 }}>Full Name</small><p className="fw600" style={{ marginBottom: 12, color: "#111827" }}>{formData.personalInfo.fullName || "—"}</p></div>
@@ -2174,7 +2174,7 @@ const PropertyKYCVerification = () => {
                     {/* Show Country-Specific Additional Data if any */}
                     {requirements && requirements.additionalFields && requirements.additionalFields.length > 0 && Object.keys(formData.additionalData).length > 0 && (
                       <div className="mb30">
-                        <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Country-Specific Information</h6>
+                        <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 8, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Country-Specific Information</div>
                         <div className="row">
                           {requirements.additionalFields.map(field => (
                             formData.additionalData[field.key] && (
@@ -2190,7 +2190,7 @@ const PropertyKYCVerification = () => {
 
                     {/* Show uploaded documents */}
                     <div className="mb30">
-                      <h6 className="mb20" style={{ fontSize: "11px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "#374151", paddingLeft: 12, borderLeft: "3px solid #f0822d", paddingTop: 4, paddingBottom: 4, lineHeight: 1.6 }}>Documents</h6>
+                      <div style={{ fontSize: "12px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1.2px", color: "#374151", display: "flex", alignItems: "center", gap: 10, marginBottom: 20, marginTop: 8, paddingBottom: 10 }} className="sec-hdr"><span style={{ display: "inline-block", width: 3, height: 16, background: "#f0822d", borderRadius: 2, flexShrink: 0 }} />Documents</div>
                       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                       {requirements?.documents?.map(doc => {
                         const f = files[doc.key];
@@ -2265,6 +2265,110 @@ const PropertyKYCVerification = () => {
       </div>
       </div>
       </div>
+      <style jsx>{`
+        .kyc-form .form-control {
+          height: 48px;
+          border: 1.5px solid #e0e3e8;
+          border-radius: 10px;
+          font-size: 14px;
+          color: #1a2332;
+          padding: 10px 16px;
+          background: #fff;
+          transition: border-color 0.2s, box-shadow 0.2s;
+          font-family: inherit;
+        }
+        .kyc-form .form-control:focus {
+          border-color: #f0822d;
+          box-shadow: 0 0 0 3px rgba(240, 130, 45, 0.13);
+          outline: none;
+        }
+        .kyc-form .form-control[readonly],
+        .kyc-form .form-control:disabled {
+          background: #f5f6f8;
+          color: #6b7280;
+          border-color: #e8eaed;
+        }
+        .kyc-form textarea.form-control {
+          height: auto;
+          min-height: 90px;
+          padding-top: 12px;
+        }
+        .kyc-form select.form-control {
+          height: 48px;
+          cursor: pointer;
+          appearance: auto;
+        }
+        .kyc-form .form-label,
+        .kyc-form label.form-label {
+          font-size: 13px;
+          font-weight: 700;
+          color: #374151;
+          margin-bottom: 8px;
+          display: block;
+          letter-spacing: 0.1px;
+        }
+        .kyc-form .text-muted {
+          font-size: 11.5px;
+          color: #9ca3af !important;
+          margin-top: 5px;
+          display: block;
+          line-height: 1.5;
+        }
+        .kyc-form .col-md-6 {
+          display: flex;
+          flex-direction: column;
+          padding-bottom: 4px;
+        }
+        .kyc-form .col-md-6 .form-control {
+          flex: 1;
+        }
+        .kyc-form .sec-hdr {
+          border: none !important;
+          border-bottom: 1.5px solid #eef0f3 !important;
+          border-bottom-color: #eef0f3 !important;
+        }
+        .kyc-form .sec-hdr::after,
+        .kyc-form .sec-hdr::before {
+          display: none !important;
+        }
+        .kyc-form .form-check {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 12px 16px;
+          margin-bottom: 10px !important;
+          min-height: 44px;
+          border-radius: 8px;
+          background: #fafbfc;
+          border: 1px solid #f0f2f5 !important;
+        }
+        .kyc-form .form-check:hover {
+          background: #f4f6f9;
+          border-color: #e0e3e8 !important;
+        }
+        .kyc-form .form-check-input {
+          width: 18px;
+          height: 18px;
+          margin: 0;
+          flex-shrink: 0;
+          cursor: pointer;
+          accent-color: #f0822d;
+          position: static;
+          float: none;
+        }
+        .kyc-form .form-check-label {
+          font-size: 13.5px;
+          font-weight: 600;
+          color: #1a2332;
+          line-height: 1.55;
+          padding-left: 0;
+          margin-left: 0;
+          cursor: pointer;
+        }
+        @media (max-width: 768px) {
+          .kyc-form { padding: 28px 20px 24px !important; }
+        }
+      `}</style>
       <Footer1 />
     </div>
   );

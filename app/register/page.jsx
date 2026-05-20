@@ -244,7 +244,9 @@ export default function RegisterPage() {
                     <label style={{ fontSize: 12, fontWeight: 700, color: "#6b7280", display: "block", marginBottom: 6, textTransform: "uppercase", letterSpacing: 0.8 }}>Phone</label>
                     <div style={{ display: "flex", alignItems: "center", border: "1.5px solid #e5e7eb", borderRadius: 10, background: "#fff", overflow: "hidden", height: 46 }}>
                       <span style={{ padding: "0 10px", color: "#374151", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", borderRight: "1.5px solid #e5e7eb", height: "100%", display: "flex", alignItems: "center" }}>{countryCode}</span>
-                      <input type="tel" name="phone" placeholder="Phone number" value={form.phone} onChange={handleChange}
+                      <input type="text" inputMode="numeric" name="phone" placeholder="Phone number" value={form.phone}
+                        onChange={(e) => { const v = e.target.value.replace(/[^0-9]/g, ""); setForm({ ...form, phone: v }); setError(""); }}
+                        maxLength={15}
                         style={{ flex: 1, border: "none", outline: "none", background: "transparent", padding: "0 12px", fontSize: 13, fontFamily: "inherit", height: "100%" }} />
                     </div>
                   </div>

@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import apiClient from "@/utils/apiClient";
 
 const COUNTRIES = [
   { name: "UAE",         currency: "AED", symbol: "د.إ", flag: "🇦🇪", rate: 4.5,  stampDuty: 4.0, registration: 0.5 },
@@ -67,6 +68,13 @@ export default function EmiCalculator() {
   const [totalCost, setTotalCost] = useState(0);
   const [downAmount, setDownAmount] = useState(0);
 
+  // Backend save state
+  const [saving, setSaving] = useState(false);
+  const [saveMsg, setSaveMsg] = useState("");
+  const [history, setHistory] = useState([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+
   // Currency converter
   const [ccAmount, setCcAmount] = useState("");
   const [fromCur, setFromCur] = useState("USD");
@@ -101,6 +109,45 @@ export default function EmiCalculator() {
     } catch {}
     // Fallback
     setExchangeRate(convertStatic(1, from, to));
+  };
+
+  const saveCalculation = async () => {
+    setSaving(true);
+    setSaveMsg("");
+    try {
+      await apiClient.post("/calculator/emi", {
+        country: country.name,
+        currency: country.currency,
+        propertyPrice: parseFloat(price),
+        downPaymentPct: parseFloat(downPct),
+        annualRate: parseFloat(rate),
+        tenureYears: parseInt(tenure),
+        exchangeRate,
+      });
+      setSaveMsg("Saved!");
+      fetchHistory();
+      setTimeout(() => setSaveMsg(""), 3000);
+    } catch {
+      setSaveMsg("Save failed.");
+      setTimeout(() => setSaveMsg(""), 3000);
+    }
+    setSaving(false);
+  };
+
+  const fetchHistory = async () => {
+    setHistoryLoading(true);
+    try {
+      const res = await apiClient.get("/calculator/history");
+      setHistory(Array.isArray(res.data?.data) ? res.data.data : []);
+    } catch { setHistory([]); }
+    setHistoryLoading(false);
+  };
+
+  const deleteHistory = async (id) => {
+    try {
+      await apiClient.delete(`/calculator/history/${id}`);
+      setHistory((prev) => prev.filter((h) => h._id !== id));
+    } catch {}
   };
 
   useEffect(() => {
@@ -233,7 +280,7 @@ export default function EmiCalculator() {
               <div>
                 <label style={labelStyle}>
                   Down Payment: <strong>{downPct}%</strong>
-                  <span style={{ color:"#888", fontWeight:400 }}> ({sym}{fmt(downAmount)})</span>
+                  <span style={{ color:"#888", fontWeight:400 }}> ({sym} {fmt(downAmount)})</span>
                 </label>
                 <input type="range" min={5} max={50} step={1} value={downPct}
                   onChange={(e) => setDownPct(Number(e.target.value))}
@@ -259,30 +306,36 @@ export default function EmiCalculator() {
             </div>
 
             {/* Results */}
-            <div style={{ marginTop:20, background:"#FFF7ED", border:"1px solid #fde8cc", borderRadius:12, padding:"18px 16px" }}>
-              <div style={{ fontSize:12, color:"#888", fontWeight:600, marginBottom:2 }}>Monthly EMI</div>
-              <div style={{ fontSize:30, fontWeight:800, color:"#f0822d", marginBottom:2 }}>
-                {x !== 1 ? `${sym} ${fmt(emi * x)}` : `${sym} ${fmt(emi)}`}
+            <div style={{ marginTop:20, background:"#FFF7ED", border:"1px solid #fde8cc", borderRadius:12, padding:"20px 18px" }}>
+              <div style={{ fontSize:12, color:"#888", fontWeight:600, marginBottom:6 }}>Monthly EMI</div>
+              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+                <span style={{ fontSize:32, fontWeight:800, color:"#f0822d", lineHeight:1 }}>
+                  {x !== 1 ? fmt(emi * x) : fmt(emi)}
+                </span>
+                <span style={{ fontSize:18, fontWeight:700, color:"#f0822d", lineHeight:1, paddingTop:2 }}>{sym}</span>
               </div>
               {x !== 1 && (
-                <div style={{ fontSize:12, color:"#aaa", fontWeight:500, marginBottom:12 }}>
+                <div style={{ fontSize:12, color:"#aaa", fontWeight:500, marginBottom:16, marginTop:-6 }}>
                   ≈ ${fmt(emi)} USD
                 </div>
               )}
 
-              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:14 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:16 }}>
                 {[
                   { label:"Loan Amount",       usd: loanAmount },
                   { label:"Total Interest",     usd: totalInterest },
                   { label:`Stamp Duty (${country.stampDuty}%)`, usd: stampDuty },
                   { label:"Total Cost to Buyer", usd: totalCost },
                 ].map((s) => (
-                  <div key={s.label} style={{ background:"#fff", borderRadius:8, padding:"9px 11px", border:"1px solid #f0e0cc" }}>
-                    <div style={{ fontSize:11, color:"#999", marginBottom:2 }}>{s.label}</div>
-                    <div style={{ fontSize:13, fontWeight:700, color:"#1a2332" }}>
-                      {x !== 1 ? `${sym} ${fmt(s.usd * x)}` : `${sym}${fmt(s.usd)}`}
+                  <div key={s.label} style={{ background:"#fff", borderRadius:10, padding:"12px 14px", border:"1px solid #f0e0cc" }}>
+                    <div style={{ fontSize:11, color:"#999", marginBottom:8 }}>{s.label}</div>
+                    <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+                      <span style={{ fontSize:14, fontWeight:700, color:"#1a2332", lineHeight:1 }}>
+                        {x !== 1 ? fmt(s.usd * x) : fmt(s.usd)}
+                      </span>
+                      <span style={{ fontSize:12, fontWeight:600, color:"#555", lineHeight:1, paddingTop:1 }}>{sym}</span>
                     </div>
-                    {x !== 1 && <div style={{ fontSize:11, color:"#aaa", fontWeight:500 }}>${fmt(s.usd)} USD</div>}
+                    {x !== 1 && <div style={{ fontSize:11, color:"#aaa", fontWeight:500, marginTop:5 }}>${fmt(s.usd)} USD</div>}
                   </div>
                 ))}
               </div>
@@ -307,6 +360,56 @@ export default function EmiCalculator() {
             <div style={{ marginTop:8, fontSize:11, color:"#aaa" }}>
               * Stamp Duty {country.stampDuty}% + Registration {country.registration}% included in Total Cost. Rates are indicative.
             </div>
+
+            {/* Save button */}
+            <div style={{ marginTop:14, display:"flex", alignItems:"center", gap:10 }}>
+              <button onClick={saveCalculation} disabled={saving}
+                style={{ background: saving ? "#e0e3e8" : "#f0822d", color:"#fff", border:"none", borderRadius:8, padding:"9px 20px", fontSize:13, fontWeight:700, cursor: saving ? "not-allowed" : "pointer" }}>
+                {saving ? "Saving…" : "Save Calculation"}
+              </button>
+              <button onClick={() => { setShowHistory((v) => !v); if (!showHistory) fetchHistory(); }}
+                style={{ background:"#f8fafc", color:"#555", border:"1px solid #e0e3e8", borderRadius:8, padding:"9px 16px", fontSize:13, fontWeight:600, cursor:"pointer" }}>
+                {showHistory ? "Hide History" : "My History"}
+              </button>
+              {saveMsg && <span style={{ fontSize:12, color: saveMsg === "Saved!" ? "#10B981" : "#EF4444", fontWeight:600 }}>{saveMsg}</span>}
+            </div>
+
+            {/* History panel */}
+            {showHistory && (
+              <div style={{ marginTop:14, border:"1px solid #eef0f3", borderRadius:10, overflow:"hidden" }}>
+                <div style={{ padding:"10px 14px", background:"#f8fafc", fontSize:12, fontWeight:700, color:"#555", borderBottom:"1px solid #eef0f3" }}>
+                  Saved Calculations
+                </div>
+                {historyLoading ? (
+                  <div style={{ padding:20, textAlign:"center", color:"#aaa", fontSize:12 }}>Loading…</div>
+                ) : history.length === 0 ? (
+                  <div style={{ padding:20, textAlign:"center", color:"#aaa", fontSize:12 }}>No saved calculations yet.</div>
+                ) : (
+                  <div style={{ maxHeight:260, overflowY:"auto" }}>
+                    {history.map((h) => {
+                      const c = COUNTRIES.find((x) => x.name === h.country) || COUNTRIES[0];
+                      const x = h.exchangeRate || 1;
+                      return (
+                        <div key={h._id} style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"10px 14px", borderBottom:"1px solid #f5f5f5", fontSize:12 }}>
+                          <div>
+                            <span style={{ fontWeight:700, color:"#1a2332" }}>{c.flag} {h.country}</span>
+                            <span style={{ color:"#888", marginLeft:8 }}>${Number(h.propertyPrice).toLocaleString()} · {h.tenureYears}yr · {h.annualRate}%</span>
+                          </div>
+                          <div style={{ textAlign:"right" }}>
+                            <div style={{ fontWeight:700, color:"#f0822d" }}>
+                              {x !== 1 ? `${c.symbol} ${Math.round(h.monthlyEmi * x).toLocaleString()}` : `$ ${Number(h.monthlyEmi).toLocaleString()}`}/mo
+                            </div>
+                            <div style={{ color:"#aaa", fontSize:11 }}>{new Date(h.createdAt).toLocaleDateString()}</div>
+                          </div>
+                          <button onClick={() => deleteHistory(h._id)}
+                            style={{ marginLeft:10, background:"none", border:"none", color:"#EF4444", cursor:"pointer", fontSize:16, padding:0 }}>×</button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Section B — Currency Converter */}

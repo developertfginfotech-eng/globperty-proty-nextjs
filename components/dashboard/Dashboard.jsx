@@ -36,13 +36,15 @@ function BuyerDashboard() {
     ]).then(([favsRes, offersRes]) => {
       if (favsRes.status === "fulfilled")
         setFavorites(favsRes.value.data.favorites || []);
-      if (offersRes.status === "fulfilled")
-        setOffers(offersRes.value.data.offers || offersRes.value.data || []);
+      if (offersRes.status === "fulfilled") {
+        const raw = offersRes.value.data;
+        setOffers(Array.isArray(raw?.offers) ? raw.offers : Array.isArray(raw) ? raw : []);
+      }
       setLoading(false);
     });
   }, []);
 
-  const activeOffers = offers.filter((o) => o.status === "pending" || o.status === "countered");
+  const activeOffers = Array.isArray(offers) ? offers.filter((o) => o.status === "pending" || o.status === "countered") : [];
 
   const statCards = [
     {

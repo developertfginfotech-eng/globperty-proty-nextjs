@@ -160,12 +160,12 @@ export default function DirectMessages() {
 
   return (
     <div className="main-content w-100">
-      <div className="main-content-inner" style={{ padding: 0 }}>
+      <div className="main-content-inner">
         <div style={{
           display: "grid",
           gridTemplateColumns: "320px 1fr",
-          height: "calc(100vh - 120px)",
-          minHeight: 500,
+          height: "calc(100vh - 180px)",
+          minHeight: 520,
           border: "1px solid #eef0f3",
           borderRadius: 14,
           overflow: "hidden",

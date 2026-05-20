@@ -1,14 +1,10 @@
-import Property from "@/components/dashboard/Property";
+import PropertyHub from "@/components/dashboard/PropertyHub";
 import React from "react";
 
 export const metadata = {
-  title: "My Property || Globperty - Real Estate React Nextjs Template",
-  description: "Globperty - Real Estate React Nextjs Template",
+  title: "My Properties || Globperty",
+  description: "Globperty - Real Estate",
 };
 export default function page() {
-  return (
-    <>
-      <Property />
-    </>
-  );
+  return <PropertyHub />;
 }

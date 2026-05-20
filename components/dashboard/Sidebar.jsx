@@ -140,7 +140,7 @@ export default function Sidebar() {
             </li>
             <li
               className={`nav-menu-item ${
-                pathname == "/my-property" ? "active" : ""
+                ["/my-property", "/my-favorites", "/review", "/visits"].includes(pathname) ? "active" : ""
               } `}
             >
               <Link className="nav-menu-link" href={`/my-property`}>
@@ -308,82 +308,6 @@ export default function Sidebar() {
                 My Plans
               </Link>
             </li>
-            <li
-              className={`nav-menu-item ${
-                pathname == "/my-favorites" ? "active" : ""
-              } `}
-            >
-              <Link className="nav-menu-link" href={`/my-favorites`}>
-                <svg
-                  width={20}
-                  height={20}
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M3.33203 18.3333H14.9987C15.4407 18.3333 15.8646 18.1577 16.1772 17.8451C16.4898 17.5326 16.6654 17.1087 16.6654 16.6666V5.83329L12.4987 1.66663H4.9987C4.55667 1.66663 4.13275 1.84222 3.82019 2.15478C3.50763 2.46734 3.33203 2.89127 3.33203 3.33329V4.99996"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11.668 1.66663V4.99996C11.668 5.44199 11.8436 5.86591 12.1561 6.17847C12.4687 6.49103 12.8926 6.66663 13.3346 6.66663H16.668"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M8.574 8.91662C8.28934 8.63239 7.92648 8.43938 7.53169 8.3622C7.1369 8.28503 6.72807 8.32718 6.35733 8.48329C6.11566 8.58329 5.89066 8.73329 5.70733 8.92496L5.41566 9.20829L5.124 8.92496C4.84097 8.641 4.48002 8.44744 4.08689 8.36882C3.69376 8.29019 3.28613 8.33003 2.91566 8.48329C2.66566 8.58329 2.449 8.73329 2.25733 8.92496C1.46566 9.70829 1.424 11.0333 2.424 12.0416L5.41566 15L8.41566 12.0416C9.41566 11.0333 9.36566 9.70829 8.574 8.92496V8.91662Z"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                My favorites {favCount > 0 ? `(${favCount})` : ""}
-              </Link>
-            </li>
-            <li
-              className={`nav-menu-item ${
-                pathname == "/review" ? "active" : ""
-              } `}
-            >
-              <Link className="nav-menu-link" href={`/review`}>
-                <svg
-                  width={20}
-                  height={20}
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M6.66797 9.99996C7.11 9.99996 7.53392 9.82436 7.84648 9.5118C8.15904 9.19924 8.33464 8.77532 8.33464 8.33329V6.66663H6.66797"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M11.668 9.99996C12.11 9.99996 12.5339 9.82436 12.8465 9.5118C13.159 9.19924 13.3346 8.77532 13.3346 8.33329V6.66663H11.668"
-                    stroke="#A8ABAE"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                Reviews
-              </Link>
-            </li>
             {/* Notifications */}
             <li className={`nav-menu-item ${pathname === "/notifications" ? "active" : ""}`}>
               <Link className="nav-menu-link" href="/notifications" style={{ position: "relative" }}>
@@ -469,29 +393,6 @@ export default function Sidebar() {
               </>
             )}
 
-            {/* Visits — all roles */}
-            <li className={`nav-menu-item ${pathname == "/visits" ? "active" : ""}`}>
-              <Link className="nav-menu-link" href="/visits">
-                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="2.5" y="4.16663" width="15" height="13.3333" rx="1.5" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M13.332 2.5V5.83333" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M6.66797 2.5V5.83333" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M2.5 8.33337H17.5" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                Visits
-              </Link>
-            </li>
-
-            {/* Messages — all roles */}
-            <li className={`nav-menu-item ${pathname == "/messages" ? "active" : ""}`}>
-              <Link className="nav-menu-link" href="/messages">
-                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                AI Assistant
-              </Link>
-            </li>
-
             {/* Direct Messages — all roles */}
             <li className={`nav-menu-item ${pathname == "/inbox" ? "active" : ""}`}>
               <Link className="nav-menu-link" href="/inbox">
@@ -499,20 +400,6 @@ export default function Sidebar() {
                   <path d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 Direct Messages
-              </Link>
-            </li>
-
-            {/* Documents — all roles */}
-            <li className={`nav-menu-item ${pathname == "/documents" ? "active" : ""}`}>
-              <Link className="nav-menu-link" href="/documents">
-                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.668 1.66663H4.9987C4.55667 1.66663 4.13275 1.84222 3.82019 2.15478C3.50763 2.46734 3.33203 2.89127 3.33203 3.33329V16.6666C3.33203 17.1087 3.50763 17.5326 3.82019 17.8451C4.13275 18.1577 4.55667 18.3333 4.9987 18.3333H14.9987C15.4407 18.3333 15.8646 18.1577 16.1772 17.8451C16.4898 17.5326 16.6654 17.1087 16.6654 16.6666V6.66663L11.668 1.66663Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M11.668 1.66663V6.66663H16.668" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M13.332 10.8334H6.66536" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M13.332 14.1666H6.66536" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M8.33203 7.5H6.66536" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                Documents
               </Link>
             </li>
 
@@ -565,6 +452,16 @@ export default function Sidebar() {
                   <circle cx="10" cy="13.75" r="0.833333" fill="#A8ABAE"/>
                 </svg>
                 Help & Support
+              </Link>
+            </li>
+
+            {/* AI Assistant — all roles — bottom of menu */}
+            <li className={`nav-menu-item ${pathname == "/messages" ? "active" : ""}`}>
+              <Link className="nav-menu-link" href="/messages">
+                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                AI Assistant
               </Link>
             </li>
 

@@ -114,6 +114,15 @@ export default function CaptchaWidget({ onVerify }) {
           </svg>
         </button>
       </div>
+      <style jsx>{`
+        .captcha-input::placeholder {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          letter-spacing: normal;
+          font-weight: 400;
+          color: #b0b8c8;
+          font-size: 14px;
+        }
+      `}</style>
       <div style={{ marginTop: 8, position: "relative" }}>
         <input
           type="text"
@@ -122,9 +131,10 @@ export default function CaptchaWidget({ onVerify }) {
           maxLength={code.length}
           placeholder="Type the characters above"
           autoComplete="off"
+          className="captcha-input"
           style={{
-            width: "100%", padding: "10px 40px 10px 14px", borderRadius: 10, fontSize: 15,
-            fontFamily: "'Courier New', monospace", letterSpacing: 3, fontWeight: 700,
+            width: "100%", padding: "10px 40px 10px 14px", borderRadius: 10, fontSize: 16,
+            fontFamily: "'Courier New', monospace", letterSpacing: 4, fontWeight: 700,
             border: status === "error" ? "2px solid #ef4444" : status === "ok" ? "2px solid #22c55e" : "1.5px solid #e5e7eb",
             background: status === "ok" ? "#f0fdf4" : "#fafafa",
             outline: "none", transition: "border-color 0.15s",
