@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import apiClient from "@/utils/apiClient";
 
 function MakeOfferModal({ property, onClose }) {
@@ -174,9 +174,41 @@ export default function PropertyOverview({ property }) {
   const price = property?.price ? Number(property.price).toLocaleString() : "—";
   const isRent = property?.adType === "For Rent";
   const [showOfferModal, setShowOfferModal] = useState(false);
+  const [isFav, setIsFav] = useState(false);
+  const [favLoading, setFavLoading] = useState(false);
 
   const isLoggedIn = () => {
     try { return !!localStorage.getItem("authToken"); } catch { return false; }
+  };
+
+  useEffect(() => {
+    if (!property?._id || !isLoggedIn()) return;
+    apiClient.get(`/favorites/check/${property._id}`)
+      .then((res) => setIsFav(res.data?.isFavorited ?? false))
+      .catch(() => {});
+  }, [property?._id]);
+
+  const toggleFav = async () => {
+    if (!isLoggedIn()) {
+      window.location.href = "/login";
+      return;
+    }
+    if (favLoading) return;
+    setFavLoading(true);
+    try {
+      if (isFav) {
+        await apiClient.delete(`/favorites/${property._id}`);
+        setIsFav(false);
+      } else {
+        await apiClient.post("/favorites", { propertyId: property._id });
+        setIsFav(true);
+      }
+    } catch (err) {
+      // If already favorited error, just mark as fav
+      if (err?.response?.data?.message?.includes("already")) setIsFav(true);
+    } finally {
+      setFavLoading(false);
+    }
   };
 
   return (
@@ -206,11 +238,17 @@ export default function PropertyOverview({ property }) {
         <div className="action">
           <ul className="list-action">
             <li>
-              <a href="#">
-                <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15.75 6.1875C15.75 4.32375 14.1758 2.8125 12.234 2.8125C10.7828 2.8125 9.53625 3.657 9 4.86225C8.46375 3.657 7.21725 2.8125 5.76525 2.8125C3.825 2.8125 2.25 4.32375 2.25 6.1875C2.25 11.6025 9 15.1875 9 15.1875C9 15.1875 15.75 11.6025 15.75 6.1875Z" stroke="#5C5E61" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <button
+                type="button"
+                onClick={toggleFav}
+                disabled={favLoading}
+                title={isFav ? "Remove from favourites" : "Add to favourites"}
+                style={{ background: "none", border: "none", cursor: favLoading ? "wait" : "pointer", padding: 0, display: "flex", alignItems: "center", justifyContent: "center" }}
+              >
+                <svg width={18} height={18} viewBox="0 0 18 18" fill={isFav ? "#f0822d" : "none"} xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.75 6.1875C15.75 4.32375 14.1758 2.8125 12.234 2.8125C10.7828 2.8125 9.53625 3.657 9 4.86225C8.46375 3.657 7.21725 2.8125 5.76525 2.8125C3.825 2.8125 2.25 4.32375 2.25 6.1875C2.25 11.6025 9 15.1875 9 15.1875C9 15.1875 15.75 11.6025 15.75 6.1875Z" stroke={isFav ? "#f0822d" : "#5C5E61"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </a>
+              </button>
             </li>
             <li>
               <a href="#">

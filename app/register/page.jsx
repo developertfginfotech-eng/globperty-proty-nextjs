@@ -57,7 +57,7 @@ const AGENT_SECTIONS = [
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", country: "UAE", role: "buyer", password: "", confirmPassword: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", country: "UAE", role: "buyer", userType: "", password: "", confirmPassword: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -77,7 +77,9 @@ export default function RegisterPage() {
     setError("");
     try {
       const backendRole = form.role === "other" ? "buyer" : form.role;
-      await register({ name: form.name, email: form.email, password: form.password, phone: form.phone, country: form.country, countryCode, role: backendRole });
+      const payload = { name: form.name, email: form.email, password: form.password, phone: form.phone, country: form.country, countryCode, role: backendRole };
+      if (form.role === "other" && form.userType) payload.userType = form.userType;
+      await register(payload);
       if (form.role === "seller") {
         window.location.href = "/kyc-property-verification";
       } else {
@@ -200,7 +202,7 @@ export default function RegisterPage() {
                     {[
                       { value: "buyer",  label: "Buyer" },
                       { value: "seller", label: "Seller" },
-                      { value: "other",  label: "Other" },
+                      { value: "other",  label: "Others" },
                     ].map(opt => (
                       <button key={opt.value} type="button" onClick={() => setForm(f => ({ ...f, role: opt.value }))}
                         style={{
@@ -215,6 +217,25 @@ export default function RegisterPage() {
                       </button>
                     ))}
                   </div>
+
+                  {/* Sub-options when Other is selected */}
+                  {form.role === "other" && (
+                    <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 8 }}>
+                      {["Property Developer", "Buy Leads", "Virtual Expo Exhibitor", "Finance Partner", "Legal Partner", "Advertise on Globperty", "Partner With Us"].map(sub => (
+                        <button key={sub} type="button"
+                          onClick={() => setForm(f => ({ ...f, userType: sub }))}
+                          style={{
+                            padding: "6px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600,
+                            border: form.userType === sub ? "1.5px solid #f0822d" : "1.5px solid #e5e7eb",
+                            background: form.userType === sub ? "rgba(240,130,45,0.08)" : "#fff",
+                            color: form.userType === sub ? "#f0822d" : "#6b7280",
+                            cursor: "pointer", transition: "all 0.15s",
+                          }}>
+                          {sub}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Full Name */}

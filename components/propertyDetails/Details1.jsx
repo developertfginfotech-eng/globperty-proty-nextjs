@@ -49,7 +49,7 @@ export default function Details1({ property }) {
               <PropertyNearby />
             </div>
             <div className="wg-property mb-0 box-comment">
-              <Reviews />
+              <Reviews propertyId={property?._id} />
             </div>
           </div>
           <div className="col-xl-4 col-lg-5">
