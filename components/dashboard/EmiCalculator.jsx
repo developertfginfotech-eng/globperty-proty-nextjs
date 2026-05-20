@@ -381,7 +381,7 @@ export default function EmiCalculator() {
               <div style={{ fontSize:12, fontWeight:700, color:"#1a2332", marginBottom:8 }}>Approximate Rates (1 USD)</div>
               <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(100px,1fr))", gap:6 }}>
                 {COUNTRIES.map((c) => (
-                  <div key={c.currency} style={{ fontSize:11, color:"#555", background:"#fff", border:"1px solid #eee", borderRadius:6, padding:"4px 8px" }}>
+                  <div key={c.name} style={{ fontSize:11, color:"#555", background:"#fff", border:"1px solid #eee", borderRadius:6, padding:"4px 8px" }}>
                     <span style={{ marginRight:4 }}>{c.flag}</span>
                     <strong>{c.currency}</strong> {fmt(STATIC_RATES_USD[c.currency] || 1)}
                   </div>
