@@ -167,8 +167,8 @@ export default function DocumentVault() {
 
     apiClient.get("/kyc/status")
       .then((res) => {
-        const data = res.data?.data || res.data;
-        if (data && data._id) {
+        const data = res.data?.kyc || res.data?.data || res.data;
+        if (data && (data._id || data.id || data.status)) {
           setKycData(data);
           setKycStatus(data.status || "pending");
         } else {
@@ -288,7 +288,7 @@ export default function DocumentVault() {
                     </div>
 
                     <Link
-                      href="/kyc"
+                      href="/kyc-property-verification"
                       style={{
                         display: "block",
                         background: "#f0822d",

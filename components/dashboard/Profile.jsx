@@ -122,7 +122,7 @@ export default function Profile() {
                   </span>
                 )}
                 {(!kycStatus || kycStatus === "rejected") && (
-                  <a href="/documents" style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#F3F4F6", color:"#6B7280", fontSize:12, fontWeight:700, padding:"3px 10px", borderRadius:20, border:"1px solid #e0e3e8", textDecoration:"none" }}>
+                  <a href="/kyc-property-verification" style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#F3F4F6", color:"#6B7280", fontSize:12, fontWeight:700, padding:"3px 10px", borderRadius:20, border:"1px solid #e0e3e8", textDecoration:"none" }}>
                     🔒 Get Verified →
                   </a>
                 )}
