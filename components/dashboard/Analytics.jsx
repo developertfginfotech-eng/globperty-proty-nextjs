@@ -111,6 +111,137 @@ function InteractionChip({ label }) {
   );
 }
 
+// ─── CRM Lead Status ─────────────────────────────────────────────────────────
+
+const LEAD_STATUSES = ["New","Contacted","Visit Scheduled","Offer Received","Negotiating","Closed","Lost"];
+const STATUS_COLORS = {
+  "New": { bg:"#EFF6FF", color:"#3B82F6" },
+  "Contacted": { bg:"#FFF7ED", color:"#f0822d" },
+  "Visit Scheduled": { bg:"#F5F3FF", color:"#8B5CF6" },
+  "Offer Received": { bg:"#ECFDF5", color:"#10B981" },
+  "Negotiating": { bg:"#FFF7ED", color:"#d97706" },
+  "Closed": { bg:"#ECFDF5", color:"#065f46" },
+  "Lost": { bg:"#FEF2F2", color:"#EF4444" },
+};
+
+const CRM_KEY = "crm_leads_v1";
+function loadCRM() { try { return JSON.parse(localStorage.getItem(CRM_KEY) || "{}"); } catch { return {}; } }
+function saveCRM(data) { localStorage.setItem(CRM_KEY, JSON.stringify(data)); }
+
+function LeadsTab({ leads, loading, propertyCount }) {
+  const [crm, setCrm] = useState({});
+  const [expandedKey, setExpandedKey] = useState(null);
+  const [noteInput, setNoteInput] = useState("");
+  const [reminderInput, setReminderInput] = useState("");
+
+  useEffect(() => { setCrm(loadCRM()); }, []);
+
+  const updateCRM = (key, patch) => {
+    const next = { ...loadCRM(), [key]: { ...(loadCRM()[key] || {}), ...patch } };
+    saveCRM(next);
+    setCrm(next);
+  };
+
+  const openExpand = (key) => {
+    if (expandedKey === key) { setExpandedKey(null); return; }
+    const d = loadCRM()[key] || {};
+    setNoteInput(d.note || "");
+    setReminderInput(d.reminder || "");
+    setExpandedKey(key);
+  };
+
+  const saveNote = (key) => { updateCRM(key, { note: noteInput }); };
+  const saveReminder = (key) => { updateCRM(key, { reminder: reminderInput }); };
+
+  const sourceLabel = (interactions) => {
+    if (interactions.includes("Inquiry") && interactions.includes("Saved")) return "Inquiry + Saved";
+    if (interactions.includes("Inquiry")) return "Inquiry";
+    if (interactions.includes("Saved")) return "Saved";
+    return "—";
+  };
+
+  return (
+    <>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:8, marginBottom:20 }}>
+        <h3 className="title" style={{ margin:0 }}>CRM Leads</h3>
+        {!loading && <span style={{ fontSize:13, color:"#888", fontWeight:500 }}>{leads.length} leads · {propertyCount} {propertyCount===1?"property":"properties"}</span>}
+      </div>
+
+      {loading && <div style={{ padding:40, textAlign:"center", color:"#888" }}>Loading leads…</div>}
+      {!loading && leads.length === 0 && <div style={{ padding:40, textAlign:"center", color:"#888" }}>No leads yet. Leads appear when buyers inquire or save your properties.</div>}
+
+      {!loading && leads.length > 0 && (
+        <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+          {leads.map((lead) => {
+            const d = crm[lead.key] || {};
+            const status = d.status || "New";
+            const sc = STATUS_COLORS[status] || STATUS_COLORS["New"];
+            const isOpen = expandedKey === lead.key;
+            const hasReminder = d.reminder && new Date(d.reminder) > new Date();
+            return (
+              <div key={lead.key} style={{ background:"#fff", border:"1px solid #eef0f3", borderRadius:12, overflow:"hidden" }}>
+                <div style={{ padding:"12px 16px", display:"flex", alignItems:"center", gap:12, flexWrap:"wrap", cursor:"pointer" }} onClick={() => openExpand(lead.key)}>
+                  <div style={{ width:36, height:36, borderRadius:"50%", background:"linear-gradient(135deg,#f0822d,#e56c1a)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+                    <span style={{ fontSize:13, fontWeight:800, color:"#fff" }}>{(lead.name||"?")[0].toUpperCase()}</span>
+                  </div>
+                  <div style={{ flex:1, minWidth:120 }}>
+                    <div style={{ fontWeight:700, fontSize:13, color:"#1a2332" }}>{lead.name}</div>
+                    <div style={{ fontSize:12, color:"#888" }}>{lead.email}</div>
+                  </div>
+                  <div style={{ fontSize:12, color:"#555", minWidth:100 }}>{lead.propertyName}</div>
+                  <div style={{ display:"flex", gap:6, alignItems:"center", flexWrap:"wrap" }}>
+                    {lead.interactions.map((i) => <InteractionChip key={i} label={i} />)}
+                    <span style={{ fontSize:11, background:"#f3f4f6", color:"#888", padding:"2px 8px", borderRadius:20 }}>{sourceLabel(lead.interactions)}</span>
+                  </div>
+                  <select
+                    value={status}
+                    onClick={(e) => e.stopPropagation()}
+                    onChange={(e) => { e.stopPropagation(); updateCRM(lead.key, { status: e.target.value }); }}
+                    style={{ fontSize:11, fontWeight:700, padding:"3px 8px", borderRadius:20, border:"none", background:sc.bg, color:sc.color, cursor:"pointer", outline:"none" }}
+                  >
+                    {LEAD_STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                  {hasReminder && <span style={{ fontSize:10, background:"#FFF7ED", color:"#f0822d", padding:"2px 7px", borderRadius:20, fontWeight:700 }}>🔔 {new Date(d.reminder).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span>}
+                  <span style={{ fontSize:12, color:"#bbb" }}>{formatDate(lead.lastSeen)}</span>
+                  <span style={{ fontSize:16, color:"#bbb" }}>{isOpen ? "▲" : "▼"}</span>
+                </div>
+
+                {isOpen && (
+                  <div style={{ borderTop:"1px solid #f0f0f0", padding:"14px 16px", background:"#fafafa", display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
+                    <div>
+                      <label style={{ fontSize:12, fontWeight:700, color:"#555", display:"block", marginBottom:6 }}>Lead Notes</label>
+                      <textarea
+                        value={noteInput}
+                        onChange={(e) => setNoteInput(e.target.value)}
+                        placeholder="Add context — e.g. 'wants possession by March', 'offered 10% below asking'…"
+                        rows={3}
+                        style={{ width:"100%", fontSize:12, padding:"8px 10px", border:"1px solid #e0e3e8", borderRadius:8, resize:"vertical", outline:"none", boxSizing:"border-box", fontFamily:"inherit" }}
+                      />
+                      <button onClick={() => saveNote(lead.key)} style={{ marginTop:6, fontSize:12, fontWeight:700, background:"#f0822d", color:"#fff", border:"none", borderRadius:6, padding:"5px 14px", cursor:"pointer" }}>Save Note</button>
+                      {d.note && <div style={{ marginTop:8, fontSize:12, color:"#555", fontStyle:"italic", background:"#fff", border:"1px solid #eee", borderRadius:6, padding:"6px 10px" }}>{d.note}</div>}
+                    </div>
+                    <div>
+                      <label style={{ fontSize:12, fontWeight:700, color:"#555", display:"block", marginBottom:6 }}>Follow-up Reminder</label>
+                      <input
+                        type="datetime-local"
+                        value={reminderInput}
+                        onChange={(e) => setReminderInput(e.target.value)}
+                        style={{ width:"100%", fontSize:12, padding:"8px 10px", border:"1px solid #e0e3e8", borderRadius:8, outline:"none", boxSizing:"border-box" }}
+                      />
+                      <button onClick={() => saveReminder(lead.key)} style={{ marginTop:6, fontSize:12, fontWeight:700, background:"#8B5CF6", color:"#fff", border:"none", borderRadius:6, padding:"5px 14px", cursor:"pointer" }}>Set Reminder</button>
+                      {d.reminder && <div style={{ marginTop:8, fontSize:12, color:"#8B5CF6", fontWeight:600 }}>🔔 Reminder: {new Date(d.reminder).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}</div>}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </>
+  );
+}
+
 // ─── Main Component ──────────────────────────────────────────────────────────
 
 export default function Analytics() {
@@ -585,81 +716,7 @@ export default function Analytics() {
 
           {/* ── CRM Leads Tab ── */}
           {activeTab === "leads" && (
-            <>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8, marginBottom: 20 }}>
-                <h3 className="title" style={{ margin: 0 }}>CRM Leads</h3>
-                {!loading && (
-                  <span style={{ fontSize: 13, color: "#888", fontWeight: 500 }}>
-                    {leads.length} leads across {propertyCount} {propertyCount === 1 ? "property" : "properties"}
-                  </span>
-                )}
-              </div>
-
-              {loading && (
-                <div style={{ padding: 40, textAlign: "center", color: "#888" }}>Loading leads…</div>
-              )}
-
-              {!loading && leads.length === 0 && (
-                <div style={{ padding: 40, textAlign: "center", color: "#888" }}>
-                  No leads yet. Leads appear when buyers inquire or save your properties.
-                </div>
-              )}
-
-              {!loading && leads.length > 0 && (
-                <div className="wrap-table">
-                  <div className="table-responsive">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Property</th>
-                          <th>Interactions</th>
-                          <th>Last Activity</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {leads.map((lead) => (
-                          <tr key={lead.key}>
-                            <td>
-                              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                                <div style={{
-                                  width: 34,
-                                  height: 34,
-                                  borderRadius: "50%",
-                                  background: "linear-gradient(135deg, #f0822d, #e56c1a)",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  flexShrink: 0,
-                                }}>
-                                  <span style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>
-                                    {(lead.name || "?")[0].toUpperCase()}
-                                  </span>
-                                </div>
-                                <span style={{ fontWeight: 600, fontSize: 13, color: "#1a2332" }}>{lead.name}</span>
-                              </div>
-                            </td>
-                            <td>
-                              <span style={{ fontSize: 13, color: "#555" }}>{lead.email}</span>
-                            </td>
-                            <td>
-                              <span style={{ fontSize: 13, color: "#333", fontWeight: 500 }}>{lead.propertyName}</span>
-                            </td>
-                            <td>
-                              {lead.interactions.map((i) => <InteractionChip key={i} label={i} />)}
-                            </td>
-                            <td>
-                              <span style={{ fontSize: 13, color: "#888" }}>{formatDate(lead.lastSeen)}</span>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
-            </>
+            <LeadsTab leads={leads} loading={loading} propertyCount={propertyCount} />
           )}
         </div>
 

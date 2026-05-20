@@ -17,10 +17,22 @@ function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
+const NOTES_KEY = "fav_notes_v1";
+function loadNotes() { try { return JSON.parse(localStorage.getItem(NOTES_KEY) || "{}"); } catch { return {}; } }
+function saveNote(pid, val) { const n = loadNotes(); if (val) n[pid] = val; else delete n[pid]; localStorage.setItem(NOTES_KEY, JSON.stringify(n)); }
+
 export default function Favorites() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [removing, setRemoving] = useState(null);
+  const [notes, setNotes] = useState({});
+  const [editingNote, setEditingNote] = useState(null);
+  const [noteInput, setNoteInput] = useState("");
+
+  useEffect(() => { setNotes(loadNotes()); }, []);
+
+  const openNote = (pid) => { setEditingNote(pid); setNoteInput(notes[pid] || ""); };
+  const saveNoteLocal = (pid) => { saveNote(pid, noteInput.trim()); setNotes(loadNotes()); setEditingNote(null); };
 
   useEffect(() => {
     apiClient.get("/favorites")
@@ -72,6 +84,7 @@ export default function Favorites() {
                   <thead>
                     <tr>
                       <th>Listing</th>
+                      <th>My Note</th>
                       <th>Saved On</th>
                       <th>Action</th>
                     </tr>
@@ -84,6 +97,7 @@ export default function Favorites() {
                       const photo = imgSrc(p.images?.[0]);
                       const price = p.price ? `$${Number(p.price).toLocaleString()}` : "—";
                       const location = [p.city, p.country].filter(Boolean).join(", ");
+                      const existingNote = notes[p._id];
                       return (
                         <tr key={fav._id} className="file-delete">
                           <td>
@@ -112,6 +126,32 @@ export default function Favorites() {
                                 </div>
                               </div>
                             </div>
+                          </td>
+                          <td style={{ minWidth: 160 }}>
+                            {editingNote === p._id ? (
+                              <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                                <input
+                                  autoFocus
+                                  value={noteInput}
+                                  onChange={(e) => setNoteInput(e.target.value)}
+                                  onKeyDown={(e) => { if (e.key === "Enter") saveNoteLocal(p._id); if (e.key === "Escape") setEditingNote(null); }}
+                                  placeholder="Add a note…"
+                                  style={{ flex: 1, fontSize: 12, padding: "5px 8px", border: "1px solid #e0e3e8", borderRadius: 6, outline: "none" }}
+                                />
+                                <button onClick={() => saveNoteLocal(p._id)} style={{ fontSize: 11, background: "#f0822d", color: "#fff", border: "none", borderRadius: 5, padding: "4px 8px", cursor: "pointer" }}>Save</button>
+                                <button onClick={() => setEditingNote(null)} style={{ fontSize: 11, background: "#f3f4f6", color: "#888", border: "none", borderRadius: 5, padding: "4px 8px", cursor: "pointer" }}>✕</button>
+                              </div>
+                            ) : (
+                              <div style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }} onClick={() => openNote(p._id)}>
+                                {existingNote ? (
+                                  <span style={{ fontSize: 12, color: "#555", fontStyle: "italic", background: "#FFF7ED", padding: "3px 8px", borderRadius: 6, maxWidth: 140, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block" }}>
+                                    {existingNote}
+                                  </span>
+                                ) : (
+                                  <span style={{ fontSize: 12, color: "#bbb" }}>+ Add note</span>
+                                )}
+                              </div>
+                            )}
                           </td>
                           <td>
                             <span style={{ fontSize: 13, color: "#555" }}>{formatDate(fav.createdAt)}</span>

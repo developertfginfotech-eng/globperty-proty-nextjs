@@ -492,6 +492,58 @@ export default function Sidebar() {
               </Link>
             </li>
 
+            {/* Inbox — all roles */}
+            <li className={`nav-menu-item ${pathname == "/inbox" ? "active" : ""}`}>
+              <Link className="nav-menu-link" href="/inbox">
+                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2.5 3.33337H17.5C18.4205 3.33337 19.1667 4.07957 19.1667 5.00004V13.3334C19.1667 14.2538 18.4205 15.0001 17.5 15.0001H2.5C1.57953 15.0001 0.833336 14.2538 0.833336 13.3334V5.00004C0.833336 4.07957 1.57953 3.33337 2.5 3.33337Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M18.3333 4.16663L10 10.8333L1.66667 4.16663" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Inbox
+              </Link>
+            </li>
+
+            {/* Documents — all roles */}
+            <li className={`nav-menu-item ${pathname == "/documents" ? "active" : ""}`}>
+              <Link className="nav-menu-link" href="/documents">
+                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.668 1.66663H4.9987C4.55667 1.66663 4.13275 1.84222 3.82019 2.15478C3.50763 2.46734 3.33203 2.89127 3.33203 3.33329V16.6666C3.33203 17.1087 3.50763 17.5326 3.82019 17.8451C4.13275 18.1577 4.55667 18.3333 4.9987 18.3333H14.9987C15.4407 18.3333 15.8646 18.1577 16.1772 17.8451C16.4898 17.5326 16.6654 17.1087 16.6654 16.6666V6.66663L11.668 1.66663Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M11.668 1.66663V6.66663H16.668" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M13.332 10.8334H6.66536" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M13.332 14.1666H6.66536" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M8.33203 7.5H6.66536" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Documents
+              </Link>
+            </li>
+
+            {/* EMI Calculator — all roles */}
+            <li className={`nav-menu-item ${pathname == "/calculator" ? "active" : ""}`}>
+              <Link className="nav-menu-link" href="/calculator">
+                <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2.5" y="2.5" width="15" height="15" rx="2" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M6.66797 6.66663H13.3346" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M6.66797 10H9.16797" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M6.66797 13.3334H9.16797" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12.5 10L13.332 10.8334L15 9.16663" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12.5 13.3334L13.332 14.1667L15 12.5" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                EMI Calculator
+              </Link>
+            </li>
+
+            {/* Admin — admin role only */}
+            {role === "admin" && (
+              <li className={`nav-menu-item ${pathname == "/admin" ? "active" : ""}`}>
+                <Link className="nav-menu-link" href="/admin">
+                  <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2.5L12.5 7.5L18 8.25L14 12.25L15 17.5L10 15L5 17.5L6 12.25L2 8.25L7.5 7.5L10 2.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Admin CRM
+                </Link>
+              </li>
+            )}
+
             {/* Support */}
             <li className={`nav-menu-item ${pathname == "/support" ? "active" : ""}`}>
               <Link className="nav-menu-link" href="/support">

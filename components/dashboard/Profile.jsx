@@ -2,6 +2,11 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "@/utils/apiClient";
 
+const PREF_KEY = "buyer_prefs_v1";
+function loadPrefs() { try { return JSON.parse(localStorage.getItem(PREF_KEY) || "{}"); } catch { return {}; } }
+
+const PROP_TYPES = ["Apartment","Villa","Townhouse","Studio","Office","Land","Warehouse","Other"];
+
 export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [form, setForm] = useState({});
@@ -11,8 +16,11 @@ export default function Profile() {
   const [pwForm, setPwForm] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" });
   const [pwMsg, setPwMsg] = useState("");
   const [pwSaving, setPwSaving] = useState(false);
+  const [kycStatus, setKycStatus] = useState(null);
+  const [prefs, setPrefs] = useState({});
 
   useEffect(() => {
+    setPrefs(loadPrefs());
     apiClient.get("/auth/profile")
       .then((res) => {
         const u = res.data.user;
@@ -36,7 +44,17 @@ export default function Profile() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
+
+    apiClient.get("/kyc/status")
+      .then((res) => setKycStatus(res.data?.data?.status || res.data?.status || null))
+      .catch(() => {});
   }, []);
+
+  const setPref = (f) => (e) => {
+    const next = { ...loadPrefs(), [f]: e.target.value };
+    localStorage.setItem(PREF_KEY, JSON.stringify(next));
+    setPrefs(next);
+  };
 
   const set = (field) => (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
@@ -91,8 +109,25 @@ export default function Profile() {
           <div className="box">
             <h3 className="title">Account Settings</h3>
             <div className="box-agent-account">
-              <h6>{profile ? `${profile.role?.charAt(0).toUpperCase()}${profile.role?.slice(1)} Account` : "Account"}</h6>
-              <p className="note" style={{ color: "#555", marginBottom: 12 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap", marginBottom:10 }}>
+                <h6 style={{ margin:0 }}>{profile ? `${profile.role?.charAt(0).toUpperCase()}${profile.role?.slice(1)} Account` : "Account"}</h6>
+                {kycStatus === "approved" && (
+                  <span style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#ECFDF5", color:"#10B981", fontSize:12, fontWeight:700, padding:"3px 10px", borderRadius:20, border:"1px solid #10B981" }}>
+                    ✓ Verified
+                  </span>
+                )}
+                {kycStatus === "pending" && (
+                  <span style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#FFF7ED", color:"#f0822d", fontSize:12, fontWeight:700, padding:"3px 10px", borderRadius:20, border:"1px solid #f0822d" }}>
+                    ⏳ Verification Pending
+                  </span>
+                )}
+                {(!kycStatus || kycStatus === "rejected") && (
+                  <a href="/documents" style={{ display:"inline-flex", alignItems:"center", gap:4, background:"#F3F4F6", color:"#6B7280", fontSize:12, fontWeight:700, padding:"3px 10px", borderRadius:20, border:"1px solid #e0e3e8", textDecoration:"none" }}>
+                    🔒 Get Verified →
+                  </a>
+                )}
+              </div>
+              <p className="note" style={{ color: "#555", marginBottom: 0 }}>
                 Your account type: <strong>{profile?.role || "—"}</strong>
                 {profile?.email && <span style={{ marginLeft: 12, color: "#888" }}>{profile.email}</span>}
               </p>
@@ -190,6 +225,38 @@ export default function Profile() {
                   </button>
                 </div>
               </form>
+
+              {/* Buyer Preferences */}
+              {(profile?.role === "buyer" || profile?.role === "user") && (
+                <>
+                  <h5 className="title" style={{ marginTop: 32 }}>Property Preferences</h5>
+                  <div className="box" style={{ background:"#f8fafc", border:"1px solid #eef0f3", borderRadius:10, padding:20, marginBottom:24 }}>
+                    <p style={{ fontSize:13, color:"#888", marginBottom:16 }}>These help us show you better-matched listings and price alerts.</p>
+                    <div className="box grid-layout-4 gap-30">
+                      <div className="box-fieldset">
+                        <label>Budget Min ($):</label>
+                        <input type="number" value={prefs.budgetMin || ""} onChange={setPref("budgetMin")} className="form-control" placeholder="e.g. 100000" />
+                      </div>
+                      <div className="box-fieldset">
+                        <label>Budget Max ($):</label>
+                        <input type="number" value={prefs.budgetMax || ""} onChange={setPref("budgetMax")} className="form-control" placeholder="e.g. 500000" />
+                      </div>
+                      <div className="box-fieldset">
+                        <label>Property Type Interest:</label>
+                        <select value={prefs.propertyType || ""} onChange={setPref("propertyType")} className="form-control">
+                          <option value="">Any</option>
+                          {PROP_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+                        </select>
+                      </div>
+                      <div className="box-fieldset">
+                        <label>Preferred City:</label>
+                        <input type="text" value={prefs.preferredCity || ""} onChange={setPref("preferredCity")} className="form-control" placeholder="e.g. Dubai" />
+                      </div>
+                    </div>
+                    <p style={{ fontSize:12, color:"#bbb", marginTop:12, marginBottom:0 }}>Preferences are saved automatically as you type.</p>
+                  </div>
+                </>
+              )}
 
               {/* Change Password */}
               <h5 className="title" style={{ marginTop: 32 }}>Change password</h5>
