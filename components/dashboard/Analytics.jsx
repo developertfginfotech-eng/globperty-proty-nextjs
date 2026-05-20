@@ -418,18 +418,32 @@ export default function Analytics() {
 
   const [marketError, setMarketError] = useState("");
 
-  const fetchMarket = async (city) => {
-    if (!city.trim()) return;
+  const KNOWN_COUNTRIES = ["UAE","USA","Portugal","Canada","Australia","Turkey","Cyprus","Malta","Hungary","Latvia","Philippines","Malaysia","UK","Germany","France","Spain","Italy","Singapore","India","China"];
+
+  const fetchMarket = async (query) => {
+    if (!query.trim()) return;
     setMarketLoading(true);
     setMarketError("");
     setMarketData(null);
+    const q = query.trim();
+    const isCountry = KNOWN_COUNTRIES.some((c) => c.toLowerCase() === q.toLowerCase());
+    const param = isCountry ? `country=${encodeURIComponent(q.toUpperCase() === "UAE" ? "UAE" : q)}` : `city=${encodeURIComponent(q)}`;
     try {
-      const res = await apiClient.get(`/market-intelligence/overview?city=${encodeURIComponent(city.trim())}`);
+      const res = await apiClient.get(`/market-intelligence/overview?${param}`);
       const d = res.data?.data || res.data || null;
       setMarketData(d);
     } catch (err) {
+      if (!isCountry) {
+        try {
+          const res2 = await apiClient.get(`/market-intelligence/overview?country=${encodeURIComponent(q)}`);
+          const d = res2.data?.data || res2.data || null;
+          setMarketData(d);
+          setMarketLoading(false);
+          return;
+        } catch {}
+      }
       const msg = err?.response?.data?.message || "";
-      setMarketError(msg || "No data found for this city. Try a different city name.");
+      setMarketError(msg || "No properties found. Try a country name (e.g. UAE, USA) or a city name (e.g. Dubai).");
     }
     setMarketLoading(false);
   };
@@ -584,11 +598,11 @@ export default function Analytics() {
           {activeTab === "market" && (
             <>
               <h3 className="title">Market Price Reference</h3>
-              <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
                 <input
                   value={marketCity}
                   onChange={(e) => setMarketCity(e.target.value)}
-                  placeholder="Enter city (e.g. Dubai)"
+                  placeholder="Enter country or city (e.g. UAE, Dubai)"
                   style={{ flex: 1, minWidth: 160, padding: "8px 14px", border: "1px solid #e0e3e8", borderRadius: 8, fontSize: 13, outline: "none" }}
                   onKeyDown={(e) => e.key === "Enter" && fetchMarket(marketCity)}
                 />
@@ -598,6 +612,19 @@ export default function Analytics() {
                 >
                   Search
                 </button>
+              </div>
+              {/* Quick country chips */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>
+                {[
+                  { label: "🇦🇪 UAE", v: "UAE" }, { label: "🇺🇸 USA", v: "USA" }, { label: "🇵🇹 Portugal", v: "Portugal" },
+                  { label: "🇨🇦 Canada", v: "Canada" }, { label: "🇦🇺 Australia", v: "Australia" }, { label: "🇹🇷 Turkey", v: "Turkey" },
+                  { label: "🇨🇾 Cyprus", v: "Cyprus" }, { label: "🇲🇾 Malaysia", v: "Malaysia" },
+                ].map((c) => (
+                  <button key={c.v} onClick={() => { setMarketCity(c.v); fetchMarket(c.v); }}
+                    style={{ fontSize: 11, fontWeight: 600, padding: "4px 10px", border: "1px solid #e0e3e8", borderRadius: 20, background: marketCity === c.v ? "#fff7ed" : "#fff", color: "#555", cursor: "pointer" }}>
+                    {c.label}
+                  </button>
+                ))}
               </div>
 
               {marketLoading && <div style={{ padding: 40, textAlign: "center", color: "#888" }}>Loading market data…</div>}
@@ -623,7 +650,7 @@ export default function Analytics() {
                   <div>
                     {/* Location header */}
                     <div style={{ marginBottom: 20, fontSize: 13, color: "#888" }}>
-                      Showing data for <strong style={{ color: "#1a2332" }}>{marketData.location?.city || marketCity}</strong>
+                      Showing data for <strong style={{ color: "#1a2332" }}>{marketData.location?.country && marketData.location.country !== "All Countries" ? marketData.location.country : (marketData.location?.city || marketCity)}</strong>
                       {" · "}{marketData.totalListings} active listings
                       {marketData.listingGrowth !== undefined && (
                         <span style={{ marginLeft: 8, color: marketData.listingGrowth >= 0 ? "#10B981" : "#EF4444", fontWeight: 600 }}>
