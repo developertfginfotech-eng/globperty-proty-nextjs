@@ -492,14 +492,13 @@ export default function Sidebar() {
               </Link>
             </li>
 
-            {/* Inbox — all roles */}
+            {/* Direct Messages — all roles */}
             <li className={`nav-menu-item ${pathname == "/inbox" ? "active" : ""}`}>
               <Link className="nav-menu-link" href="/inbox">
                 <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2.5 3.33337H17.5C18.4205 3.33337 19.1667 4.07957 19.1667 5.00004V13.3334C19.1667 14.2538 18.4205 15.0001 17.5 15.0001H2.5C1.57953 15.0001 0.833336 14.2538 0.833336 13.3334V5.00004C0.833336 4.07957 1.57953 3.33337 2.5 3.33337Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M18.3333 4.16663L10 10.8333L1.66667 4.16663" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M17.5 12.5C17.5 12.942 17.3244 13.366 17.0118 13.6785C16.6993 13.9911 16.2754 14.1667 15.8333 14.1667H5.83333L2.5 17.5V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H15.8333C16.2754 2.5 16.6993 2.67559 17.0118 2.98816C17.3244 3.30072 17.5 3.72464 17.5 4.16667V12.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                Inbox
+                Direct Messages
               </Link>
             </li>
 

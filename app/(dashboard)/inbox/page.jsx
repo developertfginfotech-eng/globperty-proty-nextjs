@@ -1,2 +1,2 @@
-import Inbox from "@/components/dashboard/Inbox";
-export default function Page() { return <Inbox />; }
+import DirectMessages from "@/components/dashboard/DirectMessages";
+export default function Page() { return <DirectMessages />; }
