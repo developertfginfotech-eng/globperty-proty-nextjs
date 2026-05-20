@@ -226,7 +226,7 @@ export default function EmiCalculator() {
               <div>
                 <label style={labelStyle}>Property Price (USD)</label>
                 <input type="number" value={price} min={0} onChange={(e) => setPrice(e.target.value)} style={inputStyle} />
-                {x !== 1 && <div style={{ fontSize:11, color:"#f0822d", marginTop:3, fontWeight:600 }}>≈ {sym} {fmt(price * x)}</div>}
+                {x !== 1 && <div style={{ fontSize:11, color:"#888", marginTop:3 }}>≈ {sym} {fmt(price * x)}</div>}
               </div>
 
               {/* Down Payment */}
@@ -262,11 +262,11 @@ export default function EmiCalculator() {
             <div style={{ marginTop:20, background:"#FFF7ED", border:"1px solid #fde8cc", borderRadius:12, padding:"18px 16px" }}>
               <div style={{ fontSize:12, color:"#888", fontWeight:600, marginBottom:2 }}>Monthly EMI</div>
               <div style={{ fontSize:30, fontWeight:800, color:"#f0822d", marginBottom:2 }}>
-                {sym} {fmt(emi)}
+                {x !== 1 ? `${sym} ${fmt(emi * x)}` : `${sym} ${fmt(emi)}`}
               </div>
               {x !== 1 && (
-                <div style={{ fontSize:14, color:"#e56c1a", fontWeight:700, marginBottom:12 }}>
-                  ≈ {sym} {fmt(emi * x)}
+                <div style={{ fontSize:12, color:"#aaa", fontWeight:500, marginBottom:12 }}>
+                  ≈ ${fmt(emi)} USD
                 </div>
               )}
 
@@ -279,8 +279,10 @@ export default function EmiCalculator() {
                 ].map((s) => (
                   <div key={s.label} style={{ background:"#fff", borderRadius:8, padding:"9px 11px", border:"1px solid #f0e0cc" }}>
                     <div style={{ fontSize:11, color:"#999", marginBottom:2 }}>{s.label}</div>
-                    <div style={{ fontSize:13, fontWeight:700, color:"#1a2332" }}>{sym}{fmt(s.usd)}</div>
-                    {x !== 1 && <div style={{ fontSize:11, color:"#f0822d", fontWeight:600 }}>{sym} {fmt(s.usd * x)}</div>}
+                    <div style={{ fontSize:13, fontWeight:700, color:"#1a2332" }}>
+                      {x !== 1 ? `${sym} ${fmt(s.usd * x)}` : `${sym}${fmt(s.usd)}`}
+                    </div>
+                    {x !== 1 && <div style={{ fontSize:11, color:"#aaa", fontWeight:500 }}>${fmt(s.usd)} USD</div>}
                   </div>
                 ))}
               </div>
