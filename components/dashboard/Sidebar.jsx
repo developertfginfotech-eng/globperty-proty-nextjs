@@ -531,6 +531,19 @@ export default function Sidebar() {
               </Link>
             </li>
 
+            {/* CRM — seller, agent, broker, admin */}
+            {(role === "agent" || role === "seller" || role === "broker" || role === "admin") && (
+              <li className={`nav-menu-item ${pathname == "/crm" ? "active" : ""}`}>
+                <Link className="nav-menu-link" href="/crm">
+                  <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.16667 2.5H4.16667C3.72464 2.5 3.30072 2.67559 2.98816 2.98816C2.67559 3.30072 2.5 3.72464 2.5 4.16667V15.8333C2.5 16.2754 2.67559 16.6993 2.98816 17.0118C3.30072 17.3244 3.72464 17.5 4.16667 17.5H15.8333C16.2754 17.5 16.6993 17.3244 17.0118 17.0118C17.3244 16.6993 17.5 16.2754 17.5 15.8333V10.8333" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M15.8333 1.66663L18.3333 4.16663L10 12.4999H7.5V9.99994L15.8333 1.66663Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  CRM
+                </Link>
+              </li>
+            )}
+
             {/* Admin — admin role only */}
             {role === "admin" && (
               <li className={`nav-menu-item ${pathname == "/admin" ? "active" : ""}`}>
@@ -538,7 +551,7 @@ export default function Sidebar() {
                   <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 2.5L12.5 7.5L18 8.25L14 12.25L15 17.5L10 15L5 17.5L6 12.25L2 8.25L7.5 7.5L10 2.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  Admin CRM
+                  Admin Panel
                 </Link>
               </li>
             )}
