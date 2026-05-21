@@ -250,8 +250,8 @@ export default function Analytics() {
   const maxViews = Math.max(...properties.map((p) => p.viewCount || 0), 1);
 
   return (
-    <div className="main-content w-100">
-      <div className="main-content-inner">
+    <div className="main-content style-2" style={{ flex: 1, minWidth: 0, width: "100%" }}>
+      <div className="main-content-inner wrap-dashboard-content-2" style={{ width: "100%", boxSizing: "border-box" }}>
         <div className="button-show-hide show-mb">
           <span className="body-1">Show Dashboard</span>
         </div>

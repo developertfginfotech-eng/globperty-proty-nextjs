@@ -12,6 +12,17 @@ function imgSrc(raw) {
   return `${BACKEND_URL}${raw}`;
 }
 
+function renderMarkdown(text) {
+  if (!text) return "";
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/\n/g, "<br/>");
+}
+
 function timeAgo(date) {
   if (!date) return "";
   const secs = Math.floor((Date.now() - new Date(date)) / 1000);
@@ -159,8 +170,8 @@ export default function DirectMessages() {
   };
 
   return (
-    <div className="main-content w-100">
-      <div className="main-content-inner">
+    <div className="main-content style-2" style={{ flex: 1, minWidth: 0, width: "100%" }}>
+      <div className="main-content-inner wrap-dashboard-content-2" style={{ width: "100%", boxSizing: "border-box" }}>
         <div style={{
           display: "grid",
           gridTemplateColumns: "320px 1fr",
@@ -289,17 +300,19 @@ export default function DirectMessages() {
                         )}
                         <div style={{ maxWidth: "68%" }}>
                           {!self && <div style={{ fontSize: 10, color: "#aaa", marginBottom: 3, fontWeight: 600 }}>{msg.senderName}</div>}
-                          <div style={{
-                            background: self ? "#f0822d" : "#f3f4f6",
-                            color: self ? "#fff" : "#1a2332",
-                            borderRadius: self ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
-                            padding: "10px 14px",
-                            fontSize: 13,
-                            lineHeight: 1.5,
-                            wordBreak: "break-word",
-                          }}>
-                            {msg.content}
-                          </div>
+                          <div
+                            dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
+                            style={{
+                              background: self ? "#f0822d" : "#f3f4f6",
+                              color: self ? "#fff" : "#1a2332",
+                              borderRadius: self ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+                              padding: "10px 14px",
+                              fontSize: 13,
+                              lineHeight: 1.6,
+                              wordBreak: "break-word",
+                              whiteSpace: "pre-wrap",
+                            }}
+                          />
                           <div style={{ fontSize: 10, color: "#ccc", marginTop: 3, textAlign: self ? "right" : "left" }}>
                             {timeAgo(msg.createdAt)}
                           </div>
