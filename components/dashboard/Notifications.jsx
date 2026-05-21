@@ -15,7 +15,7 @@ function typeIcon(type) {
     case "offer": return "💰";
     case "tour": return "📅";
     case "kyc": return "🔒";
-    case "inquiry": return "💬";
+    case "new_lead": return "💬";
     case "lead": return "👤";
     default: return "🔔";
   }

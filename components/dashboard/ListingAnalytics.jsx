@@ -53,7 +53,7 @@ export default function ListingAnalytics() {
   const [role, setRole] = useState("");
   const [properties, setProperties] = useState([]);
   const [savesMap, setSavesMap] = useState({});
-  const [inquiriesMap, setInquiriesMap] = useState({});
+  const [leadsMap, setLeadsMap] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function ListingAnalytics() {
     Promise.allSettled([
       apiClient.get("/property/agent/properties"),
       apiClient.get("/favorites/my-properties"),
-      apiClient.get("/inquiries"),
+      apiClient.get("/leads"),
     ]).then(([propsRes, favsRes, inqRes]) => {
       const rawProps = propsRes.status === "fulfilled" ? propsRes.value.data : null;
       const props = Array.isArray(rawProps) ? rawProps : (Array.isArray(rawProps?.properties) ? rawProps.properties : []);
@@ -78,7 +78,7 @@ export default function ListingAnalytics() {
       const favs = Array.isArray(rawFavs) ? rawFavs : (Array.isArray(rawFavs?.favorites) ? rawFavs.favorites : []);
 
       const rawInqs = inqRes.status === "fulfilled" ? inqRes.value.data : null;
-      const inqs = Array.isArray(rawInqs) ? rawInqs : (Array.isArray(rawInqs?.inquiries) ? rawInqs.inquiries : (Array.isArray(rawInqs?.data) ? rawInqs.data : []));
+      const inqs = Array.isArray(rawInqs) ? rawInqs : (Array.isArray(rawInqs?.leads) ? rawInqs.leads : (Array.isArray(rawInqs?.data) ? rawInqs.data : []));
 
       // Build saves count per property
       const sm = {};
@@ -87,7 +87,7 @@ export default function ListingAnalytics() {
         if (pid) sm[pid] = (sm[pid] || 0) + 1;
       });
 
-      // Build inquiries count per property
+      // Build leads count per property
       const im = {};
       inqs.forEach((i) => {
         const pid = i.propertyId?._id || i.propertyId;
@@ -96,7 +96,7 @@ export default function ListingAnalytics() {
 
       setProperties(props);
       setSavesMap(sm);
-      setInquiriesMap(im);
+      setLeadsMap(im);
     }).finally(() => setLoading(false));
   }, []);
 
@@ -126,7 +126,7 @@ export default function ListingAnalytics() {
 
   const totalViews = properties.reduce((s, p) => s + (p.viewCount || 0), 0);
   const totalSaves = Object.values(savesMap).reduce((s, v) => s + v, 0);
-  const totalInquiries = Object.values(inquiriesMap).reduce((s, v) => s + v, 0);
+  const totalLeads = Object.values(leadsMap).reduce((s, v) => s + v, 0);
   const maxViews = Math.max(...properties.map((p) => p.viewCount || 0), 1);
 
   return (
@@ -150,7 +150,7 @@ export default function ListingAnalytics() {
               { label: "Total Listings", value: properties.length, color: "#3B82F6", bg: "#EFF6FF" },
               { label: "Total Views", value: totalViews, color: "#f0822d", bg: "#FFF7ED" },
               { label: "Total Saves", value: totalSaves, color: "#8B5CF6", bg: "#F5F3FF" },
-              { label: "Total Inquiries", value: totalInquiries, color: "#10B981", bg: "#ECFDF5" },
+              { label: "Total Leads", value: totalLeads, color: "#10B981", bg: "#ECFDF5" },
             ].map((s) => (
               <div key={s.label} style={{
                 background: s.bg,
@@ -180,7 +180,7 @@ export default function ListingAnalytics() {
                 const id = p._id;
                 const title = p.propertyName || p.title || "Untitled";
                 const saves = savesMap[id] || 0;
-                const inquiries = inquiriesMap[id] || 0;
+                const leadCount = leadsMap[id] || 0;
                 const views = p.viewCount || 0;
                 const viewPct = maxViews > 0 ? Math.round((views / maxViews) * 100) : 0;
                 const photo = imgSrc(p.images?.[0]);
@@ -210,7 +210,7 @@ export default function ListingAnalytics() {
                       <div style={{ display: "flex", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
                         <StatBox label="Views" value={views} icon="👁" />
                         <StatBox label="Saves" value={saves} icon="❤️" />
-                        <StatBox label="Inquiries" value={inquiries} icon="💬" />
+                        <StatBox label="Leads" value={leadCount} icon="💬" />
                       </div>
 
                       {/* Views bar */}

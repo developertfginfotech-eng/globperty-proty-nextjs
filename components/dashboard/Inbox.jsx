@@ -23,9 +23,9 @@ function timeAgo(date) {
 
 function TypeChip({ type }) {
   const styles = {
-    Inquiry: { bg: "#EFF6FF", color: "#3B82F6" },
-    Visit:   { bg: "#FFF7ED", color: "#f0822d" },
-    Offer:   { bg: "#ECFDF5", color: "#10B981" },
+    Lead:  { bg: "#EFF6FF", color: "#3B82F6" },
+    Visit: { bg: "#FFF7ED", color: "#f0822d" },
+    Offer: { bg: "#ECFDF5", color: "#10B981" },
   };
   const s = styles[type] || { bg: "#F3F4F6", color: "#6B7280" };
   return (
@@ -87,7 +87,7 @@ function SummaryChip({ label, count, color, bg }) {
   );
 }
 
-function MessageThread({ messages, inquiryId, onReplySent }) {
+function MessageThread({ messages, leadId, onReplySent }) {
   const [replyText, setReplyText] = useState("");
   const [sending, setSending] = useState(false);
 
@@ -95,8 +95,8 @@ function MessageThread({ messages, inquiryId, onReplySent }) {
     if (!replyText.trim() || sending) return;
     setSending(true);
     try {
-      const res = await apiClient.post(`/inquiries/${inquiryId}/reply`, { message: replyText.trim() });
-      const updated = res.data?.inquiry || res.data;
+      const res = await apiClient.post(`/leads/${leadId}/reply`, { message: replyText.trim() });
+      const updated = res.data?.lead || res.data;
       onReplySent(updated);
       setReplyText("");
     } catch {
@@ -175,7 +175,7 @@ function MessageThread({ messages, inquiryId, onReplySent }) {
   );
 }
 
-const TABS = ["All", "Inquiries", "Visits", "Offers"];
+const TABS = ["All", "Leads", "Visits", "Offers"];
 
 export default function Inbox() {
   const [role, setRole] = useState(null);
@@ -194,21 +194,21 @@ export default function Inbox() {
       : "/offers/received";
 
     Promise.allSettled([
-      apiClient.get("/inquiries"),
+      apiClient.get("/leads"),
       apiClient.get("/tours/my-tours"),
       apiClient.get(offersEndpoint),
     ]).then(([inqRes, tourRes, offerRes]) => {
       const items = [];
 
-      // Inquiries
+      // Leads
       if (inqRes.status === "fulfilled") {
         const raw = inqRes.value.data;
-        const list = Array.isArray(raw) ? raw : (Array.isArray(raw?.data) ? raw.data : (Array.isArray(raw?.inquiries) ? raw.inquiries : []));
+        const list = Array.isArray(raw) ? raw : (Array.isArray(raw?.data) ? raw.data : (Array.isArray(raw?.leads) ? raw.leads : []));
         list.forEach((inq) => {
           const lastMsg = (inq.messages || []).slice(-1)[0];
           items.push({
             _id: inq._id,
-            type: "Inquiry",
+            type: "Lead",
             propertyName: inq.propertyId?.propertyName || "Property",
             thumbnail: inq.propertyId?.images?.[0],
             personName: inq.inquirerName || "Unknown",
@@ -220,7 +220,7 @@ export default function Inbox() {
             unread: !inq.isReadByAgent,
             date: inq.updatedAt || inq.createdAt,
             messages: inq.messages || [],
-            rawInquiry: inq,
+            rawLead: inq,
           });
         });
       }
@@ -276,11 +276,11 @@ export default function Inbox() {
     }).finally(() => setLoading(false));
   }, []);
 
-  const handleReplySent = (inquiryId, updatedInquiry) => {
+  const handleReplySent = (leadId, updatedLead) => {
     setFeed((prev) =>
       prev.map((item) => {
-        if (item._id !== inquiryId || item.type !== "Inquiry") return item;
-        const msgs = updatedInquiry?.messages || item.messages;
+        if (item._id !== leadId || item.type !== "Lead") return item;
+        const msgs = updatedLead?.messages || item.messages;
         const lastMsg = msgs.slice(-1)[0];
         return {
           ...item,
@@ -295,13 +295,13 @@ export default function Inbox() {
     );
   };
 
-  const inquiries = feed.filter((i) => i.type === "Inquiry");
+  const leads = feed.filter((i) => i.type === "Lead");
   const visits = feed.filter((i) => i.type === "Visit");
   const offers = feed.filter((i) => i.type === "Offer");
-  const unreadCount = inquiries.filter((i) => i.unread).length;
+  const unreadCount = leads.filter((i) => i.unread).length;
 
   const filtered = activeTab === "All" ? feed
-    : activeTab === "Inquiries" ? inquiries
+    : activeTab === "Leads" ? leads
     : activeTab === "Visits" ? visits
     : offers;
 
@@ -320,7 +320,7 @@ export default function Inbox() {
           {/* Summary chips */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 24 }}>
             <SummaryChip label="Total" count={feed.length} color="#6B7280" bg="#F3F4F6" />
-            <SummaryChip label="Unread Inquiries" count={unreadCount} color="#3B82F6" bg="#EFF6FF" />
+            <SummaryChip label="Unread Leads" count={unreadCount} color="#3B82F6" bg="#EFF6FF" />
             <SummaryChip label="Visits" count={visits.length} color="#f0822d" bg="#FFF7ED" />
             <SummaryChip label="Offers" count={offers.length} color="#10B981" bg="#ECFDF5" />
           </div>
@@ -345,9 +345,9 @@ export default function Inbox() {
                 }}
               >
                 {tab}
-                {tab === "Inquiries" && inquiries.length > 0 && (
+                {tab === "Leads" && leads.length > 0 && (
                   <span style={{ marginLeft: 6, background: "#EFF6FF", color: "#3B82F6", fontSize: 11, fontWeight: 700, padding: "1px 7px", borderRadius: 20 }}>
-                    {inquiries.length}
+                    {leads.length}
                   </span>
                 )}
               </button>
@@ -369,7 +369,7 @@ export default function Inbox() {
               {filtered.map((item) => {
                 const isExpanded = expandedId === item._id;
                 const thumb = imgSrc(item.thumbnail);
-                const canExpand = item.type === "Inquiry" && isSeller;
+                const canExpand = item.type === "Lead" && isSeller;
 
                 return (
                   <div key={item._id + item.type} style={{
@@ -432,11 +432,11 @@ export default function Inbox() {
                       </div>
                     </div>
 
-                    {/* Expanded thread (seller + inquiry only) */}
+                    {/* Expanded thread (seller + lead only) */}
                     {canExpand && isExpanded && (
                       <MessageThread
                         messages={item.messages}
-                        inquiryId={item._id}
+                        leadId={item._id}
                         onReplySent={(updated) => handleReplySent(item._id, updated)}
                       />
                     )}

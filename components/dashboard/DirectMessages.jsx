@@ -57,7 +57,7 @@ export default function DirectMessages() {
 
   const fetchThreads = useCallback(async () => {
     try {
-      const res = await apiClient.get("/inquiries");
+      const res = await apiClient.get("/leads");
       const data = res.data?.data;
       setThreads(Array.isArray(data) ? data : []);
     } catch {
@@ -76,7 +76,7 @@ export default function DirectMessages() {
     if (!selected) return;
     const id = setInterval(async () => {
       try {
-        const res = await apiClient.get(`/inquiries/${selected}`);
+        const res = await apiClient.get(`/leads/${selected}`);
         if (res.data?.data) {
           setSelectedThread(res.data.data);
           setThreads((prev) =>
@@ -97,7 +97,7 @@ export default function DirectMessages() {
     setThreadLoading(true);
     setInput("");
     try {
-      const res = await apiClient.get(`/inquiries/${thread._id}`);
+      const res = await apiClient.get(`/leads/${thread._id}`);
       setSelectedThread(res.data?.data || thread);
     } catch {
       setSelectedThread(thread);
@@ -125,7 +125,7 @@ export default function DirectMessages() {
       messages: [...(prev?.messages || []), optimistic],
     }));
     try {
-      const res = await apiClient.post(`/inquiries/${selected}/message`, { content: text });
+      const res = await apiClient.post(`/leads/${selected}/message`, { content: text });
       if (res.data?.data) {
         setSelectedThread(res.data.data);
         setThreads((prev) =>

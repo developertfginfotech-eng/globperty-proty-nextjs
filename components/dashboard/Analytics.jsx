@@ -99,7 +99,7 @@ export default function Analytics() {
   // ListingAnalytics state
   const [properties, setProperties] = useState([]);
   const [savesMap, setSavesMap] = useState({});
-  const [inquiriesMap, setInquiriesMap] = useState({});
+  const [leadsMap, setLeadsMap] = useState({});
 
   // Market Intelligence state
   const [marketCity, setMarketCity] = useState("Dubai");
@@ -122,7 +122,7 @@ export default function Analytics() {
     Promise.allSettled([
       apiClient.get("/property/agent/properties"),
       apiClient.get("/favorites/my-properties"),
-      apiClient.get("/inquiries"),
+      apiClient.get("/leads"),
     ]).then(([propsRes, favsRes, inqRes]) => {
       const rawProps = propsRes.status === "fulfilled" ? propsRes.value.data : null;
       const props = Array.isArray(rawProps)
@@ -141,13 +141,13 @@ export default function Analytics() {
       const rawInqs = inqRes.status === "fulfilled" ? inqRes.value.data : null;
       const inqs = Array.isArray(rawInqs)
         ? rawInqs
-        : Array.isArray(rawInqs?.inquiries)
-        ? rawInqs.inquiries
+        : Array.isArray(rawInqs?.leads)
+        ? rawInqs.leads
         : Array.isArray(rawInqs?.data)
         ? rawInqs.data
         : [];
 
-      // ── Analytics: saves & inquiries per property ──
+      // ── Analytics: saves & leads per property ──
       const sm = {};
       favs.forEach((f) => {
         const pid = f.propertyId?._id || f.propertyId || f._id;
@@ -162,7 +162,7 @@ export default function Analytics() {
 
       setProperties(props);
       setSavesMap(sm);
-      setInquiriesMap(im);
+      setLeadsMap(im);
     }).finally(() => setLoading(false));
   }, []);
 
@@ -246,7 +246,7 @@ export default function Analytics() {
 
   const totalViews = properties.reduce((s, p) => s + (p.viewCount || 0), 0);
   const totalSaves = Object.values(savesMap).reduce((s, v) => s + v, 0);
-  const totalInquiries = Object.values(inquiriesMap).reduce((s, v) => s + v, 0);
+  const totalLeads = Object.values(leadsMap).reduce((s, v) => s + v, 0);
   const maxViews = Math.max(...properties.map((p) => p.viewCount || 0), 1);
 
   return (
@@ -283,7 +283,7 @@ export default function Analytics() {
                   { label: "Total Listings",  value: properties.length, color: "#3B82F6", bg: "#EFF6FF" },
                   { label: "Total Views",      value: totalViews,        color: "#f0822d", bg: "#FFF7ED" },
                   { label: "Total Saves",      value: totalSaves,        color: "#8B5CF6", bg: "#F5F3FF" },
-                  { label: "Total Inquiries",  value: totalInquiries,    color: "#10B981", bg: "#ECFDF5" },
+                  { label: "Total Leads",  value: totalLeads,    color: "#10B981", bg: "#ECFDF5" },
                 ].map((s) => (
                   <div key={s.label} style={{
                     background: s.bg,
@@ -313,7 +313,7 @@ export default function Analytics() {
                     const id = p._id;
                     const title = p.propertyName || p.title || "Untitled";
                     const saves = savesMap[id] || 0;
-                    const inquiries = inquiriesMap[id] || 0;
+                    const leadCount = leadsMap[id] || 0;
                     const views = p.viewCount || 0;
                     const viewPct = maxViews > 0 ? Math.round((views / maxViews) * 100) : 0;
                     const photo = imgSrc(p.images?.[0]);
@@ -343,7 +343,7 @@ export default function Analytics() {
                           <div style={{ display: "flex", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
                             <StatBox label="Views"     value={views}     icon="👁" />
                             <StatBox label="Saves"     value={saves}     icon="❤️" />
-                            <StatBox label="Inquiries" value={inquiries} icon="💬" />
+                            <StatBox label="Leads" value={leadCount} icon="💬" />
                           </div>
 
                           <div style={{ marginBottom: 10 }}>

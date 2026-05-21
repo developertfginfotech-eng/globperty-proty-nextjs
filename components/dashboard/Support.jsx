@@ -33,7 +33,7 @@ const FAQS = [
   },
   {
     q: "How do I contact a buyer or seller directly?",
-    a: "Use the inquiry form on any property page to contact the seller. Sellers can respond via the Inquiries section. For urgent matters, use the contact info on the property detail page.",
+    a: "Use the lead form on any property page to contact the seller. Sellers can respond via the Leads section. For urgent matters, use the contact info on the property detail page.",
   },
 ];
 

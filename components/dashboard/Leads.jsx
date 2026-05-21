@@ -9,8 +9,9 @@ function formatDate(dateStr) {
 
 function InteractionChip({ label }) {
   const styles = {
-    Inquiry: { bg: "#EFF6FF", color: "#3B82F6" },
-    Saved: { bg: "#F5F3FF", color: "#8B5CF6" },
+    Lead:     { bg: "#EFF6FF", color: "#3B82F6" },
+    Saved:    { bg: "#F5F3FF", color: "#8B5CF6" },
+    Assigned: { bg: "#DCFCE7", color: "#16A34A" },
   };
   const s = styles[label] || { bg: "#F3F4F6", color: "#6B7280" };
   return (
@@ -45,74 +46,32 @@ export default function Leads() {
 
     Promise.allSettled([
       apiClient.get("/property/agent/properties"),
-      apiClient.get("/inquiries"),
-      apiClient.get("/favorites/my-properties"),
-    ]).then(([propsRes, inqRes, favsRes]) => {
+      apiClient.get("/leads"),
+    ]).then(([propsRes, leadsRes]) => {
       const rawProps = propsRes.status === "fulfilled" ? propsRes.value.data : null;
       const props = Array.isArray(rawProps) ? rawProps : (Array.isArray(rawProps?.properties) ? rawProps.properties : []);
-
-      const rawInqs = inqRes.status === "fulfilled" ? inqRes.value.data : null;
-      const inqs = Array.isArray(rawInqs) ? rawInqs : (Array.isArray(rawInqs?.inquiries) ? rawInqs.inquiries : (Array.isArray(rawInqs?.data) ? rawInqs.data : []));
-
-      const rawFavs = favsRes.status === "fulfilled" ? favsRes.value.data : null;
-      const favs = Array.isArray(rawFavs) ? rawFavs : (Array.isArray(rawFavs?.favorites) ? rawFavs.favorites : []);
-
       setPropertyCount(props.length);
 
-      // Build a map of propertyId -> propertyName
-      const propNameMap = {};
-      props.forEach((p) => { propNameMap[p._id] = p.propertyName || p.title || "Untitled"; });
+      const rawLeads = leadsRes.status === "fulfilled" ? leadsRes.value.data : null;
+      const assignedLeads = Array.isArray(rawLeads)
+        ? rawLeads
+        : (Array.isArray(rawLeads?.leads) ? rawLeads.leads : (Array.isArray(rawLeads?.data) ? rawLeads.data : []));
 
-      // Merge leads by email/buyerId
-      const leadsMap = {};
-
-      const getKey = (item) => {
-        const buyer = item.buyerId || item.userId || item.user;
-        if (typeof buyer === "object" && buyer !== null) return buyer.email || buyer._id;
-        return buyer || item.email || "unknown";
-      };
-
-      inqs.forEach((inq) => {
-        const key = getKey(inq);
-        const buyer = inq.buyerId || inq.userId || inq.user || {};
-        const pid = inq.propertyId?._id || inq.propertyId;
-        if (!leadsMap[key]) {
-          leadsMap[key] = {
-            key,
-            name: buyer.name || buyer.fullName || inq.name || "Unknown",
-            email: buyer.email || inq.email || key,
-            propertyName: propNameMap[pid] || inq.propertyId?.propertyName || "—",
-            interactions: [],
-            lastSeen: inq.createdAt,
-          };
-        }
-        if (!leadsMap[key].interactions.includes("Inquiry")) {
-          leadsMap[key].interactions.push("Inquiry");
-        }
-        if (inq.createdAt > leadsMap[key].lastSeen) leadsMap[key].lastSeen = inq.createdAt;
+      const mapped = assignedLeads.map((l) => {
+        const buyer = l.buyerId || {};
+        return {
+          key: l._id,
+          name: buyer.name || l.inquirerName || "Unknown",
+          email: buyer.email || l.inquirerEmail || "—",
+          propertyName: l.propertyTitle || l.propertyId?.propertyName || l.propertyId?.title || "—",
+          city: l.propertyId?.city || "",
+          firstMessage: l.messages?.[0]?.content || "—",
+          assignedAt: l.assignedAt,
+          lastSeen: l.updatedAt || l.createdAt,
+        };
       });
 
-      favs.forEach((fav) => {
-        const key = getKey(fav);
-        const buyer = fav.buyerId || fav.userId || fav.user || {};
-        const pid = fav.propertyId?._id || fav.propertyId;
-        if (!leadsMap[key]) {
-          leadsMap[key] = {
-            key,
-            name: buyer.name || buyer.fullName || "Unknown",
-            email: buyer.email || key,
-            propertyName: propNameMap[pid] || fav.propertyId?.propertyName || "—",
-            interactions: [],
-            lastSeen: fav.createdAt,
-          };
-        }
-        if (!leadsMap[key].interactions.includes("Saved")) {
-          leadsMap[key].interactions.push("Saved");
-        }
-        if (fav.createdAt > leadsMap[key].lastSeen) leadsMap[key].lastSeen = fav.createdAt;
-      });
-
-      setLeads(Object.values(leadsMap).sort((a, b) => (b.lastSeen || "") > (a.lastSeen || "") ? 1 : -1));
+      setLeads(mapped.sort((a, b) => (b.assignedAt || b.lastSeen || "") > (a.assignedAt || a.lastSeen || "") ? 1 : -1));
     }).finally(() => setLoading(false));
   }, []);
 
@@ -149,10 +108,10 @@ export default function Leads() {
 
         <div className="widget-box-2 wd-listing">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8, marginBottom: 20 }}>
-            <h3 className="title" style={{ margin: 0 }}>CRM Leads</h3>
+            <h3 className="title" style={{ margin: 0 }}>My Assigned Leads</h3>
             {!loading && (
               <span style={{ fontSize: 13, color: "#888", fontWeight: 500 }}>
-                {leads.length} leads across {propertyCount} {propertyCount === 1 ? "property" : "properties"}
+                {leads.length} {leads.length === 1 ? "lead" : "leads"} assigned by admin
               </span>
             )}
           </div>
@@ -161,9 +120,26 @@ export default function Leads() {
             <div style={{ padding: 40, textAlign: "center", color: "#888" }}>Loading leads…</div>
           )}
 
+          {/* Info banner */}
+          <div style={{
+            background: "#EFF6FF",
+            border: "1px solid #BFDBFE",
+            borderRadius: 8,
+            padding: "10px 14px",
+            marginBottom: 16,
+            fontSize: 13,
+            color: "#1D4ED8",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+          }}>
+            <span style={{ fontSize: 16 }}>ℹ️</span>
+            Leads are assigned to you by the admin. Contact support if you need more leads.
+          </div>
+
           {!loading && leads.length === 0 && (
             <div style={{ padding: 40, textAlign: "center", color: "#888" }}>
-              No leads yet. Leads appear when buyers inquire or save your properties.
+              No leads assigned to you yet. Admin will assign leads to you.
             </div>
           )}
 
@@ -173,11 +149,10 @@ export default function Leads() {
                 <table>
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Email</th>
+                      <th>Buyer</th>
                       <th>Property</th>
-                      <th>Interactions</th>
-                      <th>Last Activity</th>
+                      <th>Message</th>
+                      <th>Assigned On</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -199,20 +174,24 @@ export default function Leads() {
                                 {(lead.name || "?")[0].toUpperCase()}
                               </span>
                             </div>
-                            <span style={{ fontWeight: 600, fontSize: 13, color: "#1a2332" }}>{lead.name}</span>
+                            <div>
+                              <div style={{ fontWeight: 600, fontSize: 13, color: "#1a2332" }}>{lead.name}</div>
+                              <div style={{ fontSize: 11, color: "#888" }}>{lead.email}</div>
+                            </div>
                           </div>
                         </td>
                         <td>
-                          <span style={{ fontSize: 13, color: "#555" }}>{lead.email}</span>
+                          <div style={{ fontSize: 13, color: "#333", fontWeight: 500 }}>{lead.propertyName}</div>
+                          {lead.city && <div style={{ fontSize: 11, color: "#888" }}>{lead.city}</div>}
                         </td>
                         <td>
-                          <span style={{ fontSize: 13, color: "#333", fontWeight: 500 }}>{lead.propertyName}</span>
+                          <span style={{ fontSize: 13, color: "#555", display: "block", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {lead.firstMessage}
+                          </span>
                         </td>
                         <td>
-                          {lead.interactions.map((i) => <InteractionChip key={i} label={i} />)}
-                        </td>
-                        <td>
-                          <span style={{ fontSize: 13, color: "#888" }}>{formatDate(lead.lastSeen)}</span>
+                          <InteractionChip label="Assigned" />
+                          <div style={{ fontSize: 11, color: "#888", marginTop: 3 }}>{formatDate(lead.assignedAt || lead.lastSeen)}</div>
                         </td>
                       </tr>
                     ))}

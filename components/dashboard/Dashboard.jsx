@@ -245,7 +245,7 @@ function SellerDashboard({ role, kycStatus }) {
   const [stats, setStats] = useState({ totalProperties: 0, totalFavorites: 0, totalReviews: 0 });
   const [pendingCount, setPendingCount] = useState(0);
   const [favorites, setFavorites] = useState([]);
-  const [inquiries, setInquiries] = useState([]);
+  const [leads, setLeads] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -255,14 +255,14 @@ function SellerDashboard({ role, kycStatus }) {
       apiClient.get("/dashboard/stats"),
       getAgentProperties(),
       apiClient.get("/favorites"),
-      apiClient.get("/inquiries"),
+      apiClient.get("/leads"),
       apiClient.get("/reviews/my-properties"),
       apiClient.get("/notifications"),
     ]).then(([statsRes, propsRes, favsRes, inqRes, revRes, notifRes]) => {
       if (statsRes.status === "fulfilled") setStats(statsRes.value.data.stats || {});
       if (propsRes.status === "fulfilled") setPendingCount(propsRes.value.filter((p) => p.status === "pending").length);
       if (favsRes.status === "fulfilled") setFavorites(favsRes.value.data.favorites || []);
-      if (inqRes.status === "fulfilled") setInquiries((inqRes.value.data.data || []).slice(0, 4));
+      if (inqRes.status === "fulfilled") setLeads((inqRes.value.data.data || []).slice(0, 4));
       if (revRes.status === "fulfilled") setReviews((revRes.value.data.reviews || []).slice(0, 5));
       if (notifRes.status === "fulfilled") {
         const raw = notifRes.value.data;
@@ -427,25 +427,25 @@ function SellerDashboard({ role, kycStatus }) {
             </div>
             {loading ? (
               <div style={{ padding: 16, color: "#888", fontSize: 13 }}>Loading…</div>
-            ) : inquiries.length === 0 ? (
+            ) : leads.length === 0 ? (
               <div style={{ padding: 16, color: "#888", fontSize: 13 }}>No messages yet.</div>
             ) : (
               <ul className="list-mess">
-                {inquiries.map((inq) => (
-                  <li key={inq._id} className="mess-item">
+                {leads.map((lead) => (
+                  <li key={lead._id} className="mess-item">
                     <div className="user-box">
                       <div className="avatar">
                         <div style={{ width: 51, height: 51, borderRadius: "50%", background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 18, color: "#555" }}>
-                          {(inq.inquirerName || "?")[0].toUpperCase()}
+                          {(lead.inquirerName || "?")[0].toUpperCase()}
                         </div>
                       </div>
                       <div className="content">
-                        <div className="name fw-6">{inq.inquirerName || "Guest"}</div>
-                        <span className="caption-2 text-variant-3">{timeAgo(inq.createdAt)}</span>
+                        <div className="name fw-6">{lead.inquirerName || "Guest"}</div>
+                        <span className="caption-2 text-variant-3">{timeAgo(lead.createdAt)}</span>
                       </div>
                     </div>
                     <p style={{ fontSize: 13, color: "#555", marginTop: 6, lineHeight: 1.5 }}>
-                      {inq.message?.slice(0, 100)}{inq.message?.length > 100 ? "…" : ""}
+                      {lead.message?.slice(0, 100)}{lead.message?.length > 100 ? "…" : ""}
                     </p>
                   </li>
                 ))}

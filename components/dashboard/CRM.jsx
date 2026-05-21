@@ -13,11 +13,11 @@ const STATUS_COLORS = {
   "Lost":            { bg:"#FEF2F2", color:"#EF4444", dot:"#EF4444" },
 };
 const SOURCE_COLORS = {
-  "Inquiry": { bg:"#EFF6FF", color:"#3B82F6" },
-  "Saved":   { bg:"#F5F3FF", color:"#8B5CF6" },
-  "Visit":   { bg:"#FFF7ED", color:"#f0822d" },
-  "Offer":   { bg:"#ECFDF5", color:"#10B981" },
-  "Manual":  { bg:"#F3F4F6", color:"#6B7280" },
+  "Lead":   { bg:"#EFF6FF", color:"#3B82F6" },
+  "Saved":  { bg:"#F5F3FF", color:"#8B5CF6" },
+  "Visit":  { bg:"#FFF7ED", color:"#f0822d" },
+  "Offer":  { bg:"#ECFDF5", color:"#10B981" },
+  "Manual": { bg:"#F3F4F6", color:"#6B7280" },
 };
 
 const EMAIL_TEMPLATES = [
@@ -205,7 +205,7 @@ function AddLeadModal({ onClose, onAdd }) {
           <div>
             <label style={labelStyle}>Source</label>
             <select value={form.source} onChange={set("source")} style={{ ...inputStyle, appearance:"none" }}>
-              {["Manual","Inquiry","Referral","Social Media","Walk-in","Cold Call"].map((s) => <option key={s}>{s}</option>)}
+              {["Manual","Lead","Referral","Social Media","Walk-in","Cold Call"].map((s) => <option key={s}>{s}</option>)}
             </select>
           </div>
           <div>
@@ -528,7 +528,7 @@ function EnquiryInbox() {
 
   useEffect(() => {
     Promise.allSettled([
-      apiClient.get("/inquiries"),
+      apiClient.get("/leads"),
       apiClient.get("/tours/my-tours"),
       apiClient.get("/offers/received"),
     ]).then(([inqRes, tourRes, offerRes]) => {
@@ -537,7 +537,7 @@ function EnquiryInbox() {
       const offers = (offerRes.status==="fulfilled" ? (offerRes.value.data?.data || offerRes.value.data) : []) || [];
 
       const merged = [
-        ...(Array.isArray(inqs) ? inqs : []).map((i) => ({ ...i, _type:"Inquiry", _at: i.updatedAt || i.createdAt })),
+        ...(Array.isArray(inqs) ? inqs : []).map((i) => ({ ...i, _type:"Lead", _at: i.updatedAt || i.createdAt })),
         ...(Array.isArray(tours) ? tours : []).map((t) => ({ ...t, _type:"Visit", _at: t.updatedAt || t.createdAt })),
         ...(Array.isArray(offers) ? offers : []).map((o) => ({ ...o, _type:"Offer", _at: o.updatedAt || o.createdAt })),
       ].sort((a,b) => new Date(b._at) - new Date(a._at));
@@ -550,7 +550,7 @@ function EnquiryInbox() {
     if (!replyText.trim()) return;
     setReplying(true);
     try {
-      await apiClient.post(`/inquiries/${id}/message`, { content: replyText });
+      await apiClient.post(`/leads/${id}/message`, { content: replyText });
       setReplyText("");
       setReplyId(null);
     } catch {}
@@ -558,21 +558,21 @@ function EnquiryInbox() {
   };
 
   const filtered = filter === "All" ? items : items.filter((i) => i._type === filter);
-  const typeCounts = { Inquiry: 0, Visit: 0, Offer: 0 };
+  const typeCounts = { Lead: 0, Visit: 0, Offer: 0 };
   items.forEach((i) => { typeCounts[i._type] = (typeCounts[i._type]||0) + 1; });
 
-  const typeColors = { Inquiry:"#3B82F6", Visit:"#f0822d", Offer:"#10B981" };
-  const typeBgs   = { Inquiry:"#EFF6FF", Visit:"#FFF7ED", Offer:"#ECFDF5" };
+  const typeColors = { Lead:"#3B82F6", Visit:"#f0822d", Offer:"#10B981" };
+  const typeBgs   = { Lead:"#EFF6FF", Visit:"#FFF7ED", Offer:"#ECFDF5" };
 
   if (loading) return <div style={{ padding:60, textAlign:"center", color:"#aaa" }}>Loading inbox…</div>;
 
   return (
     <>
       <div style={{ display:"flex", gap:8, marginBottom:20, flexWrap:"wrap" }}>
-        {["All","Inquiry","Visit","Offer"].map((t) => (
+        {["All","Lead","Visit","Offer"].map((t) => (
           <button key={t} onClick={() => setFilter(t)}
             style={{ padding:"8px 18px", borderRadius:20, border:"none", fontSize:13, fontWeight:700, cursor:"pointer", background: filter===t?"#f0822d":"#f3f4f6", color: filter===t?"#fff":"#555" }}>
-            {t === "Inquiry" ? "Lead" : t} {t!=="All" && `(${typeCounts[t]||0})`}
+            {t} {t!=="All" && `(${typeCounts[t]||0})`}
           </button>
         ))}
       </div>
@@ -591,7 +591,7 @@ function EnquiryInbox() {
           const isExpanded = replyId === item._id;
 
           let who = "", what = "", status = "", lastMsg = "";
-          if (item._type === "Inquiry") {
+          if (item._type === "Lead") {
             who = item.inquirerName || item.buyerId?.name || "Buyer";
             what = item.propertyId?.propertyName || item.propertyTitle || "Property";
             status = item.status || "open";
@@ -629,7 +629,7 @@ function EnquiryInbox() {
                 <span style={{ fontSize:11, fontWeight:600, padding:"4px 12px", borderRadius:20, flexShrink:0, background:statusBg, color:statusColor, textTransform:"capitalize" }}>{status}</span>
               </div>
 
-              {isExpanded && item._type === "Inquiry" && (
+              {isExpanded && item._type === "Lead" && (
                 <div style={{ borderTop:"1px solid #f0f0f0", padding:"14px 18px", background:"#fafafa" }}>
                   {(item.messages||[]).slice(-4).map((m, i) => (
                     <div key={i} style={{ marginBottom:10, display:"flex", gap:10, alignItems:"flex-start" }}>
@@ -778,14 +778,14 @@ export default function CRM() {
   useEffect(() => {
     Promise.allSettled([
       apiClient.get("/property/agent/properties"),
-      apiClient.get("/inquiries"),
+      apiClient.get("/leads"),
       apiClient.get("/favorites/my-properties"),
       apiClient.get("/tours/my-tours"),
       apiClient.get("/offers/received"),
       apiClient.get("/leads/meta"),
     ]).then(([propsRes, inqRes, favsRes, toursRes, offersRes, metaRes]) => {
       const props = extractArr(propsRes, ["properties","data"]);
-      const inqs  = extractArr(inqRes,  ["data","inquiries"]);
+      const inqs  = extractArr(inqRes,  ["data","leads"]);
       const favs  = extractArr(favsRes, ["favorites","data"]);
       const tours = extractArr(toursRes,["tours","data"]);
       const offrs = extractArr(offersRes,["data","offers"]);
@@ -806,7 +806,7 @@ export default function CRM() {
         const t = item.updatedAt || item.createdAt;
         if (t > leadsMap[key].lastSeen) leadsMap[key].lastSeen = t;
       };
-      inqs.forEach((i)  => addLead(i, "Inquiry"));
+      inqs.forEach((i)  => addLead(i, "Lead"));
       favs.forEach((f)  => addLead(f, "Saved"));
       tours.forEach((t) => addLead(t, "Visit"));
       offrs.forEach((o) => addLead(o, "Offer"));
