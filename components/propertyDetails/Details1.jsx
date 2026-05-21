@@ -49,11 +49,11 @@ export default function Details1({ property }) {
               <PropertyNearby />
             </div>
             <div className="wg-property mb-0 box-comment">
-              <Reviews propertyId={property?._id} />
+              <Reviews propertyId={property?._id || property?.id} />
             </div>
           </div>
           <div className="col-xl-4 col-lg-5">
-            <Sidebar agent={property?.agent || property?.agentId} propertyId={property?._id} />
+            <Sidebar agent={property?.agent || property?.agentId} propertyId={property?._id || property?.id} />
           </div>
         </div>
       </div>
