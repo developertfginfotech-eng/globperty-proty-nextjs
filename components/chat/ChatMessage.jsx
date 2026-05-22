@@ -1,4 +1,5 @@
 "use client";
+import { renderMarkdown } from "@/utils/renderMarkdown";
 
 export default function ChatMessage({ message }) {
   const isUser = message.role === "user";
@@ -27,7 +28,7 @@ export default function ChatMessage({ message }) {
         fontSize: 14, lineHeight: 1.5,
         boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
       }}>
-        <p style={{ margin: 0, whiteSpace: "pre-wrap" }}>{message.content}</p>
+        <div style={{ margin: 0 }}>{isUser ? message.content : renderMarkdown(message.content)}</div>
         <span style={{ display: "block", fontSize: 11, marginTop: 6, opacity: 0.7 }}>
           {new Date(message.timestamp).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
         </span>

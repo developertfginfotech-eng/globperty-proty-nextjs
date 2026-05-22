@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { chatAPI } from '@/utils/chatApi';
 import { aiAPI } from '@/utils/aiApi';
+import { renderMarkdown } from '@/utils/renderMarkdown';
 import Link from 'next/link';
 
 const QUICK_ACTIONS = [
@@ -130,19 +131,6 @@ function buildListingUrl(filters) {
   return `/grid-full-3-col?${p.toString()}`;
 }
 
-function renderText(content) {
-  return content.split('\n').map((line, i, arr) => {
-    const html = line
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em style="color:#eb6753">$1</em>');
-    return (
-      <span key={i}>
-        <span dangerouslySetInnerHTML={{ __html: html }} />
-        {i < arr.length - 1 && <br />}
-      </span>
-    );
-  });
-}
 
 export default function GlobpertyCopilot() {
   const sessionId = useRef(`copilot_${Date.now()}`).current;
@@ -460,7 +448,7 @@ export default function GlobpertyCopilot() {
                     : '0 2px 12px rgba(0,0,0,0.07)',
                   border: msg.isError ? '1px solid #ffd6d6' : 'none',
                 }}>
-                  {renderText(msg.content)}
+                  {renderMarkdown(msg.content)}
                 </div>
 
                 {/* Property Cards */}
