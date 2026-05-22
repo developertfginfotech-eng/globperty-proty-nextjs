@@ -139,14 +139,38 @@ const POPULAR_SEARCHES = [
 ];
 
 const POPULAR_GUIDES = [
-  "How to Buy Property in Dubai as Indian","Portugal Golden Visa Guide 2025","Turkey Citizenship by Investment",
-  "Can Foreigners Buy in Malaysia","Best Areas to Invest in Dubai","Rental Yield Dubai Marina",
-  "Cyprus Permanent Residency Guide","Student Housing in Sydney","Malta Residency Programme 2025",
-  "Philippines Property Foreign Buyers","Hungary Guest Investor Visa","NRI Buying Property Abroad Guide",
-  "Latvia EU Residency via Property","Airbnb Investment Dubai 2025","Off-Plan Property Dubai Guide",
-  "Property Tax in Portugal Explained","Best Cities to Invest in Turkey","Student Accommodation Melbourne",
-  "Buy Property in Lisbon as Foreigner","ROI Buying Property in Cyprus","Cost of Living in Dubai for Indians",
-  "Toronto Condo Investment Guide","Malaysia MM2H Visa 2025","How to Get UAE Golden Visa",
+  [
+    { label: "How to Buy Property in Dubai", href: "/blog-grid" },
+    { label: "Buying Property in Portugal", href: "/blog-grid" },
+    { label: "Cyprus Permanent Residency", href: "/blog-grid" },
+    { label: "Best Areas to Invest in Dubai", href: "/blog-grid" },
+    { label: "International Property Investment", href: "/blog-grid" },
+    { label: "Expat Guide — Living in Portugal", href: "/blog-grid" },
+  ],
+  [
+    { label: "Portugal Golden Visa 2025", href: "/blog-grid" },
+    { label: "Buying Property in Turkey", href: "/blog-grid" },
+    { label: "Malta Residency Programme", href: "/blog-grid" },
+    { label: "Dubai Rental Yield by Area 2025", href: "/blog-grid" },
+    { label: "Getting a Mortgage Abroad", href: "/home-loan-process" },
+    { label: "Best Countries to Retire Abroad", href: "/blog-grid" },
+  ],
+  [
+    { label: "Turkey Citizenship by Investment", href: "/blog-grid" },
+    { label: "Buying Property in Australia", href: "/blog-grid" },
+    { label: "Hungary Guest Investor Visa", href: "/blog-grid" },
+    { label: "Airbnb Investment Dubai 2025", href: "/blog-grid" },
+    { label: "Cost of Living in Dubai", href: "/blog-grid" },
+    { label: "Student Housing in Australia", href: "/blog-grid" },
+  ],
+  [
+    { label: "UAE Golden Visa Guide", href: "/blog-grid" },
+    { label: "Buying Property in Canada", href: "/blog-grid" },
+    { label: "Latvia EU Residency Guide", href: "/blog-grid" },
+    { label: "Off-Plan Property Guide Dubai", href: "/blog-grid" },
+    { label: "Expat Guide — Living in Dubai", href: "/blog-grid" },
+    { label: "Student Housing in UK", href: "/blog-grid" },
+  ],
 ];
 
 const TRUST_BADGES = [
@@ -318,16 +342,27 @@ export default function Footer1() {
       </div>
 
       {/* Popular Guides */}
-      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "24px 40px", maxWidth: 1400, margin: "0 auto" }}>
-        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: "#6e7681", textTransform: "uppercase", marginBottom: 12 }}>Popular Guides &amp; Resources</p>
-        <p style={{ fontSize: 12, color: "#6e7681", lineHeight: 2 }}>
-          {POPULAR_GUIDES.map((g, i) => (
-            <span key={g}>
-              <a href="#" style={{ color: "#6e7681", textDecoration: "none" }}>{g}</a>
-              {i < POPULAR_GUIDES.length - 1 && <span style={{ margin: "0 8px" }}>·</span>}
-            </span>
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "32px 40px", maxWidth: 1400, margin: "0 auto" }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 20 }}>Popular Guides &amp; Resources</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0 24px" }}>
+          {POPULAR_GUIDES.map((col, ci) => (
+            <ul key={ci} style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {col.map((item, li) => (
+                <li key={li} style={{ marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#f0822d", flexShrink: 0 }} />
+                  <Link
+                    href={item.href}
+                    style={{ fontSize: 13, color: "#8b949e", textDecoration: "none", transition: "color 0.2s" }}
+                    onMouseEnter={e => e.currentTarget.style.color = "#ffffff"}
+                    onMouseLeave={e => e.currentTarget.style.color = "#8b949e"}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           ))}
-        </p>
+        </div>
       </div>
 
       {/* Trust Badges */}
