@@ -80,62 +80,34 @@ const FOR_AGENTS = [
   { label: "Partner With Us",                   href: "/partner" },
 ];
 
-const COUNTRIES = [
-  {
-    flag: "🇦🇪", name: "UAE Properties",
-    links: ["Buy Property in Dubai","Rent Property in Dubai","Apartments in Dubai Marina","Villas in Palm Jumeirah","Property in Downtown Dubai","Buy Property in Abu Dhabi","Property in Sharjah","Dubai Off-Plan Projects","Dubai Golden Visa Property","Invest in UAE Real Estate"],
-  },
-  {
-    flag: "🇵🇹", name: "Portugal Properties",
-    links: ["Buy Property in Portugal","Property in Lisbon","Property in Porto","Algarve Property for Sale","Portugal Golden Visa Property","Madeira Property","Holiday Homes in Portugal","Apartments in Lisbon","Invest in Portugal Real Estate","Portugal Property for Indians"],
-  },
-  {
-    flag: "🇹🇷", name: "Turkey Properties",
-    links: ["Buy Property in Turkey","Property in Istanbul","Apartments in Antalya","Villas in Bodrum","Turkey Citizenship Property","Property in Izmir","Beachfront Property Turkey","Off-Plan in Istanbul","Invest in Turkey Real Estate","Turkey Property for Indians"],
-  },
-  {
-    flag: "🇦🇺", name: "Australia Properties",
-    links: ["Buy Property in Australia","Property in Sydney","Property in Melbourne","Apartments in Brisbane","Perth Property for Sale","Student Housing Sydney","Student Housing Melbourne","Investment Property Australia","Rent in Sydney","NRI Property in Australia"],
-  },
-  {
-    flag: "🇺🇸", name: "USA Properties",
-    links: ["Buy Property in USA","Property in Miami","Property in New York","Property in Los Angeles","Texas Real Estate","Student Housing in USA","Condos in Miami Beach","Invest in US Real Estate","Florida Property for Sale","NRI Property in USA"],
-  },
-  {
-    flag: "🇨🇦", name: "Canada Properties",
-    links: ["Buy Property in Canada","Property in Toronto","Property in Vancouver","Calgary Real Estate","Montreal Property","Student Housing Toronto","Student Housing Vancouver","Invest in Canada Real Estate","NRI Property in Canada","Condos in Toronto"],
-  },
-  {
-    flag: "🇨🇾", name: "Cyprus Properties",
-    links: ["Buy Property in Cyprus","Property in Limassol","Property in Paphos","Nicosia Real Estate","Cyprus Residency Property","Larnaca Property","Beachfront Cyprus Property","Villas in Cyprus","Invest in Cyprus","Cyprus Property for Indians"],
-  },
-  {
-    flag: "🇲🇹", name: "Malta Properties",
-    links: ["Buy Property in Malta","Property in Sliema","Property in St Julian's","Valletta Real Estate","Malta Residency Property","Gozo Property for Sale","Apartments in Malta","Invest in Malta","Malta Property for Indians","Holiday Homes Malta"],
-  },
-  {
-    flag: "🇲🇾", name: "Malaysia Properties",
-    links: ["Buy Property in Malaysia","Property in Kuala Lumpur","Property in Penang","Johor Bahru Real Estate","Malaysia MM2H Property","Langkawi Property","Student Housing Malaysia","Condos in KL","Invest in Malaysia","Malaysia Property for Indians"],
-  },
-  {
-    flag: "🇵🇭", name: "Philippines Properties",
-    links: ["Buy Property in Philippines","Property in Manila","Property in Cebu","Davao Real Estate","Condos in BGC Manila","Boracay Property","Makati Property","Invest in Philippines","Holiday Homes Philippines","Rental Property Manila"],
-  },
-  {
-    flag: "🇭🇺", name: "Hungary Properties",
-    links: ["Buy Property in Hungary","Property in Budapest","Hungary Guest Investor Visa","Apartments in Budapest","Invest in Hungary","Budapest Investment Property","Hungary Property for Indians","Student Housing Budapest","Commercial Property Hungary","Holiday Homes Hungary"],
-  },
-  {
-    flag: "🇱🇻", name: "Latvia Properties",
-    links: ["Buy Property in Latvia","Property in Riga","Jurmala Property for Sale","Latvia Residency Property","Apartments in Riga","Invest in Latvia","Latvia Property for Indians","Beach Property Latvia","Commercial Property Riga","EU Residency via Latvia"],
-  },
+const COUNTRY_CARDS = [
+  { flag: "🇦🇪", name: "Dubai, UAE",    desc: "8.2% avg yield · 0% tax · 200K+ new residents/yr", badge: "6–9% Yield",   badgeColor: "#16a34a", trending: true,  href: "/countries/uae" },
+  { flag: "🇵🇹", name: "Portugal",      desc: "+48% prices in 5yrs · 63% of Lisbon sales are foreign", badge: "Golden Visa",  badgeColor: "#2563eb", trending: true,  href: "/countries/portugal" },
+  { flag: "🇹🇷", name: "Turkey",        desc: "Full citizenship from $400K · 60K+ foreign sales 2024",  badge: "Citizenship",  badgeColor: "#ea580c", trending: true,  href: "/countries/turkey" },
+  { flag: "🇨🇾", name: "Cyprus",        desc: "EU PR from €300K · lowest threshold in Europe",           badge: "EU Residency", badgeColor: "#7c3aed", trending: false, href: "/countries/cyprus" },
+  { flag: "🇦🇺", name: "Australia",     desc: "Record migration 2024 · Sydney & Melbourne booming",      badge: "Top Liveable", badgeColor: "#7c3aed", trending: false, href: "/countries/australia" },
+  { flag: "🇲🇾", name: "Malaysia",      desc: "MM2H visa · affordable living · English spoken",           badge: "5–7% Yield",   badgeColor: "#16a34a", trending: false, href: "/countries/malaysia" },
+  { flag: "🇲🇹", name: "Malta",         desc: "EU English-speaking island · MPRP programme",             badge: "EU Residency", badgeColor: "#7c3aed", trending: false, href: "/countries/malta" },
+  { flag: "🇵🇭", name: "Philippines",   desc: "6%+ GDP growth · beach & city investment options",        badge: "6–9% Yield",   badgeColor: "#16a34a", trending: false, href: "/countries/philippines" },
+  { flag: "🇭🇺", name: "Hungary",       desc: "New EU visa from €250K · flat 15% income tax",            badge: "New GIV",      badgeColor: "#ea580c", trending: false, href: "/countries/hungary" },
+  { flag: "🇨🇦", name: "Canada",        desc: "World's top immigration destination · Toronto rising",    badge: "High Demand",  badgeColor: "#7c3aed", trending: false, href: "/countries/canada" },
+  { flag: "🇺🇸", name: "USA",           desc: "Miami · NYC · LA — global wealth magnet",                 badge: "Global Hub",   badgeColor: "#ea580c", trending: false, href: "/countries/usa" },
+  { flag: "🇱🇻", name: "Latvia",        desc: "EU residency · Riga undervalued · €250K entry",           badge: "EU Residency", badgeColor: "#7c3aed", trending: false, href: "/countries/latvia" },
 ];
 
-const POPULAR_SEARCHES = [
-  "Apartments Abroad","Villas for Sale","Golden Visa Properties","Beachfront Homes",
-  "Student Accommodation","Holiday Lets","Off-Plan Properties","Luxury Penthouses",
-  "NRI Investment","Commercial Property","Airbnb Properties","Residency by Investment",
-  "Land & Plots","Townhouses","New Launches 2025",
+const COUNTRY_PILLS = [
+  { flag: "🇦🇪", name: "UAE",         href: "/countries/uae" },
+  { flag: "🇺🇸", name: "USA",         href: "/countries/usa" },
+  { flag: "🇵🇹", name: "Portugal",    href: "/countries/portugal" },
+  { flag: "🇨🇦", name: "Canada",      href: "/countries/canada" },
+  { flag: "🇦🇺", name: "Australia",   href: "/countries/australia" },
+  { flag: "🇹🇷", name: "Turkey",      href: "/countries/turkey" },
+  { flag: "🇨🇾", name: "Cyprus",      href: "/countries/cyprus" },
+  { flag: "🇲🇹", name: "Malta",       href: "/countries/malta" },
+  { flag: "🇭🇺", name: "Hungary",     href: "/countries/hungary" },
+  { flag: "🇱🇻", name: "Latvia",      href: "/countries/latvia" },
+  { flag: "🇵🇭", name: "Philippines", href: "/countries/philippines" },
+  { flag: "🇲🇾", name: "Malaysia",    href: "/countries/malaysia" },
 ];
 
 const POPULAR_GUIDES = [
@@ -173,18 +145,24 @@ const POPULAR_GUIDES = [
   ],
 ];
 
-const TRUST_BADGES = [
-  { icon: "✅", text: "Verified Agents & Developers" },
-  { icon: "🌍", text: "12 Countries · 40+ Cities" },
-  { icon: "🔍", text: "AI-Powered Search" },
-  { icon: "🪪", text: "Golden Visa Experts" },
-  { icon: "🎓", text: "Student Housing Specialists" },
-  { icon: "🔒", text: "Secure & GDPR Compliant" },
-  { icon: "💬", text: "24/7 AI Support" },
-  { icon: "🏛", text: "Globperty LLC · USA" },
+const TRUST_ITEMS = [
+  "Verified Agents & Developers",
+  "12 Countries · 40+ Cities",
+  "AI-Powered Property Search",
+  "Golden Visa Experts",
+  "Free for Buyers",
+  "24/7 AI Support",
+  "Globperty LLC · USA",
 ];
 
-const LEGAL_LINKS = ["Privacy Policy","Terms of Use","Cookie Policy","Disclaimer","GDPR Compliance","Sitemap","Accessibility"];
+const LEGAL_LINKS = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Use",   href: "/terms" },
+  { label: "Cookie Policy",  href: "/cookies" },
+  { label: "Disclaimer",     href: "/disclaimer" },
+  { label: "GDPR",           href: "/gdpr" },
+  { label: "Sitemap",        href: "/sitemap" },
+];
 
 export default function Footer1() {
   const [email, setEmail] = useState("");
@@ -230,19 +208,24 @@ export default function Footer1() {
             <p style={{ fontSize: 13, color: "#8b949e", lineHeight: 1.7, marginBottom: 20 }}>
               Your global real estate intelligence platform. Buy, sell, rent and invest in properties across 12 countries — powered by AI and deep market knowledge.
             </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
-              {[{icon:"💼",label:"LinkedIn"},{icon:"📘",label:"Facebook"},{icon:"📸",label:"Instagram"},{icon:"▶️",label:"YouTube"},{icon:"💬",label:"WhatsApp"},{icon:"✖",label:"Twitter/X"}].map(s => (
-                <a key={s.label} href="#" style={{ display: "flex", alignItems: "center", gap: 5, background: "#1a3050", border: "1px solid #1a3050", borderRadius: 6, padding: "5px 10px", fontSize: 12, color: "#c9d1d9", textDecoration: "none" }}>
-                  <span>{s.icon}</span>{s.label}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 20 }}>
+              {[
+                { icon: "icon-linked", href: "#" },
+                { icon: "icon-fb",     href: "#" },
+                { icon: "icon-ins",    href: "#" },
+                { icon: "icon-X",      href: "#" },
+              ].map((s, i) => (
+                <a key={i} href={s.href} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 36, height: 36, background: "#1a3050", border: "1px solid #243b55", borderRadius: 8, color: "#c9d1d9", fontSize: 14, textDecoration: "none" }}>
+                  <i className={s.icon} />
                 </a>
               ))}
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <a href="#" style={{ display: "flex", alignItems: "center", gap: 8, background: "#1a3050", border: "1px solid #1a3050", borderRadius: 8, padding: "8px 14px", fontSize: 12, color: "#8b949e", textDecoration: "none" }}>
-                <span>📱</span> App Store — Coming Soon
+              <a href="#" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#1a3050", border: "1px solid #243b55", borderRadius: 8, padding: "8px 14px", fontSize: 12, color: "#c9d1d9", textDecoration: "none" }}>
+                <i className="icon-apple" style={{ fontSize: 16 }} /> App Store
               </a>
-              <a href="#" style={{ display: "flex", alignItems: "center", gap: 8, background: "#1a3050", border: "1px solid #1a3050", borderRadius: 8, padding: "8px 14px", fontSize: 12, color: "#8b949e", textDecoration: "none" }}>
-                <span>🤖</span> Google Play — Coming Soon
+              <a href="#" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#1a3050", border: "1px solid #243b55", borderRadius: 8, padding: "8px 14px", fontSize: 12, color: "#c9d1d9", textDecoration: "none" }}>
+                <i className="icon-google-play" style={{ fontSize: 16 }} /> Google Play
               </a>
             </div>
           </div>
@@ -308,35 +291,34 @@ export default function Footer1() {
         </div>
       </div>
 
-      {/* Country Grid */}
-      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "40px 40px", maxWidth: 1400, margin: "0 auto" }}>
-        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 32 }}>
-          Browse Properties by Country &amp; City — All Destinations
+      {/* Country Destination Cards */}
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "40px 40px 32px", maxWidth: 1400, margin: "0 auto" }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 24 }}>
+          Where People Are Moving &amp; Buying in 2025
         </p>
-        <div className="glb-footer-countries-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "32px 24px" }}>
-          {COUNTRIES.map(c => (
-            <div key={c.name}>
-              <h6 style={{ color: "#fff", fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
-                {c.flag} {c.name}
-              </h6>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                {c.links.map(l => (
-                  <li key={l} style={{ marginBottom: 5 }}>
-                    <a href="#" style={{ fontSize: 12, color: "#6e7681", textDecoration: "none" }}>{l}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 12, marginBottom: 32 }}>
+          {COUNTRY_CARDS.map(c => (
+            <Link key={c.name} href={c.href} style={{ textDecoration: "none", position: "relative", background: "#112240", border: "1px solid #1a3050", borderRadius: 10, padding: "14px 12px", display: "block" }}>
+              {c.trending && (
+                <span style={{ position: "absolute", top: -1, right: 10, background: "#f0822d", color: "#fff", fontSize: 9, fontWeight: 700, padding: "2px 7px", borderRadius: "0 0 6px 6px", letterSpacing: 0.5 }}>Trending</span>
+              )}
+              <div style={{ fontSize: 22, marginBottom: 6 }}>{c.flag}</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", marginBottom: 4 }}>{c.name}</div>
+              <div style={{ fontSize: 11, color: "#6e7681", lineHeight: 1.5, marginBottom: 8 }}>{c.desc}</div>
+              <span style={{ fontSize: 10, fontWeight: 700, color: "#fff", background: c.badgeColor, padding: "2px 8px", borderRadius: 4 }}>{c.badge}</span>
+            </Link>
           ))}
         </div>
-      </div>
 
-      {/* Popular Searches */}
-      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "28px 40px", maxWidth: 1400, margin: "0 auto" }}>
-        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: "#6e7681", textTransform: "uppercase", marginBottom: 14 }}>Popular Searches:</p>
+        {/* Country Pills */}
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 12 }}>
+          Browse Properties by Country
+        </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-          {POPULAR_SEARCHES.map(s => (
-            <a key={s} href="#" style={{ fontSize: 12, color: "#8b949e", border: "1px solid #1a3050", borderRadius: 20, padding: "5px 14px", textDecoration: "none", whiteSpace: "nowrap" }}>{s}</a>
+          {COUNTRY_PILLS.map(p => (
+            <Link key={p.name} href={p.href} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#112240", border: "1px solid #1a3050", borderRadius: 20, padding: "6px 14px", fontSize: 13, color: "#c9d1d9", textDecoration: "none" }}>
+              <span>{p.flag}</span>{p.name}
+            </Link>
           ))}
         </div>
       </div>
@@ -365,50 +347,61 @@ export default function Footer1() {
         </div>
       </div>
 
-      {/* Trust Badges */}
-      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "20px 40px", maxWidth: 1400, margin: "0 auto" }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 32px" }}>
-          {TRUST_BADGES.map(b => (
-            <div key={b.text} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#8b949e" }}>
-              <span>{b.icon}</span><span>{b.text}</span>
+      {/* AI Property Assistant Bar */}
+      <div style={{ background: "#0a1628", borderTop: "1px solid #1a3050", borderBottom: "1px solid #1a3050", padding: "18px 40px" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 34, height: 34, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 }}>✨</div>
+              <span style={{ fontWeight: 700, color: "#fff", fontSize: 14 }}>AI Property Assistant</span>
+              <span style={{ color: "#8b949e", fontSize: 13 }}>— ask anything about buying or investing globally</span>
             </div>
-          ))}
+            <div style={{ display: "flex", flex: 1, minWidth: 280, gap: 8, alignItems: "center", marginLeft: "auto" }}>
+              <input
+                type="text"
+                placeholder="e.g. Which country gives best yield under $300K?"
+                style={{ flex: 1, padding: "9px 14px", borderRadius: 8, border: "1px solid #1a3050", background: "#112240", color: "#c9d1d9", fontSize: 13, outline: "none" }}
+              />
+              <Link href="/copilot" style={{ padding: "9px 18px", borderRadius: 8, background: "#2563eb", color: "#fff", fontWeight: 700, fontSize: 13, textDecoration: "none", whiteSpace: "nowrap" }}>
+                Ask AI →
+              </Link>
+            </div>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {["Best Golden Visa for me?","Dubai vs Portugal","Highest yield 2025","Where should I invest $500K?"].map(q => (
+              <Link key={q} href={`/copilot?q=${encodeURIComponent(q)}`} style={{ fontSize: 12, color: "#8b949e", border: "1px solid #1a3050", borderRadius: 20, padding: "4px 12px", textDecoration: "none" }}>
+                {q}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Quick Nav Bar */}
-      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "16px 40px", maxWidth: 1400, margin: "0 auto" }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 0", alignItems: "center" }}>
-          {[
-            { label: "Properties", href: "/listings" },
-            { label: "Countries", href: "/countries/uae" },
-            { label: "Guides", href: "/blog-grid" },
-            { label: "Visas", href: "/contact" },
-            { label: "Tools", href: "/compare" },
-            { label: "Finance", href: "/home-loan-process" },
-            { label: "Events", href: "/contact" },
-            { label: "Agents", href: "/agency-grid" },
-            { label: "Contact", href: "/contact" },
-          ].map((item, i, arr) => (
-            <span key={item.label} style={{ display: "flex", alignItems: "center" }}>
-              <a href={item.href} style={{ fontSize: 12, color: "#8b949e", textDecoration: "none", fontWeight: 500 }}>{item.label}</a>
-              {i < arr.length - 1 && <span style={{ margin: "0 10px", color: "#1a3050" }}>·</span>}
+      {/* Trust Bar */}
+      <div style={{ borderTop: "1px solid #1a3050", padding: "14px 40px" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "8px 28px", alignItems: "center" }}>
+          {TRUST_ITEMS.map(item => (
+            <span key={item} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 12, color: "#8b949e" }}>
+              <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: "#22c55e", flexShrink: 0 }} />
+              {item}
             </span>
           ))}
         </div>
       </div>
 
       {/* Legal / Bottom bar */}
-      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "20px 40px", maxWidth: 1400, margin: "0 auto" }}>
-        <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 4 }}>© 2025 Globperty LLC. All rights reserved. Registered in the United States of America.</p>
-        <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 16 }}>Globperty is an independent property portal. All listings are provided by verified third-party agents and developers. Globperty does not provide legal, financial or immigration advice.</p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 0", alignItems: "center" }}>
-          {LEGAL_LINKS.map((l, i) => (
-            <span key={l} style={{ display: "flex", alignItems: "center" }}>
-              <a href="#" style={{ fontSize: 12, color: "#6e7681", textDecoration: "none" }}>{l}</a>
-              {i < LEGAL_LINKS.length - 1 && <span style={{ margin: "0 10px", color: "#1a3050" }}>·</span>}
-            </span>
-          ))}
+      <div style={{ borderTop: "1px solid #1a3050", padding: "20px 40px" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+          <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 2 }}>© 2025 Globperty LLC. All rights reserved. Registered in the United States of America.</p>
+          <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 14 }}>Independent property portal. All listings provided by verified third-party agents. Globperty does not provide legal, financial or immigration advice.</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 0", alignItems: "center" }}>
+            {LEGAL_LINKS.map((l, i) => (
+              <span key={l.label} style={{ display: "flex", alignItems: "center" }}>
+                <Link href={l.href} style={{ fontSize: 12, color: "#6e7681", textDecoration: "none" }}>{l.label}</Link>
+                {i < LEGAL_LINKS.length - 1 && <span style={{ margin: "0 10px", color: "#1a3050" }}>·</span>}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
