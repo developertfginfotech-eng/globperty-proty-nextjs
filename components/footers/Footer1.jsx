@@ -3,81 +3,57 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 const PROPERTIES = [
-  { label: "Buy Property Abroad",        href: "/listings?status=buy" },
-  { label: "Rent Property Abroad",       href: "/listings?status=rent" },
-  { label: "Sell Your Property",         href: "/add-property" },
-  { label: "Short Stay / Holiday Let",   href: "/listings?type=short-stay" },
-  { label: "Student Housing",            href: "/listings?type=student" },
-  { label: "Shared / Roommate Housing",  href: "/listings?type=shared" },
-  { label: "New Projects & Off-Plan",    href: "/project-list" },
-  { label: "Luxury Properties",          href: "/listings?type=luxury" },
-  { label: "Commercial Property",        href: "/listings?type=Office" },
-  { label: "Apartments & Flats",         href: "/listings?type=Apartment" },
-  { label: "Villas & Houses",            href: "/listings?type=Villa" },
-  { label: "Townhouses",                 href: "/listings?type=townhouse" },
-  { label: "Penthouses",                 href: "/listings?type=Penthouse" },
-  { label: "Land & Plots",               href: "/listings?type=land" },
-  { label: "Beachfront Properties",      href: "/listings?type=beachfront" },
-  { label: "Investment Properties",      href: "/listings?purpose=invest" },
+  { label: "Buy Property",            href: "/listings?status=buy" },
+  { label: "Rent Property",           href: "/listings?status=rent" },
+  { label: "Sell Property",           href: "/add-property" },
+  { label: "Short Stay / Holiday Let",href: "/listings?type=short-stay" },
+  { label: "Student Housing",         href: "/listings?type=student" },
+  { label: "New Projects & Off-Plan", href: "/project-list" },
+  { label: "Golden Visa Properties",  href: "/listings?purpose=golden-visa" },
+  { label: "Luxury Properties",       href: "/listings?type=luxury" },
+  { label: "Commercial Property",     href: "/listings?type=Office" },
 ];
 
 const KNOWLEDGE_BASE = [
-  { label: "Country Investment Guides",  href: "/blog-grid" },
-  { label: "City & Area Guides",         href: "/blog-grid" },
-  { label: "Property Market Reports",    href: "/blog-grid" },
-  { label: "Golden Visa Guides",         href: "/blog-grid" },
-  { label: "Legal & Ownership Rules",    href: "/blog-grid" },
-  { label: "Tax Guides by Country",      href: "/blog-grid" },
-  { label: "Expat Living Guides",        href: "/blog-grid" },
-  { label: "Student Housing Guide",      href: "/blog-grid" },
-  { label: "Airbnb Investment Guide",    href: "/blog-grid" },
-  { label: "Off-Plan Buying Guide",      href: "/blog-grid" },
-  { label: "Mortgage Guides",            href: "/home-loan-process" },
-  { label: "NRI Property Guide",         href: "/blog-grid" },
-  { label: "Relocation Guide",           href: "/blog-grid" },
-  { label: "Commercial Property Guide",  href: "/blog-grid" },
-  { label: "News & Market Updates",      href: "/blog-grid" },
-  { label: "Property Glossary",          href: "/blog-grid" },
+  { label: "Country Guides",          href: "/blog-grid" },
+  { label: "Golden Visa Guides",      href: "/blog-grid" },
+  { label: "Investment Guides",       href: "/blog-grid" },
+  { label: "Buying Guides",           href: "/blog-grid" },
+  { label: "Legal & Ownership",       href: "/blog-grid" },
+  { label: "Tax Guides",              href: "/blog-grid" },
+  { label: "Market Reports",          href: "/blog-grid" },
+  { label: "Expat Guides",            href: "/blog-grid" },
+  { label: "Student Housing",         href: "/blog-grid" },
+  { label: "News & Updates",          href: "/blog-grid" },
 ];
 
 const TOOLS_FINANCE = [
-  { label: "Rental Yield Calculator",    href: "/rental-yield" },
-  { label: "ROI & Growth Estimator",     href: "/roi-calculator" },
-  { label: "Mortgage Calculator",        href: "/home-loan-process" },
-  { label: "Currency Converter",         href: "/currency-converter" },
-  { label: "Visa Eligibility Checker",   href: "/contact" },
-  { label: "Airbnb Income Estimator",    href: "/rental-yield" },
-  { label: "Cost of Buying Calculator",  href: "/cost-of-buying" },
-  { label: "Country Comparison Tool",    href: "/compare" },
-  { label: "Neighbourhood Explorer",     href: "/listings" },
-  { label: "AI Property Assistant",      href: "/copilot" },
-  { label: "Mortgage Partners",          href: "/finance-partner" },
-  { label: "Compare Mortgages",          href: "/home-loan-process" },
-  { label: "Property Insurance",         href: "/contact" },
-  { label: "Legal Services",             href: "/legal-partner" },
-  { label: "Tax Advisory",               href: "/contact" },
-  { label: "Islamic Finance",            href: "/contact" },
+  { label: "Rental Yield Calculator", href: "/rental-yield" },
+  { label: "ROI Estimator",           href: "/roi-calculator" },
+  { label: "Mortgage Calculator",     href: "/home-loan-process" },
+  { label: "Currency Converter",      href: "/currency-converter" },
+  { label: "Visa Eligibility Checker",href: "/contact" },
+  { label: "Airbnb Income Estimator", href: "/rental-yield" },
+  { label: "Cost of Buying Calculator",href: "/cost-of-buying" },
+  { label: "Country Comparison Tool", href: "/compare" },
+  { label: "AI Property Assistant",   href: "/copilot" },
 ];
 
 const COMPANY = [
-  { label: "About Globperty",  href: "/about" },
-  { label: "Our Story",        href: "/about" },
-  { label: "Careers",          href: "/contact" },
-  { label: "Press & Media",    href: "/contact" },
-  { label: "Blog",             href: "/blog-grid" },
-  { label: "Contact Us",       href: "/contact" },
-  { label: "FAQ",              href: "/faq" },
+  { label: "About Globperty", href: "/about" },
+  { label: "Contact Us",      href: "/contact" },
+  { label: "FAQ",             href: "/faq" },
+  { label: "Careers",         href: "/contact" },
+  { label: "Press & Media",   href: "/contact" },
+  { label: "Virtual Expos",   href: "/virtual-expo" },
 ];
 
 const FOR_AGENTS = [
-  { label: "List Your Properties", badge: "FREE", href: "/list-your-properties" },
-  { label: "Create Agent Profile",              href: "/my-profile" },
-  { label: "Agent Dashboard",                   href: "/dashboard" },
-  { label: "Buy Leads",                         href: "/buy-leads" },
-  { label: "Developer Packages",                href: "/developer-packages" },
-  { label: "Exhibit at Expo",                   href: "/virtual-expo" },
-  { label: "Advertise",                         href: "/advertise" },
-  { label: "Partner With Us",                   href: "/partner" },
+  { label: "List Property",        badge: "FREE", href: "/list-your-properties" },
+  { label: "Agent Sign Up",                       href: "/my-profile" },
+  { label: "Developer Packages",                  href: "/developer-packages" },
+  { label: "Advertise",                           href: "/advertise" },
+  { label: "Partner With Us",                     href: "/partner" },
 ];
 
 const COUNTRY_CARDS = [
@@ -169,9 +145,61 @@ export default function Footer1() {
 
   return (
     <footer style={{ background: "#0d1b2a", color: "#c9d1d9", fontFamily: "inherit" }}>
+      <style>{`
+        .glb-footer-newsletter { background: #112240; border-bottom: 1px solid #1a3050; padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+        .glb-footer-newsletter-form { display: flex; gap: 10px; align-items: center; }
+        .glb-footer-newsletter-form input { width: 260px; }
+        .glb-footer-cols { display: grid; grid-template-columns: 220px 1fr 1fr 1fr 1fr; gap: 32px; }
+        .glb-footer-inner { padding: 40px 40px 32px; max-width: 1400px; margin: 0 auto; }
+        .glb-footer-section { max-width: 1400px; margin: 0 auto; padding: 32px 40px; }
+        .glb-footer-section + .glb-footer-section { border-top: 1px solid #1a3050; }
+        .glb-country-cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+        .glb-country-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+        .glb-guides-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 24px; }
+        .glb-ai-bar { padding: 18px 40px; }
+        .glb-ai-bar-inner { max-width: 1400px; margin: 0 auto; }
+        .glb-ai-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
+        .glb-ai-input-group { display: flex; flex: 1; min-width: 260px; gap: 8px; margin-left: auto; }
+        .glb-trust-bar { padding: 14px 40px; border-top: 1px solid #1a3050; }
+        .glb-trust-inner { max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px 28px; }
+        .glb-legal { padding: 20px 40px; border-top: 1px solid #1a3050; }
+        .glb-legal-inner { max-width: 1400px; margin: 0 auto; }
+        .glb-legal-links { display: flex; flex-wrap: wrap; gap: 6px 0; align-items: center; }
+
+        @media (max-width: 1199px) {
+          .glb-footer-cols { grid-template-columns: 200px 1fr 1fr 1fr 1fr; gap: 24px; }
+          .glb-country-cards { grid-template-columns: repeat(4, 1fr); }
+          .glb-footer-inner, .glb-footer-section, .glb-ai-bar, .glb-trust-bar, .glb-legal { padding-left: 24px; padding-right: 24px; }
+        }
+
+        @media (max-width: 991px) {
+          .glb-footer-cols { grid-template-columns: 1fr 1fr; gap: 24px; }
+          .glb-country-cards { grid-template-columns: repeat(3, 1fr); }
+          .glb-guides-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 767px) {
+          .glb-footer-newsletter { flex-direction: column; align-items: flex-start; padding: 16px 20px; }
+          .glb-footer-newsletter-form { width: 100%; flex-direction: column; }
+          .glb-footer-newsletter-form input { width: 100%; }
+          .glb-footer-cols { grid-template-columns: 1fr 1fr; gap: 20px; }
+          .glb-footer-inner, .glb-footer-section, .glb-ai-bar, .glb-trust-bar, .glb-legal { padding-left: 16px; padding-right: 16px; }
+          .glb-country-cards { grid-template-columns: repeat(2, 1fr); }
+          .glb-guides-grid { grid-template-columns: repeat(2, 1fr); }
+          .glb-ai-row { flex-direction: column; align-items: flex-start; }
+          .glb-ai-input-group { width: 100%; margin-left: 0; }
+          .glb-ai-input-group input { flex: 1; min-width: 0; }
+        }
+
+        @media (max-width: 480px) {
+          .glb-footer-cols { grid-template-columns: 1fr; }
+          .glb-country-cards { grid-template-columns: repeat(2, 1fr); }
+          .glb-guides-grid { grid-template-columns: 1fr; }
+        }
+      `}</style>
 
       {/* Newsletter Banner */}
-      <div className="glb-footer-newsletter" style={{ background: "#112240", borderBottom: "1px solid #1a3050", padding: "20px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+      <div className="glb-footer-newsletter">
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
             <span style={{ fontSize: 20 }}>🌍</span>
@@ -179,7 +207,7 @@ export default function Footer1() {
           </div>
           <p style={{ margin: 0, fontSize: 13, color: "#8b949e" }}>Get weekly investment insights, Golden Visa updates &amp; exclusive property deals — free</p>
         </div>
-        <div className="glb-footer-newsletter-form" style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        <div className="glb-footer-newsletter-form">
           <input
             type="email"
             placeholder="Enter your email address"
@@ -197,8 +225,8 @@ export default function Footer1() {
       </div>
 
       {/* Main Footer Columns */}
-      <div className="glb-footer-section" style={{ padding: "48px 40px 32px", maxWidth: 1400, margin: "0 auto" }}>
-        <div className="glb-footer-cols" style={{ display: "grid", gridTemplateColumns: "260px 1fr 1fr 1fr 1fr", gap: 40 }}>
+      <div className="glb-footer-inner">
+        <div className="glb-footer-cols">
 
           {/* Brand column */}
           <div>
@@ -292,11 +320,11 @@ export default function Footer1() {
       </div>
 
       {/* Country Destination Cards */}
-      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "40px 40px 32px", maxWidth: 1400, margin: "0 auto" }}>
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050" }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 24 }}>
           Where People Are Moving &amp; Buying in 2025
         </p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 12, marginBottom: 32 }}>
+        <div className="glb-country-cards" style={{ marginBottom: 28 }}>
           {COUNTRY_CARDS.map(c => (
             <Link key={c.name} href={c.href} style={{ textDecoration: "none", position: "relative", background: "#112240", border: "1px solid #1a3050", borderRadius: 10, padding: "14px 12px", display: "block" }}>
               {c.trending && (
@@ -314,7 +342,7 @@ export default function Footer1() {
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 12 }}>
           Browse Properties by Country
         </p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        <div className="glb-country-pills">
           {COUNTRY_PILLS.map(p => (
             <Link key={p.name} href={p.href} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#112240", border: "1px solid #1a3050", borderRadius: 20, padding: "6px 14px", fontSize: 13, color: "#c9d1d9", textDecoration: "none" }}>
               <span>{p.flag}</span>{p.name}
@@ -324,9 +352,9 @@ export default function Footer1() {
       </div>
 
       {/* Popular Guides */}
-      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050", padding: "32px 40px", maxWidth: 1400, margin: "0 auto" }}>
+      <div className="glb-footer-section" style={{ borderTop: "1px solid #1a3050" }}>
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 20 }}>Popular Guides &amp; Resources</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0 24px" }}>
+        <div className="glb-guides-grid">
           {POPULAR_GUIDES.map((col, ci) => (
             <ul key={ci} style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {col.map((item, li) => (
@@ -348,15 +376,15 @@ export default function Footer1() {
       </div>
 
       {/* AI Property Assistant Bar */}
-      <div style={{ background: "#0a1628", borderTop: "1px solid #1a3050", borderBottom: "1px solid #1a3050", padding: "18px 40px" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 10 }}>
+      <div className="glb-ai-bar" style={{ background: "#0a1628", borderTop: "1px solid #1a3050", borderBottom: "1px solid #1a3050" }}>
+        <div className="glb-ai-bar-inner">
+          <div className="glb-ai-row">
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 34, height: 34, borderRadius: "50%", background: "linear-gradient(135deg,#7c3aed,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 }}>✨</div>
               <span style={{ fontWeight: 700, color: "#fff", fontSize: 14 }}>AI Property Assistant</span>
               <span style={{ color: "#8b949e", fontSize: 13 }}>— ask anything about buying or investing globally</span>
             </div>
-            <div style={{ display: "flex", flex: 1, minWidth: 280, gap: 8, alignItems: "center", marginLeft: "auto" }}>
+            <div className="glb-ai-input-group">
               <input
                 type="text"
                 placeholder="e.g. Which country gives best yield under $300K?"
@@ -378,8 +406,8 @@ export default function Footer1() {
       </div>
 
       {/* Trust Bar */}
-      <div style={{ borderTop: "1px solid #1a3050", padding: "14px 40px" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "8px 28px", alignItems: "center" }}>
+      <div className="glb-trust-bar">
+        <div className="glb-trust-inner">
           {TRUST_ITEMS.map(item => (
             <span key={item} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 12, color: "#8b949e" }}>
               <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: "#22c55e", flexShrink: 0 }} />
@@ -390,11 +418,11 @@ export default function Footer1() {
       </div>
 
       {/* Legal / Bottom bar */}
-      <div style={{ borderTop: "1px solid #1a3050", padding: "20px 40px" }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+      <div className="glb-legal">
+        <div className="glb-legal-inner">
           <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 2 }}>© 2025 Globperty LLC. All rights reserved. Registered in the United States of America.</p>
           <p style={{ fontSize: 12, color: "#6e7681", marginBottom: 14 }}>Independent property portal. All listings provided by verified third-party agents. Globperty does not provide legal, financial or immigration advice.</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 0", alignItems: "center" }}>
+          <div className="glb-legal-links">
             {LEGAL_LINKS.map((l, i) => (
               <span key={l.label} style={{ display: "flex", alignItems: "center" }}>
                 <Link href={l.href} style={{ fontSize: 12, color: "#6e7681", textDecoration: "none" }}>{l.label}</Link>

@@ -201,6 +201,8 @@ const INITIAL_FORM = {
   powerBackup: false,
   security: false,
   waterStorage: false,
+  // Media extras
+  tourUrl: "",
   // Additional info
   previousOccupancy: "",
   whoWillShow: "",
@@ -212,9 +214,14 @@ const INITIAL_FORM = {
 export default function AddProperty() {
   const router = useRouter();
   const fileInputRef = useRef(null);
+  const floorPlanInputRef = useRef(null);
+  const attachmentInputRef = useRef(null);
   const [form, setForm] = useState(INITIAL_FORM);
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [floorPlans, setFloorPlans] = useState([]);
+  const [floorPlanPreviews, setFloorPlanPreviews] = useState([]);
+  const [attachments, setAttachments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -296,6 +303,26 @@ export default function AddProperty() {
   const removeImage = (idx) => {
     setImages((prev) => prev.filter((_, i) => i !== idx));
     setPreviews((prev) => prev.filter((_, i) => i !== idx));
+  };
+
+  const handleFloorPlans = (e) => {
+    const files = Array.from(e.target.files || []).slice(0, 5);
+    setFloorPlans((prev) => [...prev, ...files].slice(0, 5));
+    setFloorPlanPreviews((prev) => [...prev, ...files.map((f) => URL.createObjectURL(f))].slice(0, 5));
+  };
+
+  const removeFloorPlan = (idx) => {
+    setFloorPlans((prev) => prev.filter((_, i) => i !== idx));
+    setFloorPlanPreviews((prev) => prev.filter((_, i) => i !== idx));
+  };
+
+  const handleAttachments = (e) => {
+    const files = Array.from(e.target.files || []).slice(0, 5);
+    setAttachments((prev) => [...prev, ...files].slice(0, 5));
+  };
+
+  const removeAttachment = (idx) => {
+    setAttachments((prev) => prev.filter((_, i) => i !== idx));
   };
 
   const handleAiAnalyzeImages = async () => {
@@ -397,6 +424,8 @@ export default function AddProperty() {
         }
       });
       images.forEach((img) => fd.append("images", img));
+      floorPlans.forEach((f) => fd.append("floorPlans", f));
+      attachments.forEach((f) => fd.append("attachments", f));
 
       await addProperty(fd);
       setSuccess(true);
@@ -779,6 +808,75 @@ export default function AddProperty() {
               <label className="text-btn">YouTube / Vimeo URL:</label>
               <input type="text" className="form-control" placeholder="e.g. https://youtube.com/watch?v=..." value={form.videoUrl} onChange={set("videoUrl")} />
               <small style={{ color: "#888", fontSize: 12 }}>Paste a YouTube or Vimeo link. Direct video file upload is not supported.</small>
+            </fieldset>
+          </div>
+
+          {/* Floor Plans */}
+          <div className="widget-box-2 mb-20">
+            <h3 className="title">Floor Plans</h3>
+            <p style={{ fontSize: 13, color: "#888", marginBottom: 16 }}>Upload floor plan images (up to 5). Accepted: JPG, PNG, WEBP.</p>
+            <div className="box-uploadfile text-center" style={{ marginBottom: floorPlanPreviews.length > 0 ? 16 : 0 }}>
+              <div className="uploadfile">
+                <label className="tf-btn bg-color-primary pd-10 btn-upload mx-auto" style={{ cursor: "pointer" }}>
+                  <svg width={21} height={20} viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.625 14.375V17.1875C13.625 17.705 13.205 18.125 12.6875 18.125H4.5625C4.31386 18.125 4.0754 18.0262 3.89959 17.8504C3.72377 17.6746 3.625 17.4361 3.625 17.1875V6.5625C3.625 6.045 4.045 5.625 4.5625 5.625H6.125C6.54381 5.62472 6.96192 5.65928 7.375 5.72834M13.625 14.375H16.4375C16.4375 13.955 17.375 13.4375V9.375C17.375 5.65834 14.6725 2.57417 11.125 1.97834C10.7119 1.90928 10.2938 1.87472 9.875 1.875H8.3125C7.795 1.875 7.375 2.295 7.375 2.8125V5.72834M13.625 14.375H8.3125C8.06386 14.375 7.8254 14.2762 7.64959 14.1004C7.47377 13.9246 7.375 13.6861 7.375 13.4375V5.72834" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  Select Floor Plans
+                  <input ref={floorPlanInputRef} type="file" className="ip-file" accept="image/*" multiple onChange={handleFloorPlans} style={{ display: "none" }} />
+                </label>
+                <p className="file-name fw-5">or drag images here <br /><span>(Up to 5 floor plan images)</span></p>
+              </div>
+            </div>
+            {floorPlanPreviews.length > 0 && (
+              <div className="box-img-upload">
+                {floorPlanPreviews.map((src, i) => (
+                  <div key={i} className="item-upload file-delete">
+                    <img alt="floor plan" src={src} style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 8 }} />
+                    <span className="icon icon-trashcan1 remove-file" onClick={() => removeFloorPlan(i)} style={{ cursor: "pointer" }} />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* File Attachments */}
+          <div className="widget-box-2 mb-20">
+            <h3 className="title">File Attachments</h3>
+            <p style={{ fontSize: 13, color: "#888", marginBottom: 16 }}>Upload brochures, contracts or documents (up to 5 files). Accepted: PDF, DOC, DOCX.</p>
+            <div style={{ marginBottom: 16 }}>
+              <label className="tf-btn bg-color-primary pd-10 btn-upload" style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <svg width={18} height={18} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M14 2v6h6M12 18v-6M9 15l3-3 3 3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Attach Documents
+                <input ref={attachmentInputRef} type="file" accept=".pdf,.doc,.docx" multiple onChange={handleAttachments} style={{ display: "none" }} />
+              </label>
+            </div>
+            {attachments.length > 0 && (
+              <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {attachments.map((file, i) => (
+                  <li key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "#f8f9fa", borderRadius: 8, marginBottom: 8, fontSize: 13 }}>
+                    <svg width={16} height={16} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="#eb6753" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M14 2v6h6" stroke="#eb6753" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span style={{ flex: 1 }}>{file.name}</span>
+                    <span style={{ color: "#888", fontSize: 11 }}>({(file.size / 1024).toFixed(0)} KB)</span>
+                    <span onClick={() => removeAttachment(i)} style={{ cursor: "pointer", color: "#cc0000", fontWeight: 700, fontSize: 16, lineHeight: 1 }}>×</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* 360 Virtual Tour */}
+          <div className="widget-box-2 mb-20">
+            <h3 className="title">360° Virtual Tour</h3>
+            <fieldset className="box-fieldset">
+              <label className="text-btn">Virtual Tour URL:</label>
+              <input type="text" className="form-control" placeholder="e.g. https://my.matterport.com/show/?m=..." value={form.tourUrl} onChange={set("tourUrl")} />
+              <small style={{ color: "#888", fontSize: 12 }}>Paste a Matterport, Kuula, or any iframe-compatible 360° tour link.</small>
             </fieldset>
           </div>
 
