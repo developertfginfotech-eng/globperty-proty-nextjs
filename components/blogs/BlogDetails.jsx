@@ -76,91 +76,108 @@ export default function BlogDetails({ blog }) {
                   <p>0 comment</p>
                 </div>
                 <div className="meta-item flex align-center">
-                  <p>26 August, 2024</p>
+                  <p>{blog.date || "26 August, 2024"}</p>
                 </div>
               </div>
             </div>
-            <p className="fw-5 text-color-heading mb-30">
-              The housing sector has long been a focal point for investors
-              seeking stability and growth. Understanding the dynamics of
-              housing stocks and effectively trading within this sector can lead
-              to substantial gains.
-            </p>
-            <div className="image-wrap mb-30">
-              <Image
-                className="lazyload"
-                data-src="/images/blog/blog-details.jpg"
-                alt=""
-                width={840}
-                height={473}
-                src="/images/blog/blog-details.jpg"
-              />
-            </div>
-            <div className="wrap-content mb-20">
-              <h4 className="mb-18">Understanding Housing Stocks</h4>
-              <p className="mb-20">
-                Housing stocks encompass companies involved in various aspects
-                of the real estate industry, including homebuilders, developers,
-                and related service providers. Factors influencing these stocks
-                range from interest rates and economic indicators to trends in
-                homeownership rates.
-              </p>
-              <p>
-                Pay close attention to economic indicators such as employment
-                rates, GDP growth, and consumer confidence. A strong economy
-                often correlates with increased demand for housing, benefiting
-                related stocks.
-              </p>
-            </div>
-            <div className="quote">
-              <p>
-                “Lower rates can boost homebuying activity, benefiting housing
-                stocks, while higher rates may have the opposite effect.”
-              </p>
-              <p className="author">
-                said Mike Fratantoni, MBA’s chief economist.
-              </p>
-            </div>
-            <div className="group-image">
-              <div className="image-wrap">
-                <Image
-                  className="lazyload"
-                  data-src="/images/blog/blog-details-1.jpg"
-                  alt=""
-                  width={410}
-                  height={273}
-                  src="/images/blog/blog-details-1.jpg"
-                />
-              </div>
-              <div className="image-wrap">
-                <Image
-                  className="lazyload"
-                  data-src="/images/blog/blog-details-2.jpg"
-                  alt=""
-                  width={410}
-                  height={273}
-                  src="/images/blog/blog-details-2.jpg"
-                />
-              </div>
-            </div>
-            <div className="wrap-content mb-30">
-              <h4 className="mb-16 font-manrope">Identify Emerging Trends</h4>
-              <p className="mb-22">
-                Stay informed about emerging trends in the housing market, such
-                as the demand for sustainable homes, technological advancements,
-                and demographic shifts. Companies aligning with these trends may
-                present attractive investment opportunities.
-              </p>
-              <p>
-                Take a long-term investment approach if you believe in the
-                stability and growth potential of the housing sector. Look for
-                companies with solid fundamentals and a track record of success.
-                For short-term traders, capitalize on market fluctuations driven
-                by economic reports, interest rate changes, or industry-specific
-                news. Keep a close eye on earnings reports and government
-                housing data releases.
-              </p>
-            </div>
+            {blog.content ? (
+              <>
+                <div className="image-wrap mb-30">
+                  <Image
+                    className="lazyload"
+                    alt={blog.title}
+                    width={840}
+                    height={473}
+                    src={blog.imageSrc || "/images/blog/blog-details.jpg"}
+                  />
+                </div>
+                <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+              </>
+            ) : (
+              <>
+                <p className="fw-5 text-color-heading mb-30">
+                  The housing sector has long been a focal point for investors
+                  seeking stability and growth. Understanding the dynamics of
+                  housing stocks and effectively trading within this sector can lead
+                  to substantial gains.
+                </p>
+                <div className="image-wrap mb-30">
+                  <Image
+                    className="lazyload"
+                    data-src="/images/blog/blog-details.jpg"
+                    alt=""
+                    width={840}
+                    height={473}
+                    src="/images/blog/blog-details.jpg"
+                  />
+                </div>
+                <div className="wrap-content mb-20">
+                  <h4 className="mb-18">Understanding Housing Stocks</h4>
+                  <p className="mb-20">
+                    Housing stocks encompass companies involved in various aspects
+                    of the real estate industry, including homebuilders, developers,
+                    and related service providers. Factors influencing these stocks
+                    range from interest rates and economic indicators to trends in
+                    homeownership rates.
+                  </p>
+                  <p>
+                    Pay close attention to economic indicators such as employment
+                    rates, GDP growth, and consumer confidence. A strong economy
+                    often correlates with increased demand for housing, benefiting
+                    related stocks.
+                  </p>
+                </div>
+                <div className="quote">
+                  <p>
+                    "Lower rates can boost homebuying activity, benefiting housing
+                    stocks, while higher rates may have the opposite effect."
+                  </p>
+                  <p className="author">
+                    said Mike Fratantoni, MBA's chief economist.
+                  </p>
+                </div>
+                <div className="group-image">
+                  <div className="image-wrap">
+                    <Image
+                      className="lazyload"
+                      data-src="/images/blog/blog-details-1.jpg"
+                      alt=""
+                      width={410}
+                      height={273}
+                      src="/images/blog/blog-details-1.jpg"
+                    />
+                  </div>
+                  <div className="image-wrap">
+                    <Image
+                      className="lazyload"
+                      data-src="/images/blog/blog-details-2.jpg"
+                      alt=""
+                      width={410}
+                      height={273}
+                      src="/images/blog/blog-details-2.jpg"
+                    />
+                  </div>
+                </div>
+                <div className="wrap-content mb-30">
+                  <h4 className="mb-16 font-manrope">Identify Emerging Trends</h4>
+                  <p className="mb-22">
+                    Stay informed about emerging trends in the housing market, such
+                    as the demand for sustainable homes, technological advancements,
+                    and demographic shifts. Companies aligning with these trends may
+                    present attractive investment opportunities.
+                  </p>
+                  <p>
+                    Take a long-term investment approach if you believe in the
+                    stability and growth potential of the housing sector. Look for
+                    companies with solid fundamentals and a track record of success.
+                    For short-term traders, capitalize on market fluctuations driven
+                    by economic reports, interest rate changes, or industry-specific
+                    news. Keep a close eye on earnings reports and government
+                    housing data releases.
+                  </p>
+                </div>
+              </>
+            )}
             <div className="tag-wrap flex justify-between items-center">
               <div className="tags">
                 <p>Tags:</p>
@@ -413,7 +430,7 @@ export default function BlogDetails({ blog }) {
                     <div className="text-addres">
                       <p>
                         Connect with a trusted agent who knows the market inside
-                        out - whether you’re buying or selling.
+                        out - whether you're buying or selling.
                       </p>
                     </div>
                   </div>

@@ -15,16 +15,16 @@ const PROPERTIES = [
 ];
 
 const KNOWLEDGE_BASE = [
-  { label: "Country Guides",          href: "/blog-grid" },
-  { label: "Golden Visa Guides",      href: "/blog-grid" },
-  { label: "Investment Guides",       href: "/blog-grid" },
-  { label: "Buying Guides",           href: "/blog-grid" },
-  { label: "Legal & Ownership",       href: "/blog-grid" },
-  { label: "Tax Guides",              href: "/blog-grid" },
-  { label: "Market Reports",          href: "/blog-grid" },
-  { label: "Expat Guides",            href: "/blog-grid" },
-  { label: "Student Housing",         href: "/blog-grid" },
-  { label: "News & Updates",          href: "/blog-grid" },
+  { label: "Country Guides",          href: "/blog-details/101" },
+  { label: "Golden Visa Guides",      href: "/blog-details/102" },
+  { label: "Investment Guides",       href: "/blog-details/103" },
+  { label: "Buying Guides",           href: "/blog-details/104" },
+  { label: "Legal & Ownership",       href: "/blog-details/105" },
+  { label: "Tax Guides",              href: "/blog-details/106" },
+  { label: "Market Reports",          href: "/blog-details/107" },
+  { label: "Expat Guides",            href: "/blog-details/108" },
+  { label: "Student Housing",         href: "/blog-details/109" },
+  { label: "News & Updates",          href: "/blog-details/110" },
 ];
 
 const TOOLS_FINANCE = [
