@@ -338,17 +338,6 @@ export default function Footer1() {
           ))}
         </div>
 
-        {/* Country Pills */}
-        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: "#6e7681", textTransform: "uppercase", marginBottom: 12 }}>
-          Browse Properties by Country
-        </p>
-        <div className="glb-country-pills">
-          {COUNTRY_PILLS.map(p => (
-            <Link key={p.name} href={p.href} style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#112240", border: "1px solid #1a3050", borderRadius: 20, padding: "6px 14px", fontSize: 13, color: "#c9d1d9", textDecoration: "none" }}>
-              <span>{p.flag}</span>{p.name}
-            </Link>
-          ))}
-        </div>
       </div>
 
       {/* Popular Guides */}
