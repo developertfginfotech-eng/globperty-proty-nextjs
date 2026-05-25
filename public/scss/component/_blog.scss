@@ -506,6 +506,85 @@
             gap: 9px;
         }
     }
+    .article-content {
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--Text);
+        p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--Text);
+        }
+        h2, h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--Heading);
+            margin-bottom: 14px;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+        h4 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--Heading);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        ul {
+            list-style: disc;
+            padding-left: 22px;
+            margin-bottom: 16px;
+            li {
+                list-style: disc;
+                font-size: 15px;
+                line-height: 1.8;
+                color: var(--Text);
+                margin-bottom: 6px;
+                padding-left: 4px;
+            }
+        }
+        ol {
+            list-style: decimal;
+            padding-left: 22px;
+            margin-bottom: 16px;
+            li {
+                font-size: 15px;
+                line-height: 1.8;
+                color: var(--Text);
+                margin-bottom: 6px;
+                padding-left: 4px;
+            }
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px;
+            th, td {
+                padding: 9px 12px;
+                border: 1px solid var(--Line);
+                line-height: 1.5;
+                vertical-align: top;
+            }
+            thead tr {
+                background-color: var(--Color-6);
+                th {
+                    font-weight: 600;
+                    color: var(--Heading);
+                }
+            }
+            tbody tr:nth-child(even) {
+                background-color: #fafafa;
+            }
+        }
+        .wrap-content {
+            margin-bottom: 24px;
+        }
+        strong {
+            font-weight: 600;
+            color: var(--Heading);
+        }
+    }
 }
 
 .section-related-posts {

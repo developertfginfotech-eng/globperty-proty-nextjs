@@ -91,7 +91,7 @@ export default function BlogDetails({ blog }) {
                     src={blog.imageSrc || "/images/blog/blog-details.jpg"}
                   />
                 </div>
-                <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+                <div className="article-content" dangerouslySetInnerHTML={{ __html: blog.content }} />
               </>
             ) : (
               <>
