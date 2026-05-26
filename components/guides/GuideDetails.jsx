@@ -256,7 +256,7 @@ function OwnershipSection({ sec }) {
     <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
       <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
       {sec.callout && <Callout text={sec.callout.text} type={sec.callout.type} />}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+      <div className="kb-grid-2">
         {sec.cards.map((card, i) => (
           <div key={i} style={{ border: `2px solid ${card.color === "green" ? "#bbf7d0" : "#e2e8f0"}`, borderRadius: 12, padding: 22, background: card.color === "green" ? "#f0fdf4" : "#fff" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
@@ -307,8 +307,8 @@ function FeeTableSection({ sec }) {
   return (
     <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
       <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
-      <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden", marginBottom: 20 }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <div className="kb-table-scroll" style={{ marginBottom: 20 }}>
+        <table>
           <thead>
             <tr style={{ background: "#0f172a" }}>
               {["FEE / COST", "AMOUNT", "PAID TO", "WHEN"].map(h => (
@@ -340,7 +340,7 @@ function AreasSection({ sec }) {
     <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
       <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
       {/* Featured area cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 24 }}>
+      <div className="kb-grid-3">
         {sec.featured.map((area, i) => (
           <div key={i} style={{ border: "1px solid #e2e8f0", borderRadius: 12, padding: 20, background: "#fff", position: "relative" }}>
             <span style={{ background: area.badgeColor, color: "#fff", borderRadius: 6, padding: "3px 10px", fontSize: 11, fontWeight: 700, display: "inline-block", marginBottom: 12 }}>{area.badge}</span>
@@ -355,8 +355,8 @@ function AreasSection({ sec }) {
         ))}
       </div>
       {/* Data table */}
-      <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <div className="kb-table-scroll">
+        <table>
           <thead>
             <tr style={{ background: "#0f172a" }}>
               {["AREA", "STUDIO PRICE", "1BR PRICE", "GROSS YIELD", "5YR GROWTH", "BEST FOR"].map(h => (
@@ -386,7 +386,7 @@ function MortgageSection({ sec }) {
   return (
     <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
       <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <div className="kb-mortgage-grid">
         {/* Rules */}
         <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, padding: 22 }}>
           <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 14, color: "#0f172a" }}>Mortgage Rules for Non-Residents</h4>
@@ -399,11 +399,11 @@ function MortgageSection({ sec }) {
           </ul>
         </div>
         {/* Bank table */}
-        <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden" }}>
+        <div className="kb-table-scroll">
           <div style={{ padding: "12px 16px", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
             <h4 style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", margin: 0 }}>Top Banks for Foreign Buyers</h4>
           </div>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <table>
             <thead>
               <tr style={{ background: "#0f172a" }}>
                 {["BANK", "RATE FROM", "NON-RESIDENT"].map(h => (
@@ -441,7 +441,7 @@ function GoldenVisaSection({ sec }) {
         <div style={{ color: "#fbbf24", fontSize: 10, fontWeight: 800, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 8 }}>UAE GOLDEN VISA</div>
         <h3 style={{ color: "#fff", fontSize: "clamp(18px, 2.5vw, 26px)", fontWeight: 800, marginBottom: 10 }}>{sec.banner}</h3>
         <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 14, lineHeight: 1.65, marginBottom: 24 }}>{sec.bannerSub}</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+        <div className="kb-gv-stats">
           {sec.stats.map((s, i) => (
             <div key={i} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "14px 16px" }}>
               <div style={{ fontSize: "clamp(16px, 2vw, 22px)", fontWeight: 800, color: "#f97316", marginBottom: 4 }}>{s.value}</div>
@@ -463,8 +463,8 @@ function TaxSection({ sec }) {
     <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
       <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
       <Callout text={sec.callout} type="info" />
-      <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <div className="kb-table-scroll">
+        <table>
           <thead>
             <tr style={{ background: "#0f172a" }}>
               {["TAX TYPE", "RATE", "DETAIL"].map(h => (
@@ -491,7 +491,7 @@ function MistakesSection({ sec }) {
   return (
     <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
       <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+      <div className="kb-grid-2">
         <div style={{ border: "1px solid #bbf7d0", borderRadius: 12, padding: 22, background: "#f0fdf4" }}>
           <div style={{ color: "#16a34a", fontSize: 13, fontWeight: 700, marginBottom: 14 }}>✅ What Smart Buyers Do</div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
@@ -787,6 +787,28 @@ export default function GuideDetails({ blog }) {
 
   return (
     <>
+      <style>{`
+        .kb-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .kb-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+        .kb-gv-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+        .kb-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden}
+        .kb-table-scroll table{width:100%;border-collapse:collapse;min-width:500px}
+        .kb-mortgage-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        @media(max-width:991px){
+          .kb-grid-3{grid-template-columns:1fr 1fr !important}
+          .kb-mortgage-grid{grid-template-columns:1fr !important}
+        }
+        @media(max-width:767px){
+          .kb-grid-2{grid-template-columns:1fr !important}
+          .kb-grid-3{grid-template-columns:1fr !important}
+          .kb-gv-stats{grid-template-columns:1fr 1fr !important}
+          .kb-mortgage-grid{grid-template-columns:1fr !important}
+          .kb-table-scroll table{min-width:420px}
+        }
+        @media(max-width:480px){
+          .kb-gv-stats{grid-template-columns:1fr 1fr !important}
+        }
+      `}</style>
       <Hero blog={blog} cfg={cfg} />
       <TabNav tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} sections={sections} />
 
