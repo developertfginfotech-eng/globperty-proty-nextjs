@@ -563,7 +563,7 @@ function AuthorBox({ blog }) {
       <div>
         <div style={{ fontWeight: 700, fontSize: 15, color: "#0f172a", marginBottom: 2 }}>Globperty Research Team</div>
         <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 3 }}>Global Property Intelligence · Expert Reviewed</div>
-        <div style={{ fontSize: 12, color: "#f97316" }}>Last updated: {blog.date} · Verified against Dubai Land Department data</div>
+        <div style={{ fontSize: 12, color: "#f97316" }}>Last updated: {blog.date} · Verified against official government sources</div>
       </div>
     </div>
   );
@@ -810,7 +810,7 @@ export default function GuideDetails({ blog }) {
         }
       `}</style>
       <Hero blog={blog} cfg={cfg} />
-      <TabNav tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} sections={sections} />
+      {sections.length > 0 && <TabNav tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} sections={sections} />}
 
       <div style={{ background: "#f8fafc" }}>
         <div className="tf-container" style={{ paddingTop: 32, paddingBottom: 80 }}>
@@ -837,7 +837,7 @@ export default function GuideDetails({ blog }) {
                   <div style={{ background: "#fff", borderRadius: 16, padding: "32px 36px", boxShadow: "0 1px 4px rgba(0,0,0,0.05)", marginBottom: 32 }}>
                     <div className="article-content" style={{ fontSize: 15, lineHeight: 1.85, color: "#374151" }} dangerouslySetInnerHTML={{ __html: blog.content }} />
                   </div>
-                  <FAQSection sec={{ sectionLabel: "FAQ", title: "Frequently Asked Questions", faqs: [] }} />
+                  {/* no empty FAQ for HTML-only articles */}
                 </>
               )}
 
