@@ -3,271 +3,182 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { blogArticles4 } from "@/data/blogs";
+import { GUIDE_CONTENT } from "@/data/guideContent";
 
-// ─── Static data ──────────────────────────────────────────────────────────────
+// ─── Tag config (hero data per tag) ──────────────────────────────────────────
 
-const GLANCE_STATS = {
-  "Buying Guide": [
-    { value: "9 Steps", label: "Purchase Process" },
-    { value: "5–10%", label: "Acquisition Costs" },
-    { value: "4–8 wks", label: "Completion Time" },
-    { value: "75% LTV", label: "Max Mortgage" },
-  ],
-  "Country Guides": [
-    { value: "12+", label: "Countries Covered" },
-    { value: "6–9%", label: "Best Gross Yield" },
-    { value: "$80K+", label: "Lowest Entry" },
-    { value: "5", label: "Citizenship Routes" },
-  ],
-  "Golden Visa": [
-    { value: "$400K", label: "Turkey Citizenship" },
-    { value: "€300K", label: "Cyprus EU Residency" },
-    { value: "7 days", label: "Min Stay (Portugal)" },
-    { value: "2–6 mo", label: "Processing Time" },
-  ],
-  "Investment": [
-    { value: "6–9%", label: "Dubai Gross Yield" },
-    { value: "18%", label: "Turkey 5yr Growth" },
-    { value: "3", label: "Strategy Types" },
-    { value: "$80K+", label: "Min Entry Price" },
-  ],
-  "Legal & Ownership": [
-    { value: "3", label: "Ownership Types" },
-    { value: "10%", label: "Typical Deposit" },
-    { value: "4–12 wks", label: "Completion Time" },
-    { value: "$500", label: "Title Search Cost" },
-  ],
-  "Tax Guide": [
-    { value: "0%", label: "UAE Tax Rate" },
-    { value: "28%", label: "Portugal CGT" },
-    { value: "4%", label: "UAE Transfer Fee" },
-    { value: "5+", label: "Tax-Efficient Markets" },
-  ],
-  "Market Report": [
-    { value: "177K+", label: "Dubai Transactions 2024" },
-    { value: "12%", label: "Dubai Price Growth" },
-    { value: "6–9%", label: "Best Rental Yield" },
-    { value: "12", label: "Markets Tracked" },
-  ],
-  "Market Reports": [
-    { value: "177K+", label: "Dubai Transactions 2024" },
-    { value: "12%", label: "Dubai Price Growth" },
-    { value: "6–9%", label: "Best Rental Yield" },
-    { value: "12", label: "Markets Tracked" },
-  ],
-  "Expat Guide": [
-    { value: "90%+", label: "Dubai Expat Population" },
-    { value: "5 yr", label: "UAE Retirement Visa" },
-    { value: "5", label: "Top Expat Destinations" },
-    { value: "15 min", label: "Read Time" },
-  ],
-  "Student Housing": [
-    { value: "6–9%", label: "UK PBSA Yields" },
-    { value: "95–99%", label: "Typical Occupancy" },
-    { value: "$52K+", label: "Min Entry (Malaysia)" },
-    { value: "51 wks", label: "Typical Lease" },
-  ],
-  "News & Updates": [
-    { value: "14.2K", label: "Dubai March Transactions" },
-    { value: "40%", label: "Golden Visa App Growth" },
-    { value: "3–4 mo", label: "Turkey Processing Time" },
-    { value: "500+", label: "Hungary GIV Approvals" },
-  ],
+const TAG_CFG = {
+  "Buying Guide": {
+    flag: "🇦🇪", countryLabel: "United Arab Emirates",
+    glanceIcon: "🏙", glanceTitle: "DUBAI AT A GLANCE",
+    glanceRows: [
+      { label: "Foreigners Can Buy?",  value: "Yes — Freehold ✓",   color: "green" },
+      { label: "Avg Rental Yield",     value: "6–9% p.a.",          type: "badge-green" },
+      { label: "Income Tax",           value: "0% ✓",               color: "green" },
+      { label: "Capital Gains Tax",    value: "0% ✓",               color: "green" },
+      { label: "Golden Visa From",     value: "AED 2,000,000",      color: "orange" },
+      { label: "Transaction Costs",    value: "~7–8% of price",     color: "normal" },
+      { label: "Timeline to Buy",      value: "30–60 days",         color: "normal" },
+      { label: "Market Trend",         value: "📈 Bullish 2025",    type: "badge-orange" },
+    ],
+    tabs: ["Overview","Ownership Rights","Buying Process","Costs & Fees","Best Areas","Mortgage","Golden Visa","Taxes","Common Mistakes","FAQ"],
+    ctaPrimary:   { icon: "🏠", text: "Browse Dubai Properties", href: "/properties" },
+    ctaSecondary: { icon: "🎫", text: "Golden Visa Guide",        href: "/knowledge-base/102" },
+    ctaTertiary:  { icon: "🤖", text: "Ask AI Assistant",         href: "/copilot" },
+    sidebarTitle: "DUBAI QUICK FACTS", sidebarBrowseLabel: "Browse Dubai Properties", sidebarBrowseHref: "/properties",
+    aiContext: "buying, investing or living in Dubai",
+    aiSuggestions: ["Best area under AED 800K?", "Golden Visa cost?", "Mortgage options?"],
+    goldenVisa: { title: "UAE GOLDEN VISA", icon: "🎫", rows: [
+      { label: "Min Property Value", value: "AED 2,000,000", color: "orange" },
+      { label: "Visa Validity",      value: "10 Years",      color: "green"  },
+      { label: "Min. Stay Required", value: "None",          color: "green"  },
+      { label: "Family Included",    value: "Yes ✓",         color: "green"  },
+      { label: "Processing Time",    value: "~30 days",      color: "normal" },
+    ], href: "/knowledge-base/102", cta: "Full Golden Visa Guide →" },
+  },
+  "Golden Visa": {
+    flag: "🎫", countryLabel: "Global Programmes",
+    glanceIcon: "🎫", glanceTitle: "GOLDEN VISA AT A GLANCE",
+    glanceRows: [
+      { label: "Turkey Citizenship",   value: "$400,000 min",         color: "orange" },
+      { label: "Cheapest EU Route",    value: "Cyprus €300K",         type: "badge-green" },
+      { label: "Schengen Access",      value: "Yes — EU ✓",          color: "green" },
+      { label: "Family Included",      value: "Yes ✓",               color: "green" },
+      { label: "Min. Stay (Portugal)", value: "7 days/year",          color: "normal" },
+      { label: "Processing Time",      value: "2–6 months",           color: "normal" },
+      { label: "Hungary GIV",          value: "10-year permit",       color: "normal" },
+      { label: "Best For Citizenship", value: "📋 Turkey (fastest)", type: "badge-orange" },
+    ],
+    tabs: ["Overview","Programme Comparison","Requirements","Application","Benefits","Costs","Mistakes","FAQ","Related"],
+    ctaPrimary:   { icon: "🎫", text: "Check Eligibility",   href: "/contact" },
+    ctaSecondary: { icon: "🏠", text: "Browse Properties",    href: "/properties" },
+    ctaTertiary:  { icon: "🤖", text: "Ask AI Assistant",     href: "/copilot" },
+    sidebarTitle: "PROGRAMME QUICK FACTS", sidebarBrowseLabel: "Check Eligibility", sidebarBrowseHref: "/contact",
+    aiContext: "Golden Visa programmes and investment migration",
+    aiSuggestions: ["Which visa suits me?", "Fastest citizenship?", "Compare costs?"],
+    goldenVisa: null,
+  },
 };
 
-const QUICK_FACTS = {
-  "Buying Guide": [
-    { label: "Foreign Freehold Ownership", value: "Yes (freehold zones)" },
-    { label: "Min. Investment (Visa)", value: "AED 2,000,000 (~$545K)" },
-    { label: "Transfer Fee (Dubai)", value: "4% DLD" },
-    { label: "Avg. Gross Yield", value: "6–9%" },
-    { label: "Purchase Timeline", value: "4–8 weeks" },
-    { label: "Mortgage Available", value: "Yes (up to 75% LTV)" },
+const DEFAULT_CFG = {
+  flag: "🌍", countryLabel: "Global Markets",
+  glanceIcon: "📋", glanceTitle: "GUIDE AT A GLANCE",
+  glanceRows: [
+    { label: "Markets Covered",    value: "12+",             color: "normal" },
+    { label: "Best Avg Yield",     value: "6–9% p.a.",       type: "badge-green" },
+    { label: "Tax-Free Market",    value: "UAE ✓",           color: "green" },
+    { label: "Golden Visa From",   value: "AED 2,000,000",   color: "orange" },
+    { label: "Transaction Costs",  value: "5–10% of price",  color: "normal" },
+    { label: "Timeline to Buy",    value: "4–8 weeks",       color: "normal" },
+    { label: "Expert Reviewed",    value: "Yes ✓",           color: "green" },
+    { label: "Market Trend",       value: "📈 Bullish 2025", type: "badge-orange" },
   ],
-  "Golden Visa": [
-    { label: "Cheapest EU Route", value: "Cyprus €300K" },
-    { label: "Citizenship Route", value: "Turkey $400K" },
-    { label: "Portugal Min. Stay", value: "7 days/year" },
-    { label: "Processing Time", value: "2–6 months" },
-    { label: "Family Included", value: "Yes (most programs)" },
-    { label: "UAE 10-yr Visa", value: "AED 2M+ property" },
-  ],
-  "Country Guides": [
-    { label: "Top Yield Market", value: "Dubai (6–9%)" },
-    { label: "Min. Entry Price", value: "From $80K (Philippines)" },
-    { label: "EU Citizenship Route", value: "Portugal (5 yrs)" },
-    { label: "Tax-Free Markets", value: "UAE" },
-    { label: "Best 5yr Capital Growth", value: "Turkey (18% CAGR)" },
-    { label: "Most Accessible Market", value: "Philippines, Malaysia" },
-  ],
-  "Investment": [
-    { label: "Best BTL Yield", value: "Dubai 6–9%" },
-    { label: "Short-Stay Premium", value: "+2–3× long-term yield" },
-    { label: "Off-Plan Discount", value: "10–20% below market" },
-    { label: "Best 5yr Capital Growth", value: "Turkey 18% CAGR" },
-    { label: "Recommended Diversification", value: "2–3 markets" },
-    { label: "Currency Risk", value: "Low (USD-pegged UAE)" },
-  ],
-  "Legal & Ownership": [
-    { label: "Ownership Types", value: "Freehold / Leasehold / Condo" },
-    { label: "Standard Deposit", value: "10% of purchase price" },
-    { label: "Title Search Cost", value: "~$500" },
-    { label: "Completion Time", value: "4–12 weeks" },
-    { label: "Power of Attorney", value: "Available in all markets" },
-    { label: "Nominee Ownership", value: "Illegal / unenforceable" },
-  ],
-  "Tax Guide": [
-    { label: "UAE Tax (all types)", value: "Zero" },
-    { label: "Portugal Transfer Tax", value: "0–8% IMT" },
-    { label: "Portugal CGT (non-resident)", value: "28%" },
-    { label: "Turkey CGT (5yr+ hold)", value: "Zero" },
-    { label: "Cyprus Annual Property Tax", value: "Zero (since 2017)" },
-    { label: "Australia Stamp Duty", value: "4–5.5% + 7–8% surcharge" },
-  ],
+  tabs: ["Overview","Key Steps","Costs & Fees","Legal Tips","Financing","Markets","Mistakes","FAQ","Related"],
+  ctaPrimary:   { icon: "🏠", text: "Browse Properties",  href: "/properties" },
+  ctaSecondary: { icon: "🌍", text: "Compare Countries",   href: "/countries" },
+  ctaTertiary:  { icon: "🤖", text: "Ask AI Assistant",    href: "/copilot" },
+  sidebarTitle: "GUIDE QUICK FACTS", sidebarBrowseLabel: "Browse Properties", sidebarBrowseHref: "/properties",
+  aiContext: "international real estate and property investment",
+  aiSuggestions: ["Best yield areas?", "Golden Visa cost?", "Mortgage options?"],
+  goldenVisa: null,
 };
 
-const DEFAULT_QUICK_FACTS = [
-  { label: "Countries Covered", value: "12+" },
-  { label: "Avg. Gross Yield (UAE)", value: "6–9%" },
-  { label: "Best Transfer Fee", value: "4% (Dubai)" },
-  { label: "Completion Timeline", value: "4–8 weeks" },
-  { label: "Expert Reviewed", value: "Yes" },
-  { label: "Last Updated", value: "2025" },
-];
+const TITLE_KEYWORDS = ["Dubai","Portugal","Turkey","Cyprus","Malta","Australia","Malaysia","Philippines","Hungary","Canada","Latvia","UAE","Abroad","Airbnb","Golden Visa"];
 
-const FAQS_BY_TAG = {
-  "Buying Guide": [
-    { q: "Can foreigners buy freehold property in Dubai?", a: "Yes. Dubai has designated freehold zones where foreigners can purchase with full ownership rights. Popular areas include Downtown Dubai, Dubai Marina, Palm Jumeirah, and Business Bay." },
-    { q: "What are the total acquisition costs when buying abroad?", a: "Typically 5–10% above the purchase price. In Dubai: 4% DLD transfer fee + 2% agent commission + ~0.25% mortgage registration + admin fees of AED 4,000–5,000." },
-    { q: "Do I need to be in the country to complete a purchase?", a: "Not necessarily. Many markets allow completion via Power of Attorney. Your lawyer can handle the entire process, including signing at the land registry." },
-    { q: "How long does the purchase process take?", a: "Ready properties: 4–8 weeks from offer acceptance to title deed transfer. Off-plan: purchase agreement signed immediately, handover 1–3 years later." },
-    { q: "Can I get a mortgage as a foreign buyer?", a: "Yes, in most markets. UAE banks lend up to 75% LTV to non-residents. Off-plan properties often offer developer payment plans as a cost-effective alternative." },
-  ],
-  "Golden Visa": [
-    { q: "Which Golden Visa gives the fastest EU citizenship?", a: "Portugal's Golden Visa leads to EU citizenship after 5 years of legal residency with just 7 days/year minimum stay. Malta's MEIN programme can be faster but costs significantly more." },
-    { q: "Which is the most affordable Golden Visa for EU access?", a: "Cyprus Permanent Residency from €300,000 is the lowest EU threshold. Hungary's Guest Investor Visa starts from €250,000 via a real estate fund and gives Schengen residency." },
-    { q: "Which Golden Visa gives actual citizenship, not just residency?", a: "Turkey's Citizenship by Investment ($400K) grants full Turkish citizenship within 3–6 months. Portuguese Golden Visa leads to citizenship after 5 years of legal residency." },
-    { q: "Do I need to live in the country to maintain a Golden Visa?", a: "Requirements vary. UAE: no minimum stay. Portugal: 7 days/year. Hungary GIV: no minimum stay. Cyprus MPRP: no minimum stay." },
-    { q: "Can family members be included on a Golden Visa?", a: "Yes, in virtually all programmes. Spouse and financially dependent children are included at no additional investment. Some programmes also include dependent parents." },
-  ],
-};
-
-const DEFAULT_FAQS = [
-  { q: "What is the safest way to buy property internationally?", a: "Always engage an independent local lawyer — not one recommended by the agent or developer. Verify clean title, check for outstanding mortgages, and review all contracts before signing." },
-  { q: "How do I transfer money internationally for a property purchase?", a: "Use a specialist FX broker rather than a high-street bank — you can save 1–3% on large transfers. Ensure you comply with anti-money laundering requirements in both countries." },
-  { q: "What taxes will I pay when buying property abroad?", a: "Acquisition costs: transfer taxes (1.5–8%), VAT on new builds in some markets, and agent fees. Annual costs include property tax and rental income tax if you let the property." },
-  { q: "Can I get a mortgage as a foreign buyer?", a: "Yes, in most markets. UAE banks lend up to 75% LTV to non-residents; Portuguese banks 65–70%. Developer payment plans often offer better terms than local bank mortgages." },
-  { q: "How do I find a trustworthy real estate agent abroad?", a: "Use Globperty's verified agent network. All agents are reviewed for licensing compliance and track record. Look for agents who specialise in foreign buyer transactions." },
-];
-
-const TAG_TO_CATEGORY = {
-  "Country Guides": "Country Guides",
-  "Country Guide": "Country Guides",
-  "Golden Visa": "Golden Visa Guides",
-  "Investment": "Investment Guides",
-  "Buying Guide": "Buying Guides",
-  "Legal & Ownership": "Legal & Ownership",
-  "Tax Guide": "Tax Guides",
-  "Market Report": "Market Reports",
-  "Market Reports": "Market Reports",
-  "Expat Guide": "Expat Guides",
-  "Student Housing": "Student Housing",
-  "News & Updates": "News & Updates",
-};
-
-const TABS = ["Overview", "Key Steps", "Costs & Fees", "Legal Tips", "Financing", "FAQ", "Related"];
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
-function StatItem({ value, label }) {
-  return (
-    <div style={{ padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-      <div style={{ fontSize: 19, fontWeight: 800, color: "#f97316" }}>{value}</div>
-      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 2, lineHeight: 1.3 }}>{label}</div>
-    </div>
-  );
+function splitTitle(title) {
+  for (const kw of TITLE_KEYWORDS) {
+    const idx = title.indexOf(kw);
+    if (idx >= 0) return { before: title.slice(0, idx), highlight: kw, after: title.slice(idx + kw.length) };
+  }
+  return { before: title, highlight: "", after: "" };
 }
 
-function Hero({ blog }) {
-  const stats = GLANCE_STATS[blog.tag] || [
-    { value: "15 min", label: "Read Time" },
-    { value: "2025", label: "Up to Date" },
-    { value: "Expert", label: "Reviewed" },
-    { value: "Free", label: "Access" },
-  ];
-  const category = TAG_TO_CATEGORY[blog.tag] || blog.tag;
+// ─── Glance value renderer ────────────────────────────────────────────────────
 
+function GlanceVal({ row, sidebar }) {
+  const size = sidebar ? 12 : 13;
+  if (row.type === "badge-green")
+    return <span style={{ background: sidebar ? "rgba(34,197,94,0.12)" : "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.3)", color: sidebar ? "#16a34a" : "#4ade80", borderRadius: 20, padding: "2px 10px", fontSize: size - 1, fontWeight: 600 }}>{row.value}</span>;
+  if (row.type === "badge-orange")
+    return <span style={{ background: sidebar ? "rgba(249,115,22,0.1)" : "rgba(249,115,22,0.15)", border: "1px solid rgba(249,115,22,0.3)", color: sidebar ? "#ea580c" : "#fb923c", borderRadius: 20, padding: "2px 10px", fontSize: size - 1, fontWeight: 600 }}>{row.value}</span>;
+  if (row.color === "green")  return <span style={{ color: sidebar ? "#16a34a" : "#4ade80", fontSize: size, fontWeight: 700 }}>{row.value}</span>;
+  if (row.color === "orange") return <span style={{ color: sidebar ? "#ea580c" : "#fb923c", fontSize: size, fontWeight: 700 }}>{row.value}</span>;
+  return <span style={{ color: sidebar ? "#0f172a" : "#e2e8f0", fontSize: size, fontWeight: sidebar ? 600 : 500 }}>{row.value}</span>;
+}
+
+// ─── HERO ─────────────────────────────────────────────────────────────────────
+
+function Hero({ blog, cfg }) {
+  const { before, highlight, after } = splitTitle(blog.title);
   return (
-    <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", paddingTop: 36, paddingBottom: 64 }}>
+    <div style={{ background: "#0d1321", paddingTop: 32, paddingBottom: 56 }}>
       <div className="tf-container">
         {/* Breadcrumb */}
-        <div style={{ marginBottom: 24, fontSize: 13 }}>
+        <nav style={{ marginBottom: 22, fontSize: 13 }}>
           <Link href="/" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Home</Link>
-          <span style={{ color: "rgba(255,255,255,0.25)", margin: "0 8px" }}>›</span>
+          <span style={{ color: "rgba(255,255,255,0.2)", margin: "0 8px" }}>›</span>
           <Link href="/knowledge-base" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Knowledge Base</Link>
-          <span style={{ color: "rgba(255,255,255,0.25)", margin: "0 8px" }}>›</span>
-          <Link href={`/knowledge-base?category=${encodeURIComponent(category)}`} style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>{category}</Link>
-          <span style={{ color: "rgba(255,255,255,0.25)", margin: "0 8px" }}>›</span>
-          <span style={{ color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>{blog.title?.slice(0, 40)}{blog.title?.length > 40 ? "…" : ""}</span>
-        </div>
+          <span style={{ color: "rgba(255,255,255,0.2)", margin: "0 8px" }}>›</span>
+          <Link href="/knowledge-base" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Buying Guides</Link>
+          <span style={{ color: "rgba(255,255,255,0.2)", margin: "0 8px" }}>›</span>
+          <span style={{ color: "rgba(255,255,255,0.8)", fontWeight: 600 }}>{blog.title?.slice(0, 45)}{blog.title?.length > 45 ? "…" : ""}</span>
+        </nav>
 
         <div style={{ display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap" }}>
-          {/* Left content */}
+          {/* Left */}
           <div style={{ flex: 1, minWidth: 280 }}>
             {/* Badges */}
-            <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
-              <span style={{ background: "#f97316", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: 12, fontWeight: 700 }}>
-                {blog.tag}
-              </span>
-              <span style={{ border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.7)", borderRadius: 20, padding: "4px 14px", fontSize: 12 }}>
-                ★ Most Popular
-              </span>
-              <span style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.3)", color: "#4ade80", borderRadius: 20, padding: "4px 14px", fontSize: 12 }}>
-                ✓ Expert Reviewed
-              </span>
+            <div style={{ display: "flex", gap: 8, marginBottom: 22, flexWrap: "wrap" }}>
+              {[`🏠 ${blog.tag}`, `${cfg.flag} ${cfg.countryLabel}`, "⭐ Most Popular Guide"].map((b, i) => (
+                <span key={i} style={{ background: "rgba(255,255,255,0.1)", color: "#e2e8f0", borderRadius: 20, padding: "5px 14px", fontSize: 12, fontWeight: 500 }}>{b}</span>
+              ))}
             </div>
-
             {/* Title */}
-            <h1 style={{ color: "#fff", fontSize: "clamp(22px, 2.8vw, 38px)", fontWeight: 800, lineHeight: 1.25, marginBottom: 16, maxWidth: 680 }}>
-              {blog.title}
+            <h1 style={{ color: "#fff", fontSize: "clamp(26px, 3.2vw, 44px)", fontWeight: 800, lineHeight: 1.2, marginBottom: 18, maxWidth: 660 }}>
+              {before}<span style={{ color: "#f97316" }}>{highlight}</span>{after}
             </h1>
-
             {/* Description */}
-            <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.75, marginBottom: 24, maxWidth: 640 }}>
-              {blog.description}
-            </p>
-
+            <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 16, lineHeight: 1.75, marginBottom: 20, maxWidth: 600 }}>{blog.description}</p>
             {/* Meta */}
-            <div style={{ display: "flex", gap: 20, flexWrap: "wrap", marginBottom: 30, fontSize: 13 }}>
-              <span style={{ color: "rgba(255,255,255,0.45)" }}>📅 Updated {blog.date}</span>
-              <span style={{ color: "rgba(255,255,255,0.45)" }}>⏱ 12 min read</span>
-              <span style={{ color: "rgba(255,255,255,0.45)" }}>✍️ Globperty Research</span>
-              <span style={{ color: "#4ade80" }}>✓ Expert Reviewed</span>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 0, marginBottom: 30, fontSize: 13, alignItems: "center" }}>
+              {[
+                { dot: false, text: `Updated ${blog.date}` },
+                { dot: true,  text: "12 min read" },
+                { dot: true,  text: "Globperty Research Team" },
+                { dot: true,  text: "Expert Reviewed", green: true },
+              ].map((m, i) => (
+                <React.Fragment key={i}>
+                  {m.dot && <span style={{ color: "#f97316", margin: "0 10px" }}>•</span>}
+                  <span style={{ color: m.green ? "#4ade80" : "rgba(255,255,255,0.5)" }}>{m.text}</span>
+                </React.Fragment>
+              ))}
             </div>
-
             {/* CTAs */}
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <Link href="/contact" style={{ background: "#f97316", color: "#fff", borderRadius: 8, padding: "12px 22px", fontSize: 14, fontWeight: 700, textDecoration: "none", display: "inline-block" }}>
-                Talk to an Expert →
+              <Link href={cfg.ctaPrimary.href} style={{ background: "#f97316", color: "#fff", borderRadius: 8, padding: "12px 20px", fontSize: 14, fontWeight: 700, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+                {cfg.ctaPrimary.icon} {cfg.ctaPrimary.text}
               </Link>
-              <Link href="/properties" style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.18)", color: "#fff", borderRadius: 8, padding: "12px 22px", fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-block" }}>
-                Browse Properties
-              </Link>
-              <Link href="/tools" style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.65)", borderRadius: 8, padding: "12px 22px", fontSize: 14, fontWeight: 500, textDecoration: "none", display: "inline-block" }}>
-                Calculate ROI
-              </Link>
+              {[cfg.ctaSecondary, cfg.ctaTertiary].map((btn, i) => (
+                <Link key={i} href={btn.href} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.2)", color: "#e2e8f0", borderRadius: 8, padding: "12px 20px", fontSize: 14, fontWeight: 600, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  {btn.icon} {btn.text}
+                </Link>
+              ))}
             </div>
           </div>
 
           {/* At a Glance card */}
-          <div style={{ width: 220, flexShrink: 0, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 14, padding: 22 }}>
-            <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 10, fontWeight: 800, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 14 }}>
-              At a Glance
+          <div style={{ width: 260, flexShrink: 0, background: "#131f35", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, overflow: "hidden" }}>
+            <div style={{ padding: "14px 20px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <div style={{ color: "#fb923c", fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>
+                {cfg.glanceIcon} {cfg.glanceTitle}
+              </div>
             </div>
-            {stats.map((s, i) => <StatItem key={i} {...s} />)}
-            <div style={{ paddingTop: 10, fontSize: 10, color: "rgba(255,255,255,0.25)" }}>
-              Data updated {blog.date}
-            </div>
+            {cfg.glanceRows.map((row, i) => (
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 20px", borderBottom: i < cfg.glanceRows.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 12 }}>{row.label}</span>
+                <GlanceVal row={row} sidebar={false} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -275,36 +186,26 @@ function Hero({ blog }) {
   );
 }
 
-function TabNav({ activeTab, setActiveTab }) {
-  const SCROLL_TARGETS = ["guide-overview", "guide-overview", "guide-overview", "guide-overview", "guide-overview", "guide-faq", "guide-related"];
+// ─── TAB NAV ──────────────────────────────────────────────────────────────────
 
+function TabNav({ tabs, activeTab, setActiveTab, sections }) {
   return (
     <div style={{ background: "#fff", borderBottom: "1px solid #e2e8f0", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
       <div className="tf-container">
         <div style={{ display: "flex", overflowX: "auto", scrollbarWidth: "none" }}>
-          {TABS.map((tab, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                setActiveTab(i);
-                document.getElementById(SCROLL_TARGETS[i])?.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-              style={{
-                background: "none",
-                border: "none",
-                padding: "15px 17px",
-                fontSize: 13.5,
-                fontWeight: activeTab === i ? 700 : 500,
-                color: activeTab === i ? "#f97316" : "#64748b",
-                borderBottom: activeTab === i ? "2px solid #f97316" : "2px solid transparent",
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                marginBottom: -1,
-                transition: "color 0.2s",
-              }}
-            >
-              {tab}
-            </button>
+          {tabs.map((tab, i) => (
+            <button key={i} onClick={() => {
+              setActiveTab(i);
+              const sec = sections?.[i];
+              if (sec) document.getElementById(`section-${sec.id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }} style={{
+              background: "none", border: "none", padding: "15px 16px",
+              fontSize: 13.5,
+              fontWeight: activeTab === i ? 700 : 400,
+              color: activeTab === i ? "#1d4ed8" : "#6b7280",
+              borderBottom: activeTab === i ? "2px solid #1d4ed8" : "2px solid transparent",
+              cursor: "pointer", whiteSpace: "nowrap", marginBottom: -1, transition: "color 0.15s",
+            }}>{tab}</button>
           ))}
         </div>
       </div>
@@ -312,142 +213,534 @@ function TabNav({ activeTab, setActiveTab }) {
   );
 }
 
-function QuickFactsCard({ tag }) {
-  const facts = QUICK_FACTS[tag] || DEFAULT_QUICK_FACTS;
+// ─── Section header helper ────────────────────────────────────────────────────
+
+function SectionHeader({ label, title, subtitle }) {
   return (
-    <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 22, marginBottom: 18 }}>
-      <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 14, color: "#0f172a" }}>📋 Quick Facts</h4>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <tbody>
-          {facts.map((f, i) => (
-            <tr key={i} style={{ borderBottom: i < facts.length - 1 ? "1px solid #f1f5f9" : "none" }}>
-              <td style={{ padding: "7px 0", fontSize: 12, color: "#64748b", lineHeight: 1.4 }}>{f.label}</td>
-              <td style={{ padding: "7px 0", fontSize: 12, fontWeight: 700, color: "#1e293b", textAlign: "right", paddingLeft: 8 }}>{f.value}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div style={{ marginBottom: 24 }}>
+      <div style={{ color: "#f97316", fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 8 }}>{label}</div>
+      <h2 style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: 800, color: "#0f172a", marginBottom: subtitle ? 6 : 0 }}>{title}</h2>
+      {subtitle && <p style={{ fontSize: 14, color: "#6b7280", lineHeight: 1.6 }}>{subtitle}</p>}
     </div>
   );
 }
 
-function AIAssistantCard() {
-  const suggestions = ["What's my buying budget?", "Which country suits me?", "Explain Golden Visa options"];
+function Callout({ text, type }) {
+  const styles = {
+    "good-news": { bg: "#f0fdf4", border: "#bbf7d0", icon: "✅", textColor: "#166534" },
+    "info":      { bg: "#eff6ff", border: "#bfdbfe", icon: "ℹ️", textColor: "#1e40af" },
+    "warning":   { bg: "#fffbeb", border: "#fde68a", icon: "💡", textColor: "#92400e" },
+  };
+  const s = styles[type] || styles["info"];
   return (
-    <div style={{ background: "linear-gradient(135deg, #1e293b, #0f172a)", borderRadius: 12, padding: 22, marginBottom: 18, color: "#fff" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-        <div style={{ background: "#f97316", borderRadius: 8, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>🤖</div>
-        <div>
-          <div style={{ fontWeight: 700, fontSize: 14 }}>AI Property Assistant</div>
-          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)" }}>Powered by Globperty AI</div>
-        </div>
-      </div>
-      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 14, lineHeight: 1.6 }}>
-        Get instant answers about your specific property situation.
-      </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
-        {suggestions.map((q, i) => (
-          <Link key={i} href="/copilot" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 6, padding: "7px 10px", fontSize: 12, color: "rgba(255,255,255,0.7)", textDecoration: "none", display: "block" }}>
-            {q} →
-          </Link>
+    <div style={{ background: s.bg, border: `1px solid ${s.border}`, borderRadius: 10, padding: "14px 18px", marginBottom: 20, fontSize: 13.5, color: s.textColor, lineHeight: 1.65 }}>
+      {text}
+    </div>
+  );
+}
+
+// ─── Section renderers ────────────────────────────────────────────────────────
+
+function ArticleSection({ sec }) {
+  return (
+    <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
+      {sec.callout && <Callout text={sec.callout.text} type={sec.callout.type} />}
+      <div className="article-content" style={{ fontSize: 15, lineHeight: 1.85, color: "#374151" }} dangerouslySetInnerHTML={{ __html: sec.body }} />
+    </div>
+  );
+}
+
+function OwnershipSection({ sec }) {
+  return (
+    <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
+      {sec.callout && <Callout text={sec.callout.text} type={sec.callout.type} />}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        {sec.cards.map((card, i) => (
+          <div key={i} style={{ border: `2px solid ${card.color === "green" ? "#bbf7d0" : "#e2e8f0"}`, borderRadius: 12, padding: 22, background: card.color === "green" ? "#f0fdf4" : "#fff" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <h4 style={{ fontSize: 15, fontWeight: 700, color: "#0f172a", margin: 0 }}>{card.title}</h4>
+              {card.recommended && <span style={{ background: "#16a34a", color: "#fff", borderRadius: 20, padding: "2px 10px", fontSize: 11, fontWeight: 700 }}>Recommended for Investors</span>}
+            </div>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+              {card.points.map((p, j) => (
+                <li key={j} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13.5, color: "#374151", lineHeight: 1.5 }}>
+                  <span style={{ color: card.color === "green" ? "#16a34a" : "#9ca3af", marginTop: 1, flexShrink: 0 }}>{card.color === "green" ? "✓" : "–"}</span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+            {card.color !== "green" && (
+              <div style={{ marginTop: 12, fontSize: 12, color: "#ef4444", fontWeight: 500 }}>Skip to leasehold where possible</div>
+            )}
+          </div>
         ))}
       </div>
-      <Link href="/copilot" style={{ background: "#f97316", color: "#fff", borderRadius: 8, padding: "10px", fontSize: 13, fontWeight: 700, textDecoration: "none", display: "block", textAlign: "center" }}>
-        Ask the AI Assistant →
-      </Link>
     </div>
   );
 }
 
-function RelatedGuidesCard({ currentId }) {
+function StepsSection({ sec }) {
+  return (
+    <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
+      <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+        {sec.steps.map((step, i) => (
+          <div key={i} style={{ display: "flex", gap: 20, paddingBottom: 28, borderLeft: i < sec.steps.length - 1 ? "2px solid #e2e8f0" : "none", marginLeft: 19, paddingLeft: 28, position: "relative" }}>
+            <div style={{ width: 40, height: 40, background: "#1d4ed8", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 16, flexShrink: 0, position: "absolute", left: -21, top: 0 }}>
+              {step.n}
+            </div>
+            <div style={{ paddingTop: 6 }}>
+              <h4 style={{ fontSize: 16, fontWeight: 700, color: "#0f172a", marginBottom: 8 }}>{step.title}</h4>
+              <p style={{ fontSize: 14, color: "#4b5563", lineHeight: 1.7, marginBottom: 8 }}>{step.desc}</p>
+              <span style={{ background: "#f1f5f9", color: "#64748b", borderRadius: 6, padding: "3px 10px", fontSize: 12, fontWeight: 600 }}>⏱ {step.time}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FeeTableSection({ sec }) {
+  return (
+    <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
+      <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden", marginBottom: 20 }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ background: "#0f172a" }}>
+              {["FEE / COST", "AMOUNT", "PAID TO", "WHEN"].map(h => (
+                <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.7)", letterSpacing: 0.5, textTransform: "uppercase" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sec.fees.map((row, i) => (
+              <tr key={i} style={{ background: row.total ? "#f8fafc" : i % 2 === 0 ? "#fff" : "#fafafa", borderBottom: "1px solid #f1f5f9" }}>
+                <td style={{ padding: "11px 16px", fontSize: 13.5, fontWeight: row.total ? 700 : 500, color: "#0f172a" }}>{row.fee}</td>
+                <td style={{ padding: "11px 16px", fontSize: 13.5, fontWeight: row.total ? 700 : 500, color: row.total ? "#0f172a" : "#374151" }}>{row.amount}</td>
+                <td style={{ padding: "11px 16px", fontSize: 13, color: "#6b7280" }}>{row.paidTo}</td>
+                <td style={{ padding: "11px 16px", fontSize: 13, color: row.total ? "#f97316" : "#6b7280", fontWeight: row.total ? 600 : 400 }}>
+                  {row.total ? "Budget this upfront" : row.when}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {sec.callout && <Callout text={sec.callout} type="warning" />}
+    </div>
+  );
+}
+
+function AreasSection({ sec }) {
+  return (
+    <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
+      {/* Featured area cards */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 24 }}>
+        {sec.featured.map((area, i) => (
+          <div key={i} style={{ border: "1px solid #e2e8f0", borderRadius: 12, padding: 20, background: "#fff", position: "relative" }}>
+            <span style={{ background: area.badgeColor, color: "#fff", borderRadius: 6, padding: "3px 10px", fontSize: 11, fontWeight: 700, display: "inline-block", marginBottom: 12 }}>{area.badge}</span>
+            <div style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", marginBottom: 4 }}>{area.name}</div>
+            <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 12 }}>{area.fullName}</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <div style={{ fontSize: 12, color: "#374151" }}>Entry price <strong>{area.entry}</strong></div>
+              <div style={{ fontSize: 12, color: "#374151" }}>Gross yield <strong style={{ color: "#16a34a" }}>{area.yield}</strong></div>
+              <div style={{ fontSize: 12, color: "#374151" }}>Best for <strong>{area.best}</strong></div>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Data table */}
+      <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ background: "#0f172a" }}>
+              {["AREA", "STUDIO PRICE", "1BR PRICE", "GROSS YIELD", "5YR GROWTH", "BEST FOR"].map(h => (
+                <th key={h} style={{ padding: "10px 14px", textAlign: "left", fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.65)", letterSpacing: 0.5, textTransform: "uppercase", whiteSpace: "nowrap" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sec.table.map((row, i) => (
+              <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa", borderBottom: "1px solid #f1f5f9" }}>
+                <td style={{ padding: "10px 14px", fontSize: 13, fontWeight: 600, color: "#0f172a" }}>{row.area}</td>
+                <td style={{ padding: "10px 14px", fontSize: 12, color: "#374151" }}>{row.studio}</td>
+                <td style={{ padding: "10px 14px", fontSize: 12, color: "#374151" }}>{row.oneBR}</td>
+                <td style={{ padding: "10px 14px", fontSize: 12, fontWeight: 700, color: "#16a34a" }}>{row.yield}</td>
+                <td style={{ padding: "10px 14px", fontSize: 12, fontWeight: 600, color: "#1d4ed8" }}>{row.growth}</td>
+                <td style={{ padding: "10px 14px", fontSize: 12, color: "#374151" }}>{row.best}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function MortgageSection({ sec }) {
+  return (
+    <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+        {/* Rules */}
+        <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, padding: 22 }}>
+          <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 14, color: "#0f172a" }}>Mortgage Rules for Non-Residents</h4>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+            {sec.rules.map((r, i) => (
+              <li key={i} style={{ display: "flex", gap: 8, fontSize: 13.5, color: "#374151", lineHeight: 1.5 }}>
+                <span style={{ color: "#3b82f6", marginTop: 2, flexShrink: 0 }}>•</span>{r}
+              </li>
+            ))}
+          </ul>
+        </div>
+        {/* Bank table */}
+        <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden" }}>
+          <div style={{ padding: "12px 16px", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
+            <h4 style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", margin: 0 }}>Top Banks for Foreign Buyers</h4>
+          </div>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr style={{ background: "#0f172a" }}>
+                {["BANK", "RATE FROM", "NON-RESIDENT"].map(h => (
+                  <th key={h} style={{ padding: "9px 14px", fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.65)", textAlign: "left", letterSpacing: 0.5, textTransform: "uppercase" }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sec.banks.map((b, i) => (
+                <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa", borderBottom: "1px solid #f1f5f9" }}>
+                  <td style={{ padding: "9px 14px", fontSize: 13, fontWeight: 600, color: "#0f172a" }}>{b.name}</td>
+                  <td style={{ padding: "9px 14px", fontSize: 13, color: "#374151" }}>{b.rate}</td>
+                  <td style={{ padding: "9px 14px" }}>
+                    {b.nonResident
+                      ? <span style={{ color: "#16a34a", fontSize: 12, fontWeight: 600 }}>Yes ✓</span>
+                      : <span style={{ background: "#fef3c7", color: "#d97706", borderRadius: 4, padding: "1px 7px", fontSize: 11, fontWeight: 600 }}>{b.note || "Limited"}</span>
+                    }
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GoldenVisaSection({ sec }) {
+  return (
+    <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
+      {/* Dark banner */}
+      <div style={{ background: "linear-gradient(135deg, #0f172a, #1e3a5f)", borderRadius: 14, padding: "28px 32px", marginBottom: 20 }}>
+        <div style={{ color: "#fbbf24", fontSize: 10, fontWeight: 800, letterSpacing: 1.5, textTransform: "uppercase", marginBottom: 8 }}>UAE GOLDEN VISA</div>
+        <h3 style={{ color: "#fff", fontSize: "clamp(18px, 2.5vw, 26px)", fontWeight: 800, marginBottom: 10 }}>{sec.banner}</h3>
+        <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 14, lineHeight: 1.65, marginBottom: 24 }}>{sec.bannerSub}</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+          {sec.stats.map((s, i) => (
+            <div key={i} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "14px 16px" }}>
+              <div style={{ fontSize: "clamp(16px, 2vw, 22px)", fontWeight: 800, color: "#f97316", marginBottom: 4 }}>{s.value}</div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.3 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 12, marginTop: 20, flexWrap: "wrap" }}>
+          <Link href="/properties" style={{ background: "#f97316", color: "#fff", borderRadius: 8, padding: "11px 22px", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>Browse Golden Visa Properties</Link>
+          <Link href="/knowledge-base/102" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", borderRadius: 8, padding: "11px 22px", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>Full Golden Visa Guide →</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TaxSection({ sec }) {
+  return (
+    <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
+      <Callout text={sec.callout} type="info" />
+      <div style={{ border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead>
+            <tr style={{ background: "#0f172a" }}>
+              {["TAX TYPE", "RATE", "DETAIL"].map(h => (
+                <th key={h} style={{ padding: "11px 16px", textAlign: "left", fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.65)", letterSpacing: 0.5, textTransform: "uppercase" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sec.taxes.map((row, i) => (
+              <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#fafafa", borderBottom: "1px solid #f1f5f9" }}>
+                <td style={{ padding: "11px 16px", fontSize: 13.5, fontWeight: 600, color: "#0f172a" }}>{row.type}</td>
+                <td style={{ padding: "11px 16px", fontSize: 13.5, fontWeight: 700, color: row.rate === "0%" ? "#16a34a" : "#374151" }}>{row.rate}</td>
+                <td style={{ padding: "11px 16px", fontSize: 13, color: "#6b7280" }}>{row.detail}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function MistakesSection({ sec }) {
+  return (
+    <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        <div style={{ border: "1px solid #bbf7d0", borderRadius: 12, padding: 22, background: "#f0fdf4" }}>
+          <div style={{ color: "#16a34a", fontSize: 13, fontWeight: 700, marginBottom: 14 }}>✅ What Smart Buyers Do</div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+            {sec.smart.map((p, i) => (
+              <li key={i} style={{ display: "flex", gap: 8, fontSize: 13, color: "#166534", lineHeight: 1.5 }}>
+                <span style={{ flexShrink: 0, marginTop: 2 }}>✓</span>{p}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div style={{ border: "1px solid #fecaca", borderRadius: 12, padding: 22, background: "#fff5f5" }}>
+          <div style={{ color: "#dc2626", fontSize: 13, fontWeight: 700, marginBottom: 14 }}>⚠️ Common Mistakes to Avoid</div>
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+            {sec.avoid.map((p, i) => (
+              <li key={i} style={{ display: "flex", gap: 8, fontSize: 13, color: "#7f1d1d", lineHeight: 1.5 }}>
+                <span style={{ flexShrink: 0, marginTop: 2 }}>✗</span>{p}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FAQSection({ sec }) {
+  const [open, setOpen] = useState(null);
+  const items = sec?.faqs || [];
+  return (
+    <div id={`section-faq`} style={{ marginBottom: 48 }}>
+      <SectionHeader label={sec?.sectionLabel || "FAQ"} title={sec?.title || "Frequently Asked Questions"} subtitle={sec?.subtitle} />
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {items.map((item, i) => (
+          <div key={i} style={{ border: "1px solid #e2e8f0", borderRadius: 10, overflow: "hidden" }}>
+            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 20px", background: open === i ? "#eff6ff" : "#fff", border: "none", cursor: "pointer", textAlign: "left", gap: 12 }}>
+              <span style={{ fontSize: 14, fontWeight: 600, color: "#0f172a", lineHeight: 1.4 }}>{item.q}</span>
+              <span style={{ color: "#1d4ed8", fontSize: 20, flexShrink: 0, transform: open === i ? "rotate(45deg)" : "none", transition: "transform 0.2s", display: "inline-block" }}>+</span>
+            </button>
+            {open === i && <div style={{ padding: "4px 20px 16px", fontSize: 14, color: "#4b5563", lineHeight: 1.75 }}>{item.a}</div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function renderSection(sec) {
+  switch (sec.type) {
+    case "article":            return <ArticleSection   key={sec.id} sec={sec} />;
+    case "ownership-comparison": return <OwnershipSection key={sec.id} sec={sec} />;
+    case "steps":              return <StepsSection     key={sec.id} sec={sec} />;
+    case "fee-table":          return <FeeTableSection  key={sec.id} sec={sec} />;
+    case "areas":              return <AreasSection     key={sec.id} sec={sec} />;
+    case "mortgage":           return <MortgageSection  key={sec.id} sec={sec} />;
+    case "golden-visa":        return <GoldenVisaSection key={sec.id} sec={sec} />;
+    case "tax-table":          return <TaxSection       key={sec.id} sec={sec} />;
+    case "mistakes":           return <MistakesSection  key={sec.id} sec={sec} />;
+    case "faq":                return <FAQSection       key={sec.id} sec={sec} />;
+    default:                   return null;
+  }
+}
+
+// ─── Content components ───────────────────────────────────────────────────────
+
+function AuthorBox({ blog }) {
+  return (
+    <div style={{ background: "#fff", border: "1px solid #e8edf2", borderRadius: 12, padding: "16px 20px", marginBottom: 14, display: "flex", alignItems: "flex-start", gap: 14 }}>
+      <div style={{ width: 44, height: 44, borderRadius: 8, background: "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>🏢</div>
+      <div>
+        <div style={{ fontWeight: 700, fontSize: 15, color: "#0f172a", marginBottom: 2 }}>Globperty Research Team</div>
+        <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 3 }}>Global Property Intelligence · Expert Reviewed</div>
+        <div style={{ fontSize: 12, color: "#f97316" }}>Last updated: {blog.date} · Verified against Dubai Land Department data</div>
+      </div>
+    </div>
+  );
+}
+
+function ShareBar() {
+  return (
+    <div style={{ background: "#fff", border: "1px solid #e8edf2", borderRadius: 12, padding: "12px 20px", marginBottom: 24, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+        <span style={{ fontSize: 13, color: "#6b7280", marginRight: 2 }}>Share this guide:</span>
+        {["LinkedIn","WhatsApp","Facebook","Copy Link"].map(s => (
+          <button key={s} onClick={() => {}} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: "4px 12px", fontSize: 12, color: "#374151", cursor: "pointer" }}>{s}</button>
+        ))}
+      </div>
+      <span style={{ fontSize: 12, color: "#9ca3af" }}>⏱ 12 min read</span>
+    </div>
+  );
+}
+
+function HeroStats({ stats }) {
+  if (!stats) return null;
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginBottom: 32 }}>
+      {stats.map((s, i) => (
+        <div key={i} style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: "18px 16px", textAlign: "center" }}>
+          <div style={{ fontSize: "clamp(22px, 2.5vw, 32px)", fontWeight: 800, color: "#f97316", marginBottom: 4 }}>{s.value}</div>
+          <div style={{ fontSize: 12, color: "#64748b" }}>{s.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function PhotoGrid() {
+  const photos = [
+    { src: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=640&h=500&fit=crop", label: "Dubai Skyline" },
+    { src: "https://images.unsplash.com/photo-1534251369789-5f67d147eb71?w=320&h=240&fit=crop",  label: "Palm Jumeirah" },
+    { src: "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=320&h=240&fit=crop",    label: "Burj Khalifa" },
+    { src: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=320&h=240&fit=crop",    label: "Dubai Marina" },
+    { src: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=320&h=240&fit=crop",  label: "Villa Dubai" },
+  ];
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "230px 230px", gap: 4, marginBottom: 28, borderRadius: 12, overflow: "hidden" }}>
+      <div style={{ gridRow: "1 / 3", position: "relative", background: "#1e293b" }}>
+        <Image src={photos[0].src} alt={photos[0].label} fill style={{ objectFit: "cover" }} />
+        <div style={{ position: "absolute", top: 12, left: 12, background: "rgba(0,0,0,0.55)", color: "#fff", fontSize: 13, fontWeight: 600, padding: "4px 10px", borderRadius: 6 }}>{photos[0].label}</div>
+      </div>
+      {photos.slice(1).map((p, i) => (
+        <div key={i} style={{ position: "relative", background: "#1e293b" }}>
+          <Image src={p.src} alt={p.label} fill style={{ objectFit: "cover" }} />
+          <div style={{ position: "absolute", top: 8, left: 8, background: "rgba(0,0,0,0.55)", color: "#fff", fontSize: 11, fontWeight: 600, padding: "3px 8px", borderRadius: 5 }}>{p.label}</div>
+          {i === 3 && <div style={{ position: "absolute", bottom: 10, right: 10, background: "rgba(0,0,0,0.7)", color: "#fff", fontSize: 12, fontWeight: 600, padding: "4px 12px", borderRadius: 20 }}>+24 photos</div>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function QuickSummary({ points }) {
+  return (
+    <div style={{ background: "#0f172a", borderRadius: 12, padding: "22px 26px", marginBottom: 32 }}>
+      <div style={{ color: "#f97316", fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", marginBottom: 14 }}>⚡ QUICK SUMMARY — KEY FACTS</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {points.map((p, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+            <div style={{ width: 20, height: 20, borderRadius: "50%", background: "rgba(34,197,94,0.2)", border: "1px solid rgba(34,197,94,0.4)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+              <span style={{ color: "#4ade80", fontSize: 11 }}>✓</span>
+            </div>
+            <span style={{ color: "rgba(255,255,255,0.85)", fontSize: 13.5, lineHeight: 1.55 }}>{p}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Sidebar ──────────────────────────────────────────────────────────────────
+
+function QuickFactsSidebar({ cfg }) {
+  return (
+    <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden", marginBottom: 18 }}>
+      <div style={{ background: "#0f172a", padding: "13px 18px" }}>
+        <div style={{ color: "#f97316", fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>{cfg.glanceIcon} {cfg.sidebarTitle}</div>
+      </div>
+      {cfg.glanceRows.map((row, i) => (
+        <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 16px", borderBottom: i < cfg.glanceRows.length - 1 ? "1px solid #f1f5f9" : "none" }}>
+          <span style={{ color: "#6b7280", fontSize: 12 }}>{row.label}</span>
+          <GlanceVal row={row} sidebar={true} />
+        </div>
+      ))}
+      <div style={{ padding: "12px 14px 14px", borderTop: "1px solid #f1f5f9" }}>
+        <Link href={cfg.sidebarBrowseHref} style={{ display: "block", background: "#1d4ed8", color: "#fff", borderRadius: 8, padding: "11px", textAlign: "center", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>{cfg.sidebarBrowseLabel}</Link>
+      </div>
+    </div>
+  );
+}
+
+function AIAssistantSidebar({ cfg }) {
+  const [input, setInput] = useState("");
+  return (
+    <div style={{ background: "#1e293b", borderRadius: 12, padding: 20, marginBottom: 18, color: "#fff" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+        <span style={{ fontSize: 20 }}>🤖</span>
+        <div style={{ fontWeight: 700, fontSize: 15 }}>Ask AI Assistant</div>
+      </div>
+      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginBottom: 14, lineHeight: 1.5 }}>Ask anything about {cfg.aiContext}</p>
+      <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
+        <input value={input} onChange={e => setInput(e.target.value)} placeholder={`e.g. ${cfg.aiSuggestions[0]}`}
+          style={{ flex: 1, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, padding: "8px 12px", fontSize: 12, color: "#fff", outline: "none" }} />
+        <Link href={`/copilot${input ? `?q=${encodeURIComponent(input)}` : ""}`}
+          style={{ background: "#f97316", borderRadius: 8, width: 36, display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", flexShrink: 0, fontSize: 16, color: "#fff" }}>→</Link>
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+        {cfg.aiSuggestions.map((s, i) => (
+          <Link key={i} href={`/copilot?q=${encodeURIComponent(s)}`}
+            style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "4px 10px", fontSize: 11, color: "rgba(255,255,255,0.65)", textDecoration: "none" }}>{s}</Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function GoldenVisaSidebar({ gv }) {
+  if (!gv) return null;
+  return (
+    <div style={{ borderRadius: 12, overflow: "hidden", marginBottom: 18 }}>
+      <div style={{ background: "#f97316", padding: "13px 18px" }}>
+        <div style={{ color: "#fff", fontSize: 11, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase" }}>{gv.icon} {gv.title}</div>
+      </div>
+      <div style={{ background: "#fff", border: "1px solid #fed7aa", borderTop: "none" }}>
+        {gv.rows.map((row, i) => (
+          <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 16px", borderBottom: i < gv.rows.length - 1 ? "1px solid #f1f5f9" : "none" }}>
+            <span style={{ color: "#6b7280", fontSize: 12 }}>{row.label}</span>
+            <GlanceVal row={row} sidebar={true} />
+          </div>
+        ))}
+        <div style={{ padding: "12px 14px 14px" }}>
+          <Link href={gv.href} style={{ display: "block", background: "#f97316", color: "#fff", borderRadius: 8, padding: "10px", textAlign: "center", fontSize: 13, fontWeight: 700, textDecoration: "none" }}>{gv.cta}</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RelatedGuidesSidebar({ currentId }) {
   const others = blogArticles4.filter(g => g.id !== currentId).slice(0, 5);
   return (
-    <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 22, marginBottom: 18 }}>
-      <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 14, color: "#0f172a" }}>📚 Related Guides</h4>
+    <div style={{ background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden" }}>
+      <div style={{ background: "#f8fafc", padding: "12px 16px", borderBottom: "1px solid #e2e8f0" }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: "#0f172a" }}>📚 RELATED GUIDES</div>
+      </div>
       {others.map((g, i) => (
-        <Link key={i} href={`/knowledge-base/${g.id}`} style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "8px 0", borderBottom: i < others.length - 1 ? "1px solid #f1f5f9" : "none", textDecoration: "none" }}>
-          <span style={{ background: "#fff7ed", color: "#f97316", borderRadius: 4, padding: "2px 7px", fontSize: 10, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>{g.tag}</span>
-          <span style={{ fontSize: 12, color: "#374151", fontWeight: 500, lineHeight: 1.45 }}>{g.title}</span>
+        <Link key={i} href={`/knowledge-base/${g.id}`} style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "10px 14px", borderBottom: i < others.length - 1 ? "1px solid #f1f5f9" : "none", textDecoration: "none" }}>
+          <span style={{ background: "#fff7ed", color: "#f97316", borderRadius: 4, padding: "2px 6px", fontSize: 10, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>{g.tag}</span>
+          <span style={{ fontSize: 12, color: "#374151", fontWeight: 500, lineHeight: 1.4 }}>{g.title}</span>
         </Link>
       ))}
     </div>
   );
 }
 
-function MortgageCard() {
-  return (
-    <div style={{ background: "linear-gradient(135deg, #eff6ff, #dbeafe)", border: "1px solid #bfdbfe", borderRadius: 12, padding: 22 }}>
-      <div style={{ fontSize: 24, marginBottom: 8 }}>🏦</div>
-      <h4 style={{ fontSize: 14, fontWeight: 700, marginBottom: 8, color: "#1e3a5f" }}>Need Financing?</h4>
-      <p style={{ fontSize: 12, color: "#374151", marginBottom: 14, lineHeight: 1.6 }}>
-        Compare rates from 20+ international lenders. Get pre-approved in 48 hours.
-      </p>
-      <div style={{ background: "#fff", borderRadius: 8, padding: 12, marginBottom: 12 }}>
-        <div style={{ fontSize: 10, color: "#64748b", marginBottom: 3 }}>Estimated monthly payment</div>
-        <div style={{ fontSize: 20, fontWeight: 800, color: "#1e3a5f" }}>$2,847<span style={{ fontSize: 12, fontWeight: 400, color: "#64748b" }}>/mo</span></div>
-        <div style={{ fontSize: 10, color: "#64748b" }}>on $500K at 4.5%, 25 years</div>
-      </div>
-      <Link href="/tools" style={{ background: "#1d4ed8", color: "#fff", borderRadius: 8, padding: "10px", fontSize: 12, fontWeight: 700, textDecoration: "none", display: "block", textAlign: "center" }}>
-        Calculate My Mortgage →
-      </Link>
-    </div>
-  );
-}
-
-function FAQAccordion({ tag }) {
-  const [open, setOpen] = useState(null);
-  const faqs = FAQS_BY_TAG[tag] || DEFAULT_FAQS;
-
-  return (
-    <div id="guide-faq" style={{ marginTop: 48 }}>
-      <div style={{ display: "inline-block", background: "#fff7ed", color: "#f97316", borderRadius: 6, padding: "3px 12px", fontSize: 11, fontWeight: 800, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>
-        FAQ
-      </div>
-      <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 20, color: "#0f172a" }}>Frequently Asked Questions</h2>
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {faqs.map((item, i) => (
-          <div key={i} style={{ border: "1px solid #e2e8f0", borderRadius: 10, overflow: "hidden" }}>
-            <button
-              onClick={() => setOpen(open === i ? null : i)}
-              style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 20px", background: open === i ? "#fff7ed" : "#fff", border: "none", cursor: "pointer", textAlign: "left", gap: 12 }}
-            >
-              <span style={{ fontSize: 14, fontWeight: 600, color: "#0f172a", lineHeight: 1.4 }}>{item.q}</span>
-              <span style={{ color: "#f97316", fontSize: 22, flexShrink: 0, transform: open === i ? "rotate(45deg)" : "none", transition: "transform 0.2s", display: "inline-block" }}>+</span>
-            </button>
-            {open === i && (
-              <div style={{ padding: "4px 20px 16px", fontSize: 14, color: "#4b5563", lineHeight: 1.75 }}>
-                {item.a}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+// ─── Related guides bottom ────────────────────────────────────────────────────
 
 function RelatedGuidesBottom({ currentId }) {
   const guides = blogArticles4.filter(g => g.id !== currentId).slice(0, 3);
   return (
-    <div id="guide-related" style={{ marginTop: 48 }}>
-      <div style={{ display: "inline-block", background: "#fff7ed", color: "#f97316", borderRadius: 6, padding: "3px 12px", fontSize: 11, fontWeight: 800, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>
-        Continue Reading
-      </div>
+    <div style={{ marginTop: 48 }}>
+      <div style={{ display: "inline-block", background: "#fff7ed", color: "#f97316", borderRadius: 6, padding: "3px 12px", fontSize: 11, fontWeight: 800, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>Continue Reading</div>
       <h2 style={{ fontSize: 24, fontWeight: 800, marginBottom: 24, color: "#0f172a" }}>Related Guides You Should Read</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 20 }}>
         {guides.map((g, i) => (
-          <Link key={i} href={`/knowledge-base/${g.id}`} style={{ textDecoration: "none", display: "block", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden" }}>
-            {g.imageSrc && (
-              <div style={{ height: 150, overflow: "hidden", position: "relative" }}>
-                <Image src={g.imageSrc} alt={g.title} fill style={{ objectFit: "cover" }} />
-              </div>
-            )}
+          <Link key={i} href={`/knowledge-base/${g.id}`} style={{ textDecoration: "none", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, overflow: "hidden", display: "block" }}>
+            {g.imageSrc && <div style={{ height: 150, position: "relative" }}><Image src={g.imageSrc} alt={g.title} fill style={{ objectFit: "cover" }} /></div>}
             <div style={{ padding: "16px 18px" }}>
               <span style={{ background: "#fff7ed", color: "#f97316", borderRadius: 4, padding: "2px 8px", fontSize: 11, fontWeight: 700 }}>{g.tag}</span>
               <h4 style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", marginTop: 10, marginBottom: 6, lineHeight: 1.45 }}>{g.title}</h4>
-              <p style={{ fontSize: 12, color: "#64748b", lineHeight: 1.5, margin: 0 }}>
-                {g.description?.slice(0, 90)}…
-              </p>
+              <p style={{ fontSize: 12, color: "#64748b", lineHeight: 1.5, margin: 0 }}>{g.description?.slice(0, 90)}…</p>
               <div style={{ marginTop: 12, fontSize: 12, color: "#f97316", fontWeight: 600 }}>Read Guide →</div>
             </div>
           </Link>
@@ -460,63 +753,83 @@ function RelatedGuidesBottom({ currentId }) {
 // ─── Main export ──────────────────────────────────────────────────────────────
 
 export default function GuideDetails({ blog }) {
+  const cfg = TAG_CFG[blog.tag] || DEFAULT_CFG;
+  const structured = GUIDE_CONTENT[blog.id];
+  const sections = structured?.sections || [];
+  const tabs = sections.length > 0 ? sections.map(s => s.tabLabel) : cfg.tabs;
   const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const faqEl = document.getElementById("guide-faq");
-      const relEl = document.getElementById("guide-related");
-      if (!faqEl || !relEl) return;
-      const scroll = window.scrollY + 120;
-      if (scroll >= relEl.offsetTop) setActiveTab(6);
-      else if (scroll >= faqEl.offsetTop) setActiveTab(5);
-      else setActiveTab(0);
+      if (sections.length === 0) return;
+      const scroll = window.scrollY + 140;
+      let active = 0;
+      sections.forEach((sec, i) => {
+        const el = document.getElementById(`section-${sec.id}`);
+        if (el && scroll >= el.offsetTop) active = i;
+      });
+      setActiveTab(active);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [sections]);
+
+  const quickSummaryPoints = structured ? sections.find(s => s.type === "article") ? [
+    "Foreigners of all nationalities can buy freehold property in 40+ designated zones in Dubai",
+    "Zero income tax, zero capital gains tax and zero rental income tax in the UAE",
+    "Total transaction costs are approximately 7–8% above the purchase price",
+    "Property worth AED 2,000,000+ qualifies you for the 10-year UAE Golden Visa",
+    "Dubai recorded 120,000+ property transactions in 2023 — a historic record",
+  ] : cfg.quickSummary || [] : [];
 
   return (
     <>
-      <Hero blog={blog} />
-      <TabNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Hero blog={blog} cfg={cfg} />
+      <TabNav tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} sections={sections} />
 
       <div style={{ background: "#f8fafc" }}>
-        <div className="tf-container" style={{ paddingTop: 48, paddingBottom: 80 }}>
+        <div className="tf-container" style={{ paddingTop: 32, paddingBottom: 80 }}>
           <div className="row" style={{ alignItems: "flex-start" }}>
-            {/* Main content */}
-            <div className="col-lg-8" id="guide-overview">
-              {/* Article content card */}
-              <div style={{ background: "#fff", borderRadius: 16, padding: "36px 40px", boxShadow: "0 1px 4px rgba(0,0,0,0.05)", marginBottom: 0 }}>
-                {blog.imageSrc && (
-                  <div style={{ borderRadius: 10, overflow: "hidden", marginBottom: 28, position: "relative", height: 300 }}>
-                    <Image src={blog.imageSrc} alt={blog.title} fill style={{ objectFit: "cover" }} />
+            {/* ── Main content ── */}
+            <div className="col-lg-8">
+              <AuthorBox blog={blog} />
+              <ShareBar />
+
+              {structured ? (
+                <>
+                  <PhotoGrid />
+                  <QuickSummary points={quickSummaryPoints} />
+                  {structured.heroStats && <HeroStats stats={structured.heroStats} />}
+                  {sections.map(sec => renderSection(sec))}
+                </>
+              ) : (
+                <>
+                  {blog.imageSrc && (
+                    <div style={{ borderRadius: 12, overflow: "hidden", marginBottom: 24, position: "relative", height: 300 }}>
+                      <Image src={blog.imageSrc} alt={blog.title} fill style={{ objectFit: "cover" }} />
+                    </div>
+                  )}
+                  <div style={{ background: "#fff", borderRadius: 16, padding: "32px 36px", boxShadow: "0 1px 4px rgba(0,0,0,0.05)", marginBottom: 32 }}>
+                    <div className="article-content" style={{ fontSize: 15, lineHeight: 1.85, color: "#374151" }} dangerouslySetInnerHTML={{ __html: blog.content }} />
                   </div>
-                )}
-                <div
-                  className="article-content"
-                  style={{ fontSize: 15, lineHeight: 1.85, color: "#374151" }}
-                  dangerouslySetInnerHTML={{ __html: blog.content }}
-                />
-              </div>
+                  <FAQSection sec={{ sectionLabel: "FAQ", title: "Frequently Asked Questions", faqs: [] }} />
+                </>
+              )}
 
-              <FAQAccordion tag={blog.tag} />
               <RelatedGuidesBottom currentId={blog.id} />
-
-              {/* Disclaimer */}
-              <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: 18, marginTop: 32, fontSize: 12, color: "#94a3b8", lineHeight: 1.7 }}>
+              <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: 16, marginTop: 32, fontSize: 12, color: "#94a3b8", lineHeight: 1.7 }}>
                 <strong style={{ color: "#64748b" }}>Disclaimer: </strong>
-                The information in this guide is for educational purposes only and does not constitute financial, legal, or investment advice. Property markets and regulations change frequently — always consult qualified local professionals before making investment decisions. Globperty does not accept liability for decisions made based on this content.
+                This guide is for educational purposes only and does not constitute financial, legal, or investment advice. Always consult qualified local professionals before making investment decisions.
               </div>
             </div>
 
-            {/* Sticky sidebar */}
+            {/* ── Sticky sidebar ── */}
             <div className="col-lg-4">
-              <div style={{ position: "sticky", top: 72, paddingLeft: 16 }}>
-                <QuickFactsCard tag={blog.tag} />
-                <AIAssistantCard />
-                <RelatedGuidesCard currentId={blog.id} />
-                <MortgageCard />
+              <div style={{ position: "sticky", top: 68, paddingLeft: 16 }}>
+                <QuickFactsSidebar cfg={cfg} />
+                <AIAssistantSidebar cfg={cfg} />
+                <GoldenVisaSidebar gv={cfg.goldenVisa} />
+                <RelatedGuidesSidebar currentId={blog.id} />
               </div>
             </div>
           </div>
