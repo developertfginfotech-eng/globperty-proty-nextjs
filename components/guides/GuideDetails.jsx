@@ -820,7 +820,7 @@ export default function GuideDetails({ blog }) {
               <AuthorBox blog={blog} />
               <ShareBar />
 
-              {structured ? (
+              {sections.length > 0 ? (
                 <>
                   <PhotoGrid />
                   <QuickSummary points={quickSummaryPoints} />
