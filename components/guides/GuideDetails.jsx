@@ -112,7 +112,7 @@ function Hero({ blog, cfg }) {
   const { before, highlight, after } = splitTitle(blog.title);
   return (
     <div style={{ background: "#0d1321", paddingTop: 32, paddingBottom: 56 }}>
-      <div className="tf-container">
+      <div className="tf-container xl">
         {/* Breadcrumb */}
         <nav style={{ marginBottom: 22, fontSize: 13 }}>
           <Link href="/" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Home</Link>
@@ -191,7 +191,7 @@ function Hero({ blog, cfg }) {
 function TabNav({ tabs, activeTab, setActiveTab, sections }) {
   return (
     <div style={{ background: "#fff", borderBottom: "1px solid #e2e8f0", position: "sticky", top: 0, zIndex: 100, boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
-      <div className="tf-container">
+      <div className="tf-container xl">
         <div style={{ display: "flex", overflowX: "auto", scrollbarWidth: "none" }}>
           {tabs.map((tab, i) => (
             <button key={i} onClick={() => {
@@ -813,7 +813,7 @@ export default function GuideDetails({ blog }) {
       {sections.length > 0 && <TabNav tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} sections={sections} />}
 
       <div style={{ background: "#f8fafc" }}>
-        <div className="tf-container" style={{ paddingTop: 32, paddingBottom: 80 }}>
+        <div className="tf-container xl" style={{ paddingTop: 32, paddingBottom: 80 }}>
           <div className="row" style={{ alignItems: "flex-start" }}>
             {/* ── Main content ── */}
             <div className="col-lg-8">
