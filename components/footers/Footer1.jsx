@@ -89,15 +89,15 @@ const COUNTRY_PILLS = [
 const POPULAR_GUIDES = [
   [
     { label: "How to Buy Property in Dubai",       href: "/knowledge-base/104" },
-    { label: "Buying Property in Portugal",         href: "/knowledge-base/104" },
-    { label: "Cyprus Permanent Residency",          href: "/knowledge-base/102" },
-    { label: "Best Areas to Invest in Dubai",       href: "/knowledge-base/103" },
+    { label: "Buying Property in Portugal",         href: "/knowledge-base/135" },
+    { label: "Cyprus Permanent Residency",          href: "/knowledge-base/137" },
+    { label: "Best Areas to Invest in Dubai",       href: "/knowledge-base/139" },
     { label: "International Property Investment",   href: "/knowledge-base/103" },
-    { label: "Expat Guide — Living in Portugal",    href: "/knowledge-base/108" },
+    { label: "Expat Guide — Living in Portugal",    href: "/knowledge-base/138" },
   ],
   [
-    { label: "Portugal Golden Visa 2025",           href: "/knowledge-base/102" },
-    { label: "Buying Property in Turkey",           href: "/knowledge-base/104" },
+    { label: "Portugal Golden Visa 2025",           href: "/knowledge-base/136" },
+    { label: "Buying Property in Turkey",           href: "/knowledge-base/140" },
     { label: "Malta Residency Programme",           href: "/knowledge-base/111" },
     { label: "Dubai Rental Yield by Area 2025",     href: "/knowledge-base/112" },
     { label: "Getting a Mortgage Abroad",           href: "/knowledge-base/113" },

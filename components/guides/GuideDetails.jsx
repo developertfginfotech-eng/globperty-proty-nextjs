@@ -753,7 +753,10 @@ function RelatedGuidesBottom({ currentId }) {
 // ─── Main export ──────────────────────────────────────────────────────────────
 
 export default function GuideDetails({ blog }) {
-  const cfg = TAG_CFG[blog.tag] || DEFAULT_CFG;
+  const heroCfgOverride = GUIDE_CONTENT[blog.id]?.heroCfg;
+  const cfg = heroCfgOverride
+    ? { ...(TAG_CFG[blog.tag] || DEFAULT_CFG), ...heroCfgOverride }
+    : (TAG_CFG[blog.tag] || DEFAULT_CFG);
   const structured = GUIDE_CONTENT[blog.id];
   const sections = structured?.sections || [];
   const tabs = sections.length > 0 ? sections.map(s => s.tabLabel) : cfg.tabs;
