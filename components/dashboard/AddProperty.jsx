@@ -241,7 +241,7 @@ export default function AddProperty() {
       return;
     }
 
-    if (role === "admin") {
+    if (role === "admin" || role === "super_admin") {
       setKycChecking(false);
       return;
     }
