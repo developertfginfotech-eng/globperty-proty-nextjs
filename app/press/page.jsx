@@ -1,74 +1,61 @@
+import Breadcumb from "@/components/common/Breadcumb";
+import Cta from "@/components/common/Cta";
 import Footer1 from "@/components/footers/Footer1";
 import Header1 from "@/components/headers/Header1";
 
 export const metadata = {
   title: "Press & Media — Globperty",
-  description: "Globperty press kit, media enquiries, recent coverage, and brand assets for journalists and content creators.",
+  description: "Globperty press kit, media enquiries, recent coverage, and brand assets.",
 };
 
-export default function PressPage() {
-  const coverage = [
-    { quote: "The platform making cross-border real estate effortless", source: "PropTech Weekly" },
-    { quote: "Top 10 Real Estate Startups to Watch", source: "TechCrunch" },
-    { quote: "Virtual property expos are the future — Globperty leads the way", source: "Forbes" },
-  ];
+const coverage = [
+  { quote: "The platform making cross-border real estate effortless", source: "PropTech Weekly" },
+  { quote: "Top 10 Real Estate Startups to Watch", source: "TechCrunch" },
+  { quote: "Virtual property expos are the future — Globperty leads the way", source: "Forbes" },
+];
 
+export default function PressPage() {
   return (
     <>
       <div id="wrapper" className="counter-scroll">
         <Header1 />
         <div className="main-content">
-
-          <section className="flat-section flat-banner-v6" style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)", padding: "80px 0 60px" }}>
-            <div className="tf-container">
-              <div className="row justify-content-center text-center">
-                <div className="col-lg-7">
-                  <div className="sub-title fw-7 text-white mb-12" style={{ fontSize: 13, letterSpacing: 2, textTransform: "uppercase", opacity: 0.7 }}>Press & Media</div>
-                  <h1 className="text-white fw-8 mb-20" style={{ fontSize: "clamp(28px, 4vw, 48px)" }}>Globperty in the News</h1>
-                  <p className="text-white" style={{ fontSize: 16, opacity: 0.8 }}>
-                    For media enquiries, press kits, and interview requests — we'd love to connect.
-                  </p>
-                  <a href="mailto:press@globperty.com" className="tf-btn bg-color-primary fw-7 pd-14 mt-24 d-inline-block">press@globperty.com</a>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* PRESS KIT */}
+          <Breadcumb pageName="Press & Media" />
           <section className="flat-section tf-spacing-6">
             <div className="tf-container">
-              <div className="row gy-32">
-                <div className="col-lg-5">
-                  <div className="heading-section mb-32">
-                    <div className="sub-title fw-7 text-color-primary mb-12">Press Kit</div>
-                    <h2 className="title mb-16">Brand Assets & Resources</h2>
-                    <p className="text-variant-1 body-2 mb-24">
-                      Everything you need to cover Globperty accurately and compellingly. Download our press kit for brand assets, founder bios, and company overview.
-                    </p>
+              <div className="row justify-content-center text-center mb-48">
+                <div className="col-lg-7">
+                  <div className="heading-section">
+                    <div className="sub-title fw-7 text-color-primary mb-12">Press & Media</div>
+                    <h2 className="title wow animate__fadeInUp animate__animated" data-wow-duration="1s">Globperty in the News</h2>
+                    <p className="text-1 mb-20">If you are a journalist, editor, or content creator covering real estate, technology, or global markets — we would love to connect.</p>
+                    <a href="mailto:press@globperty.com" className="tf-btn bg-color-primary fw-7 pd-17">press@globperty.com</a>
                   </div>
-                  <ul className="list-style-none" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                    {["Company overview & fact sheet", "Founder bios & high-res headshots", "Brand logos & style guide", "Product screenshots & demo videos"].map((item, i) => (
-                      <li key={i} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14 }}>
-                        <i className="icon-check-circle text-color-primary" style={{ fontSize: 18 }} />
-                        <span>{item}</span>
+                </div>
+              </div>
+              <div className="row gy-40">
+                <div className="col-lg-5 wow animate__fadeInLeft animate__animated" data-wow-duration="1s">
+                  <div className="sub-title fw-7 text-color-primary mb-12">Press Kit</div>
+                  <h3 className="title mb-16">Brand Assets & Resources</h3>
+                  <p className="text-1 text-variant-1 mb-24">Everything you need to cover Globperty accurately. Download our press kit for brand assets, founder bios, and company overview.</p>
+                  <ul className="list-style-none mb-30">
+                    {["Company overview & fact sheet","Founder bios & high-res headshots","Brand logos & style guide","Product screenshots & demo videos"].map((item, i) => (
+                      <li key={i} className="d-flex align-items-center gap-12 mb-14">
+                        <i className="icon-check-circle fs-20 text-color-primary" />
+                        <span className="text-1">{item}</span>
                       </li>
                     ))}
                   </ul>
-                  <a href="mailto:press@globperty.com" className="tf-btn bg-color-primary fw-7 pd-14 mt-32 d-inline-block">Request Press Kit</a>
+                  <a href="mailto:press@globperty.com" className="tf-btn bg-color-primary fw-7 pd-17">Request Press Kit</a>
                 </div>
-
-                <div className="col-lg-7">
-                  <div className="heading-section mb-32">
-                    <div className="sub-title fw-7 text-color-primary mb-12">Recent Coverage</div>
-                    <h2 className="title mb-16">What They're Saying</h2>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                <div className="col-lg-7 wow animate__fadeInRight animate__animated" data-wow-duration="1s">
+                  <div className="sub-title fw-7 text-color-primary mb-12">Recent Coverage</div>
+                  <h3 className="title mb-24">What They are Saying</h3>
+                  <div className="d-flex flex-column gap-20">
                     {coverage.map((c, i) => (
-                      <div key={i} style={{ padding: "24px 28px", borderRadius: 12, border: "1.5px solid #e8edf5", background: "#fff" }}>
-                        <p style={{ fontSize: 16, fontWeight: 600, fontStyle: "italic", color: "#334155", marginBottom: 10, lineHeight: 1.6 }}>
-                          &ldquo;{c.quote}&rdquo;
-                        </p>
-                        <div style={{ fontSize: 13, fontWeight: 700, color: "#f57224" }}>— {c.source}</div>
+                      <div key={i} className="box-icon-v2 hover-btn-view style-col pd-24">
+                        <p className="body-1 fw-6 mb-10" style={{ fontStyle:"italic" }}>&ldquo;{c.quote}&rdquo;</p>
+                        <div className="text-color-primary fw-7 text-1">— {c.source}</div>
                       </div>
                     ))}
                   </div>
@@ -76,7 +63,7 @@ export default function PressPage() {
               </div>
             </div>
           </section>
-
+          <Cta />
         </div>
         <Footer1 />
       </div>
