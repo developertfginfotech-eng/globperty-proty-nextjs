@@ -188,234 +188,71 @@ export default function Faqs() {
                   </div>
                 </li>
                 <li className="faq-item">
-                  <a
-                    href="#accordion2-faq-four"
-                    className="faq-header h6 collapsed"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    aria-controls="accordion2-faq-four"
-                  >
-                    Are There Any Hidden Fees Not Displayed In The Pricing
-                    Table?
+                  <a href="#accordion2-faq-four" className="faq-header h6 collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accordion2-faq-four">
+                    Are there any hidden fees?
                     <i className="icon-CaretDown" />
                   </a>
-                  <div
-                    id="accordion2-faq-four"
-                    className="collapse"
-                    data-bs-parent="#wrapper-faq-2"
-                  >
-                    <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
-                    </p>
+                  <div id="accordion2-faq-four" className="collapse" data-bs-parent="#wrapper-faq-2">
+                    <p className="faq-body">No hidden fees. What you see in the pricing page is what you pay. Premium features are clearly listed per plan. There are no setup fees or surprise charges.</p>
                   </div>
                 </li>
                 <li className="faq-item">
-                  <a
-                    href="#accordion2-faq-five"
-                    className="faq-header h6 collapsed"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    aria-controls="accordion2-faq-five"
-                  >
-                    What Is The Refund Procedure?
+                  <a href="#accordion2-faq-five" className="faq-header h6 collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accordion2-faq-five">
+                    Can I upgrade or downgrade my plan?
                     <i className="icon-CaretDown" />
                   </a>
-                  <div
-                    id="accordion2-faq-five"
-                    className="collapse"
-                    data-bs-parent="#wrapper-faq-2"
-                  >
-                    <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
-                    </p>
-                  </div>
-                </li>
-                <li className="faq-item">
-                  <a
-                    href="#accordion2-faq-six"
-                    className="faq-header h6 collapsed"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    aria-controls="accordion2-faq-six"
-                  >
-                    Is There Financial Or Accounting Support?
-                    <i className="icon-CaretDown" />
-                  </a>
-                  <div
-                    id="accordion2-faq-six"
-                    className="collapse"
-                    data-bs-parent="#wrapper-faq-2"
-                  >
-                    <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
-                    </p>
+                  <div id="accordion2-faq-five" className="collapse" data-bs-parent="#wrapper-faq-2">
+                    <p className="faq-body">Yes. You can upgrade or downgrade your subscription plan at any time from your account settings. Changes take effect at the start of the next billing cycle.</p>
                   </div>
                 </li>
               </ul>
             </div>
             <div className="tf-faq">
-              <h3 className="fw-8 title mb-24">Safety and Security</h3>
+              <h3 className="fw-8 title mb-24">Safety &amp; Trust</h3>
               <ul className="box-faq" id="wrapper-faq-3">
                 <li className="faq-item">
-                  <a
-                    href="#accordion3-faq-one"
-                    className="faq-header h6 collapsed"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    aria-controls="accordion3-faq-one"
-                  >
-                    What Languages Does Your Service Support?
+                  <a href="#accordion3-faq-one" className="faq-header h6 collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accordion3-faq-one">
+                    How does Globperty verify agents and sellers?
                     <i className="icon-CaretDown" />
                   </a>
-                  <div
-                    id="accordion3-faq-one"
-                    className="collapse"
-                    data-bs-parent="#wrapper-faq-3"
-                  >
-                    <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
-                    </p>
+                  <div id="accordion3-faq-one" className="collapse" data-bs-parent="#wrapper-faq-3">
+                    <p className="faq-body">All sellers and brokers on Globperty must complete KYC (Know Your Customer) verification before listing. This includes identity documents, proof of address, and where applicable, agency registration. Buyers can always see the verification badge on verified profiles.</p>
                   </div>
                 </li>
                 <li className="faq-item active">
-                  <a
-                    href="#accordion3-faq-two"
-                    className="faq-header h6 collapsed"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    aria-controls="accordion3-faq-two"
-                  >
-                    How Do I Integrate Your Service Into My System?
+                  <a href="#accordion3-faq-two" className="faq-header h6 collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accordion3-faq-two">
+                    Is my personal data safe?
                     <i className="icon-CaretDown" />
                   </a>
-                  <div
-                    id="accordion3-faq-two"
-                    className="collapse"
-                    data-bs-parent="#wrapper-faq-3"
-                  >
-                    <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
-                    </p>
+                  <div id="accordion3-faq-two" className="collapse" data-bs-parent="#wrapper-faq-3">
+                    <p className="faq-body">Absolutely. Globperty is fully GDPR-compliant. Your data is encrypted, never sold to third parties, and you can request deletion at any time. We use industry-standard security protocols across all systems.</p>
                   </div>
                 </li>
                 <li className="faq-item">
-                  <a
-                    href="#accordion3-faq-three"
-                    className="faq-header h6 collapsed"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    aria-controls="accordion3-faq-three"
-                  >
-                    What Are The Safety Features Of Your System?
+                  <a href="#accordion3-faq-three" className="faq-header h6 collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accordion3-faq-three">
+                    How do I report a suspicious listing?
                     <i className="icon-CaretDown" />
                   </a>
-                  <div
-                    id="accordion3-faq-three"
-                    className="collapse"
-                    data-bs-parent="#wrapper-faq-3"
-                  >
-                    <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
-                    </p>
+                  <div id="accordion3-faq-three" className="collapse" data-bs-parent="#wrapper-faq-3">
+                    <p className="faq-body">Use the &quot;Report&quot; button on any listing page, or email us at <strong>hello@globperty.com</strong>. Our compliance team reviews all reports within 24 hours and takes immediate action if a listing violates our policies.</p>
                   </div>
                 </li>
                 <li className="faq-item">
-                  <a
-                    href="#accordion3-faq-four"
-                    className="faq-header h6 collapsed"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    aria-controls="accordion3-faq-four"
-                  >
-                    How Can I Request New Features?
+                  <a href="#accordion3-faq-four" className="faq-header h6 collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accordion3-faq-four">
+                    What currencies does Globperty support?
                     <i className="icon-CaretDown" />
                   </a>
-                  <div
-                    id="accordion3-faq-four"
-                    className="collapse"
-                    data-bs-parent="#wrapper-faq-3"
-                  >
-                    <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
-                    </p>
+                  <div id="accordion3-faq-four" className="collapse" data-bs-parent="#wrapper-faq-3">
+                    <p className="faq-body">Globperty supports 50+ currencies. You can switch currency display in your account settings or use the currency converter tool in our Tools section. Prices shown are based on live exchange rates.</p>
                   </div>
                 </li>
                 <li className="faq-item">
-                  <a
-                    href="#accordion3-faq-five"
-                    className="faq-header h6 collapsed"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    aria-controls="accordion3-faq-five"
-                  >
-                    Is My Data Protected?
+                  <a href="#accordion3-faq-five" className="faq-header h6 collapsed" data-bs-toggle="collapse" aria-expanded="false" aria-controls="accordion3-faq-five">
+                    How do I contact Globperty support?
                     <i className="icon-CaretDown" />
                   </a>
-                  <div
-                    id="accordion3-faq-five"
-                    className="collapse"
-                    data-bs-parent="#wrapper-faq-3"
-                  >
-                    <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
-                    </p>
-                  </div>
-                </li>
-                <li className="faq-item">
-                  <a
-                    href="#accordion3-faq-six"
-                    className="faq-header h6 collapsed"
-                    data-bs-toggle="collapse"
-                    aria-expanded="false"
-                    aria-controls="accordion3-faq-six"
-                  >
-                    How Do I Report A Technical Issue?
-                    <i className="icon-CaretDown" />
-                  </a>
-                  <div
-                    id="accordion3-faq-six"
-                    className="collapse"
-                    data-bs-parent="#wrapper-faq-3"
-                  >
-                    <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
-                    </p>
+                  <div id="accordion3-faq-five" className="collapse" data-bs-parent="#wrapper-faq-3">
+                    <p className="faq-body">You can reach us at <strong>hello@globperty.com</strong> or call <strong>+1 (800) GLOB-PTY</strong>. Support hours are Monday to Friday, 9 AM – 6 PM GMT. You can also use the contact form on this page.</p>
                   </div>
                 </li>
               </ul>
