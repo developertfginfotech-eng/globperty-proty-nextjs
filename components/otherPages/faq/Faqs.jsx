@@ -259,7 +259,7 @@ export default function Faqs() {
             </div>
           </div>
           <div className="col-xl-4 col-lg-5">
-            <div className="tf-sidebar sticky-sidebar">
+            <div className="tf-sidebar">
               <div className="form-contact-seller mb-30">
                 <h4 className="heading-title mb-20">Contact Support</h4>
                 <div className="seller-info mb-20">
