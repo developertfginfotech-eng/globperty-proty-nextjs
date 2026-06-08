@@ -44,8 +44,7 @@ export default function Benefits() {
                   data-wow-duration="1s"
                   data-wow-delay="0s"
                 >
-                  Benefits when you work <br />
-                  at Globperty
+                  Why Work at Globperty
                 </h2>
                 <div
                   className="description wow animate__fadeInUp animate__animated"
@@ -53,14 +52,10 @@ export default function Benefits() {
                   data-wow-delay="0s"
                 >
                   <p className="text-1 mb-16">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aenean sollicitudin ipsum ullamcorper, pulvinar ipsum in,
-                    imperdiet ante. In feugiat tortor semper nibh rhoncus
-                    volutpat. Suspendisse potenti.
+                    At Globperty, you&apos;ll work with a global team across 4 continents on technology that impacts how millions of people buy and invest in property. We move fast, give real ownership, and believe borders should never limit great talent.
                   </p>
                   <p className="text-1">
-                    Proin pharetra rhoncus maximus. Sed est dolor, consectetur
-                    eu sagittis a
+                    Remote-first with flexible hours, competitive salary + equity options, and a culture that values bold thinking over bureaucracy.
                   </p>
                 </div>
                 <div className="wrap-icon">
@@ -73,7 +68,7 @@ export default function Benefits() {
                       <i className="icon-heart-1" />
                     </div>
                     <div className="title text-1 text-center fw-6">
-                      Health care
+                      Global Remote Work
                     </div>
                   </div>
                   <div
@@ -85,7 +80,7 @@ export default function Benefits() {
                       <i className="icon-pig" />
                     </div>
                     <div className="title text-1 text-center fw-6">
-                      Attractive salary and bonus
+                      Salary + Equity
                     </div>
                   </div>
                   <div
@@ -97,7 +92,7 @@ export default function Benefits() {
                       <i className="icon-family" />
                     </div>
                     <div className="title text-1 text-center fw-6">
-                      Family life
+                      Flexible Hours
                     </div>
                   </div>
                 </div>

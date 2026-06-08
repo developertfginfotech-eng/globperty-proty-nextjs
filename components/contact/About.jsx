@@ -9,7 +9,7 @@ export default function About() {
             <div className="box-contact">
               <div className="heading-section mb-48">
                 <h2 className="title split-text split-lines-transform">
-                  We provide the most suitable and quality real estate.
+                  We're Here to Help — Reach Globperty Anytime.
                 </h2>
                 <p className="text-1">
                   Estimate your payment with our easy-to-use loan calculator.
@@ -48,7 +48,7 @@ export default function About() {
                   </div>
                   <div className="content">
                     <div className="sub">Office address</div>
-                    <p>102 Ingraham St, Brooklyn, NY 11237</p>
+                    <p>London, UK · Dubai · Singapore · New York</p>
                   </div>
                 </li>
                 <li>
@@ -92,7 +92,7 @@ export default function About() {
                   </div>
                   <div className="content">
                     <div className="sub">Office address</div>
-                    <div className="phone">(603) 555-0123</div>
+                    <div className="phone">+1 (800) GLOB-PTY</div>
                   </div>
                 </li>
                 <li>
@@ -168,7 +168,7 @@ export default function About() {
                   </div>
                   <div className="content">
                     <div className="sub">Office address</div>
-                    <a href="#">themesflat@gmail.com</a>
+                    <a href="mailto:hello@globperty.com">hello@globperty.com</a>
                   </div>
                 </li>
               </ul>

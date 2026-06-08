@@ -26,7 +26,7 @@ export default function AboutPage() {
           <Breadcumb pageName="About Globperty" />
 
           {/* HERO BANNER */}
-          <section className="flat-banner-v4 tf-spacing-1">
+          <section className="flat-banner-v4">
             <div className="tf-container">
               <div className="row justify-content-center">
                 <div className="col-lg-8 text-center">

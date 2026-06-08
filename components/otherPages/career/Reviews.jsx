@@ -22,14 +22,10 @@ export default function Reviews() {
                   data-wow-delay="0s"
                 >
                   <p className="text-1 mb-15">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aenean sollicitudin ipsum ullamcorper, pulvinar ipsum in,
-                    imperdiet ante. In feugiat tortor semper nibh rhoncus
-                    volutpat.
+                    Our team spans 4 continents and works on technology that&apos;s changing how the world buys, sells, and discovers property. Here&apos;s what our people say about working at Globperty.
                   </p>
                   <p className="text-1">
-                    Proin pharetra rhoncus maximus. Sed est dolor, consectetur
-                    eu sagittis a
+                    Join a team that gives you real ownership, flexible work, and the chance to build something that matters globally.
                   </p>
                 </div>
                 <a
@@ -68,8 +64,8 @@ export default function Reviews() {
                     />
                   </div>
                   <div className="content">
-                    <h6 className="name">Cody Fisher</h6>
-                    <p className="text-2 lh-16">CEO Themesflat</p>
+                    <h6 className="name">Sarah Thompson</h6>
+                    <p className="text-2 lh-16">Senior Engineer, Globperty</p>
                   </div>
                 </div>
                 <div
@@ -96,9 +92,7 @@ export default function Reviews() {
                     <i className="icon-star" />
                   </div>
                   <p className="text-1 description line-clamp-3">
-                    Vivamus at nisl ornare, vulputate turpis finibus, posuere
-                    metus. Donec in placerat felis. Praesent ante tellus,
-                    dignissim nec imperdiet ac.
+                    Working at Globperty is unlike any other company. The pace is fast, the problems are real, and you genuinely feel like you&apos;re building the future of real estate. The team is world-class and the culture is truly remote-first.
                   </p>
                   <div className="author">
                     <div className="avatar">
@@ -111,9 +105,9 @@ export default function Reviews() {
                     </div>
                     <div className="content">
                       <h6 className="name">
-                        <a href="#">Cody Fisher</a>
+                        <a href="#">Sarah Thompson</a>
                       </h6>
-                      <p className="text-2">CEO Themesflat</p>
+                      <p className="text-2">Senior Engineer, Globperty</p>
                     </div>
                   </div>
                 </div>
