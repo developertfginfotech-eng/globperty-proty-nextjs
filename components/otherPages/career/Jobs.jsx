@@ -13,16 +13,14 @@ export default function Jobs() {
                 data-wow-duration="1s"
                 data-wow-delay="0s"
               >
-                Best Job For You At Globperty
+                Open Roles at Globperty
               </h2>
               <p
                 className="text-1 wow animate__fadeInUp animate__animated"
                 data-wow-duration="1s"
                 data-wow-delay="0s"
               >
-                We connect you directly to the person that knows the most about
-                a property for sale, <br />
-                the listing agent.
+                Don&apos;t see your role? Send your CV to <strong>careers@globperty.com</strong> — we&apos;re always open to exceptional talent.
               </p>
             </div>
             <div className="tf-grid-layout-2 mb-48">

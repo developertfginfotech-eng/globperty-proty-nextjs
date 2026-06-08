@@ -1,59 +1,24 @@
 "use client";
 
-import { useState } from "react";
-
 export default function PageTitle() {
-  // State to track the active item
-  const [activeItem, setActiveItem] = useState("For sale");
-
-  // Array of items to render
-  const items = ["For sale", "For rent"];
   return (
-    <div className="page-title career">
-      <div className="tf-container">
+    <div className="page-title career" style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f172a 100%)", minHeight: 480, display: "flex", alignItems: "center" }}>
+      <div className="tf-container" style={{ width: "100%" }}>
         <div className="row justify-center">
-          <div className="col-lg-8">
+          <div className="col-lg-8 text-center">
             <div className="content-inner">
-              <div className="heading-title">
-                <h1 className="title">
+              <div className="heading-title mb-32">
+                <div style={{ fontSize: 12, fontWeight: 700, color: "#f57224", textTransform: "uppercase", letterSpacing: 2, marginBottom: 16 }}>We&apos;re Hiring</div>
+                <h1 className="title text-white" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", lineHeight: 1.15, marginBottom: 20 }}>
                   Build the Future of Global Real Estate with Us
                 </h1>
-                <p className="h6 fw-4">
+                <p className="h6 fw-4 text-white" style={{ opacity: 0.75, maxWidth: 560, margin: "0 auto 32px" }}>
                   We&apos;re looking for bold thinkers, passionate builders, and people who believe that real estate should have no borders.
                 </p>
               </div>
-              <div className="wg-filter">
-                <div className="form-title">
-                  <div className="tf-dropdown-sort" data-bs-toggle="dropdown">
-                    <div className="btn-select">
-                      <span className="text-sort-value">{activeItem}</span>
-                      <i className="icon-CaretDown" />
-                    </div>
-                    <div className="dropdown-menu">
-                      {items.map((item) => (
-                        <div
-                          key={item}
-                          className={`select-item ${
-                            activeItem === item ? "active" : ""
-                          }`}
-                          onClick={() => setActiveItem(item)} // Set the active item on click
-                        >
-                          <span className="text-value-item">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <form>
-                    <fieldset>
-                      <input type="text" placeholder="Find job here" />
-                    </fieldset>
-                  </form>
-                  <div className="wrap-btn">
-                    <a href="#" className="tf-btn bg-color-primary fw-7 pd-3">
-                      Search <i className="icon-MagnifyingGlass fw-6" />
-                    </a>
-                  </div>
-                </div>
+              <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+                <a href="#open-roles" className="tf-btn bg-color-primary fw-7 pd-15">View Open Roles</a>
+                <a href="mailto:careers@globperty.com" className="tf-btn style-border color-white fw-7 pd-14">Send Your CV</a>
               </div>
             </div>
           </div>

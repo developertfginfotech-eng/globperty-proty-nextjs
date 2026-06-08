@@ -28,7 +28,7 @@ export default function PressPage() {
                   <p className="text-white" style={{ fontSize: 16, opacity: 0.8 }}>
                     For media enquiries, press kits, and interview requests — we'd love to connect.
                   </p>
-                  <a href="mailto:press@globperty.com" className="tf-btn btn-gradient mt-24 d-inline-block">press@globperty.com</a>
+                  <a href="mailto:press@globperty.com" className="tf-btn bg-color-primary fw-7 pd-14 mt-24 d-inline-block">press@globperty.com</a>
                 </div>
               </div>
             </div>
@@ -54,7 +54,7 @@ export default function PressPage() {
                       </li>
                     ))}
                   </ul>
-                  <a href="mailto:press@globperty.com" className="tf-btn btn-gradient mt-32 d-inline-block">Request Press Kit</a>
+                  <a href="mailto:press@globperty.com" className="tf-btn bg-color-primary fw-7 pd-14 mt-32 d-inline-block">Request Press Kit</a>
                 </div>
 
                 <div className="col-lg-7">

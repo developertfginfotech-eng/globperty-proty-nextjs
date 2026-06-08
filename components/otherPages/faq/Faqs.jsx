@@ -423,92 +423,46 @@ export default function Faqs() {
           </div>
           <div className="col-xl-4 col-lg-5">
             <div className="tf-sidebar sticky-sidebar">
-              <form className="form-contact-seller mb-30">
-                <h4 className="heading-title mb-30">Contact Sellers</h4>
-                <div className="seller-info">
-                  <div className="avartar">
-                    <Image
-                      alt=""
-                      width={200}
-                      height={200}
-                      src="/images/avatar/seller.jpg"
-                    />
-                  </div>
+              <div className="form-contact-seller mb-30">
+                <h4 className="heading-title mb-20">Contact Support</h4>
+                <div className="seller-info mb-20">
                   <div className="content">
-                    <h6 className="name">Shara Conner</h6>
+                    <h6 className="name">Globperty Support Team</h6>
                     <ul className="contact">
                       <li>
                         <i className="icon-phone-1" />
-                        <span>1-333-345-6868</span>
+                        <span>+1 (800) GLOB-PTY</span>
                       </li>
                       <li>
                         <i className="icon-mail" />
-                        <a href="#">themesflat@gmail.com</a>
+                        <a href="mailto:hello@globperty.com">hello@globperty.com</a>
                       </li>
                     </ul>
+                    <p className="text-variant-1" style={{ fontSize: 12, marginTop: 8 }}>Mon – Fri, 9 AM – 6 PM GMT</p>
                   </div>
                 </div>
                 <fieldset className="mb-12">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Full Name"
-                    name="name"
-                    id="name"
-                    required=""
-                  />
+                  <input type="text" className="form-control" placeholder="Your Name" name="name" required="" />
+                </fieldset>
+                <fieldset className="mb-12">
+                  <input type="email" className="form-control" placeholder="Your Email" name="email" required="" />
                 </fieldset>
                 <fieldset className="mb-30">
-                  <textarea
-                    name="message"
-                    cols={30}
-                    rows={10}
-                    placeholder="How can an agent help"
-                    id="message"
-                    required=""
-                    defaultValue={""}
-                  />
+                  <textarea name="message" cols={30} rows={5} placeholder="How can we help you?" required="" defaultValue={""} />
                 </fieldset>
-                <a href="#" className="tf-btn bg-color-primary w-full">
-                  Send message
-                </a>
-              </form>
-              <div className="sidebar-ads">
-                <div className="image-wrap">
-                  <Image
-                    className="lazyload"
-                    data-src="/images/blog/ads.jpg"
-                    alt=""
-                    width={400}
-                    height={470}
-                    src="/images/blog/ads.jpg"
-                  />
-                </div>
-                <div className="logo relative z-5">
-                  <Image
-                    alt=""
-                    width={272}
-                    height={85}
-                    src="/images/logo/logo-2@2x.png"
-                  />
-                </div>
+                <a href="mailto:hello@globperty.com" className="tf-btn bg-color-primary w-full">Send Message</a>
+              </div>
+              <div className="sidebar-ads" style={{ background: "linear-gradient(135deg,#0f172a,#1e3a5f)", borderRadius: 12, padding: 24 }}>
                 <div className="box-ads relative z-5">
-                  <div className="content">
-                    <h4 className="title">
-                      <Link href={`/property-detail-v1`}>
-                        We can help you find a local real estate agent
-                      </Link>
-                    </h4>
+                  <div className="content mb-16">
+                    <h4 className="title text-white mb-10">Need a Property Expert?</h4>
                     <div className="text-addres">
-                      <p>
-                        Connect with a trusted agent who knows the market inside
-                        out - whether you’re buying or selling.
+                      <p style={{ color: "rgba(255,255,255,.7)", fontSize: 13 }}>
+                        Connect with a verified agent who knows the global market inside out — whether you&apos;re buying, selling, or investing.
                       </p>
                     </div>
                   </div>
-                  <a href="#" className="tf-btn fw-6 bg-color-primary w-full">
-                    Connect with an agent
-                  </a>
+                  <a href="/agents" className="tf-btn fw-6 bg-color-primary w-full">Find an Agent</a>
                 </div>
               </div>
             </div>
