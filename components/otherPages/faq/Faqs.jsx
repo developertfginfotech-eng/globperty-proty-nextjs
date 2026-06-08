@@ -22,7 +22,7 @@ export default function Faqs() {
                     aria-expanded="false"
                     aria-controls="accordion-faq-one"
                   >
-                    Why Should I Use Your Services?
+                    What is Globperty?
                     <i className="icon-CaretDown" />
                   </a>
                   <div
@@ -31,11 +31,7 @@ export default function Faqs() {
                     data-bs-parent="#wrapper-faq"
                   >
                     <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
+                      Globperty is a global property marketplace where you can search, list, and explore real estate from around the world — all in one platform. We combine AI-powered search, live market data, and virtual property experiences to make buying and selling seamless across borders.
                     </p>
                   </div>
                 </li>
@@ -47,7 +43,7 @@ export default function Faqs() {
                     aria-expanded="false"
                     aria-controls="accordion-faq-two"
                   >
-                    Why Should I Use Your Services?
+                    Is Globperty free to use?
                     <i className="icon-CaretDown" />
                   </a>
                   <div
@@ -56,11 +52,7 @@ export default function Faqs() {
                     data-bs-parent="#wrapper-faq"
                   >
                     <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
+                      Browsing and searching properties is completely free. Listing fees and premium features are available via our subscription plans. You only pay when you're ready to list or access advanced tools.
                     </p>
                   </div>
                 </li>
@@ -72,7 +64,7 @@ export default function Faqs() {
                     aria-expanded="false"
                     aria-controls="accordion-faq-three"
                   >
-                    How Secure Are Your Services?
+                    Can I list a property from any country?
                     <i className="icon-CaretDown" />
                   </a>
                   <div
@@ -81,11 +73,7 @@ export default function Faqs() {
                     data-bs-parent="#wrapper-faq"
                   >
                     <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
+                      Yes! Globperty supports listings from 100+ countries. Our platform is built to handle international currencies, legal nuances, and multilingual listings — making it truly borderless.
                     </p>
                   </div>
                 </li>
@@ -97,7 +85,7 @@ export default function Faqs() {
                     aria-expanded="false"
                     aria-controls="accordion-faq-four"
                   >
-                    Is There Customer Support Available?
+                    How does the virtual expo feature work?
                     <i className="icon-CaretDown" />
                   </a>
                   <div
@@ -106,11 +94,7 @@ export default function Faqs() {
                     data-bs-parent="#wrapper-faq"
                   >
                     <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
+                      Virtual Expos let you attend live and recorded property showcases from developers and agents — from anywhere in the world, on any device. You get real-time Q&amp;A, downloadable brochures, and personalized event reminders.
                     </p>
                   </div>
                 </li>
@@ -122,7 +106,7 @@ export default function Faqs() {
                     aria-expanded="false"
                     aria-controls="accordion-faq-five"
                   >
-                    How Can I Update My Account Information?
+                    Is my data safe on Globperty?
                     <i className="icon-CaretDown" />
                   </a>
                   <div
@@ -131,18 +115,14 @@ export default function Faqs() {
                     data-bs-parent="#wrapper-faq"
                   >
                     <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
+                      Absolutely. We follow GDPR and global data protection standards to ensure your personal and financial information is always secure. Your data is encrypted and never shared with third parties without your consent.
                     </p>
                   </div>
                 </li>
               </ul>
             </div>
             <div className="tf-faq mb-49">
-              <h3 className="fw-8 title mb-24">Costs and Payments</h3>
+              <h3 className="fw-8 title mb-24">Listings & Costs</h3>
               <ul className="box-faq" id="wrapper-faq-2">
                 <li className="faq-item">
                   <a
@@ -152,7 +132,7 @@ export default function Faqs() {
                     aria-expanded="false"
                     aria-controls="accordion2-faq-one"
                   >
-                    How Do You Calculate Fees?
+                    How do I list my property on Globperty?
                     <i className="icon-CaretDown" />
                   </a>
                   <div
@@ -161,11 +141,7 @@ export default function Faqs() {
                     data-bs-parent="#wrapper-faq-2"
                   >
                     <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
+                      Register as a Seller or Broker, complete your KYC verification, then use the "Add Property" feature in your dashboard. You can upload photos, set pricing, add floor plans, and go live in minutes.
                     </p>
                   </div>
                 </li>
@@ -177,7 +153,7 @@ export default function Faqs() {
                     aria-expanded="false"
                     aria-controls="accordion2-faq-two"
                   >
-                    How Do I Pay My Invoices?
+                    What subscription plans are available?
                     <i className="icon-CaretDown" />
                   </a>
                   <div
@@ -186,11 +162,7 @@ export default function Faqs() {
                     data-bs-parent="#wrapper-faq-2"
                   >
                     <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
+                      We offer Starter, Professional, Premium, and Enterprise plans — each with increasing lead allocations, analytics access, and support levels. Visit our pricing page for a full breakdown.
                     </p>
                   </div>
                 </li>
@@ -202,7 +174,7 @@ export default function Faqs() {
                     aria-expanded="false"
                     aria-controls="accordion2-faq-three"
                   >
-                    Are There Opportunities For Discounts Or Promotions?
+                    How does KYC verification work?
                     <i className="icon-CaretDown" />
                   </a>
                   <div
@@ -211,11 +183,7 @@ export default function Faqs() {
                     data-bs-parent="#wrapper-faq-2"
                   >
                     <p className="faq-body">
-                      Once your account is set up and you've familiarized
-                      yourself with the platform, you are ready to start using
-                      our services. Whether it's accessing specific features,
-                      making transactions, or utilizing our tools, you'll find
-                      everything you need at your fingertips.
+                      KYC (Know Your Customer) is required for Sellers and Brokers before listing. You submit identity documents relevant to your country and account type. Our team reviews and approves within 1–2 business days.
                     </p>
                   </div>
                 </li>

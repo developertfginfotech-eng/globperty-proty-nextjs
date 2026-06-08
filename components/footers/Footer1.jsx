@@ -43,8 +43,8 @@ const COMPANY = [
   { label: "About Globperty", href: "/about" },
   { label: "Contact Us",      href: "/contact" },
   { label: "FAQ",             href: "/faq" },
-  { label: "Careers",         href: "/contact" },
-  { label: "Press & Media",   href: "/contact" },
+  { label: "Careers",         href: "/career" },
+  { label: "Press & Media",   href: "/press" },
   { label: "Virtual Expos",   href: "/virtual-expo" },
 ];
 

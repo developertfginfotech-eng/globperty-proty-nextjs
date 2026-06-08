@@ -16,11 +16,10 @@ export default function PageTitle() {
             <div className="content-inner">
               <div className="heading-title">
                 <h1 className="title">
-                  A Culture of Inclusivity and Belonging
+                  Build the Future of Global Real Estate with Us
                 </h1>
                 <p className="h6 fw-4">
-                  Thousands of luxury home enthusiasts just like you visit our
-                  website.
+                  We&apos;re looking for bold thinkers, passionate builders, and people who believe that real estate should have no borders.
                 </p>
               </div>
               <div className="wg-filter">
