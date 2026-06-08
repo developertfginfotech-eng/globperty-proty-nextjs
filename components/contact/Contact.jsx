@@ -26,10 +26,9 @@ export default function Contact() {
                 className="form-contact"
               >
                 <div className="heading-section">
-                  <h2 className="title">We Would Love to Hear From You</h2>
+                  <h2 className="title">We&apos;re Here to Help</h2>
                   <p className="text-1">
-                    We'll get to know you to understand your selling goals,
-                    explain the selling process so you know what to expect.
+                    Whether you&apos;re a buyer, seller, agent, or developer — our team is ready to assist you at every step of your property journey. Reach us at <strong>hello@globperty.com</strong> or fill the form below.
                   </p>
                 </div>
                 <div className="cols">

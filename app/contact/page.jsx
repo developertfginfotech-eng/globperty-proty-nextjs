@@ -7,8 +7,8 @@ import Header1 from "@/components/headers/Header1";
 import React from "react";
 
 export const metadata = {
-  title: "Contact || Globperty - Real Estate React Nextjs Template",
-  description: "Globperty - Real Estate React Nextjs Template",
+  title: "Contact Us — Globperty | Global Real Estate Platform",
+  description: "Get in touch with Globperty. We're here to help buyers, sellers, agents and developers at every step of their property journey.",
 };
 export default function page() {
   return (
