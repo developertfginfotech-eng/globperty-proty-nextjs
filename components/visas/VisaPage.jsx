@@ -46,7 +46,7 @@ export default function VisaPage({ visa }) {
             <h2 style={{ fontSize: 26, fontWeight: 800, color: "#111827", marginBottom: 36, textAlign: "center" }}>
               Key <span style={{ color: "#f0822d" }}>Requirements</span>
             </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+            <div className="visa-requirements-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
               {visa.requirements.map((r, i) => (
                 <div key={i} style={{ background: "#fff", borderRadius: 12, padding: "24px 20px", border: "1px solid #f3f4f6", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
                   <span style={{ fontSize: 28, display: "block", marginBottom: 12 }}>{r.icon}</span>
@@ -64,7 +64,7 @@ export default function VisaPage({ visa }) {
             <h2 style={{ fontSize: 26, fontWeight: 800, color: "#111827", marginBottom: 36, textAlign: "center" }}>
               Application <span style={{ color: "#f0822d" }}>Process</span>
             </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24 }}>
+            <div className="visa-steps-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24 }}>
               {visa.steps.map((s, i) => (
                 <div key={i} style={{ textAlign: "center", padding: "20px 12px" }}>
                   <div style={{ width: 48, height: 48, borderRadius: "50%", background: "#f0822d", color: "#fff", fontSize: 17, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 14px" }}>{String(i + 1).padStart(2, "0")}</div>

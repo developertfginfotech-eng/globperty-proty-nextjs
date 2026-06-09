@@ -186,7 +186,7 @@ export default function Hero() {
                   </div>
 
                   {/* Divider */}
-                  <div style={{ width: 1, height: 32, background: "#e5e7eb", flexShrink: 0 }} />
+                  <div className="hero-search-divider" style={{ width: 1, height: 32, background: "#e5e7eb", flexShrink: 0 }} />
 
                   {/* Location dropdown */}
                   <div

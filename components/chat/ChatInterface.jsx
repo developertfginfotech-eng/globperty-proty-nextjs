@@ -83,8 +83,9 @@ export default function ChatInterface({ sessionId, onClose }) {
 
   return (
     <div style={{
-      position: "fixed", bottom: 90, right: 20,
-      width: 400, height: 600,
+      position: "fixed", bottom: 90, right: 16,
+      width: "min(400px, calc(100vw - 32px))",
+      height: "min(600px, calc(100dvh - 120px))",
       background: "white", borderRadius: 16,
       boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
       display: "flex", flexDirection: "column", overflow: "hidden",

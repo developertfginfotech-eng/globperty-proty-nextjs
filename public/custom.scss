@@ -53,6 +53,38 @@
   }
 }
 
+/* ── Visa page: responsive grids ── */
+@media (max-width: 767px) {
+  .visa-requirements-grid { grid-template-columns: 1fr !important; }
+  .visa-steps-grid { grid-template-columns: 1fr 1fr !important; }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .visa-requirements-grid { grid-template-columns: 1fr 1fr !important; }
+  .visa-steps-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ── Hero search bar: hide divider on mobile to remove gap ── */
+@media (max-width: 767px) {
+  .hero-search-divider { display: none !important; }
+  .hero-dd-wrap { width: 100% !important; flex: 1 1 100% !important; }
+}
+
+/* ── Newsletter email input on mobile ── */
+@media (max-width: 767px) {
+  .glb-nl-input {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
+    display: block !important;
+  }
+}
+
+/* ── Dashboard sidebar hamburger ── */
+@media (max-width: 991px) {
+  .page-layout .main-content { padding-top: 56px !important; }
+}
+
 /* ── Login/Register: form takes full width on mobile ── */
 @media (max-width: 767px) {
   .glb-auth-left { display: none !important; }

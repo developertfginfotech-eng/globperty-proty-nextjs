@@ -198,6 +198,45 @@ function HeroSection({ country, onSelectTab }) {
 }
 
 function TabBar({ tabs, active, onSelect, tabRef }) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div ref={tabRef} style={{ background: "#fff", borderBottom: "1px solid #f3f4f6", position: "sticky", top: 0, zIndex: 100, overflowX: "auto", boxShadow: "0 2px 10px rgba(0,0,0,0.08)", WebkitOverflowScrolling: "touch" }}>
+        <div style={{ display: "flex", gap: 4, padding: "8px 12px", minWidth: "max-content" }}>
+          {tabs.map((tab) => (
+            <button key={tab} onClick={() => onSelect(tab)} title={tab} style={{
+              padding: active === tab ? "10px 14px" : "10px 10px",
+              margin: "2px 0",
+              fontSize: 22,
+              lineHeight: 1,
+              background: active === tab ? "linear-gradient(135deg, #f0822d, #e56c1a)" : "#f9fafb",
+              border: active === tab ? "none" : "1px solid #e5e7eb",
+              borderRadius: 12,
+              boxShadow: active === tab ? "0 3px 12px rgba(240,130,45,0.4)" : "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minWidth: 44,
+              minHeight: 44,
+              transition: "all 0.15s",
+              flexShrink: 0,
+            }}>
+              {TAB_ICONS[tab]}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div ref={tabRef} style={{ background: "#fff", borderBottom: "1px solid #f3f4f6", position: "sticky", top: 0, zIndex: 100, overflowX: "auto", boxShadow: "0 2px 10px rgba(0,0,0,0.08)" }}>
       <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px", display: "flex", gap: 4 }}>
@@ -258,7 +297,7 @@ function OverviewSection({ country }) {
 
       {/* Country stats */}
       {country.countryStats && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginBottom: 36 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 16, marginBottom: 36 }}>
           {country.countryStats.map((s) => (
             <div key={s.label} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 12, padding: "20px", textAlign: "center", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}>
               <div style={{ fontSize: 24, marginBottom: 8 }}>{s.icon}</div>
@@ -281,7 +320,7 @@ function OverviewSection({ country }) {
 
       {/* Feature cards */}
       {country.features && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginTop: 36, marginBottom: 48 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 16, marginTop: 36, marginBottom: 48 }}>
           {country.features.map((f) => (
             <div key={f.title} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 12, padding: "20px 16px", textAlign: "center", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
               <div style={{ fontSize: 28, marginBottom: 10 }}>{f.icon}</div>
@@ -310,21 +349,24 @@ function CountryComparisonBlock({ data, country }) {
       <p style={{ fontSize: 14, color: "#6b7280", marginBottom: 20 }}>{data.subtitle}</p>
       <div style={{ background: "#0f172a", borderRadius: 14, padding: 24 }}>
         <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.7)", marginBottom: 20 }}>📊 Investment Metrics Comparison</div>
-        <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols.length}, 1fr)`, gap: 0 }}>
-          {cols.map((col, ci) => (
-            <div key={ci} style={{ borderRight: ci < cols.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none", paddingRight: ci < cols.length - 1 ? 20 : 0, paddingLeft: ci > 0 ? 20 : 0 }}>
-              <div style={{ textAlign: "center", marginBottom: 16 }}>
-                <div style={{ fontSize: 28, marginBottom: 4 }}>{col.flag}</div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>{col.name}</div>
-              </div>
-              {(col.metrics || []).map((m, mi) => (
-                <div key={mi} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-                  <span style={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }}>{m.label}</span>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: m.valueColor || "#fff" }}>{m.value}</span>
+        {/* Horizontally scrollable on mobile */}
+        <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols.length}, minmax(140px, 1fr))`, gap: 0, minWidth: cols.length > 2 ? 420 : "auto" }}>
+            {cols.map((col, ci) => (
+              <div key={ci} style={{ borderRight: ci < cols.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none", paddingRight: ci < cols.length - 1 ? 16 : 0, paddingLeft: ci > 0 ? 16 : 0 }}>
+                <div style={{ textAlign: "center", marginBottom: 16 }}>
+                  <div style={{ fontSize: 28, marginBottom: 4 }}>{col.flag}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>{col.name}</div>
                 </div>
-              ))}
-            </div>
-          ))}
+                {(col.metrics || []).map((m, mi) => (
+                  <div key={mi} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.06)", gap: 8 }}>
+                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", flexShrink: 0 }}>{m.label}</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: m.valueColor || "#fff", textAlign: "right" }}>{m.value}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 20, marginTop: 16 }}>
@@ -390,7 +432,7 @@ function GeographySection({ country, cityListings }) {
       </div>
 
       {/* City cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 36 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 16, marginBottom: 36 }}>
         {(country.cityData || []).map((city) => {
           const listingCount = cityListings[city.name] || cityListings[city.name.split(" ")[0]] || 0;
           return (
@@ -664,7 +706,7 @@ function GoldenVisaSection({ data, country }) {
         <p style={{ fontSize: 14, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 24, maxWidth: 700 }}>{data.card.body}</p>
 
         {/* Stats grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 28 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12, marginBottom: 28 }}>
           {data.card.stats.map((stat, i) => (
             <div key={i} style={{ background: "rgba(255,255,255,0.08)", borderRadius: 10, padding: "14px 16px" }}>
               <div style={{ fontSize: 20, fontWeight: 800, color: "#f0822d" }}>{stat.value}</div>
@@ -971,7 +1013,7 @@ function BusinessSection({ data, country }) {
       </div>
 
       {/* Stats */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 16 }}>
         {(data.stats || []).map((s, i) => (
           <div key={i} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 20, textAlign: "center" }}>
             <div style={{ fontSize: 28, marginBottom: 8 }}>{s.icon}</div>
@@ -1052,7 +1094,7 @@ function ExpatGuideSection({ data, country }) {
       {/* Neighborhoods */}
       <div>
         <div style={{ fontSize: 14, fontWeight: 700, color: "#111827", marginBottom: 16 }}>🏙️ Best Neighborhoods for Expats</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 16 }}>
           {(data.neighborhoods || []).map((n, i) => (
             <div key={i} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: 20 }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: i === 0 ? "#f0822d" : i === 1 ? "#16a34a" : "#1d4ed8", marginBottom: 6 }}>{n.type?.toUpperCase()}</div>
@@ -1140,7 +1182,7 @@ function ListingsSection({ country }) {
           No {country.name} listings currently. <Link href="/listings" style={{ color: "#f0822d" }}>Browse all listings →</Link>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 20 }}>
           {visible.slice(0, 6).map(p => (
             <Link key={p.id || p._id} href={`/property-detail-v1/${p.id || p._id}`} style={{ textDecoration: "none" }}>
               <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.06)", transition: "box-shadow 0.2s" }}>

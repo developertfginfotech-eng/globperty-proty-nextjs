@@ -10,6 +10,7 @@ export default function Sidebar() {
   const [role, setRole] = useState("");
   const [userName, setUserName] = useState("");
   const [unreadCount, setUnreadCount] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     apiClient.get("/favorites")
@@ -25,8 +26,52 @@ export default function Sidebar() {
     } catch {}
   }, []);
 
+  const toggleMenu = () => {
+    const layout = document.querySelector(".page-layout");
+    if (!layout) return;
+    if (menuOpen) {
+      layout.classList.remove("full-width");
+      setMenuOpen(false);
+    } else {
+      layout.classList.add("full-width");
+      setMenuOpen(true);
+    }
+  };
+
+  const closeMenu = () => {
+    const layout = document.querySelector(".page-layout");
+    if (layout) layout.classList.remove("full-width");
+    setMenuOpen(false);
+  };
+
   const isBuyer = role === "buyer";
   return (
+    <>
+      {/* Mobile top bar — shown below 992px via CSS */}
+      <style>{`
+        .db-mobile-topbar { display: none; position: fixed; top: 0; left: 0; right: 0; height: 56px; background: #fff; border-bottom: 1px solid #e5e7eb; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 999; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        @media (max-width: 991px) { .db-mobile-topbar { display: flex !important; } .page-layout .main-content { padding-top: 56px; } }
+      `}</style>
+      <div className="db-mobile-topbar">
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
+          <div style={{ width: 28, height: 28, borderRadius: 8, background: "#f0822d", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          </div>
+          <span style={{ fontSize: 16, fontWeight: 800, color: "#111827" }}>Globperty</span>
+        </Link>
+        <button onClick={toggleMenu} style={{ background: "none", border: "none", cursor: "pointer", padding: 8, color: "#374151" }} aria-label="Toggle menu">
+          {menuOpen ? (
+            <svg width={24} height={24} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          ) : (
+            <svg width={24} height={24} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          )}
+        </button>
+      </div>
+      {/* Overlay to close menu */}
+      {menuOpen && (
+        <div onClick={closeMenu} style={{ position: "fixed", inset: 0, background: "rgba(22,30,45,0.4)", zIndex: 997, display: "none" }} className="db-overlay" />
+      )}
+      <style>{`.db-overlay { display: none !important; } @media (max-width: 991px) { .db-overlay { display: block !important; } }`}</style>
     <div className="wrap-sidebar">
       <div className="sidebar-menu-dashboard" style={{ background: "linear-gradient(180deg, #0d1b2a 0%, #0f2040 100%)", display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <div style={{ padding: "6px 22px 18px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
@@ -519,5 +564,6 @@ export default function Sidebar() {
         )}
       </div>
     </div>
+    </>
   );
 }
