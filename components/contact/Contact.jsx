@@ -6,12 +6,13 @@ import MapComponent from "../common/MapComponent";
 export default function Contact() {
   return (
     <section className="section-top-map style-2">
-      <div className="wrap-map">
+      <div className="wrap-map" style={{ marginBottom: 0 }}>
         <div
           id="map"
           className="row-height"
           data-map-zoom={16}
           data-map-scroll="true"
+          style={{ height: 400 }}
         >
           <MapComponent />
         </div>

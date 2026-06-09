@@ -61,18 +61,20 @@ export default function ToolPageHero({ config }) {
           </div>
         </div>
 
-        {/* Snapshot card */}
-        <div style={{ width: 270, flexShrink: 0, background: "rgba(15,20,35,0.92)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, padding: "24px", backdropFilter: "blur(12px)" }}>
-          <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 16 }}>
-            {snapshotTitle}
-          </div>
-          {snapshot.map(({ key, value, color }) => (
-            <div key={key} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", paddingBottom: 10, marginBottom: 10, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
-              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", flex: 1 }}>{key}</span>
-              <span style={{ fontSize: 13, fontWeight: 600, color: color || "#fff", textAlign: "right", maxWidth: 140 }}>{value}</span>
+        {/* Snapshot card — only render if snapshot data provided */}
+        {snapshot && snapshot.length > 0 && (
+          <div style={{ width: 270, flexShrink: 0, background: "rgba(15,20,35,0.92)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, padding: "24px", backdropFilter: "blur(12px)" }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 16 }}>
+              {snapshotTitle}
             </div>
-          ))}
-        </div>
+            {snapshot.map(({ key, value, color }) => (
+              <div key={key} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", paddingBottom: 10, marginBottom: 10, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+                <span style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", flex: 1 }}>{key}</span>
+                <span style={{ fontSize: 13, fontWeight: 600, color: color || "#fff", textAlign: "right", maxWidth: 140 }}>{value}</span>
+              </div>
+            ))}
+          </div>
+        )}
 
       </div>
     </section>
