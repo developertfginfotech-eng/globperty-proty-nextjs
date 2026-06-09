@@ -10,6 +10,15 @@
   box-sizing: border-box !important;
 }
 
+/* ── style-2 header: always dark so logo is visible on ALL pages/sizes ── */
+.header.style-2 {
+  background: #0a101e !important;
+}
+/* Remove negative margin globally — non-hero pages no longer get content overlap */
+.header.style-2 .header-inner {
+  margin-bottom: 0 !important;
+}
+
 /* ── Mobile header: switch from 3-col grid to flex space-between ── */
 @media (max-width: 1093px) {
   .globperty-header-grid {
@@ -26,24 +35,12 @@
     margin-left: auto !important;
     justify-content: flex-end !important;
   }
-  /* Remove negative margin on style-2 header on mobile so content doesn't overlap breadcrumb */
-  .header.style-2 .header-inner {
-    margin-bottom: 0 !important;
-  }
-  /* Dark background on style-2 header on mobile (no longer blending into hero) */
-  .header.style-2 {
-    background: #0a101e !important;
-  }
   /* Breadcrumb area — give breathing room below header on mobile */
   .flat-title.style-2 {
     padding-top: 16px !important;
     margin-bottom: 16px !important;
   }
-  /* Hero section — reduce huge bottom padding on mobile */
-  .page-title.home02 {
-    padding-top: 80px !important;
-    padding-bottom: 40px !important;
-  }
+  /* keep hero full height on tablets (no padding override here) */
   /* Logo — keep wordmark at its natural size, never clip */
   .globperty-header-grid > div:first-child {
     flex-shrink: 0;
@@ -618,6 +615,12 @@
 
   /* Countries hero */
   .country-hero-content { min-width: 100% !important; }
+
+  /* Hero section — reduce huge padding on phones only */
+  .page-title.home02 {
+    padding-top: 100px !important;
+    padding-bottom: 60px !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════
