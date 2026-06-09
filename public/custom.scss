@@ -26,6 +26,19 @@
     margin-left: auto !important;
     justify-content: flex-end !important;
   }
+  /* Remove negative margin on style-2 header on mobile so content doesn't overlap logo */
+  .header.style-2 .header-inner {
+    margin-bottom: 0 !important;
+  }
+  /* Breadcrumb area — give breathing room below header on mobile */
+  .flat-title.style-2 {
+    padding-top: 16px !important;
+  }
+  /* Logo sizing on mobile */
+  .globperty-header-grid img[alt="Globperty"] {
+    height: 36px !important;
+    width: auto !important;
+  }
 }
 
 /* ── Country page: stack sidebar below content on mobile ── */
