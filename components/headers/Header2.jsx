@@ -13,7 +13,7 @@ export default function Header2() {
           {/* Logo — left */}
           <div style={{ display: "flex", alignItems: "center" }}>
             <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-              <Image src="/images/logo/globperty-logo.svg" alt="Globperty" height={44} width={160} style={{ height: 44, width: "auto" }} />
+              <Image src="/images/logo/globperty-logo.svg" alt="Globperty" height={40} width={140} style={{ height: 40, width: 140, objectFit: "contain" }} />
             </Link>
           </div>
 

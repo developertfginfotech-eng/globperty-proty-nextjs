@@ -477,17 +477,7 @@ export default function Sidebar() {
               </Link>
             </li>
 
-            {/* Admin — admin role only */}
-            {role === "admin" && (
-              <li className={`nav-menu-item ${pathname == "/admin" ? "active" : ""}`}>
-                <Link className="nav-menu-link" href="/admin">
-                  <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 2.5L12.5 7.5L18 8.25L14 12.25L15 17.5L10 15L5 17.5L6 12.25L2 8.25L7.5 7.5L10 2.5Z" stroke="#A8ABAE" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  Admin Panel
-                </Link>
-              </li>
-            )}
+            {/* Admin Panel removed — separate admin website handles admin/superadmin */}
 
             {/* Support */}
             <li className={`nav-menu-item ${pathname == "/support" ? "active" : ""}`}>

@@ -34,10 +34,18 @@
   .flat-title.style-2 {
     padding-top: 16px !important;
   }
-  /* Logo sizing on mobile */
-  .globperty-header-grid img[alt="Globperty"] {
-    height: 36px !important;
-    width: auto !important;
+  /* Logo — keep wordmark at its natural size, never clip */
+  .globperty-header-grid > div:first-child {
+    flex-shrink: 0;
+    min-width: 0;
+  }
+  /* Header-right — shrink if needed but never crush the logo */
+  .globperty-header-grid .header-right {
+    flex-shrink: 0;
+  }
+  /* Hide "Add property" button in header on mobile to save space */
+  .globperty-header-grid .btn-add {
+    display: none !important;
   }
 }
 
