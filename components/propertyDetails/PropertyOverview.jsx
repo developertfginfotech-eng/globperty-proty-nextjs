@@ -17,7 +17,7 @@ function MakeOfferModal({ property, onClose }) {
     setSubmitting(true);
     try {
       await apiClient.post("/offers", {
-        propertyId: property._id,
+        propertyId: property._id || property.id,
         offerPrice: Number(offerPrice),
         message,
         ...(validUntil ? { validUntil } : {}),
@@ -49,7 +49,7 @@ function MakeOfferModal({ property, onClose }) {
         background: "#fff",
         borderRadius: 14,
         padding: "32px 28px",
-        width: "100%",
+        width: "calc(100vw - 32px)",
         maxWidth: 440,
         boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
       }}>
