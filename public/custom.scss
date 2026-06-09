@@ -503,3 +503,109 @@
   /* Countries hero */
   .country-hero-content { min-width: 100% !important; }
 }
+
+/* ═══════════════════════════════════════════════
+   COMPREHENSIVE MOBILE RESPONSIVENESS — ALL SCREENS
+   Targets: 320px → 1400px
+═══════════════════════════════════════════════ */
+
+/* ── Country snapshot card: hide on all phones/small tablets ── */
+@media (max-width: 1023px) {
+  .country-snapshot-card { display: none !important; }
+}
+
+/* ── Knowledge Base tables: always scrollable ── */
+.kb-table-scroll {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  table {
+    min-width: 480px;
+    width: 100%;
+  }
+}
+
+/* ── Section padding tighter on small screens ── */
+@media (max-width: 575px) {
+  .tf-container { padding-left: 16px !important; padding-right: 16px !important; }
+  .flat-section, .flat-banner-v4 { padding-top: 40px !important; padding-bottom: 40px !important; }
+  .tf-spacing-6 { padding-top: 48px !important; padding-bottom: 48px !important; }
+
+  /* Stats boxes in About page */
+  .box-count.style-1 { padding: 16px !important; }
+
+  /* Career benefits images hide on very small screens */
+  .section-benefits .wrap-image { display: none; }
+  .section-benefits .box-benefits { flex-direction: column !important; }
+  .section-benefits .content { padding: 0 !important; }
+}
+
+/* ── Tablet fixes (768px–1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Countries quick guide on tablets — show as full width below hero */
+  .country-snapshot-card {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 24px;
+    background: rgba(15,20,35,0.85) !important;
+  }
+
+  /* Copilot sidebar always visible on tablets */
+  .copilot-layout { flex-direction: row !important; }
+}
+
+/* ── Copilot specific responsive ── */
+@media (max-width: 767px) {
+  /* Copilot full screen on mobile */
+  .copilot-main-content {
+    width: 100vw !important;
+    padding: 12px !important;
+  }
+
+  /* Quick action buttons wrap */
+  .copilot-quick-actions {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+/* ── Surface Pro 7 / Nest Hub (1024px–1280px) ── */
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .country-snapshot-card { width: 240px !important; }
+}
+
+/* ── Galaxy Z Fold 5 folded (~344px) ── */
+@media (max-width: 360px) {
+  h1, h2 { font-size: clamp(20px, 6vw, 28px) !important; }
+  .tf-btn { padding: 10px 14px !important; font-size: 13px !important; }
+  .box-icon-v2.style-col { padding: 16px !important; }
+}
+
+/* ── iPad landscape / Surface Pro (1024px) ── */
+@media (min-width: 1024px) {
+  .country-snapshot-card { display: block !important; }
+}
+
+/* ── Prevent horizontal scroll globally ── */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* ── Images & videos never overflow ── */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Fix overflowing contact map ── */
+.section-top-map .wrap-map {
+  overflow: hidden;
+  margin-bottom: 0 !important;
+}
+
+/* ── Fix contact page gap ── */
+.section-top-map .box {
+  margin-top: 0 !important;
+  padding-top: 40px !important;
+}
+
