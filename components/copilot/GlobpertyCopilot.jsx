@@ -265,12 +265,21 @@ export default function GlobpertyCopilot() {
     prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]
   );
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const isMobileView = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <div style={{
       display: 'flex', height: '100vh',
       fontFamily: "'Lexend', sans-serif",
       background: '#f5f5f7',
+      position: 'relative',
     }}>
+
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div onClick={() => setSidebarOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 99, display: 'block' }} />
+      )}
 
       {/* ===== LEFT SIDEBAR ===== */}
       <div style={{
@@ -280,6 +289,11 @@ export default function GlobpertyCopilot() {
         padding: '28px 20px',
         gap: '28px',
         overflowY: 'auto',
+        position: typeof window !== 'undefined' && window.innerWidth < 768 ? 'fixed' : 'relative',
+        left: 0, top: 0, bottom: 0,
+        zIndex: 100,
+        transform: typeof window !== 'undefined' && window.innerWidth < 768 && !sidebarOpen ? 'translateX(-100%)' : 'translateX(0)',
+        transition: 'transform 0.3s ease',
       }}>
         {/* Logo */}
         <div>
@@ -356,13 +370,14 @@ export default function GlobpertyCopilot() {
         {/* Top bar */}
         <div style={{
           background: 'white', borderBottom: '1px solid #e8e8ec',
-          padding: '14px 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           flexShrink: 0,
         }}>
-          <div>
-            <div style={{ fontWeight: 700, fontSize: 16, color: '#111' }}>Globperty AI</div>
-            <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 1 }}>
-              Ask anything about real estate — globally
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ background: '#f3f4f6', border: 'none', borderRadius: 8, width: 36, height: 36, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>☰</button>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 16, color: '#111' }}>Globperty AI</div>
+              <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 1 }}>Ask anything about real estate — globally</div>
             </div>
           </div>
           {selectedProperties.length >= 2 && (

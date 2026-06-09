@@ -118,7 +118,7 @@ function HeroSection({ country, onSelectTab }) {
       background: `linear-gradient(to bottom, rgba(10,16,30,0.75) 0%, rgba(10,16,30,0.85) 60%, rgba(10,16,30,0.98) 100%), url('${country.heroImage}') center/cover no-repeat`,
       paddingTop: 80,
     }}>
-      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "60px 24px 40px", width: "100%", display: "flex", gap: 32, alignItems: "flex-start" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "60px 24px 40px", width: "100%", display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap" }}>
         {/* Left content */}
         <div style={{ flex: 1 }}>
           {/* Badge */}
@@ -175,8 +175,8 @@ function HeroSection({ country, onSelectTab }) {
           </div>
         </div>
 
-        {/* Snapshot card */}
-        <div style={{ width: 280, flexShrink: 0, background: "rgba(15,20,35,0.92)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, padding: "24px", backdropFilter: "blur(12px)" }}>
+        {/* Snapshot card — hidden on small screens via media query workaround */}
+        <div className="country-snapshot-card" style={{ width: 280, flexShrink: 0, background: "rgba(15,20,35,0.92)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, padding: "24px", backdropFilter: "blur(12px)" }}>
           <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}>
             🗂️ Quick Country Snapshot
           </div>

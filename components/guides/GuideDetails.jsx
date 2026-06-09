@@ -307,7 +307,7 @@ function FeeTableSection({ sec }) {
   return (
     <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
       <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
-      <div className="kb-table-scroll" style={{ marginBottom: 20 }}>
+      <div className="kb-table-scroll" style={{ marginBottom: 20, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
         <table>
           <thead>
             <tr style={{ background: "#0f172a" }}>
@@ -355,7 +355,7 @@ function AreasSection({ sec }) {
         ))}
       </div>
       {/* Data table */}
-      <div className="kb-table-scroll">
+      <div className="kb-table-scroll" style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
         <table>
           <thead>
             <tr style={{ background: "#0f172a" }}>
@@ -399,7 +399,7 @@ function MortgageSection({ sec }) {
           </ul>
         </div>
         {/* Bank table */}
-        <div className="kb-table-scroll">
+        <div className="kb-table-scroll" style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
           <div style={{ padding: "12px 16px", background: "#f8fafc", borderBottom: "1px solid #e2e8f0" }}>
             <h4 style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", margin: 0 }}>Top Banks for Foreign Buyers</h4>
           </div>
@@ -463,7 +463,7 @@ function TaxSection({ sec }) {
     <div id={`section-${sec.id}`} style={{ marginBottom: 48 }}>
       <SectionHeader label={sec.sectionLabel} title={sec.title} subtitle={sec.subtitle} />
       <Callout text={sec.callout} type="info" />
-      <div className="kb-table-scroll">
+      <div className="kb-table-scroll" style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
         <table>
           <thead>
             <tr style={{ background: "#0f172a" }}>

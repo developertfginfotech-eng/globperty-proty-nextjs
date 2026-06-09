@@ -484,3 +484,22 @@
     }
   }
 }
+
+/* ── Mobile Responsiveness Fixes ── */
+@media (max-width: 767px) {
+  /* Hide country snapshot sidebar on mobile */
+  .country-snapshot-card { display: none !important; }
+
+  /* Knowledge base table scroll */
+  .kb-table-scroll { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+  .kb-table-scroll table { min-width: 500px; }
+
+  /* Copilot layout */
+  .copilot-sidebar { transform: translateX(-100%); }
+
+  /* General table responsiveness */
+  .table-responsive-mobile { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Countries hero */
+  .country-hero-content { min-width: 100% !important; }
+}
