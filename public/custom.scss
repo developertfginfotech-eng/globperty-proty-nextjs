@@ -39,6 +39,11 @@
     padding-top: 16px !important;
     margin-bottom: 16px !important;
   }
+  /* Hero section — reduce huge bottom padding on mobile */
+  .page-title.home02 {
+    padding-top: 80px !important;
+    padding-bottom: 40px !important;
+  }
   /* Logo — keep wordmark at its natural size, never clip */
   .globperty-header-grid > div:first-child {
     flex-shrink: 0;
