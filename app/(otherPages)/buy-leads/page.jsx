@@ -66,7 +66,7 @@ export default function Page() {
                 How <span style={{ color: "#f0822d" }}>Lead Buying Works</span>
               </h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 24 }}>
               {HOW_IT_WORKS.map((s, i) => (
                 <div key={i} style={{ textAlign: "center", padding: "24px 16px" }}>
                   <div style={{ width: 52, height: 52, borderRadius: "50%", background: "#f0822d", color: "#fff", fontSize: 18, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>{String(i + 1).padStart(2, "0")}</div>
@@ -86,7 +86,7 @@ export default function Page() {
                 Types of <span style={{ color: "#f0822d" }}>Buyer Leads</span>
               </h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 20 }}>
               {LEAD_TYPES.map((t, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "20px", background: "#fff", borderRadius: 12, border: "1px solid #f3f4f6" }}>
                   <span style={{ fontSize: 28, flexShrink: 0 }}>{t.icon}</span>

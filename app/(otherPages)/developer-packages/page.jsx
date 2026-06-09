@@ -93,7 +93,7 @@ export default function Page() {
               </h2>
               <p style={{ fontSize: 15, color: "#6b7280" }}>Contact us for custom pricing tailored to your project size and target markets.</p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, maxWidth: 900, margin: "0 auto" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 24, maxWidth: 900, margin: "0 auto" }}>
               {PACKAGES.map((p, i) => (
                 <div key={i} style={{ background: p.color, borderRadius: 16, padding: "32px 24px", border: `2px solid ${p.border}`, position: "relative" }}>
                   {p.badge && <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: "#f0822d", color: "#fff", fontSize: 11, fontWeight: 700, padding: "4px 14px", borderRadius: 20 }}>{p.badge}</div>}

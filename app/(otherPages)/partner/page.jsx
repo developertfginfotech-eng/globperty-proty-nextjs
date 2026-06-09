@@ -61,7 +61,7 @@ export default function Page() {
                 If your business serves international property buyers, we want to connect you with them.
               </p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 28 }}>
               {PARTNER_TYPES.map((p, i) => (
                 <div key={i} style={{ background: "#f9fafb", borderRadius: 14, padding: "28px 24px", border: "1px solid #f3f4f6" }}>
                   <div style={{ fontSize: 32, marginBottom: 14 }}>{p.icon}</div>

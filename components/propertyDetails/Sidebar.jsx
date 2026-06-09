@@ -40,7 +40,7 @@ export default function Sidebar({ agent, propertyId }) {
   };
 
   return (
-    <div className="tf-sidebar sticky-sidebar">
+    <div className="tf-sidebar sticky-sidebar" id="contact-seller">
       <form className="form-contact-seller mb-30" onSubmit={handleSend}>
         <h4 className="heading-title mb-30">Contact Seller</h4>
         <div className="seller-info">

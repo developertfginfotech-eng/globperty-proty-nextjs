@@ -347,7 +347,7 @@ export default function PropertyOverview({ property }) {
       )}
 
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginTop: 8 }}>
-        <a href="#" className="tf-btn bg-color-primary pd-21 fw-6">Ask a question</a>
+        <a href="#contact-seller" onClick={e => { e.preventDefault(); document.getElementById("contact-seller")?.scrollIntoView({ behavior: "smooth" }); }} className="tf-btn bg-color-primary pd-21 fw-6" style={{ cursor: "pointer" }}>Ask a question</a>
         {isLoggedIn() && (
           <button
             onClick={() => setShowOfferModal(true)}

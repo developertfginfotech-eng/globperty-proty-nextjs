@@ -58,7 +58,7 @@ export default function Page() {
                 Why Partner with <span style={{ color: "#f0822d" }}>Globperty?</span>
               </h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 28 }}>
               {BENEFITS.map((b, i) => (
                 <div key={i} style={{ background: "#f9fafb", borderRadius: 14, padding: "28px 24px", border: "1px solid #f3f4f6" }}>
                   <div style={{ fontSize: 32, marginBottom: 14 }}>{b.icon}</div>

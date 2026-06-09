@@ -78,7 +78,7 @@ export default function Page() {
                 We connect your property with the right international buyer — faster, smarter and for free.
               </p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 28 }}>
               {BENEFITS.map((b, i) => (
                 <div key={i} style={{ background: "#f9fafb", borderRadius: 14, padding: "28px 24px", border: "1px solid #f3f4f6" }}>
                   <div style={{ fontSize: 32, marginBottom: 14 }}>{b.icon}</div>
@@ -97,7 +97,7 @@ export default function Page() {
               <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 10 }}>How It <span style={{ color: "#f0822d" }}>Works</span></h2>
               <p style={{ fontSize: 15, color: "#6b7280" }}>List your property in 4 simple steps</p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 24 }}>
               {HOW_IT_WORKS.map((s, i) => (
                 <div key={i} style={{ textAlign: "center", padding: "24px 16px" }}>
                   <div style={{ width: 52, height: 52, borderRadius: "50%", background: "#f0822d", color: "#fff", fontSize: 18, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>{s.step}</div>
@@ -115,7 +115,7 @@ export default function Page() {
             <div style={{ textAlign: "center", marginBottom: 40 }}>
               <h2 style={{ fontSize: 28, fontWeight: 800, color: "#111827", marginBottom: 10 }}>What You Can <span style={{ color: "#f0822d" }}>List</span></h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 20 }}>
               {LISTING_TYPES.map((t, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "20px", background: "#f9fafb", borderRadius: 12, border: "1px solid #f3f4f6" }}>
                   <span style={{ fontSize: 28, flexShrink: 0 }}>{t.icon}</span>

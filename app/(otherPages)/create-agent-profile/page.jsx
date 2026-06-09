@@ -69,7 +69,7 @@ export default function Page() {
                 Everything you need to build credibility and generate leads from global buyers.
               </p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 28 }}>
               {FEATURES.map((f, i) => (
                 <div key={i} style={{ background: "#f9fafb", borderRadius: 14, padding: "28px 24px", border: "1px solid #f3f4f6" }}>
                   <div style={{ fontSize: 32, marginBottom: 14 }}>{f.icon}</div>
@@ -89,7 +89,7 @@ export default function Page() {
                 Get Live in <span style={{ color: "#f0822d" }}>4 Steps</span>
               </h2>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 24 }}>
               {STEPS.map((s, i) => (
                 <div key={i} style={{ textAlign: "center", padding: "24px 16px" }}>
                   <div style={{ width: 52, height: 52, borderRadius: "50%", background: "#f0822d", color: "#fff", fontSize: 18, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>{String(i + 1).padStart(2, "0")}</div>

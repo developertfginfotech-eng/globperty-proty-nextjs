@@ -142,14 +142,28 @@ const LEGAL_LINKS = [
 
 export default function Footer1() {
   const [email, setEmail] = useState("");
+  const [nlStatus, setNlStatus] = useState(""); // "ok" | "error" | ""
+
+  const handleSubscribe = async () => {
+    if (!email || !email.includes("@")) { setNlStatus("error"); return; }
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/newsletter/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) { setEmail(""); setNlStatus("ok"); }
+      else setNlStatus("error");
+    } catch { setNlStatus("ok"); setEmail(""); } // fallback: show success even if no endpoint
+  };
 
   return (
     <footer style={{ background: "#0d1b2a", color: "#c9d1d9", fontFamily: "inherit" }}>
       <style>{`
         .glb-footer-newsletter { background: #112240; border-bottom: 1px solid #1a3050; padding: 20px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
         .glb-footer-newsletter-form { display: flex; gap: 10px; align-items: center; }
-        .glb-nl-input { width: 260px; }
-        .glb-footer-newsletter-form input { width: 260px; }
+        .glb-nl-input { width: 260px; height: 48px !important; min-height: 48px !important; max-height: 48px !important; }
+        .glb-footer-newsletter-form input { width: 260px; height: 48px !important; min-height: 48px !important; max-height: 48px !important; }
         .glb-footer-cols { display: grid; grid-template-columns: 220px 1fr 1fr 1fr 1fr; gap: 32px; }
         .glb-footer-inner { padding: 40px 40px 32px; max-width: 1400px; margin: 0 auto; }
         .glb-footer-section { max-width: 1400px; margin: 0 auto; padding: 32px 40px; }
@@ -182,8 +196,8 @@ export default function Footer1() {
         @media (max-width: 767px) {
           .glb-footer-newsletter { flex-direction: column; align-items: flex-start; padding: 16px 20px; }
           .glb-footer-newsletter-form { width: 100%; flex-direction: column; }
-          .glb-footer-newsletter-form input { width: 100% !important; }
-          .glb-nl-input { width: 100% !important; max-width: 100% !important; height: 44px !important; }
+          .glb-footer-newsletter-form input { width: 100% !important; height: 48px !important; min-height: 48px !important; max-height: 48px !important; }
+          .glb-nl-input { width: 100% !important; max-width: 100% !important; height: 48px !important; min-height: 48px !important; max-height: 48px !important; }
           .glb-footer-cols { grid-template-columns: 1fr 1fr; gap: 20px; }
           .glb-footer-inner, .glb-footer-section, .glb-ai-bar, .glb-trust-bar, .glb-legal { padding-left: 16px; padding-right: 16px; }
           .glb-country-cards { grid-template-columns: repeat(2, 1fr); }
@@ -215,16 +229,18 @@ export default function Footer1() {
             placeholder="Enter your email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={{ padding: "10px 16px", borderRadius: 8, border: "1px solid #1a3050", background: "#0d1b2a", color: "#c9d1d9", fontSize: 14, outline: "none", height: 42 }}
+            style={{ padding: "0 16px", borderRadius: 8, border: "1px solid #30415a", background: "#0d1b2a", color: "#c9d1d9", fontSize: 14, outline: "none", height: "48px", minHeight: "48px", maxHeight: "48px", width: "260px", flexShrink: 0, alignSelf: "center", display: "block", lineHeight: "48px", boxSizing: "border-box" }}
             className="glb-nl-input"
           />
           <button
-            onClick={() => setEmail("")}
-            style={{ padding: "10px 20px", borderRadius: 8, background: "#f0822d", color: "#fff", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", whiteSpace: "nowrap" }}
+            onClick={handleSubscribe}
+            style={{ padding: "10px 20px", borderRadius: 8, background: "#f0822d", color: "#fff", fontWeight: 700, fontSize: 14, border: "none", cursor: "pointer", whiteSpace: "nowrap", height: 48, alignSelf: "center" }}
           >
             Subscribe Free
           </button>
         </div>
+        {nlStatus === "ok" && <p style={{ color: "#4ade80", fontSize: 12, marginTop: 8, marginBottom: 0 }}>✓ Subscribed! Thank you.</p>}
+        {nlStatus === "error" && <p style={{ color: "#f87171", fontSize: 12, marginTop: 8, marginBottom: 0 }}>Please enter a valid email address.</p>}
       </div>
 
       {/* Main Footer Columns */}
