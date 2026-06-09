@@ -1,10 +1,41 @@
+"use client";
 import { properties11 } from "@/data/properties";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import apiClient from "@/utils/apiClient";
+
+function stop(e) { e.preventDefault(); }
 
 export default function PropertyGridItems({ showItems, properties: propsProp }) {
   const items = propsProp ?? properties11.slice(0, showItems ?? properties11.length);
+  const [saved, setSaved] = useState({});
+  const [compared, setCompared] = useState({});
+
+  const toggleFav = async (id, e) => {
+    e.preventDefault();
+    try {
+      if (saved[id]) {
+        await apiClient.delete(`/favorites/${id}`);
+        setSaved(s => ({ ...s, [id]: false }));
+      } else {
+        await apiClient.post("/favorites", { propertyId: id });
+        setSaved(s => ({ ...s, [id]: true }));
+      }
+    } catch { /* not logged in */ }
+  };
+
+  const toggleCompare = (id, e) => {
+    e.preventDefault();
+    setCompared(c => ({ ...c, [id]: !c[id] }));
+    // store in sessionStorage for a compare page
+    const list = JSON.parse(sessionStorage.getItem("compareList") || "[]");
+    if (list.includes(id)) {
+      sessionStorage.setItem("compareList", JSON.stringify(list.filter(x => x !== id)));
+    } else if (list.length < 4) {
+      sessionStorage.setItem("compareList", JSON.stringify([...list, id]));
+    }
+  };
   return (
     <>
       {items.map((property) => (
@@ -32,11 +63,11 @@ export default function PropertyGridItems({ showItems, properties: propsProp }) 
               )}
             </ul>
             <div className="list-btn flex gap-8">
-              <a href="#" className="btn-icon save hover-tooltip">
+              <a href="#" onClick={(e) => toggleFav(property.id, e)} className={`btn-icon save hover-tooltip${saved[property.id] ? " active" : ""}`}>
                 <i className="icon-save" />
-                <span className="tooltip">Add Favorite</span>
+                <span className="tooltip">{saved[property.id] ? "Saved!" : "Add Favorite"}</span>
               </a>
-              <a href="#" className="btn-icon find hover-tooltip">
+              <a href="#" onClick={stop} className="btn-icon find hover-tooltip">
                 <i className="icon-find-plus" />
                 <span className="tooltip">Quick View</span>
               </a>
@@ -65,9 +96,9 @@ export default function PropertyGridItems({ showItems, properties: propsProp }) 
             <div className="bot flex justify-between items-center">
               <h5 className="price">${property.price}</h5>
               <div className="wrap-btn flex">
-                <a href="#" className="compare flex gap-8 items-center text-1">
+                <a href="#" onClick={(e) => toggleCompare(property.id, e)} className="compare flex gap-8 items-center text-1" style={{ color: compared[property.id] ? "#f0822d" : "" }}>
                   <i className="icon-compare" />
-                  Compare
+                  {compared[property.id] ? "Added ✓" : "Compare"}
                 </a>
                 <Link
                   href={`/property-detail-v1/${property.id}`}

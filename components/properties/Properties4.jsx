@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import LayoutHandler from "./LayoutHandler";
 import DropdownSelect from "../common/DropdownSelect";
 import PropertyGridItems from "./PropertyGridItems";
@@ -96,10 +96,18 @@ function applyFilters(all, params) {
 
 function Properties4Inner({ defaultGrid }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [allProperties, setAllProperties] = useState([]);
   const [filtered, setFiltered]           = useState([]);
   const [loading, setLoading]             = useState(true);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+
+  const handleSort = (val) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (val === "Sort by (Default)") params.delete("sort");
+    else params.set("sort", val);
+    router.push(`?${params.toString()}`);
+  };
 
   useEffect(() => {
     getAllProperties()
@@ -151,6 +159,8 @@ function Properties4Inner({ defaultGrid }) {
                 <DropdownSelect
                   addtionalParentClass="select-filter list-sort"
                   options={["Sort by (Default)", "Newest", "Oldest"]}
+                  selectedValue={searchParams.get("sort") || "Sort by (Default)"}
+                  onChange={handleSort}
                 />
               </div>
             </div>
