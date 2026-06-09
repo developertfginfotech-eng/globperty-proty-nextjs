@@ -99,6 +99,7 @@ function Properties4Inner({ defaultGrid }) {
   const [allProperties, setAllProperties] = useState([]);
   const [filtered, setFiltered]           = useState([]);
   const [loading, setLoading]             = useState(true);
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
   useEffect(() => {
     getAllProperties()
@@ -131,7 +132,19 @@ function Properties4Inner({ defaultGrid }) {
           <div className="col-12">
             <div className="box-title">
               <h2>{heading}</h2>
-              <div className="right">
+              <div className="right" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                {/* Mobile filter toggle button — only on small screens */}
+                {mobileFilterOpen !== undefined && (
+                  <style>{`@media (max-width: 991px) { .prop-filter-btn { display: inline-flex !important; } }`}</style>
+                )}
+                <button
+                  className="prop-filter-btn"
+                  onClick={() => setMobileFilterOpen(v => !v)}
+                  style={{ display: "none", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, background: "#f0822d", color: "#fff", border: "none", fontWeight: 600, fontSize: 13, cursor: "pointer" }}
+                >
+                  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg>
+                  Filters
+                </button>
                 <ul className="nav-tab-filter group-layout" role="tablist" suppressHydrationWarning>
                   <LayoutHandler defaultGrid={defaultGrid} />
                 </ul>
@@ -142,10 +155,25 @@ function Properties4Inner({ defaultGrid }) {
               </div>
             </div>
           </div>
-          <div className="col-lg-4">
+
+          {/* Mobile filter drawer */}
+          {mobileFilterOpen && (
+            <div style={{ display: "block" }}>
+              <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 1040 }} onClick={() => setMobileFilterOpen(false)} />
+              <div style={{ position: "fixed", top: 0, left: 0, bottom: 0, width: "min(320px, 90vw)", background: "#fff", zIndex: 1050, overflowY: "auto", padding: "16px", boxShadow: "4px 0 20px rgba(0,0,0,0.15)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                  <span style={{ fontWeight: 700, fontSize: 16 }}>Filters</span>
+                  <button onClick={() => setMobileFilterOpen(false)} style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer", color: "#6b7280" }}>✕</button>
+                </div>
+                <Sidebar />
+              </div>
+            </div>
+          )}
+
+          <div className="col-lg-4 d-none d-lg-block">
             <Sidebar />
           </div>
-          <div className="col-lg-8">
+          <div className="col-lg-8 col-12">
             {loading ? (
               <p className="text-center py-60">Loading properties…</p>
             ) : filtered.length === 0 ? (

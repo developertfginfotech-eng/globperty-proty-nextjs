@@ -10,6 +10,59 @@
   box-sizing: border-box !important;
 }
 
+/* ── Mobile header: switch from 3-col grid to flex space-between ── */
+@media (max-width: 1093px) {
+  .globperty-header-grid {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 16px !important;
+    min-height: 60px !important;
+  }
+  .globperty-header-grid .main-menu {
+    display: none !important;
+  }
+  .globperty-header-grid .header-right {
+    margin-left: auto !important;
+    justify-content: flex-end !important;
+  }
+}
+
+/* ── Country page: stack sidebar below content on mobile ── */
+@media (max-width: 991px) {
+  .country-content-wrap {
+    flex-direction: column !important;
+  }
+  .country-content-wrap > main {
+    width: 100% !important;
+  }
+}
+@media (max-width: 991px) {
+  .country-sidebar {
+    width: 100% !important;
+    position: static !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+  }
+}
+
+/* ── Properties listing: Filters button visible on mobile ── */
+@media (max-width: 991px) {
+  .d-lg-none.properties-filter-btn {
+    display: inline-flex !important;
+  }
+}
+
+/* ── Login/Register: form takes full width on mobile ── */
+@media (max-width: 767px) {
+  .glb-auth-left { display: none !important; }
+  .glb-auth-right {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+    padding: 24px 16px !important;
+  }
+}
+
 .globperty-logo-text {
   font-size: 26px !important;
   font-weight: 800 !important;

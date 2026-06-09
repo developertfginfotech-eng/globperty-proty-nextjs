@@ -67,6 +67,12 @@ export default function LoginPage() {
 
   return (
     <div id="wrapper">
+      <style>{`
+        @media (max-width: 767px) {
+          .glb-auth-left { display: none !important; }
+          .glb-auth-right { flex: 1 1 100% !important; min-width: 0 !important; padding: 24px 16px !important; }
+        }
+      `}</style>
       <div style={{ minHeight: "100vh", display: "flex" }}>
 
         {/* Left panel — dark with features */}

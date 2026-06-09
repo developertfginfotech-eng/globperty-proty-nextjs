@@ -52,7 +52,7 @@ export default function CountryPage() {
       <div id="wrapper">
         <HeroSection country={country} onSelectTab={setActiveTab} />
         <TabBar tabs={TABS} active={activeTab} onSelect={setActiveTab} tabRef={tabRef} />
-        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "40px 24px", display: "flex", gap: 28, alignItems: "flex-start" }}>
+        <div className="country-content-wrap" style={{ maxWidth: 1400, margin: "0 auto", padding: "40px 24px", display: "flex", gap: 28, alignItems: "flex-start", flexWrap: "wrap" }}>
           <main style={{ flex: 1, minWidth: 0 }}>
             {activeTab === "Overview" && <OverviewSection country={country} />}
             {activeTab === "Geography" && <GeographySection country={country} cityListings={cityListings} />}
@@ -1205,7 +1205,7 @@ function Sidebar({ country, cityListings, totalListings }) {
   const sN = country.shortName || country.name.split(" ")[0];
 
   return (
-    <div style={{ width: 300, flexShrink: 0, display: "flex", flexDirection: "column", gap: 20, position: "sticky", top: 60, maxHeight: "calc(100vh - 80px)", overflowY: "auto" }}>
+    <div className="country-sidebar" style={{ width: 300, flexShrink: 0, display: "flex", flexDirection: "column", gap: 20, position: "sticky", top: 60, maxHeight: "calc(100vh - 80px)", overflowY: "auto" }}>
 
       {/* At a Glance */}
       <div style={{ background: "#0f1423", borderRadius: 14, padding: 20, color: "#fff" }}>

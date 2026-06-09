@@ -17,6 +17,14 @@ function FilterTopInner() {
   const [type,    setType]    = useState(searchParams.get("type")    || "");
   const [baths,   setBaths]   = useState(searchParams.get("baths")   || "");
   const [beds,    setBeds]    = useState(searchParams.get("beds")    || "");
+  const [isMobile, setIsMobile] = useState(false);
+
+  React.useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -56,57 +64,61 @@ function FilterTopInner() {
               </ul>
             </div>
 
-            <form className="wg-filter style-2 relative" onSubmit={handleSearch}>
-              <div className="form-title style-2" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-
-                {/* Keyword */}
-                <fieldset style={{ flex: "1 1 220px", minWidth: 180 }}>
-                  <input
-                    type="text"
-                    placeholder="Address, City, country..."
-                    value={keyword}
-                    onChange={e => setKeyword(e.target.value)}
-                    style={{ height: 46, fontSize: 14 }}
-                  />
-                </fieldset>
-
-                {/* Status */}
-                <select value={status} onChange={e => setStatus(e.target.value)} style={selectStyle}>
-                  {STATUS_OPTIONS.map(o => (
-                    <option key={o} value={o === "Any Status" ? "" : o}>
-                      {o === "buy" ? "For Sale" : o === "rent" ? "For Rent" : o === "sell" ? "Sell" : o}
-                    </option>
-                  ))}
-                </select>
-
-                {/* Type */}
-                <select value={type} onChange={e => setType(e.target.value)} style={selectStyle}>
-                  {TYPE_OPTIONS.map(o => (
-                    <option key={o} value={o === "Any Type" ? "" : o.toLowerCase()}>{o}</option>
-                  ))}
-                </select>
-
-                {/* Baths */}
-                <select value={baths} onChange={e => setBaths(e.target.value)} style={selectStyle}>
-                  {BATH_OPTIONS.map(o => (
-                    <option key={o} value={o === "Any Baths" ? "" : o}>{o === "Any Baths" ? "Baths" : `${o} Bath${o === "1" ? "" : "s"}`}</option>
-                  ))}
-                </select>
-
-                {/* Beds */}
-                <select value={beds} onChange={e => setBeds(e.target.value)} style={selectStyle}>
-                  {BED_OPTIONS.map(o => (
-                    <option key={o} value={o === "Any Beds" ? "" : o}>{o === "Any Beds" ? "Beds" : `${o} Bed${o === "1" ? "" : "s"}`}</option>
-                  ))}
-                </select>
-
-                <div className="wrap-btn" style={{ display: "flex", gap: 8, flexShrink: 0 }}>
-                  <button type="submit" className="tf-btn bg-color-primary pd-3 fw-6" style={{ height: 46, padding: "0 28px", whiteSpace: "nowrap", borderRadius: 8 }}>
+            {isMobile ? (
+              /* ── Mobile layout: keyword + 2×2 grid ── */
+              <form onSubmit={handleSearch} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 12, padding: "12px 14px" }}>
+                <input
+                  type="text"
+                  placeholder="Address, City, country..."
+                  value={keyword}
+                  onChange={e => setKeyword(e.target.value)}
+                  style={{ width: "100%", height: 44, fontSize: 14, border: "1px solid #e5e7eb", borderRadius: 8, padding: "0 14px", marginBottom: 8, boxSizing: "border-box", outline: "none" }}
+                />
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  <select value={status} onChange={e => setStatus(e.target.value)} style={{ ...selectStyle, width: "100%" }}>
+                    {STATUS_OPTIONS.map(o => <option key={o} value={o === "Any Status" ? "" : o}>{o === "buy" ? "For Sale" : o === "rent" ? "For Rent" : o === "sell" ? "Sell" : o}</option>)}
+                  </select>
+                  <select value={type} onChange={e => setType(e.target.value)} style={{ ...selectStyle, width: "100%" }}>
+                    {TYPE_OPTIONS.map(o => <option key={o} value={o === "Any Type" ? "" : o.toLowerCase()}>{o}</option>)}
+                  </select>
+                  <select value={baths} onChange={e => setBaths(e.target.value)} style={{ ...selectStyle, width: "100%" }}>
+                    {BATH_OPTIONS.map(o => <option key={o} value={o === "Any Baths" ? "" : o}>{o === "Any Baths" ? "Baths" : `${o} Bath${o === "1" ? "" : "s"}`}</option>)}
+                  </select>
+                  <select value={beds} onChange={e => setBeds(e.target.value)} style={{ ...selectStyle, width: "100%" }}>
+                    {BED_OPTIONS.map(o => <option key={o} value={o === "Any Beds" ? "" : o}>{o === "Any Beds" ? "Beds" : `${o} Bed${o === "1" ? "" : "s"}`}</option>)}
+                  </select>
+                  <button type="submit" className="tf-btn bg-color-primary fw-6" style={{ gridColumn: "1 / -1", height: 46, borderRadius: 8, fontSize: 15, fontWeight: 700 }}>
                     Search <i className="icon-MagnifyingGlass fw-6" />
                   </button>
                 </div>
-              </div>
-            </form>
+              </form>
+            ) : (
+              /* ── Desktop layout: single flex row ── */
+              <form className="wg-filter style-2 relative" onSubmit={handleSearch}>
+                <div className="form-title style-2" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "nowrap" }}>
+                  <div style={{ flex: "1 1 220px", minWidth: 180 }}>
+                    <input type="text" placeholder="Address, City, country..." value={keyword} onChange={e => setKeyword(e.target.value)} style={{ height: 46, fontSize: 14, width: "100%" }} />
+                  </div>
+                  <select value={status} onChange={e => setStatus(e.target.value)} style={selectStyle}>
+                    {STATUS_OPTIONS.map(o => <option key={o} value={o === "Any Status" ? "" : o}>{o === "buy" ? "For Sale" : o === "rent" ? "For Rent" : o === "sell" ? "Sell" : o}</option>)}
+                  </select>
+                  <select value={type} onChange={e => setType(e.target.value)} style={selectStyle}>
+                    {TYPE_OPTIONS.map(o => <option key={o} value={o === "Any Type" ? "" : o.toLowerCase()}>{o}</option>)}
+                  </select>
+                  <select value={baths} onChange={e => setBaths(e.target.value)} style={selectStyle}>
+                    {BATH_OPTIONS.map(o => <option key={o} value={o === "Any Baths" ? "" : o}>{o === "Any Baths" ? "Baths" : `${o} Bath${o === "1" ? "" : "s"}`}</option>)}
+                  </select>
+                  <select value={beds} onChange={e => setBeds(e.target.value)} style={selectStyle}>
+                    {BED_OPTIONS.map(o => <option key={o} value={o === "Any Beds" ? "" : o}>{o === "Any Beds" ? "Beds" : `${o} Bed${o === "1" ? "" : "s"}`}</option>)}
+                  </select>
+                  <div className="wrap-btn">
+                    <button type="submit" className="tf-btn bg-color-primary pd-3 fw-6" style={{ height: 46, padding: "0 28px", whiteSpace: "nowrap", borderRadius: 8 }}>
+                      Search <i className="icon-MagnifyingGlass fw-6" />
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
 
           </div>
         </div>
